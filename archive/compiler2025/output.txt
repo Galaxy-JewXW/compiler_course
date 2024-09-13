@@ -54,6 +54,19 @@ INTCON 4
 RPARENT )
 SEMICN ;
 <Stmt>
+INTTK int
+IDENFR k
+<VarDef>
+SEMICN ;
+<VarDecl>
+IDENFR k
+<LVal>
+ASSIGN =
+GETINTTK getint
+LPARENT (
+RPARENT )
+SEMICN ;
+<Stmt>
 RETURNTK return
 INTCON 0
 <Number>
