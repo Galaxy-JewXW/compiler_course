@@ -1,0 +1,25 @@
+const int aa = 9;
+
+int main() {
+    int k;
+    k = getint();
+    printf("%d %d %d\n", 22373498, k, aa);
+    if (k == aa) {
+        k = aa - 1;
+    } else {
+        k = aa;
+    }
+    if (1 == 2);
+    if (1 != 2);
+    if (1 > 2);
+    if (1 < 2);
+    if (1 >= 2);
+    if (1 <= 2);
+    if (!0);
+    if (!1);
+    ;;;
+    {}{}
+    char c = 'c';
+    printf("%c\n", c);
+    return 0;
+}
