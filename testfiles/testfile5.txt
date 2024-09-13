@@ -1,0 +1,116 @@
+// global variables
+int x = 3;
+int xx2_3;
+const int y = 3;
+
+char s2_b = 's';
+const char _man = 'b';
+char say, yas = 'n', damn;
+
+// void functions
+void whoami() {
+    printf("%d\n", 22373497 + 1);
+    return;
+}
+
+void _whoami(int i) {
+    printf("%d\n", 22373497 + i);
+}
+
+void __whoami(int i, int j) {
+    printf("%d\n", 22373497 + i - j);
+    return;
+}
+
+// int functions
+int bar() {
+    return 12;
+}
+
+int _bar(int a) {
+    return a + 19 - 4 * 7 / (2 + 4);
+}
+
+int bar__(int a, int b) {
+    if (b == 0) {
+        return a;
+    } else {
+        return bar__(b, a % b);
+    }
+    return 0;
+}
+
+// char functions
+int cnt = 0;
+char kobe() {
+    cnt = cnt + 1;
+    if (cnt == 1) {
+        return 'm';
+    }
+    if (cnt == 2) {
+        return 'a';
+    } if (cnt == 3) {
+        return 'm';
+    }
+    if (cnt == 4) {
+        return 'b';
+    }
+    if (cnt == 5) {
+        return 'a';
+    }
+    return 'g';
+}
+
+char _kobe(int i) {
+    if (i == 1) {
+        return '0';
+    }
+    if (i == 2) {
+        return 'u';
+    } else {
+        return 't';
+    }
+    return 'm';
+}
+
+char __kobe(char a, char b) {
+    if (a == b) {
+        return 'y';
+    } else {
+        return 'n';
+    }
+    return 'm';
+}
+
+int _() {
+    return 3;
+}
+
+int main() {
+    whoami();
+    printf("plus %d\n", _());
+    _whoami(1);
+    int k = getint();
+    k = bar__(k * k, k);
+    __whoami(k + 1, (k));
+    char ch = getchar();
+    ch = kobe();
+    printf("%c", ch);
+    ch = kobe();
+    printf("%c", ch);
+    ch = kobe();
+    printf("%c", ch);
+    ch = kobe();
+    printf("%c", ch);
+    ch = kobe();
+    printf("%c\n", ch);
+    {
+        char ch = getchar();
+        ch = getchar();
+        {
+            char ch = 'b';
+        }
+        printf("%c haha!\n", ch);
+    }
+    return 0;
+}
