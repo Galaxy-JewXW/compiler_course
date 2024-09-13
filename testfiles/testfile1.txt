@@ -37,7 +37,7 @@ int main() {
     if (1 == 3 && 8 != 9 || 3 ==8);
     if (!0) {}
     int a[2] = {1, 2};
-    gen(0, a, '(', hello);
+    gen(0, a, ' ', hello);
     printf("%c and %d", hello[0], a[a[a[k_]]]);
     return 0;
 }

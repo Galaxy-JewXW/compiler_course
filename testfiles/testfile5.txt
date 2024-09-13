@@ -106,11 +106,6 @@ int main() {
     ch = kobe();
     printf("%c\n", ch);
     {
-        char ch;ch = getchar();
-        ch = getchar();
-        {
-            char ch = 'b';
-        }
         printf("%c haha!\n", ch);
     }
     return 0;
