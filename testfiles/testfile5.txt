@@ -15,6 +15,7 @@ void whoami() {
 
 void _whoami(int i) {
     printf("%d\n", 22373497 + i);
+    return;
 }
 
 void __whoami(int i, int j) {
@@ -90,10 +91,10 @@ int main() {
     whoami();
     printf("plus %d\n", _());
     _whoami(1);
-    int k = getint();
+    int k=111;k = getint();
     k = bar__(k * k, k);
     __whoami(k + 1, (k));
-    char ch = getchar();
+    char ch;ch = getchar();
     ch = kobe();
     printf("%c", ch);
     ch = kobe();
@@ -105,7 +106,7 @@ int main() {
     ch = kobe();
     printf("%c\n", ch);
     {
-        char ch = getchar();
+        char ch;ch = getchar();
         ch = getchar();
         {
             char ch = 'b';

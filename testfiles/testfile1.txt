@@ -1,16 +1,4 @@
-#include <stdio.h>
 
-int getchar(){
-char c;
-scanf("%c",&c);
-return (int)c;
-}
-int getint(){
-int t;
-scanf("%d",&t);
-while(getchar()!='\n');
-return t;
-}
 
 void greet() {
     printf("%d\n", 22373498);
