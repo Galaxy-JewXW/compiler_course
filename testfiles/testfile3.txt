@@ -1,5 +1,31 @@
+const int arrayA[2] = {1,2};
+
+int get(int arr[], int k) {
+    return arr[k];
+}
+
+void set0(int arr[]) {
+    arr[1] = 0;
+}
+
 int main() {
     int a = 22373498;
     printf("%d\n", a);
+    int aa[4] = {1, 2, 3, 4}, ab[4];
+    ab[0] = arrayA[1] * 2 - 5;
+    int i;
+    for (i = 3; i >= 0; i = i - 1) {
+        ab[i] = aa[3 - i];
+    }
+    printf("%d\n", ab[0]);
+    set0(ab);
+    printf("%d %d\n", ab[0], get(aa, 1));
+    if (ab[0] != 0) {
+        if (!ab[1]) {
+            ;;;
+        } else {
+            ;;;
+        }
+    }
     return 0;
 }
