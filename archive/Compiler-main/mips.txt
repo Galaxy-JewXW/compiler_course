@@ -1,0 +1,30 @@
+.macro getInt
+li $v0, 5
+syscall
+.end_macro
+.macro putInt
+li $v0, 1
+syscall
+.end_macro
+.macro putCh
+li $v0, 11
+syscall
+.end_macro
+.macro putStr
+li $v0, 4
+syscall
+.end_macro
+.data
+.text
+jal main
+li $v0, 10
+syscall
+main:
+main_0:
+#%1 = alloca i32
+#store i32 5, i32* %1
+li $k1, 5
+sw $k1, 0($sp)
+#ret i32 0
+li $v0, 0
+jr $ra

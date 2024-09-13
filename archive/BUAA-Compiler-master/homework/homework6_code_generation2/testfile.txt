@@ -1,0 +1,4 @@
+int main() {
+printf("Hello hell o oo %d oooooasdadas77a%d ", 3, 4);
+return 0;
+}
