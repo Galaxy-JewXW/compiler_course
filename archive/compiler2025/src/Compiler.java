@@ -23,6 +23,9 @@ public class Compiler {
         String inputString = Files.readString(Paths.get(inputFile));
         Lexer lexer = new Lexer(inputString);
         ArrayList<Token> tokens = lexer.tokenize();
+        for (Token token : tokens) {
+            System.out.println(token);
+        }
 
         // 语法分析
         Parser parser = new Parser(tokens);

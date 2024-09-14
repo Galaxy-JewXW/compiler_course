@@ -2,12 +2,12 @@ package frontend;
 
 public class Token {
     private final TokenType tokenType;
-    private final String val;
+    private final String content;
     private final int line;
 
-    public Token(TokenType tokenType, String val, int line) {
+    public Token(TokenType tokenType, String content, int line) {
         this.tokenType = tokenType;
-        this.val = val;
+        this.content = content;
         this.line = line;
     }
 
@@ -15,8 +15,8 @@ public class Token {
         return tokenType;
     }
 
-    public String getValue() {
-        return val;
+    public String getContent() {
+        return content;
     }
 
     public int getLine() {
@@ -25,6 +25,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return tokenType.name() + " " + val;
+        return tokenType.name() + " " + content;
     }
 }

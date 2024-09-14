@@ -53,4 +53,8 @@ public enum TokenType {
     public String toString() {
         return name;
     }
+
+    public static String printType(TokenType type) {
+        return type.name() + " " + type.toString();
+    }
 }
