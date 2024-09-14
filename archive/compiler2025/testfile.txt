@@ -1,8 +1,6 @@
-int sb(int a) {return a + a + 114514;}
-
-
 int main(){
-printf("%d", 4);
-int k; k = getint();
-return 0;
+    if(1 & 2){
+        printf("2024 Compiler\n");
+    }
+    return 0;
 }

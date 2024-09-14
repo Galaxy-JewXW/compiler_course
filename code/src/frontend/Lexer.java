@@ -1,5 +1,9 @@
 package frontend;
 
+import error.Error;
+import error.ErrorHandler;
+import error.ErrorType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,21 +152,25 @@ public class Lexer {
 
     private void getAnd() {
         addChar();
+        type = TokenType.AND;
         if (inputString.charAt(pos) == '&') {
             addChar();
-            type = TokenType.AND;
         } else {
-            throw new RuntimeException();
+            pos++;
+            ErrorHandler.getInstance().addError(
+                    new Error(ErrorType.IllegalSymbol, line));
         }
     }
 
     private void getOr() {
         addChar();
+        type = TokenType.OR;
         if (inputString.charAt(pos) == '|') {
             addChar();
-            type = TokenType.OR;
         } else {
-            throw new RuntimeException();
+            pos++;
+            ErrorHandler.getInstance().addError(
+                    new Error(ErrorType.IllegalSymbol, line));
         }
     }
 
