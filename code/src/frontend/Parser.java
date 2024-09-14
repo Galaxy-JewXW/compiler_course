@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Set;
 
+/**
+ * 语法分析类，通过接受一系列token，生成一棵语法树。
+ * 同时进行简单的异常处理：判断右花括号，右圆括号，分号是否缺失
+ */
 public class Parser {
     private final ArrayList<Token> tokens;
     private int pos = 0;
@@ -26,6 +30,7 @@ public class Parser {
         this.tokens = tokens;
     }
 
+    // 提供“向前看”和“向后看”
     public Token curToken() {
         return tokens.get(pos);
     }
@@ -427,6 +432,7 @@ public class Parser {
             match(TokenType.IDENFR);
             match(TokenType.LPARENT);
             FuncRParams funcRParams = null;
+            // 这里判断是否存在实参，exp的first集合即为EXP_FIRST。
             if (isExp()) {
                 funcRParams = parseFuncRParams();
             }

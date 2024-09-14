@@ -1,5 +1,11 @@
 package error;
 
+/**
+ * 所有可能出现的错误集合
+ * 错误类别 a 为词法分析中会出现的错误。
+ * 错误类别 i, j, k 为语法分析中会出现的错误。
+ * 剩余错误类别均为语义分析中会出现的错误。
+ */
 public enum ErrorType {
     IllegalSymbol("a"),
     IdentRedefined("b"),

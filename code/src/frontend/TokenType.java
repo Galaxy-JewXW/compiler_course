@@ -1,5 +1,8 @@
 package frontend;
 
+/**
+ * 枚举类，记录了token可能存在的种类
+ */
 public enum TokenType {
     IDENFR("Ident"),
     INTCON("IntConst"),

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+// 工具类，负责中间结构的输出
 public class Printer {
     public static void printTokens(ArrayList<Token> tokens, String path) throws FileNotFoundException {
         PrintStream origin = System.out;

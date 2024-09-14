@@ -1,5 +1,9 @@
 package error;
 
+/**
+ * 错误的记录类
+ * 记录了错误类型与行号
+ */
 public class Error implements Comparable<Error> {
     private final ErrorType errorType;
     private final int line;

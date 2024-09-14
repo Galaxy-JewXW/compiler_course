@@ -8,7 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 词法分析类Lexer，负责分析字符串形式的源程序，将其划分为一个个词法单元，也就是token
+ */
 public class Lexer {
+    /**
+     * reservedMap是保留字表
+     * 提取出字符串后，若该字符串在保留字表中，则标记为对应属性
+     * 否则就标记为标识符
+     * <p>
+     * singleCharTokens是单符号分隔符表，便于简化程序结构
+     */
     private static final Map<String, TokenType> reservedMap = new HashMap<>();
     private static final Map<String, TokenType> singleCharTokens = new HashMap<>();
 
@@ -43,15 +53,20 @@ public class Lexer {
     }
 
     private final String inputString;
+    // 指向输入字符串的指针
     private int pos = 0;
+    // 当前分析的词法单元
     private final StringBuilder curToken = new StringBuilder();
+    // 当前分析的词法单元对应的类别
     private TokenType type = null;
+    // 程序行号
     private int line = 1;
 
     public Lexer(String inputString) {
         this.inputString = inputString;
     }
 
+    // 与主程序的接口，负责产生词法单元
     public ArrayList<Token> tokenize() {
         ArrayList<Token> tokens = new ArrayList<>();
         while (hasNext()) {
@@ -61,6 +76,7 @@ public class Lexer {
     }
 
     private boolean hasNext() {
+        // 跳过空白字符
         skip();
         if (pos >= inputString.length()) {
             return false;
@@ -92,8 +108,10 @@ public class Lexer {
             type = singleCharTokens.get(String.valueOf(c));
             addChar();
         } else if (c == '/') {
+            // 判断是除号、单行注释还是多行注释
             getDivOrCmt();
         } else if (c == '<' || c == '>' || c == '=') {
+            // 此时可能是一个符号或两个符号组成单元，需要进一步判断
             getCmpOrAgn(c);
         } else {
             throw new RuntimeException("Unrecognized character: " + c);
@@ -149,6 +167,11 @@ public class Lexer {
             type = TokenType.NOT;
         }
     }
+
+    /**
+     * 非法符号，指出现了 '&' 和 '|' 这两个符号，应该将其当做 '&&' 与 '||' 进行处理
+     * 但是在记录单词名称的时候仍记录'&'和'|'，报错行号为'&'和'|'所在的行号
+     */
 
     private void getAnd() {
         addChar();
