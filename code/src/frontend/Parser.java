@@ -353,9 +353,9 @@ public class Parser {
             panic(TokenType.SEMICN);
         }
         ForStmt forStmt2 = null;
-        if (!match(TokenType.SEMICN)) {
+        if (!match(TokenType.RPARENT)) {
             forStmt2 = parseForStmt();
-            panic(TokenType.SEMICN);
+            panic(TokenType.RPARENT);
         }
         Stmt stmt = parseStmt();
         return new ForStruct(forStmt1, cond, forStmt2, stmt);
