@@ -1,5 +1,35 @@
 INTTK int
-IDENFR a
+IDENFR kkk
+<VarDef>
+COMMA ,
+IDENFR bbb
+LBRACK [
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+<VarDef>
+SEMICN ;
+<VarDecl>
+CONSTTK const
+INTTK int
+IDENFR ci
+ASSIGN =
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+COMMA ,
+IDENFR cj
 LBRACK [
 INTCON 2
 <Number>
@@ -17,7 +47,7 @@ INTCON 1
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
+<ConstExp>
 COMMA ,
 INTCON 2
 <Number>
@@ -25,29 +55,12 @@ INTCON 2
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-RBRACE }
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
-IDENFR s
-LBRACK [
-INTCON 100
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
 <ConstExp>
-RBRACK ]
-ASSIGN =
-STRCON "mamba"
-<InitVal>
-<VarDef>
+RBRACE }
+<ConstInitVal>
+<ConstDef>
 SEMICN ;
-<VarDecl>
+<ConstDecl>
 VOIDTK void
 <FuncType>
 IDENFR foo
@@ -62,13 +75,80 @@ INTTK int
 IDENFR b
 <FuncFParam>
 COMMA ,
-INTTK int
+CHARTK char
 IDENFR c
+<FuncFParam>
+COMMA ,
+CHARTK char
+IDENFR d
+LBRACK [
+RBRACK ]
 <FuncFParam>
 <FuncFParams>
 RPARENT )
 LBRACE {
 RETURNTK return
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<FuncDef>
+CHARTK char
+<FuncType>
+IDENFR ab
+LPARENT (
+CHARTK char
+IDENFR c
+<FuncFParam>
+<FuncFParams>
+RPARENT )
+LBRACE {
+INTTK int
+IDENFR k
+<VarDef>
+SEMICN ;
+<VarDecl>
+CHARTK char
+IDENFR s
+<VarDef>
+SEMICN ;
+<VarDecl>
+RETURNTK return
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<FuncDef>
+INTTK int
+<FuncType>
+IDENFR cd
+LPARENT (
+INTTK int
+IDENFR s
+<FuncFParam>
+<FuncFParams>
+RPARENT )
+LBRACE {
+INTTK int
+IDENFR b
+<VarDef>
+SEMICN ;
+<VarDecl>
+RETURNTK return
+CHRCON 'a'
+<Character>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
 SEMICN ;
 <Stmt>
 RBRACE }
@@ -80,49 +160,36 @@ LPARENT (
 RPARENT )
 LBRACE {
 INTTK int
-IDENFR b
-ASSIGN =
-INTCON 3
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<InitVal>
+IDENFR a
 <VarDef>
 SEMICN ;
 <VarDecl>
-IDENFR foo
-LPARENT (
-IDENFR s
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,IDENFR b
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,INTCON 9
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<FuncRParams>
-RPARENT )
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
+LBRACE {
+INTTK int
+IDENFR a
+<VarDef>
 SEMICN ;
+<VarDecl>
+LBRACE {
+INTTK int
+IDENFR a
+<VarDef>
+SEMICN ;
+<VarDecl>
+RBRACE }
+<Block>
+<Stmt>
+RBRACE }
+<Block>
+<Stmt>
+LBRACE {
+INTTK int
+IDENFR a
+<VarDef>
+SEMICN ;
+<VarDecl>
+RBRACE }
+<Block>
 <Stmt>
 RETURNTK return
 INTCON 0

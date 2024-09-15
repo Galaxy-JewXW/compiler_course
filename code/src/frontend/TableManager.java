@@ -14,15 +14,16 @@ public class TableManager {
 
     private TableManager() {
     }
-
-    private final SymbolTable rootTable = new SymbolTable(null, null);
+    
     // 初始化为CompUnit对应的最高级的符号表
-    private SymbolTable currentTable = rootTable;
+    private SymbolTable currentTable = new SymbolTable(null, null);
     // 当前处于的循环层数
     private int loopLevel = 0;
 
     public void addTable(SymbolType blockType) {
-        currentTable = new SymbolTable(blockType, currentTable);
+        SymbolTable newTable = new SymbolTable(blockType, currentTable);
+        currentTable.addChild(newTable);
+        currentTable = newTable;
     }
 
     public void popTable() {

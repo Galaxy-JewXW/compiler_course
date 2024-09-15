@@ -3,12 +3,14 @@ package frontend;
 import frontend.symbol.Symbol;
 import frontend.symbol.SymbolType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SymbolTable {
-    private final HashMap<String, Symbol> symbolTable = new HashMap<>();
+    private final HashMap<String, Symbol> symbols = new HashMap<>();
     private final SymbolType blockType;
     private final SymbolTable parent;
+    private final ArrayList<SymbolTable> children = new ArrayList<>();
 
     public SymbolTable(SymbolType blockType, SymbolTable parent) {
         this.blockType = blockType;
@@ -17,6 +19,10 @@ public class SymbolTable {
 
     public SymbolTable getParent() {
         return parent;
+    }
+
+    public void addChild(SymbolTable child) {
+        children.add(child);
     }
 
     public boolean isFunc() {
@@ -36,14 +42,14 @@ public class SymbolTable {
     }
 
     public boolean containsSymbol(String symbolName) {
-        return symbolTable.containsKey(symbolName);
+        return symbols.containsKey(symbolName);
     }
 
     public Symbol getSymbol(String symbolName) {
-        return symbolTable.get(symbolName);
+        return symbols.get(symbolName);
     }
 
     public void addSymbol(Symbol symbol) {
-        symbolTable.put(symbol.getName(), symbol);
+        symbols.put(symbol.getName(), symbol);
     }
 }

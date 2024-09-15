@@ -1,9 +1,32 @@
-int a[2] = {1, 2};
-char s[100] = "mamba";
-void foo(int a[], int b, int c) {return;}
-int main() {
-int b = 3;
+int kkk, bbb[3];
+const int ci = 2, cj[2] = {1, 2};
 
-foo(s, b, 9);
-return 0;
+void foo(int a[], int b, char c, char d[]) {
+    return;
+}
+
+char ab(char c) {
+    int k;
+    char s;
+    return 1;
+}
+
+int cd(int s) {
+    int b;
+    return 'a';
+}
+
+int main() {
+    int a;
+    {
+        int a;
+        {
+            int a;
+        }
+    }
+    {
+        int a;
+    }
+
+    return 0;
 }
