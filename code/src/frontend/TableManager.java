@@ -15,8 +15,9 @@ public class TableManager {
     private TableManager() {
     }
 
+    private final SymbolTable rootTable = new SymbolTable(null, null);
     // 初始化为CompUnit对应的最高级的符号表
-    private SymbolTable currentTable = new SymbolTable(null, null);
+    private SymbolTable currentTable = rootTable;
     // 当前处于的循环层数
     private int loopLevel = 0;
 
