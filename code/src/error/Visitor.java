@@ -1,4 +1,4 @@
-package llvm;
+package error;
 
 public class Visitor {
 }
