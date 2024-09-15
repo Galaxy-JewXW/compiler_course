@@ -1,7 +1,7 @@
-package error;
+package frontend;
 
-import error.symbol.Symbol;
-import error.symbol.SymbolType;
+import frontend.symbol.Symbol;
+import frontend.symbol.SymbolType;
 
 import java.util.HashMap;
 

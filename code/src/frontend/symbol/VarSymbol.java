@@ -1,12 +1,12 @@
-package error.symbol;
+package frontend.symbol;
 
 public class VarSymbol extends Symbol {
     private final boolean isConstant;
     private final int dimension;
 
-    public VarSymbol(String name, SymbolType symbolType, boolean constant, int dimension) {
+    public VarSymbol(String name, SymbolType symbolType, boolean isConstant, int dimension) {
         super(name, symbolType);
-        this.isConstant = constant;
+        this.isConstant = isConstant;
         this.dimension = dimension;
     }
 

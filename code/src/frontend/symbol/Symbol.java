@@ -1,4 +1,4 @@
-package error.symbol;
+package frontend.symbol;
 
 public class Symbol {
     private final String name;

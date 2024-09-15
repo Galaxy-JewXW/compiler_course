@@ -1,4 +1,4 @@
-package error.symbol;
+package frontend.symbol;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package error.symbol;
+package frontend.symbol;
 
 public class FuncParam {
     private final String name;

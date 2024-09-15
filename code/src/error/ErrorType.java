@@ -12,7 +12,7 @@ public enum ErrorType {
     IdentUndefined("c"),
     ParamSizeMismatch("d"),
     ParamTypeMismatch("e"),
-    ReturnTypeError("f"),
+    ReturnTypeMismatch("f"), // 无返回值的函数存在不匹配的return语句
     ReturnMissing("g"),
     ConstAssign("h"),
     SEMICNMissing("i"),
