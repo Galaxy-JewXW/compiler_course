@@ -1,5 +1,8 @@
 package frontend.symbol;
 
+/**
+ * 函数形参符号类，记录函数形参的名称，类型和维数
+ */
 public class FuncParam {
     private final String name;
     private final SymbolType type;

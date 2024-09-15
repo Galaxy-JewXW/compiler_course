@@ -96,6 +96,10 @@ public class UnaryExp {
             }
             FuncSymbol funcSymbol = (FuncSymbol) errorVisitor.getSymbol(ident.getValue());
             checkParam(funcSymbol);
+        } else {
+            if (unaryExp != null) {
+                unaryExp.check();
+            }
         }
     }
 

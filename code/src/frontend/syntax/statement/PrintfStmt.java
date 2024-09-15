@@ -7,12 +7,18 @@ import frontend.syntax.expression.Exp;
 import java.util.ArrayList;
 
 public class PrintfStmt extends Stmt {
+    private final Token token; // "printf"
     private final Token stringConst;
     private final ArrayList<Exp> exps;
 
-    public PrintfStmt(Token stringConst, ArrayList<Exp> exps) {
+    public PrintfStmt(Token token, Token stringConst, ArrayList<Exp> exps) {
+        this.token = token;
         this.stringConst = stringConst;
         this.exps = exps;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     public Token getStringConst() {

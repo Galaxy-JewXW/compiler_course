@@ -360,11 +360,12 @@ public class Parser {
 
     private ReturnStmt parseReturnStmt() {
         Exp exp = null;
+        Token token = curToken(-1);
         if (!match(TokenType.SEMICN)) {
             exp = parseExp();
             panic(TokenType.SEMICN);
         }
-        return new ReturnStmt(exp);
+        return new ReturnStmt(token, exp);
     }
 
     private IfStmt parseIfStmt() {
@@ -408,6 +409,7 @@ public class Parser {
     }
 
     private PrintfStmt parsePrintfStmt() {
+        Token token = curToken(-1);
         match(TokenType.LPARENT);
         Token stringConst = curToken();
         match(TokenType.STRCON);
@@ -417,7 +419,7 @@ public class Parser {
             exps.add(parseExp());
         }
         panic(TokenType.SEMICN);
-        return new PrintfStmt(stringConst, exps);
+        return new PrintfStmt(token, stringConst, exps);
     }
 
     private Exp parseExp() {

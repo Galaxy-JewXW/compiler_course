@@ -10,6 +10,10 @@ public class ContinueStmt extends Stmt {
         this.token = token;
     }
 
+    public Token getToken() {
+        return token;
+    }
+
     @Override
     public void print() {
         System.out.println(token);

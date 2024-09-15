@@ -13,7 +13,7 @@ public class LValExpStmt extends Stmt {
         this.exp = exp;
     }
 
-    public LVal getLval() {
+    public LVal getLVal() {
         return lval;
     }
 

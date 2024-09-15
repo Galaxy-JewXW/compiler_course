@@ -1,9 +1,13 @@
 package tools;
 
+import error.Error;
 import frontend.Token;
 import frontend.syntax.CompUnit;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -23,5 +27,21 @@ public class Printer {
         System.setOut(new PrintStream(path));
         compUnit.print();
         System.setOut(origin);
+    }
+
+    public static void printErrors(ArrayList<Error> errors, String path) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+        if (!errors.isEmpty()) {
+            System.out.println("Got " + errors.size() + " errors.");
+        } else {
+            System.out.println("No errors found.");
+        }
+        writer.flush();
+        for (Error error : errors) {
+            System.out.println(error.showMessage());
+            writer.write(error.toString());
+            writer.newLine();
+        }
+        writer.close();
     }
 }

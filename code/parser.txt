@@ -1,98 +1,74 @@
-CONSTTK const
 INTTK int
-IDENFR const1
+IDENFR a
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
 ASSIGN =
+LBRACE {
 INTCON 1
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<ConstExp>
-<ConstInitVal>
-<ConstDef>
+<Exp>
 COMMA ,
-IDENFR const2
-ASSIGN =
-MINU -
-<UnaryOp>
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACE }
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+CHARTK char
+IDENFR s
+LBRACK [
 INTCON 100
 <Number>
 <PrimaryExp>
 <UnaryExp>
-<UnaryExp>
 <MulExp>
 <AddExp>
 <ConstExp>
-<ConstInitVal>
-<ConstDef>
-SEMICN ;
-<ConstDecl>
-INTTK int
-IDENFR change1
+RBRACK ]
+ASSIGN =
+STRCON "mamba"
+<InitVal>
 <VarDef>
 SEMICN ;
 <VarDecl>
-INTTK int
+VOIDTK void
 <FuncType>
-IDENFR gets1
+IDENFR foo
 LPARENT (
 INTTK int
-IDENFR var1
+IDENFR a
+LBRACK [
+RBRACK ]
 <FuncFParam>
 COMMA ,
 INTTK int
-IDENFR var2
+IDENFR b
+<FuncFParam>
+COMMA ,
+INTTK int
+IDENFR c
 <FuncFParam>
 <FuncFParams>
 RPARENT )
 LBRACE {
-IDENFR const1
-<LVal>
-ASSIGN =
-INTCON 999
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-IDENFR change1
-<LVal>
-ASSIGN =
-IDENFR var1
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-IDENFR var2
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
 RETURNTK return
-LPARENT (
-IDENFR change1
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RPARENT )
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
 SEMICN ;
 <Stmt>
 RBRACE }
@@ -103,22 +79,49 @@ MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
-IDENFR change1
-<LVal>
+INTTK int
+IDENFR b
 ASSIGN =
-INTCON 10
+INTCON 3
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <Exp>
+<InitVal>
+<VarDef>
 SEMICN ;
-<Stmt>
-PRINTFTK printf
+<VarDecl>
+IDENFR foo
 LPARENT (
-STRCON "Hello World$"
+IDENFR s
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,IDENFR b
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,INTCON 9
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<FuncRParams>
 RPARENT )
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
 SEMICN ;
 <Stmt>
 RETURNTK return

@@ -36,14 +36,6 @@ public class Compiler {
         visitor.visit();
 
         // 异常处理
-        if (ErrorHandler.getInstance().hasErrors()) {
-            // 在产生异常的情况下，在标准输出和errorOutput上均输出错误信息
-            // 并停止后面的分析
-            ErrorHandler.getInstance().printErrors(errorOutput);
-            return;
-        } else {
-            // 否则，提示没有产生错误，继续分析
-            System.out.println("No errors found");
-        }
+        Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);
     }
 }
