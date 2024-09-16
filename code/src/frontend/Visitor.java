@@ -199,7 +199,11 @@ public class Visitor {
     }
 
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {
-        tableManager.addSymbol(new FuncSymbol("main", SymbolType.INT32, new ArrayList<>()));
+        tableManager.addSymbol(new FuncSymbol(
+                "main",
+                SymbolType.INT32,
+                new ArrayList<>() // main函数形参表为空
+        ));
         tableManager.addTable(SymbolType.INT32);
         visitBlock(mainFuncDef.getBlock());
         tableManager.popTable();
@@ -240,6 +244,7 @@ public class Visitor {
                     || items.get(items.size() - 1).getStmt() == null
                     || !(items.get(items.size() - 1).getStmt() instanceof ReturnStmt)) {
                 // int或char函数缺少显性的return with value语句
+                // 这里并不关心返回的值是int型还是char型
                 ErrorHandler.getInstance().addError(new Error(
                         ErrorType.ReturnMissing, block.getEndLine()
                 ));
@@ -302,8 +307,10 @@ public class Visitor {
     }
 
     private void visitBlockStmt(BlockStmt blockStmt) {
+        // 访问Block中的Block时，需要另外创建符号表
         tableManager.addTable(null);
         visitBlock(blockStmt.getBlock());
+        // 递归访问完Block之后，切换符号表
         tableManager.popTable();
     }
 

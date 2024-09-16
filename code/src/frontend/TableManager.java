@@ -14,13 +14,18 @@ public class TableManager {
 
     private TableManager() {
     }
-    
+
     // 初始化为CompUnit对应的最高级的符号表
     private SymbolTable currentTable = new SymbolTable(null, null);
     // 当前处于的循环层数
     private int loopLevel = 0;
 
     public void addTable(SymbolType blockType) {
+        /*
+         * BlockType记录该Block对应的返回值类型
+         * 如果一个Block直接位于MainFuncDef或FuncDef之中，其blockType属性设置为函数定义的返回值
+         * 否则设置为null
+         */
         SymbolTable newTable = new SymbolTable(blockType, currentTable);
         currentTable.addChild(newTable);
         currentTable = newTable;
@@ -46,7 +51,7 @@ public class TableManager {
         return currentTable.isVoidFunc();
     }
 
-    /**
+    /*
      * 在符号表树中查找标识符所对应的symbol
      * 如果在本级符号表中无法查询到该symbol，则在其父节点上查找
      */
