@@ -20,7 +20,7 @@ public class TableManager {
     // 当前处于的循环层数
     private int loopLevel = 0;
 
-    public void addTable(SymbolType blockType) {
+    public void createTable(SymbolType blockType) {
         /*
          * BlockType记录该Block对应的返回值类型
          * 如果一个Block直接位于MainFuncDef或FuncDef之中，其blockType属性设置为函数定义的返回值
@@ -31,7 +31,7 @@ public class TableManager {
         currentTable = newTable;
     }
 
-    public void popTable() {
+    public void recoverTable() {
         currentTable = currentTable.getParent();
     }
 

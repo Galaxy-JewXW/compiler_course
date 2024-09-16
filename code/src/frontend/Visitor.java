@@ -190,12 +190,12 @@ public class Visitor {
         tableManager.addSymbol(new FuncSymbol(
                 funcDef.getIdent().getContent(), funcReturnType, funcParams
         ));
-        tableManager.addTable(funcReturnType);
+        tableManager.createTable(funcReturnType);
         if (funcDef.getFuncFParams() != null) {
             visitFuncFParams(funcDef.getFuncFParams());
         }
         visitBlock(funcDef.getBlock());
-        tableManager.popTable();
+        tableManager.recoverTable();
     }
 
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {
@@ -204,9 +204,9 @@ public class Visitor {
                 SymbolType.INT32,
                 new ArrayList<>() // main函数形参表为空
         ));
-        tableManager.addTable(SymbolType.INT32);
+        tableManager.createTable(SymbolType.INT32);
         visitBlock(mainFuncDef.getBlock());
-        tableManager.popTable();
+        tableManager.recoverTable();
     }
 
     private void visitFuncFParams(FuncFParams funcFParams) {
@@ -308,10 +308,10 @@ public class Visitor {
 
     private void visitBlockStmt(BlockStmt blockStmt) {
         // 访问Block中的Block时，需要另外创建符号表
-        tableManager.addTable(null);
+        tableManager.createTable(null);
         visitBlock(blockStmt.getBlock());
         // 递归访问完Block之后，切换符号表
-        tableManager.popTable();
+        tableManager.recoverTable();
     }
 
     private void visitIfStmt(IfStmt ifStmt) {
