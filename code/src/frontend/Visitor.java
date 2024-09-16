@@ -190,6 +190,7 @@ public class Visitor {
         tableManager.addSymbol(new FuncSymbol(
                 funcDef.getIdent().getContent(), funcReturnType, funcParams
         ));
+        // 函数形参不在Block块中，但实际上应该属于Block块中定义的变量
         tableManager.createTable(funcReturnType);
         if (funcDef.getFuncFParams() != null) {
             visitFuncFParams(funcDef.getFuncFParams());
