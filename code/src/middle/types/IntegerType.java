@@ -7,9 +7,9 @@ public class IntegerType extends ValueType {
         this.bits = bits;
     }
 
-    private static final IntegerType i32 = new IntegerType(32);
-    private static final IntegerType i8 = new IntegerType(8);
-    private static final IntegerType i1 = new IntegerType(1);
+    public static final IntegerType i32 = new IntegerType(32);
+    public static final IntegerType i8 = new IntegerType(8);
+    public static final IntegerType i1 = new IntegerType(1);
 
     public int getBits() {
         return bits;

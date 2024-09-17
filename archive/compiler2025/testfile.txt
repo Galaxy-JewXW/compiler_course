@@ -1,7 +1,10 @@
-int a[2] = {1, 2};
-void foo(int x[], int xx, int xxx) {return;}
+int aa[2];
+int ab[2] = {1, 2};
+const int ac[2] = {3, 4};
+
 int main() {
-int b = 3;
-foo(a, b, 9);
+int a[2];
+int b[2] = {1, 2};
+const int c[2] = {3, 4};
 return 0;
 }

@@ -1,7 +1,0 @@
-int x[2] = {1, 2};
-
-int main(){
-int a = 5;
-printf("Hello %dlove\n", a);
-return 0;
-}

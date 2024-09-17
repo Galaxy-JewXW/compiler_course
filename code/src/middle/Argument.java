@@ -1,6 +1,7 @@
-package middle.types;
+package middle;
 
 import middle.model.Value;
+import middle.types.ValueType;
 
 public class Argument extends Value {
     public Argument(ValueType valueType) {

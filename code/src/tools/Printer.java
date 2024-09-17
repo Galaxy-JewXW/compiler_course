@@ -3,6 +3,9 @@ package tools;
 import error.Error;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
+import middle.Function;
+import middle.GlobalVar;
+import middle.Module;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -43,5 +46,26 @@ public class Printer {
             writer.newLine();
         }
         writer.close();
+    }
+
+    public static void printLLVM(Module module, String path) throws FileNotFoundException {
+        PrintStream origin = System.out;
+        System.setOut(new PrintStream(path));
+        String builtInFuncs = """
+                declare i32 @getint()
+                declare i32 @getchar()
+                declare void @putint(i32)
+                declare void @putch(i8)
+                declare void @putstr(i8*)""";
+        System.out.println(builtInFuncs);
+        for (GlobalVar globalVar : module.getGlobalVars()) {
+            System.out.println(globalVar);
+        }
+        System.out.print("\n");
+        for (Function function : module.getFunctions()) {
+            function.toLLVM();
+            System.out.print("\n");
+        }
+        System.setOut(origin);
     }
 }

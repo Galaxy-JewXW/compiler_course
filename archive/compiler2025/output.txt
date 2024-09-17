@@ -1,5 +1,19 @@
 INTTK int
-IDENFR a
+IDENFR aa
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+<VarDef>
+SEMICN ;
+<VarDecl>
+INTTK int
+IDENFR ab
 LBRACK [
 INTCON 2
 <Number>
@@ -33,41 +47,75 @@ RBRACE }
 <VarDef>
 SEMICN ;
 <VarDecl>
-VOIDTK void
-<FuncType>
-IDENFR foo
-LPARENT (
+CONSTTK const
 INTTK int
-IDENFR x
+IDENFR ac
 LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
 RBRACK ]
-<FuncFParam>
-COMMA ,
-INTTK int
-IDENFR xx
-<FuncFParam>
-COMMA ,
-INTTK int
-IDENFR xxx
-<FuncFParam>
-<FuncFParams>
-RPARENT )
+ASSIGN =
 LBRACE {
-RETURNTK return
-SEMICN ;
-<Stmt>
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+COMMA ,
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
 RBRACE }
-<Block>
-<FuncDef>
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
 INTTK int
 MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
 INTTK int
+IDENFR a
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+<VarDef>
+SEMICN ;
+<VarDecl>
+INTTK int
 IDENFR b
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
 ASSIGN =
-INTCON 3
+LBRACE {
+INTCON 1
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -75,42 +123,56 @@ INTCON 3
 <AddExp>
 <Exp>
 <InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-IDENFR foo
-LPARENT (
-IDENFR a
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
 COMMA ,
-IDENFR b
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-INTCON 9
+INTCON 2
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <Exp>
-<FuncRParams>
-RPARENT )
+<InitVal>
+RBRACE }
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+CONSTTK const
+INTTK int
+IDENFR c
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+COMMA ,
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+RBRACE }
+<ConstInitVal>
+<ConstDef>
 SEMICN ;
-<Stmt>
+<ConstDecl>
 RETURNTK return
 INTCON 0
 <Number>

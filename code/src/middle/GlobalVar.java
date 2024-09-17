@@ -1,5 +1,7 @@
-package middle.model;
+package middle;
 
+import middle.model.User;
+import middle.model.Value;
 import middle.types.PointerType;
 import middle.types.ValueType;
 
