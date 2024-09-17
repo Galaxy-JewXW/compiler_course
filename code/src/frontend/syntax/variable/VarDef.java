@@ -1,8 +1,9 @@
-package frontend.syntax;
+package frontend.syntax.variable;
 
-import frontend.Token;
-import frontend.TokenType;
+import frontend.syntax.SyntaxNode;
 import frontend.syntax.expression.ConstExp;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 // 变量定义 VarDef → Ident [ '[' ConstExp ']' ] | Ident [ '[' ConstExp ']' ] '=' InitVal
 // 包含普通常量、一维数组定义

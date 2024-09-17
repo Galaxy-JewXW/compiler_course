@@ -1,6 +1,7 @@
-package frontend.syntax;
+package frontend.syntax.function;
 
-import frontend.TokenType;
+import frontend.syntax.SyntaxNode;
+import frontend.token.TokenType;
 
 import java.util.ArrayList;
 

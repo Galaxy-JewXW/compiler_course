@@ -1,6 +1,6 @@
 package frontend.syntax;
 
-import frontend.Token;
+import frontend.token.Token;
 
 public class Number extends SyntaxNode {
     private final Token intConst;

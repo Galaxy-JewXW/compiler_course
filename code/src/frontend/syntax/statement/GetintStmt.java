@@ -1,7 +1,7 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.LVal;
+import frontend.token.TokenType;
 
 public class GetintStmt extends Stmt {
     private final LVal lVal;

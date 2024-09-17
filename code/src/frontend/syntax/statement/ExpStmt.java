@@ -1,7 +1,7 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.expression.Exp;
+import frontend.token.TokenType;
 
 public class ExpStmt extends Stmt {
     private final Exp exp;

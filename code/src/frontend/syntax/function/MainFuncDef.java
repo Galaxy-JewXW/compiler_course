@@ -1,6 +1,8 @@
-package frontend.syntax;
+package frontend.syntax.function;
 
-import frontend.TokenType;
+import frontend.syntax.Block;
+import frontend.syntax.SyntaxNode;
+import frontend.token.TokenType;
 
 // 主函数定义 MainFuncDef → 'int' 'main' '(' ')' Block // 存在main函数
 public class MainFuncDef extends SyntaxNode {

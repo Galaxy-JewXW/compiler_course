@@ -1,5 +1,8 @@
 package frontend.syntax;
 
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.MainFuncDef;
+
 import java.util.ArrayList;
 
 // 编译单元 CompUnit → {Decl} {FuncDef} MainFuncDef

@@ -1,7 +1,9 @@
-package frontend.syntax;
+package frontend.syntax.function;
 
-import frontend.Token;
-import frontend.TokenType;
+import frontend.syntax.BType;
+import frontend.syntax.SyntaxNode;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 // 函数形参 FuncFParam → BType Ident ['[' ']']
 // 1.普通变量 2.一维数组变量

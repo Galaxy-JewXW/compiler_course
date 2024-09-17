@@ -1,7 +1,7 @@
 package frontend.syntax.expression;
 
-import frontend.TokenType;
 import frontend.syntax.SyntaxNode;
+import frontend.token.TokenType;
 
 import java.util.ArrayList;
 

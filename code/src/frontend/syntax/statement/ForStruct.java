@@ -1,7 +1,7 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.expression.Cond;
+import frontend.token.TokenType;
 
 // 'for' '(' [ForStmt] ';' [Cond] ';' [ForStmt] ')' Stmt
 public class ForStruct extends Stmt {

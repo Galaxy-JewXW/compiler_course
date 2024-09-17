@@ -1,9 +1,9 @@
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.Token;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
+import frontend.token.Token;
 import tools.Printer;
 
 import java.nio.file.Files;

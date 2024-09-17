@@ -1,7 +1,7 @@
 package frontend.syntax.expression;
 
-import frontend.Token;
 import frontend.syntax.SyntaxNode;
+import frontend.token.Token;
 
 // 单目运算符 UnaryOp → '+' | '−' | '!' 注：'!'仅出现在条件表达式中
 public class UnaryOp extends SyntaxNode {

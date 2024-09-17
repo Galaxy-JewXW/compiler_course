@@ -1,8 +1,8 @@
 package frontend.syntax;
 
-import frontend.Token;
-import frontend.TokenType;
 import frontend.syntax.expression.Exp;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 // 左值表达式 LVal → Ident ['[' Exp ']'] //1.普通变量、常量 2.一维数组
 public class LVal extends SyntaxNode {

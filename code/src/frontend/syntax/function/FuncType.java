@@ -1,6 +1,7 @@
-package frontend.syntax;
+package frontend.syntax.function;
 
-import frontend.Token;
+import frontend.syntax.SyntaxNode;
+import frontend.token.Token;
 
 // 函数类型 FuncType → 'void' | 'int' | 'char'
 // 覆盖三种类型的函数

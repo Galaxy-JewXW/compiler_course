@@ -3,6 +3,8 @@ package frontend;
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package frontend;
+package frontend.token;
 
 /**
  * 枚举类，记录了token可能存在的种类

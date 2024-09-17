@@ -1,8 +1,8 @@
 package frontend.syntax.statement;
 
-import frontend.Token;
-import frontend.TokenType;
 import frontend.syntax.expression.Exp;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 import java.util.ArrayList;
 

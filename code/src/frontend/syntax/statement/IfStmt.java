@@ -1,7 +1,7 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.expression.Cond;
+import frontend.token.TokenType;
 
 public class IfStmt extends Stmt {
     private final Cond cond;

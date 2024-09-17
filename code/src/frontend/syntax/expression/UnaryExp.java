@@ -1,9 +1,9 @@
 package frontend.syntax.expression;
 
-import frontend.Token;
-import frontend.TokenType;
-import frontend.syntax.FuncRParams;
 import frontend.syntax.SyntaxNode;
+import frontend.syntax.function.FuncRParams;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 // 一元表达式 UnaryExp → PrimaryExp | Ident '(' [FuncRParams] ')' | UnaryOp UnaryExp
 public class UnaryExp extends SyntaxNode {

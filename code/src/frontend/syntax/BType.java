@@ -1,6 +1,6 @@
 package frontend.syntax;
 
-import frontend.Token;
+import frontend.token.Token;
 
 // 基本类型 BType → 'int' | 'char' // 覆盖两种数据类型的定义
 public class BType extends SyntaxNode {

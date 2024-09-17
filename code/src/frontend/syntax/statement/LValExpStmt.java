@@ -1,8 +1,8 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.LVal;
 import frontend.syntax.expression.Exp;
+import frontend.token.TokenType;
 
 public class LValExpStmt extends Stmt {
     private final LVal lval;

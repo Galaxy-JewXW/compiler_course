@@ -1,4 +1,4 @@
-package frontend;
+package frontend.token;
 
 /**
  * 词法单元类，记录了类型，内容（字符串形式）和所在行号

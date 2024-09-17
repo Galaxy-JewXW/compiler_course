@@ -1,8 +1,8 @@
 package tools;
 
 import error.Error;
-import frontend.Token;
 import frontend.syntax.CompUnit;
+import frontend.token.Token;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

@@ -1,6 +1,6 @@
 package frontend.syntax;
 
-import frontend.Token;
+import frontend.token.Token;
 
 public class Character extends SyntaxNode {
     private final Token charConst;

@@ -1,10 +1,10 @@
 package frontend.syntax.expression;
 
-import frontend.TokenType;
 import frontend.syntax.Character;
 import frontend.syntax.LVal;
 import frontend.syntax.Number;
 import frontend.syntax.SyntaxNode;
+import frontend.token.TokenType;
 
 // 基本表达式 PrimaryExp → '(' Exp ')' | LVal | Number | Character// 四种情况均需覆盖
 public class PrimaryExp extends SyntaxNode {

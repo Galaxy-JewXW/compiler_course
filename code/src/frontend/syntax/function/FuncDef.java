@@ -1,7 +1,9 @@
-package frontend.syntax;
+package frontend.syntax.function;
 
-import frontend.Token;
-import frontend.TokenType;
+import frontend.syntax.Block;
+import frontend.syntax.SyntaxNode;
+import frontend.token.Token;
+import frontend.token.TokenType;
 
 // 函数定义 FuncDef → FuncType Ident '(' [FuncFParams] ')' Block
 // 1.无形参 2.有形参

@@ -1,9 +1,9 @@
 package frontend.syntax.statement;
 
-import frontend.TokenType;
 import frontend.syntax.LVal;
 import frontend.syntax.SyntaxNode;
 import frontend.syntax.expression.Exp;
+import frontend.token.TokenType;
 
 // 语句 ForStmt → LVal '=' Exp // 存在即可
 public class ForStmt extends SyntaxNode {
