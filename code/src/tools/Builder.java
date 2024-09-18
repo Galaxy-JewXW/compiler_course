@@ -33,14 +33,14 @@ public class Builder {
 
     public static AllocInst buildVar(ValueType valueType, Value initValue, BasicBlock basicBlock) {
         AllocInst allocInst = new AllocInst(valueType, basicBlock);
+        Value tempInitValue = initValue;
         if (initValue != null) {
             if (valueType.equals(IntegerType.i8)) {
-                if (initValue instanceof ConstInt constInt
-                        && constInt.getValueType().equals(IntegerType.i32)) {
-                    buildTruncInst(initValue, IntegerType.i8, basicBlock);
+                if (initValue.getValueType().equals(IntegerType.i32)) {
+                    tempInitValue = buildTruncInst(initValue, IntegerType.i8, basicBlock);
                 }
             }
-            buildStoreInst(initValue, allocInst, basicBlock);
+            buildStoreInst(tempInitValue, allocInst, basicBlock);
         }
         return allocInst;
     }

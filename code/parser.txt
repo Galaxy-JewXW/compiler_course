@@ -3,31 +3,16 @@ MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
-INTTK int
-IDENFR x
+CHARTK char
+IDENFR c
 ASSIGN =
-INTCON 3
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
 CHRCON 'a'
 <Character>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
-<AddExp>
-<Exp>
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
-IDENFR c
-ASSIGN =
-INTCON 98
+MULT *
+INTCON 2
 <Number>
 <PrimaryExp>
 <UnaryExp>

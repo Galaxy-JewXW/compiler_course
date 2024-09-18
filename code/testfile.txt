@@ -1,4 +1,3 @@
 int main() {
-int x = 3 + 'a';
-char c = 98;
+char c = 'a' * 2;
 return 0;}

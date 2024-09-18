@@ -6,6 +6,7 @@ import frontend.syntax.*;
 import frontend.syntax.expression.*;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
 import frontend.syntax.statement.Stmt;
 import frontend.syntax.variable.*;
 import frontend.token.TokenType;
@@ -180,7 +181,11 @@ public class IRVisitor {
     }
 
     private void visitStmt(Stmt stmt) {
-
+        if (stmt instanceof BlockStmt blockStmt) {
+            symbolTable.addTable();
+            visitBlock(blockStmt.getBlock());
+            symbolTable.removeTable();
+        }
     }
 
     private void visitExp(Exp exp) {
@@ -239,6 +244,14 @@ public class IRVisitor {
                     default -> throw new IllegalStateException("Unexpected value: " +
                             mulExp.getOperators().get(i - 1).getType());
                 };
+                if (tempValue instanceof ConstInt constInt
+                        && constInt.getValueType() == IntegerType.i8) {
+                    constInt.setValueType(IntegerType.i32);
+                }
+                if (curValue instanceof ConstInt constInt
+                        && constInt.getValueType() == IntegerType.i8) {
+                    constInt.setValueType(IntegerType.i32);
+                }
                 tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
             }
         }
@@ -261,6 +274,14 @@ public class IRVisitor {
                     default -> throw new IllegalStateException("Unexpected operator type: " +
                             addExp.getOperators().get(i - 1).getType());
                 };
+                if (tempValue instanceof ConstInt constInt
+                        && constInt.getValueType() == IntegerType.i8) {
+                    constInt.setValueType(IntegerType.i32);
+                }
+                if (curValue instanceof ConstInt constInt
+                        && constInt.getValueType() == IntegerType.i8) {
+                    constInt.setValueType(IntegerType.i32);
+                }
                 tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
             }
         }
