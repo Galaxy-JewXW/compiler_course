@@ -1,5 +1,8 @@
 package middle;
 
+import middle.component.Function;
+import middle.component.GlobalVar;
+
 import java.util.ArrayList;
 
 public class Module {

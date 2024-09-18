@@ -1,5 +1,10 @@
+int a = 1;
+const int b = 3;
+int c = b;
+int aaaaa[b];
 
 int main() {
-    int a[2] = {1, 2};
-return 0;
+    int d = aaaaa;
+    c = b + 4;
+    return a + b + c;
 }

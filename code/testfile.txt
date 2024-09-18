@@ -1,5 +1,7 @@
+int a = 1;
+int b = 3;
 
 int main() {
-int a[2000] = {1, 2};
-char s[600] = "Hello";
-return 0;}
+    int c = b + 4;
+    return a + b + c;
+}

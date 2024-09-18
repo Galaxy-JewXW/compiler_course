@@ -1,17 +1,16 @@
 package tools;
 
 import frontend.token.TokenType;
-import middle.*;
-import middle.instructions.*;
-import middle.model.Value;
-import middle.types.ArrayType;
-import middle.types.FunctionType;
-import middle.types.IntegerType;
-import middle.types.ValueType;
+import middle.component.*;
+import middle.component.instructions.*;
+import middle.component.model.Value;
+import middle.component.types.ArrayType;
+import middle.component.types.FunctionType;
+import middle.component.types.IntegerType;
+import middle.component.types.ValueType;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
 
 public class Builder {
     public static int calculate(int a, int b, TokenType op) {
@@ -57,24 +56,24 @@ public class Builder {
                                        BasicBlock basicBlock) {
         AllocInst allocInst = new AllocInst(valueType, basicBlock);
         if (initValue != null) {
-            Stack<Value> indexes = new Stack<>();
-            indexes.add(ConstInt.i32ZERO);
             if (initValue instanceof ConstArray constArray) {
-                int cnt = 0;
                 for (int i = 0; i < constArray.getFilled(); i++) {
                     Value value = constArray.getElements().get(i);
-                    indexes.add(new ConstInt(cnt++, IntegerType.i32));
-                    buildStoreInst(value, buildGEPInst(allocInst, new ArrayList<>(indexes),
-                            basicBlock), basicBlock);
-                    indexes.pop();
+                    ConstInt index = new ConstInt(i, IntegerType.i32);
+                    buildStoreInst(value, buildGEPInst(allocInst, index, basicBlock), basicBlock);
                 }
             }
         }
         return allocInst;
     }
 
-    public static GepInst buildGEPInst(Value pointerBase, ArrayList<Value> indexes,
+    // 对于一维数组，gep第一个“基地址偏移量”始终为0
+    // 因此只需要改变第二个“元素偏移量”即可
+    public static GepInst buildGEPInst(Value pointerBase, Value index,
                                        BasicBlock basicBlock) {
+        ArrayList<Value> indexes = new ArrayList<>();
+        indexes.add(ConstInt.i32ZERO);
+        indexes.add(index);
         return new GepInst(pointerBase, indexes, basicBlock);
     }
 
@@ -105,6 +104,10 @@ public class Builder {
 
     public static TruncInst buildTruncInst(Value value, ValueType targetType, BasicBlock basicBlock) {
         return new TruncInst(value, basicBlock, targetType);
+    }
+
+    public static LoadInst buildLoadInst(Value pointer, BasicBlock basicBlock) {
+        return new LoadInst(basicBlock, pointer);
     }
 
     public static StoreInst buildStoreInst(Value value, Value pointer, BasicBlock basicBlock) {

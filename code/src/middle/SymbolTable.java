@@ -1,6 +1,6 @@
 package middle;
 
-import middle.model.Value;
+import middle.component.model.Value;
 
 import java.util.HashMap;
 import java.util.Stack;

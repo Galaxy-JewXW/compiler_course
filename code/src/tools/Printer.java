@@ -3,15 +3,11 @@ package tools;
 import error.Error;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
-import middle.Function;
-import middle.GlobalVar;
 import middle.Module;
+import middle.component.Function;
+import middle.component.GlobalVar;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
 
 // 工具类，负责中间结构的输出

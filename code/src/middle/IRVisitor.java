@@ -6,13 +6,13 @@ import frontend.syntax.*;
 import frontend.syntax.expression.*;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.BlockStmt;
-import frontend.syntax.statement.Stmt;
+import frontend.syntax.statement.*;
 import frontend.syntax.variable.*;
 import frontend.token.TokenType;
-import middle.instructions.OperatorType;
-import middle.model.Value;
-import middle.types.*;
+import middle.component.*;
+import middle.component.instructions.OperatorType;
+import middle.component.model.Value;
+import middle.component.types.*;
 import tools.Builder;
 
 import java.util.ArrayList;
@@ -187,6 +187,7 @@ public class IRVisitor {
                 visitInitVal(varDef.getInitVal(), length);
             } else {
                 tempValue = null;
+                tempValueType = new ArrayType(tempValueType, length);
             }
             if (isGlobal) {
                 tempValue = Builder.buildGlobalArray(name, tempValueType, tempValue, false);
@@ -270,7 +271,39 @@ public class IRVisitor {
             symbolTable.addTable();
             visitBlock(blockStmt.getBlock());
             symbolTable.removeTable();
+        } else if (stmt instanceof ReturnStmt returnStmt) {
+            visitReturnStmt(returnStmt);
+        } else if (stmt instanceof ExpStmt expStmt) {
+            visitExp(expStmt.getExp());
+        } else if (stmt instanceof LValExpStmt lValExpStmt) {
+            visitLValAssignStruct(lValExpStmt.getLVal(), lValExpStmt.getExp());
         }
+    }
+
+    private void visitReturnStmt(ReturnStmt returnStmt) {
+        if (returnStmt.getExp() != null) {
+            visitExp(returnStmt.getExp());
+            Builder.buildRetInst(curBlock, tempValue);
+        } else {
+            Builder.buildRetInst(curBlock);
+        }
+    }
+
+    // 把forStmt和LValExpStmt结合在一起
+    private void visitLValAssignStruct(LVal lVal, Exp exp) {
+        visitExp(exp);
+        Value result = tempValue;
+        doLValAssign(lVal, result);
+    }
+
+    private void doLValAssign(LVal lVal, Value result) {
+        Value pointer = symbolTable.getValue(lVal.getIdent().getContent());
+        if (lVal.getExp() != null
+                && pointer.getValueType() instanceof PointerType) {
+            visitExp(lVal.getExp());
+            pointer = Builder.buildGEPInst(pointer, tempValue, curBlock);
+        }
+        tempValue = Builder.buildStoreInst(result, pointer, curBlock);
     }
 
     private void visitExp(Exp exp) {
@@ -279,11 +312,53 @@ public class IRVisitor {
         }
     }
 
+    private void visitLVal(LVal lVal) {
+        String name = lVal.getIdent().getContent();
+        Value pointer = symbolTable.getValue(name);
+        if (isGlobal || isCalculable) {
+            // 考虑const int b = 3; int c = b;
+            // 或者是const int N = 2; int aa[N];
+            if (lVal.getExp() == null) {
+                if (pointer instanceof GlobalVar globalVar) {
+                    // 全局const，满足isGlobal
+                    immediate = ((ConstInt) globalVar.getValue()).getIntValue();
+                } else {
+                    // 局部const，满足isCalculable
+                    immediate = symbolTable.getConst(name);
+                }
+            } else {
+                tempValue = ((GlobalVar) pointer).getValue();
+                visitExp(lVal.getExp());
+                tempValue = ((ConstArray) tempValue).getElements().get(immediate);
+                immediate = ((ConstInt) tempValue).getIntValue();
+            }
+        } else {
+            if (lVal.getExp() == null) {
+                // lVal为0维标识符, int a; a = 4;
+                if (!(((PointerType) pointer.getValueType()).getTargetType() instanceof ArrayType)) {
+                    tempValue = Builder.buildLoadInst(pointer, curBlock);
+                } else {
+                    throw new RuntimeException("Shouldn't reach here");
+                }
+            } else {
+                visitExp(lVal.getExp());
+                Value pos = Builder.buildGEPInst(pointer, tempValue, curBlock);
+                tempValue = Builder.buildLoadInst(pos, curBlock);
+            }
+        }
+    }
+
     private void visitPrimaryExp(PrimaryExp primaryExp) {
         if (primaryExp.getNumber() != null) {
             visitNumber(primaryExp.getNumber());
         } else if (primaryExp.getCharacter() != null) {
             visitCharacter(primaryExp.getCharacter());
+        } else if (primaryExp.getExp() != null) {
+            visitExp(primaryExp.getExp());
+        } else if (primaryExp.getLVal() != null) {
+            visitLVal(primaryExp.getLVal());
+        } else {
+            throw new RuntimeException("Shouldn't reach here");
         }
     }
 
