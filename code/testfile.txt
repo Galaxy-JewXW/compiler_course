@@ -4,15 +4,12 @@ int foo(int a, int b){
     return a + b;
 }
 
-void bar() {
-    a = 1200;
-    return;
+int foo1(char c) {
+return 1;
 }
 
 int main() {
-    bar();
-    int b = a;
-    a = getint();
-    printf("%d\n", foo(a, b));
+    char c = foo('a', 20);
+    int d = foo1(foo(100, 200));
     return 0;
 }

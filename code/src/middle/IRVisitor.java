@@ -116,18 +116,18 @@ public class IRVisitor {
             // 对应'const int a = 3;'
             visitConstExp(constInitVal.getConstExp());
             if (isGlobal || isCalculable) {
-                tempValue = new ConstInt(immediate, tempValueType);
+                tempValue = Builder.buildConstInt(immediate, tempValueType);
             }
         } else if (constInitVal.getStringConst() != null) {
             String stringConst = constInitVal.getStringConst().getContent();
             ConstArray constArray = new ConstArray(length);
             for (int i = 1; i < stringConst.length() - 1; i++) {
-                constArray.addElement(new ConstInt(stringConst.charAt(i), IntegerType.i8));
+                constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
             constArray.setFilled();
             int unfilled = length - (stringConst.length() - 2);
             for (int i = 0; i < unfilled; i++) {
-                constArray.addElement(new ConstInt(0, IntegerType.i8));
+                constArray.addElement(Builder.buildConstInt(0, IntegerType.i8));
             }
             constArray.resetType();
             tempValue = constArray;
@@ -136,12 +136,12 @@ public class IRVisitor {
             ConstArray constArray = new ConstArray(length);
             for (ConstExp constExp : constInitVal.getConstExps()) {
                 visitConstExp(constExp);
-                constArray.addElement(new ConstInt(immediate, IntegerType.i32));
+                constArray.addElement(Builder.buildConstInt(immediate, IntegerType.i32));
             }
             constArray.setFilled();
             int unfilled = length - constInitVal.getConstExps().size();
             for (int i = 0; i < unfilled; i++) {
-                constArray.addElement(new ConstInt(0, IntegerType.i32));
+                constArray.addElement(Builder.buildConstInt(0, IntegerType.i32));
             }
             constArray.resetType();
             tempValue = constArray;
@@ -206,12 +206,12 @@ public class IRVisitor {
             String stringConst = initVal.getStringConst().getContent();
             ConstArray constArray = new ConstArray(length);
             for (int i = 1; i < stringConst.length() - 1; i++) {
-                constArray.addElement(new ConstInt(stringConst.charAt(i), IntegerType.i8));
+                constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
             constArray.setFilled();
             int unfilled = length - (stringConst.length() - 2);
             for (int i = 0; i < unfilled; i++) {
-                constArray.addElement(new ConstInt(0, IntegerType.i8));
+                constArray.addElement(Builder.buildConstInt(0, IntegerType.i8));
             }
             constArray.resetType();
             tempValue = constArray;
@@ -221,14 +221,14 @@ public class IRVisitor {
             for (Exp exp : initVal.getExps()) {
                 visitExp(exp);
                 if (isGlobal) {
-                    tempValue = new ConstInt(immediate, IntegerType.i32);
+                    tempValue = Builder.buildConstInt(immediate, IntegerType.i32);
                 }
                 constArray.addElement(tempValue);
             }
             constArray.setFilled();
             int unfilled = length - initVal.getExps().size();
             for (int i = 0; i < unfilled; i++) {
-                constArray.addElement(new ConstInt(0, IntegerType.i32));
+                constArray.addElement(Builder.buildConstInt(0, IntegerType.i32));
             }
             constArray.resetType();
             tempValue = constArray;
@@ -328,6 +328,8 @@ public class IRVisitor {
             visitGetintStmt(getintStmt);
         } else if (stmt instanceof GetcharStmt getcharStmt) {
             visitGetcharStmt(getcharStmt);
+        } else if (stmt instanceof PrintfStmt printfStmt) {
+            //
         }
     }
 
@@ -462,6 +464,42 @@ public class IRVisitor {
                 tempValue = Builder.buildBinaryInst(ConstInt.i32ZERO, OperatorType.ICMP_EQ,
                         tempValue, curBlock);
             }
+        } else if (unaryExp.getIdent() != null) {
+            // 函数调用：a(10, 20, a(1, 2, 3))
+            String functionName = unaryExp.getIdent().getContent();
+            Function function = (Function) symbolTable.getSymbol(functionName);
+            // parameters是进行函数调用时所使用的实参
+            ArrayList<Value> parameters = new ArrayList<>();
+            if (unaryExp.getFuncRParams() != null) {
+                for (int i = 0; i < unaryExp.getFuncRParams().getExps().size(); i++) {
+                    Exp exp = unaryExp.getFuncRParams().getExps().get(i);
+                    visitExp(exp);
+                    // 判断是否需要进行类型转换
+                    Value cacheValue = tempValue;
+                    if (function.getArguments().get(i).getValueType().equals(IntegerType.i8)
+                            && tempValue.getValueType().equals(IntegerType.i32)) {
+                        // int型变量当作char型作为实参，需要进行截断
+                        if (tempValue instanceof ConstInt constInt) {
+                            cacheValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i8);
+                        } else {
+                            cacheValue = Builder.buildTruncInst(tempValue, IntegerType.i8, curBlock);
+                        }
+                    }
+                    if (function.getArguments().get(i).getValueType().equals(IntegerType.i32)
+                            && tempValue.getValueType().equals(IntegerType.i8)) {
+                        // char型变量当作int型作为实参，需要进行扩展
+                        if (tempValue instanceof ConstInt constInt) {
+                            cacheValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i32);
+                        } else {
+                            cacheValue = Builder.buildZextInst(tempValue, IntegerType.i32, curBlock);
+                        }
+                    }
+                    parameters.add(cacheValue);
+                }
+            }
+            tempValue = Builder.buildCallInst(function, parameters, curBlock);
+        } else {
+            throw new RuntimeException("Shouldn't reach here");
         }
     }
 

@@ -41,7 +41,7 @@ public class Compiler {
         // 异常处理
         Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);
         if (!ErrorHandler.getInstance().getErrors().isEmpty()) {
-            throw new RuntimeException();
+            return;
         }
 
         // 中间代码生成
