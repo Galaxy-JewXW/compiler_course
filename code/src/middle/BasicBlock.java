@@ -4,7 +4,7 @@ import middle.instructions.Instruction;
 import middle.instructions.TerminatorInst;
 import middle.model.Value;
 import middle.types.LabelType;
-import tools.InstBuilder;
+import tools.Builder;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class BasicBlock extends Value {
 
     public void toLLVM() {
         System.out.println(getName() + ":");
-        InstBuilder.buildRetInst(this);
+        Builder.buildRetInst(this);
         for (Instruction instruction : instructions) {
             System.out.println("\t" + instruction);
         }

@@ -13,6 +13,7 @@ public class GlobalVar extends User {
         super("@" + name, new PointerType(valueType));
         this.value = value;
         this.isConstant = isConstant;
+        Module.getInstance().addGlobalVar(this);
     }
 
     public Value getValue() {

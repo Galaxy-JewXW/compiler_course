@@ -7,7 +7,7 @@ import middle.types.ValueType;
 public class AllocInst extends MemInst {
     private final ValueType allocType;
 
-    private AllocInst(ValueType allocType, BasicBlock basicBlock) {
+    public AllocInst(ValueType allocType, BasicBlock basicBlock) {
         super(new PointerType(allocType), OperatorType.ALLOC, basicBlock);
         setName("%" + valueIdCount++);
         this.allocType = allocType;

@@ -1,2 +1,4 @@
-char s[100] = "hello";
-int main() {return 0;}
+int main() {
+int x = 3 + 'a';
+char c = 98;
+return 0;}

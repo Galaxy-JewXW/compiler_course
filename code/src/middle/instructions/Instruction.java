@@ -12,6 +12,7 @@ public class Instruction extends User {
         super("", valueType);
         this.operatorType = operatorType;
         this.basicBlock = basicBlock;
+        basicBlock.addInstruction(this);
     }
 
     public Instruction(ValueType valueType, OperatorType operatorType) {
