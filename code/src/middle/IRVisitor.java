@@ -17,6 +17,9 @@ import middle.component.types.*;
 import tools.Builder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IRVisitor {
     private final SymbolTable symbolTable = new SymbolTable();
@@ -32,6 +35,9 @@ public class IRVisitor {
     private ValueType tempValueType = null;
     private boolean isGlobal = false;
     private boolean isCalculable = false;
+    // 用于printf时暂时储存字符串
+    private final HashMap<String, Integer> stringMap = new HashMap<>();
+    int stringCount = 0;
 
     public IRVisitor(CompUnit root) {
         this.compUnit = root;
@@ -329,7 +335,7 @@ public class IRVisitor {
         } else if (stmt instanceof GetcharStmt getcharStmt) {
             visitGetcharStmt(getcharStmt);
         } else if (stmt instanceof PrintfStmt printfStmt) {
-            //
+            visitPrintfStmt(printfStmt);
         }
     }
 
@@ -354,6 +360,93 @@ public class IRVisitor {
         Function getChar = (Function) symbolTable.getSymbol("getchar");
         Value callInst = Builder.buildCallInst(getChar, new ArrayList<>(), curBlock);
         doLValAssign(lVal, callInst);
+    }
+
+    private void visitPrintfStmt(PrintfStmt printfStmt) {
+        Function putCh = (Function) symbolTable.getSymbol("putch");
+        Function putStr = (Function) symbolTable.getSymbol("putstr");
+        Function putInt = (Function) symbolTable.getSymbol("putint");
+        String formatString = printfStmt.getStringConst().getContent();
+        formatString = formatString.substring(1, formatString.length() - 1);
+        formatString = formatString.replace("\\n", "\n");
+        Pattern pattern = Pattern.compile("%[cd]");
+        Matcher matcher = pattern.matcher(formatString);
+        int pos = 0;
+        int cnt = 0;
+        while (matcher.find()) {
+            // typeString是"%d"或"%c"
+            String typeString = matcher.group();
+            int start = matcher.start();
+            String tempString = formatString.substring(pos, start);
+            ArrayList<Value> args = new ArrayList<>();
+            if (tempString.length() == 1) {
+                args.add(Builder.buildConstInt(tempString.charAt(0), IntegerType.i8));
+                tempValue = Builder.buildCallInst(putCh, args, curBlock);
+            } else {
+                Value strValue = symbolTable.getSymbol(checkStringName(tempString));
+                args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
+                tempValue = Builder.buildCallInst(putStr, args, curBlock);
+            }
+            if (typeString.equals("%d")) {
+                visitExp(printfStmt.getExps().get(cnt++));
+                ArrayList<Value> arguments = new ArrayList<>();
+                arguments.add(tempValue);
+                if (tempValue.getValueType().equals(IntegerType.i8)) {
+                    if (tempValue instanceof ConstInt constInt) {
+                        tempValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i32);
+                    } else {
+                        tempValue = Builder.buildZextInst(tempValue, IntegerType.i32, curBlock);
+                    }
+                }
+                tempValue = Builder.buildCallInst(putInt, arguments, curBlock);
+            } else if (typeString.equals("%c")) {
+                visitExp(printfStmt.getExps().get(cnt++));
+                ArrayList<Value> arguments = new ArrayList<>();
+                arguments.add(tempValue);
+                if (tempValue.getValueType().equals(IntegerType.i32)) {
+                    if (tempValue instanceof ConstInt constInt) {
+                        tempValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i8);
+                    } else {
+                        tempValue = Builder.buildTruncInst(tempValue, IntegerType.i8, curBlock);
+                    }
+                }
+                tempValue = Builder.buildCallInst(putCh, arguments, curBlock);
+            }
+            pos = start + 2;
+        }
+        if (pos < formatString.length()) {
+            String tempString = formatString.substring(pos);
+            ArrayList<Value> args = new ArrayList<>();
+            if (tempString.length() == 1) {
+                args.add(Builder.buildConstInt(tempString.charAt(0), IntegerType.i8));
+                tempValue = Builder.buildCallInst(putCh, args, curBlock);
+            } else {
+                Value strValue = symbolTable.getSymbol(checkStringName(tempString));
+                args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
+                tempValue = Builder.buildCallInst(putStr, args, curBlock);
+            }
+        }
+    }
+
+    private int getStringIndex(String string) {
+        if (stringMap.containsKey(string)) {
+            return stringMap.get(string);
+        }
+        ConstString constString = new ConstString(string);
+        ArrayType arrayType = new ArrayType(IntegerType.i8, constString.getLength());
+        String idString = getStringIdString(stringCount);
+        Value value = Builder.buildGlobalVar(idString, arrayType, constString, true);
+        symbolTable.addGlobalSymbol(idString, value);
+        stringMap.put(string, stringCount);
+        return stringCount++;
+    }
+
+    private String getStringIdString(int index) {
+        return ".str." + index;
+    }
+
+    private String checkStringName(String string) {
+        return getStringIdString(getStringIndex(string));
     }
 
     // 把forStmt和LValExpStmt结合在一起

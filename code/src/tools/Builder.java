@@ -119,6 +119,10 @@ public class Builder {
                 && value.getValueType().equals(IntegerType.i32)) {
             tempValue = buildTruncInst(value, IntegerType.i8, basicBlock);
         }
+        if (((PointerType) pointer.getValueType()).getTargetType().equals(IntegerType.i32)
+                && value.getValueType().equals(IntegerType.i8)) {
+            tempValue = buildZextInst(value, IntegerType.i32, basicBlock);
+        }
         return new StoreInst(basicBlock, tempValue, pointer);
     }
 

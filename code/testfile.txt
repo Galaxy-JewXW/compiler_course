@@ -1,15 +1,13 @@
-int a = 1000;
-
-int foo(int a, int b){
-    return a + b;
+char foo(int a) {
+return '1';
 }
 
-int foo1(char c) {
-return 1;
+int bar(char c) {
+return -2;
 }
 
 int main() {
-    char c = foo('a', 20);
-    int d = foo1(foo(100, 200));
+    int x = foo('k');
+    char kk = bar(9856);
     return 0;
 }
