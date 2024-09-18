@@ -1,19 +1,56 @@
 package middle;
 
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
 import frontend.syntax.Character;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
 import frontend.syntax.Number;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.ConstExp;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.ConstInitVal;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
-import middle.component.*;
+import middle.component.Argument;
+import middle.component.BasicBlock;
+import middle.component.ConstArray;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.instructions.BinaryInst;
 import middle.component.instructions.OperatorType;
 import middle.component.model.Value;
-import middle.component.types.*;
+import middle.component.types.ArrayType;
+import middle.component.types.Assignable;
+import middle.component.types.IntegerType;
+import middle.component.types.PointerType;
+import middle.component.types.ValueType;
+import middle.component.types.VoidType;
 import tools.Builder;
 
 import java.util.ArrayList;
@@ -336,7 +373,13 @@ public class IRVisitor {
             visitGetcharStmt(getcharStmt);
         } else if (stmt instanceof PrintfStmt printfStmt) {
             visitPrintfStmt(printfStmt);
+        } else if (stmt instanceof IfStmt ifStmt) {
+
         }
+    }
+
+    private void visitIfStmt(IfStmt ifStmt) {
+
     }
 
     private void visitReturnStmt(ReturnStmt returnStmt) {
@@ -470,6 +513,10 @@ public class IRVisitor {
         if (exp != null) {
             visitAddExp(exp.getAddExp());
         }
+    }
+
+    private void visitCond(Cond cond) {
+
     }
 
     private void visitLVal(LVal lVal) {
@@ -654,6 +701,44 @@ public class IRVisitor {
                 }
                 tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
             }
+        }
+    }
+
+    private void visitRelExp(RelExp relExp) {
+        visitAddExp(relExp.getAddExps().get(0));
+        for (int i = 1; i < relExp.getAddExps().size(); i++) {
+            Value curValue = tempValue;
+            visitAddExp(relExp.getAddExps().get(i));
+            OperatorType op = switch (relExp.getOperators().get(i - 1).getType()) {
+                case LSS -> OperatorType.ICMP_SLT;
+                case LEQ -> OperatorType.ICMP_SLE;
+                case GRE -> OperatorType.ICMP_SGT;
+                case GEQ -> OperatorType.ICMP_SGE;
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
+            tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
+        }
+    }
+
+    private void visitEqExp(EqExp eqExp) {
+        visitRelExp(eqExp.getRelExps().get(0));
+        if (eqExp.getRelExps().size() == 1 && tempValue instanceof Assignable) {
+            if (!(tempValue instanceof BinaryInst binaryInst && binaryInst.isLogical())) {
+                // 处理 !2 !0的逻辑值
+                tempValue = Builder.buildBinaryInst(tempValue, OperatorType.ICMP_NE,
+                        ConstInt.i32ZERO, curBlock);
+            }
+            return;
+        }
+        for (int i = 1; i < eqExp.getRelExps().size(); i++) {
+            Value curValue = tempValue;
+            visitRelExp(eqExp.getRelExps().get(i));
+            OperatorType op = switch (eqExp.getOperators().get(i - 1).getType()) {
+                case EQL -> OperatorType.ICMP_EQ;
+                case NEQ -> OperatorType.ICMP_NE;
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
+            tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
         }
     }
 

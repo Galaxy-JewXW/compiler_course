@@ -1,4 +1,11 @@
+int a = 5;
+int change() {
+    a = 6;
+    return a;
+}
 int main() {
-    printf("Haha%dhaa\n", 3);
+    if (1 || change()) {
+        printf("%d", a);
+    }
     return 0;
 }

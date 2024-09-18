@@ -2,14 +2,25 @@ declare i32 @getint()
 declare void @putint(i32)
 declare void @putch(i32)
 declare void @putstr(i8*)
-@hs_new_global_str_0 = dso_local constant [5 x i8] c"Haha\00"
-@hs_new_global_str_1 = dso_local constant [5 x i8] c"haa\0a\00"
+@a = dso_local global i32 5
+define dso_local i32 @change() {
+0:
+	store i32 6, i32* @a
+	%1 = load i32, i32* @a
+	ret i32 %1
+}
 define dso_local i32 @main() {
 0:
-	%1 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_0, i32 0, i32 0
-	call void @putstr(i8* %1)
-	call void @putint(i32 3)
-	%2 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_1, i32 0, i32 0
-	call void @putstr(i8* %2)
+	%1 = icmp ne i32 1, 0
+	br i1 %1, label %5, label %2
+2:
+	%3 = call i32 @change() 
+	%4 = icmp ne i32 %3, 0
+	br i1 %4, label %5, label %7
+5:
+	%6 = load i32, i32* @a
+	call void @putint(i32 %6)
+	br label %7
+7:
 	ret i32 0
 }

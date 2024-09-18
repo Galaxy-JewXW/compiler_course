@@ -15,25 +15,61 @@ li $v0, 4
 syscall
 .end_macro
 .data
-hs_new_global_str_0: .asciiz "Haha"
-hs_new_global_str_1: .asciiz "haa\n"
+a: .word 5
 .text
 jal main
 li $v0, 10
 syscall
+change:
+change_0:
+#store i32 6, i32* @a
+li $k1, 6
+la $k0, a
+sw $k1, 0($k0)
+#%1 = load i32, i32* @a
+la $k1, a
+lw $k1, 0($k1)
+sw $k1, 0($sp)
+#ret i32 %1
+lw $v0, 0($sp)
+jr $ra
 main:
 main_0:
-#%1 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_0, i32 0, i32 0
-#call void @putstr(i8* %1)
-la $a0, hs_new_global_str_0
-putStr
-#call void @putint(i32 3)
-li $a0, 3
+#%1 = icmp ne i32 1, 0
+li $k0, 1
+li $k1, 0
+sne $k0, $k0, $k1
+sw $k0, -4($sp)
+#br i1 %1, label %5, label %2
+lw $k1, -4($sp)
+blez $k1, main_2
+j main_5
+main_2:
+#%3 = call i32 @change() 
+sw $ra, -12($sp)
+addiu $sp, $sp, -16
+jal change
+addiu $sp, $sp, 16
+lw $ra, -12($sp)
+sw $v0, -8($sp)
+#%4 = icmp ne i32 %3, 0
+lw $k0, -8($sp)
+li $k1, 0
+sne $k0, $k0, $k1
+sw $k0, -12($sp)
+#br i1 %4, label %5, label %7
+lw $k1, -12($sp)
+blez $k1, main_7
+main_5:
+#%6 = load i32, i32* @a
+la $k0, a
+lw $k0, 0($k0)
+sw $k0, -16($sp)
+#call void @putint(i32 %6)
+lw $a0, -16($sp)
 putInt
-#%2 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_1, i32 0, i32 0
-#call void @putstr(i8* %2)
-la $a0, hs_new_global_str_1
-putStr
+#br label %7
+main_7:
 #ret i32 0
 li $v0, 0
 jr $ra
