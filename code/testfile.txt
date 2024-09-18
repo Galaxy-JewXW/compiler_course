@@ -1,7 +1,18 @@
-int a = 1;
-int b = 3;
+int a = 1000;
+
+int foo(int a, int b){
+    return a + b;
+}
+
+void bar() {
+    a = 1200;
+    return;
+}
 
 int main() {
-    int c = b + 4;
-    return a + b + c;
+    bar();
+    int b = a;
+    a = getint();
+    printf("%d\n", foo(a, b));
+    return 0;
 }

@@ -33,7 +33,7 @@ public class SymbolTable {
         }
     }
 
-    public Value getValue(String name) {
+    public Value getSymbol(String name) {
         for (int i = symbols.size() - 1; i >= 0; i--) {
             Value value = symbols.get(i).get(name);
             if (value != null) {

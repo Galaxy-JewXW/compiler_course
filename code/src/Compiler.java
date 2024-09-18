@@ -40,6 +40,9 @@ public class Compiler {
 
         // 异常处理
         Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);
+        if (!ErrorHandler.getInstance().getErrors().isEmpty()) {
+            throw new RuntimeException();
+        }
 
         // 中间代码生成
         IRVisitor irVisitor = new IRVisitor(compUnit);

@@ -4,10 +4,7 @@ import frontend.token.TokenType;
 import middle.component.*;
 import middle.component.instructions.*;
 import middle.component.model.Value;
-import middle.component.types.ArrayType;
-import middle.component.types.FunctionType;
-import middle.component.types.IntegerType;
-import middle.component.types.ValueType;
+import middle.component.types.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +30,16 @@ public class Builder {
         AllocInst allocInst = new AllocInst(valueType, basicBlock);
         Value tempInitValue = initValue;
         if (initValue != null) {
-            if (valueType.equals(IntegerType.i8)) {
-                if (initValue.getValueType().equals(IntegerType.i32)) {
-                    tempInitValue = buildTruncInst(initValue, IntegerType.i8, basicBlock);
+            if (valueType.equals(IntegerType.i8)
+                    && initValue.getValueType().equals(IntegerType.i32)) {
+                if (initValue instanceof ConstInt constInt) {
+                    // 对于char c = 2的情况，直接将2截断处理即可。
+                    ConstInt newInt = new ConstInt(
+                            constInt.getIntValue() & 0xFF, IntegerType.i8);
+                    buildStoreInst(newInt, allocInst, basicBlock);
+                    return allocInst;
                 }
+                tempInitValue = buildTruncInst(initValue, IntegerType.i8, basicBlock);
             }
             buildStoreInst(tempInitValue, allocInst, basicBlock);
         }
@@ -111,25 +114,35 @@ public class Builder {
     }
 
     public static StoreInst buildStoreInst(Value value, Value pointer, BasicBlock basicBlock) {
-        return new StoreInst(basicBlock, value, pointer);
+        Value tempValue = value;
+        if (((PointerType) pointer.getValueType()).getTargetType().equals(IntegerType.i8)
+                && value.getValueType().equals(IntegerType.i32)) {
+            tempValue = buildTruncInst(value, IntegerType.i8, basicBlock);
+        }
+        return new StoreInst(basicBlock, tempValue, pointer);
     }
 
     public static FunctionType buildFunctionType(ValueType retType, ArrayList<ValueType> paramsType) {
         return new FunctionType(retType, paramsType);
     }
 
-    public static Function buildFunction(String name, FunctionType functionType) {
-        return new Function(name, functionType, false);
+    public static Function buildFunction(String name, ValueType returnType,
+                                         ArrayList<ValueType> argumentsType) {
+        return new Function(name, new FunctionType(returnType, argumentsType), false);
     }
 
     public static Function buildBuiltInFunc(String name, ValueType retType, ArrayList<ValueType> params) {
-        FunctionType FunctionType = new FunctionType(retType, params);
-        return new Function(name, FunctionType, true);
+        return new Function(name, new FunctionType(retType, params), true);
     }
 
     public static Function buildBuiltInFunc(String name, ValueType retType, ValueType paramType) {
         ArrayList<ValueType> params = new ArrayList<>(Collections.singleton(paramType));
         return buildBuiltInFunc(name, retType, params);
+    }
+
+    public static CallInst buildCallInst(Function function, ArrayList<Value> arguments,
+                                         BasicBlock basicBlock) {
+        return new CallInst(basicBlock, function, arguments);
     }
 
     public static BasicBlock buildBasicBlock(Function function) {

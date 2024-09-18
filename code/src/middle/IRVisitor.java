@@ -5,6 +5,7 @@ import frontend.syntax.Number;
 import frontend.syntax.*;
 import frontend.syntax.expression.*;
 import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.MainFuncDef;
 import frontend.syntax.statement.*;
 import frontend.syntax.variable.*;
@@ -44,7 +45,7 @@ public class IRVisitor {
         symbolTable.addTable();
         symbolTable.addSymbol("getint", Builder.buildBuiltInFunc("getint",
                 IntegerType.i32, new ArrayList<>()));
-        symbolTable.addSymbol("getchar", Builder.buildBuiltInFunc("getint",
+        symbolTable.addSymbol("getchar", Builder.buildBuiltInFunc("getchar",
                 IntegerType.i32, new ArrayList<>()));
         symbolTable.addSymbol("putint", Builder.buildBuiltInFunc("putint",
                 VoidType.VOID, IntegerType.i32));
@@ -238,12 +239,58 @@ public class IRVisitor {
     }
 
     private void visitFuncDef(FuncDef funcDef) {
+        String functionName = funcDef.getIdent().getContent();
+        // 记录函数定义时形参的类型，以及函数返回值的类型
+        ArrayList<ValueType> argumentsTypes = new ArrayList<>();
+        ValueType returnType = switch (funcDef.getFuncType().getFuncType().getType()) {
+            case VOIDTK -> VoidType.VOID;
+            case INTTK -> IntegerType.i32;
+            case CHARTK -> IntegerType.i8;
+            default -> throw new RuntimeException("Shouldn't reach here");
+        };
+        if (funcDef.getFuncFParams() != null) {
+            for (FuncFParam funcFParam : funcDef.getFuncFParams().getFuncFParams()) {
+                argumentsTypes.add(getFuncFParamType(funcFParam));
+            }
+        }
+        Function function = Builder.buildFunction(functionName, returnType, argumentsTypes);
+        curFunction = function;
+        symbolTable.addSymbol(functionName, function);
+        symbolTable.addTable();
+        curBlock = Builder.buildBasicBlock(function);
+        if (funcDef.getFuncFParams() != null) {
+            for (int i = 0; i < funcDef.getFuncFParams().getFuncFParams().size(); i++) {
+                FuncFParam funcFParam = funcDef.getFuncFParams().getFuncFParams().get(i);
+                visitFuncFParam(funcFParam, function.getArguments().get(i));
+            }
+        }
+        visitBlock(funcDef.getBlock());
+        symbolTable.removeTable();
+    }
 
+    private ValueType getFuncFParamType(FuncFParam funcFParam) {
+        ValueType baseType = switch (funcFParam.getBType().getToken().getType()) {
+            case INTTK -> IntegerType.i32;
+            case CHARTK -> IntegerType.i8;
+            default -> throw new RuntimeException("Shouldn't reach here");
+        };
+        if (funcFParam.isArray()) {
+            return new PointerType(baseType);
+        } else {
+            return baseType;
+        }
+    }
+
+    private void visitFuncFParam(FuncFParam funcFParam, Argument argument) {
+        String paramName = funcFParam.getIdent().getContent();
+        // 将形参上的值复制到自己的栈帧上
+        symbolTable.addSymbol(paramName, Builder.buildVar(
+                argument.getValueType(), argument, curBlock
+        ));
     }
 
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {
-        FunctionType functionType = Builder.buildFunctionType(IntegerType.i32, new ArrayList<>());
-        Function function = Builder.buildFunction("main", functionType);
+        Function function = Builder.buildFunction("main", IntegerType.i32, new ArrayList<>());
         curFunction = function;
         symbolTable.addSymbol("main", function);
         symbolTable.addTable();
@@ -277,6 +324,10 @@ public class IRVisitor {
             visitExp(expStmt.getExp());
         } else if (stmt instanceof LValExpStmt lValExpStmt) {
             visitLValAssignStruct(lValExpStmt.getLVal(), lValExpStmt.getExp());
+        } else if (stmt instanceof GetintStmt getintStmt) {
+            visitGetintStmt(getintStmt);
+        } else if (stmt instanceof GetcharStmt getcharStmt) {
+            visitGetcharStmt(getcharStmt);
         }
     }
 
@@ -289,6 +340,20 @@ public class IRVisitor {
         }
     }
 
+    private void visitGetintStmt(GetintStmt getintStmt) {
+        LVal lVal = getintStmt.getLVal();
+        Function getInt = (Function) symbolTable.getSymbol("getint");
+        Value callInst = Builder.buildCallInst(getInt, new ArrayList<>(), curBlock);
+        doLValAssign(lVal, callInst);
+    }
+
+    private void visitGetcharStmt(GetcharStmt getcharStmt) {
+        LVal lVal = getcharStmt.getLVal();
+        Function getChar = (Function) symbolTable.getSymbol("getchar");
+        Value callInst = Builder.buildCallInst(getChar, new ArrayList<>(), curBlock);
+        doLValAssign(lVal, callInst);
+    }
+
     // 把forStmt和LValExpStmt结合在一起
     private void visitLValAssignStruct(LVal lVal, Exp exp) {
         visitExp(exp);
@@ -297,7 +362,7 @@ public class IRVisitor {
     }
 
     private void doLValAssign(LVal lVal, Value result) {
-        Value pointer = symbolTable.getValue(lVal.getIdent().getContent());
+        Value pointer = symbolTable.getSymbol(lVal.getIdent().getContent());
         if (lVal.getExp() != null
                 && pointer.getValueType() instanceof PointerType) {
             visitExp(lVal.getExp());
@@ -314,7 +379,7 @@ public class IRVisitor {
 
     private void visitLVal(LVal lVal) {
         String name = lVal.getIdent().getContent();
-        Value pointer = symbolTable.getValue(name);
+        Value pointer = symbolTable.getSymbol(name);
         if (isGlobal || isCalculable) {
             // 考虑const int b = 3; int c = b;
             // 或者是const int N = 2; int aa[N];

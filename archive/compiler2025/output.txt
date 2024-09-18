@@ -12,26 +12,11 @@ INTCON 1
 <VarDef>
 SEMICN ;
 <VarDecl>
-CONSTTK const
 INTTK int
 IDENFR b
 ASSIGN =
 INTCON 3
 <Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-<ConstInitVal>
-<ConstDef>
-SEMICN ;
-<ConstDecl>
-INTTK int
-IDENFR c
-ASSIGN =
-IDENFR b
-<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -42,16 +27,16 @@ IDENFR b
 SEMICN ;
 <VarDecl>
 INTTK int
-IDENFR aaaaa
-LBRACK [
-IDENFR b
-<LVal>
+IDENFR c
+ASSIGN =
+INTCON 5
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<ConstExp>
-RBRACK ]
+<Exp>
+<InitVal>
 <VarDef>
 SEMICN ;
 <VarDecl>
@@ -63,7 +48,14 @@ LBRACE {
 INTTK int
 IDENFR d
 ASSIGN =
-IDENFR aaaaa
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+PLUS +
+IDENFR c
 <LVal>
 <PrimaryExp>
 <UnaryExp>
@@ -74,17 +66,38 @@ IDENFR aaaaa
 <VarDef>
 SEMICN ;
 <VarDecl>
-IDENFR c
+INTTK int
+IDENFR e
+ASSIGN =
+INTCON 5
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+MULT *
+IDENFR d
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+LBRACE {
+IDENFR a
 <LVal>
 ASSIGN =
-IDENFR b
+IDENFR a
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 PLUS +
-INTCON 4
+INTCON 5
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -93,22 +106,102 @@ INTCON 4
 <Exp>
 SEMICN ;
 <Stmt>
-RETURNTK return
+INTTK int
+IDENFR b
+ASSIGN =
 IDENFR a
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
+MULT *
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
 <AddExp>
-PLUS +
+<Exp>
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+IDENFR a
+<LVal>
+ASSIGN =
 IDENFR b
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
+<Exp>
+SEMICN ;
+<Stmt>
+INTTK int
+IDENFR f
+ASSIGN =
+INTCON 20
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+IDENFR e
+<LVal>
+ASSIGN =
+IDENFR e
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
 PLUS +
-IDENFR c
+IDENFR a
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+MULT *
+INTCON 20
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<Stmt>
+INTTK int
+IDENFR f
+ASSIGN =
+INTCON 10
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+RETURNTK return
+IDENFR e
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+MULT *
+IDENFR f
 <LVal>
 <PrimaryExp>
 <UnaryExp>

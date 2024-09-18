@@ -1,10 +1,16 @@
 int a = 1;
-const int b = 3;
-int c = b;
-int aaaaa[b];
-
+int b = 3;
+int c = 5;
 int main() {
-    int d = aaaaa;
-    c = b + 4;
-    return a + b + c;
+    int d = 4 + c;
+    int e = 5 * d;
+    {
+        a = a + 5;
+        int b = a * 2;
+        a = b;
+        int f = 20;
+        e = e + a * 20;
+    }
+    int f = 10;
+    return e * f;
 }

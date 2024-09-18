@@ -25,6 +25,10 @@ public class Function extends Value {
         }
     }
 
+    public ArrayList<Argument> getArguments() {
+        return arguments;
+    }
+
     public void addBasicBlock(BasicBlock basicBlock) {
         basicBlocks.add(basicBlock);
     }
