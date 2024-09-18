@@ -1,0 +1,4 @@
+int main() {
+    printf("Haha%dhaa\n", 3);
+    return 0;
+}

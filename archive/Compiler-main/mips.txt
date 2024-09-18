@@ -1,0 +1,39 @@
+.macro getInt
+li $v0, 5
+syscall
+.end_macro
+.macro putInt
+li $v0, 1
+syscall
+.end_macro
+.macro putCh
+li $v0, 11
+syscall
+.end_macro
+.macro putStr
+li $v0, 4
+syscall
+.end_macro
+.data
+hs_new_global_str_0: .asciiz "Haha"
+hs_new_global_str_1: .asciiz "haa\n"
+.text
+jal main
+li $v0, 10
+syscall
+main:
+main_0:
+#%1 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_0, i32 0, i32 0
+#call void @putstr(i8* %1)
+la $a0, hs_new_global_str_0
+putStr
+#call void @putint(i32 3)
+li $a0, 3
+putInt
+#%2 = getelementptr inbounds [5 x i8], [5 x i8]* @hs_new_global_str_1, i32 0, i32 0
+#call void @putstr(i8* %2)
+la $a0, hs_new_global_str_1
+putStr
+#ret i32 0
+li $v0, 0
+jr $ra
