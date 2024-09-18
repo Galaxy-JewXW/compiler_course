@@ -1,18 +1,3 @@
-CONSTTK const
-INTTK int
-IDENFR kk
-ASSIGN =
-INTCON 5
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-<ConstInitVal>
-<ConstDef>
-SEMICN ;
-<ConstDecl>
 INTTK int
 MAINTK main
 LPARENT (
@@ -20,14 +5,35 @@ RPARENT )
 LBRACE {
 INTTK int
 IDENFR a
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
 ASSIGN =
-INTCON 3
+LBRACE {
+INTCON 1
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <Exp>
+<InitVal>
+COMMA ,
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<InitVal>
+RBRACE }
 <InitVal>
 <VarDef>
 SEMICN ;

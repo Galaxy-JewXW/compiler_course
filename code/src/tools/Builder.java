@@ -4,10 +4,14 @@ import frontend.token.TokenType;
 import middle.*;
 import middle.instructions.*;
 import middle.model.Value;
-import middle.types.*;
+import middle.types.ArrayType;
+import middle.types.FunctionType;
+import middle.types.IntegerType;
+import middle.types.ValueType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 public class Builder {
     public static int calculate(int a, int b, TokenType op) {
@@ -53,11 +57,17 @@ public class Builder {
                                        BasicBlock basicBlock) {
         AllocInst allocInst = new AllocInst(valueType, basicBlock);
         if (initValue != null) {
-            ArrayList<Value> indexes = new ArrayList<>();
+            Stack<Value> indexes = new Stack<>();
             indexes.add(ConstInt.i32ZERO);
-            if (initValue instanceof Assignable) {
-                buildStoreInst(initValue, buildGEPInst(allocInst,
-                        new ArrayList<>(indexes), basicBlock), basicBlock);
+            if (initValue instanceof ConstArray constArray) {
+                int cnt = 0;
+                for (int i = 0; i < constArray.getFilled(); i++) {
+                    Value value = constArray.getElements().get(i);
+                    indexes.add(new ConstInt(cnt++, IntegerType.i32));
+                    buildStoreInst(value, buildGEPInst(allocInst, new ArrayList<>(indexes),
+                            basicBlock), basicBlock);
+                    indexes.pop();
+                }
             }
         }
         return allocInst;

@@ -2,6 +2,7 @@ package middle;
 
 import middle.model.Value;
 import middle.types.ArrayType;
+import middle.types.IntegerType;
 import middle.types.ValueType;
 
 import java.util.ArrayList;
@@ -38,6 +39,14 @@ public class ConstArray extends ConstVar {
 
     public void resetType() {
         setValueType(new ArrayType(elements.get(0).getValueType(), length));
+    }
+
+    public int getFilled() {
+        if (elements.get(0).getValueType().equals(IntegerType.i32)) {
+            return filled;
+        } else {
+            return filled + 1;
+        }
     }
 
     @Override

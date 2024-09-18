@@ -6,7 +6,7 @@ LBRACE {
 INTTK int
 IDENFR a
 LBRACK [
-INTCON 2
+INTCON 2000
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -32,6 +32,23 @@ INTCON 2
 <AddExp>
 <Exp>
 RBRACE }
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+CHARTK char
+IDENFR s
+LBRACK [
+INTCON 600
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+STRCON "Hello"
 <InitVal>
 <VarDef>
 SEMICN ;
