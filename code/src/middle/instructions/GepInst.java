@@ -6,6 +6,8 @@ import middle.types.ArrayType;
 import middle.types.PointerType;
 import middle.types.ValueType;
 
+import java.util.ArrayList;
+
 public class GepInst extends MemInst {
     private final ValueType targetType;
 
@@ -15,11 +17,13 @@ public class GepInst extends MemInst {
         return type;
     }
 
-    private GepInst(Value pointer, Value index, BasicBlock basicBlock) {
+    public GepInst(Value pointer, ArrayList<Value> indexes, BasicBlock basicBlock) {
         super(new PointerType(preWork(pointer)), OperatorType.GEP, basicBlock);
         addOperand(pointer);
         this.targetType = ((PointerType) pointer.getValueType()).getTargetType();
-        addOperand(index);
+        for (Value index : indexes) {
+            addOperand(index);
+        }
         setName("%" + valueIdCount++);
     }
 

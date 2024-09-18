@@ -5,6 +5,7 @@ import frontend.token.TokenType;
 
 import java.util.ArrayList;
 
+// 逻辑表达式不可加括号改变优先级
 public class LOrExp extends SyntaxNode {
     private final ArrayList<LAndExp> lAndExps;
 

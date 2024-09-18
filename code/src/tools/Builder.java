@@ -1,15 +1,10 @@
 package tools;
 
 import frontend.token.TokenType;
-import middle.BasicBlock;
-import middle.ConstInt;
-import middle.Function;
-import middle.GlobalVar;
+import middle.*;
 import middle.instructions.*;
 import middle.model.Value;
-import middle.types.FunctionType;
-import middle.types.IntegerType;
-import middle.types.ValueType;
+import middle.types.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +38,34 @@ public class Builder {
             buildStoreInst(tempInitValue, allocInst, basicBlock);
         }
         return allocInst;
+    }
+
+    public static GlobalVar buildGlobalArray(String name, ValueType type,
+                                             Value initValue, boolean isConstant) {
+        ConstArray constArray = (ConstArray) initValue;
+        if (initValue == null && type instanceof ArrayType arrayType) {
+            constArray = new ConstArray(arrayType, arrayType.getLength());
+        }
+        return new GlobalVar(name, type, constArray, isConstant);
+    }
+
+    public static AllocInst buildArray(ValueType valueType, Value initValue,
+                                       BasicBlock basicBlock) {
+        AllocInst allocInst = new AllocInst(valueType, basicBlock);
+        if (initValue != null) {
+            ArrayList<Value> indexes = new ArrayList<>();
+            indexes.add(ConstInt.i32ZERO);
+            if (initValue instanceof Assignable) {
+                buildStoreInst(initValue, buildGEPInst(allocInst,
+                        new ArrayList<>(indexes), basicBlock), basicBlock);
+            }
+        }
+        return allocInst;
+    }
+
+    public static GepInst buildGEPInst(Value pointerBase, ArrayList<Value> indexes,
+                                       BasicBlock basicBlock) {
+        return new GepInst(pointerBase, indexes, basicBlock);
     }
 
     public static BinaryInst buildBinaryInst(Value lValue, OperatorType op,

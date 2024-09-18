@@ -9,6 +9,7 @@ public class BinaryInst extends Instruction implements Assignable {
     public BinaryInst(BasicBlock basicBlock, OperatorType operatorType, Value lValue, Value rValue) {
         super(lValue.getValueType(), operatorType, basicBlock);
         if (isLogical()) {
+            // 如果该指令为逻辑运算，返回值为位数为1
             setValueType(IntegerType.i1);
         }
         addOperand(lValue);

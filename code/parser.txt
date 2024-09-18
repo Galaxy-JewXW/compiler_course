@@ -3,15 +3,27 @@ MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
-CHARTK char
-IDENFR c
-ASSIGN =
-CHRCON 'a'
-<Character>
+INTTK int
+IDENFR a
+LBRACK [
+INTCON 2
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
-MULT *
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
 INTCON 2
 <Number>
 <PrimaryExp>
@@ -19,6 +31,7 @@ INTCON 2
 <MulExp>
 <AddExp>
 <Exp>
+RBRACE }
 <InitVal>
 <VarDef>
 SEMICN ;

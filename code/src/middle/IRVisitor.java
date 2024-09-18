@@ -84,7 +84,7 @@ public class IRVisitor {
         isCalculable = true;
         if (constDef.getConstExp() == null) {
             // 对应普通变量的定义
-            visitConstInitVal(constDef.getConstInitVal());
+            visitConstInitVal(constDef.getConstInitVal(), 0);
             int number = immediate;
             if (tempValueType.equals(IntegerType.i8)) {
                 number = number & 0xFF;
@@ -97,19 +97,56 @@ public class IRVisitor {
                 tempValue = Builder.buildVar(tempValueType, constInt, curBlock);
             }
         } else {
-            // 对应一维数组(int, char)的定义
+            // 对应的是一维数组的定义
+            visitConstExp(constDef.getConstExp());
+            int length = immediate;
+            visitConstInitVal(constDef.getConstInitVal(), length);
+            if (isGlobal) {
+                tempValue = Builder.buildGlobalArray(name, tempValueType, tempValue, true);
+            }
         }
         isCalculable = false;
         symbolTable.addSymbol(name, tempValue);
     }
 
-    private void visitConstInitVal(ConstInitVal constInitVal) {
+    // length参数为数组定义时所设置的长度
+    private void visitConstInitVal(ConstInitVal constInitVal, int length) {
         if (constInitVal.getConstExp() != null) {
             // 对应'const int a = 3;'
             visitConstExp(constInitVal.getConstExp());
             if (isGlobal || isCalculable) {
                 tempValue = new ConstInt(immediate, tempValueType);
             }
+        } else if (constInitVal.getStringConst() != null) {
+            String stringConst = constInitVal.getStringConst().getContent();
+            ConstArray constArray = new ConstArray(length);
+            for (int i = 1; i < stringConst.length() - 1; i++) {
+                constArray.addElement(new ConstInt(stringConst.charAt(i), IntegerType.i8));
+            }
+            constArray.setFilled();
+            int unfilled = length - (stringConst.length() - 2);
+            for (int i = 0; i < unfilled; i++) {
+                constArray.addElement(new ConstInt(0, IntegerType.i8));
+            }
+            constArray.resetType();
+            tempValue = constArray;
+            tempValueType = new ArrayType(IntegerType.i8, length);
+        } else if (constInitVal.getConstExps() != null) {
+            ConstArray constArray = new ConstArray(length);
+            for (ConstExp constExp : constInitVal.getConstExps()) {
+                visitConstExp(constExp);
+                constArray.addElement(new ConstInt(immediate, IntegerType.i32));
+            }
+            constArray.setFilled();
+            int unfilled = length - constInitVal.getConstExps().size();
+            for (int i = 0; i < unfilled; i++) {
+                constArray.addElement(new ConstInt(0, IntegerType.i32));
+            }
+            constArray.resetType();
+            tempValue = constArray;
+            tempValueType = new ArrayType(IntegerType.i32, length);
+        } else {
+            throw new RuntimeException("Shouldn't reach here");
         }
     }
 
@@ -126,7 +163,7 @@ public class IRVisitor {
         if (varDef.getConstExp() == null) {
             // 无维度，对应int x = 3;
             if (varDef.getInitVal() != null) {
-                visitInitVal(varDef.getInitVal());
+                visitInitVal(varDef.getInitVal(), 0);
             } else {
                 // 对未指定初始值的全局变量，统一初始为0
                 immediate = 0;
@@ -141,13 +178,61 @@ public class IRVisitor {
                         curBlock
                 );
             }
+        } else {
+            isCalculable = true;
+            visitConstExp(varDef.getConstExp());
+            int length = immediate;
+            isCalculable = false;
+            if (varDef.getInitVal() != null) {
+                visitInitVal(varDef.getInitVal(), length);
+            } else {
+                tempValue = null;
+            }
+            if (isGlobal) {
+                tempValue = Builder.buildGlobalArray(name, tempValueType, tempValue, false);
+            } else {
+                tempValue = Builder.buildArray(tempValueType, tempValue, curBlock);
+            }
         }
         symbolTable.addSymbol(name, tempValue);
     }
 
-    private void visitInitVal(InitVal initVal) {
+    private void visitInitVal(InitVal initVal, int length) {
         if (initVal.getExp() != null) {
             visitExp(initVal.getExp());
+        } else if (initVal.getStringConst() != null) {
+            String stringConst = initVal.getStringConst().getContent();
+            ConstArray constArray = new ConstArray(length);
+            for (int i = 1; i < stringConst.length() - 1; i++) {
+                constArray.addElement(new ConstInt(stringConst.charAt(i), IntegerType.i8));
+            }
+            constArray.setFilled();
+            int unfilled = length - (stringConst.length() - 2);
+            for (int i = 0; i < unfilled; i++) {
+                constArray.addElement(new ConstInt(0, IntegerType.i8));
+            }
+            constArray.resetType();
+            tempValue = constArray;
+            tempValueType = new ArrayType(IntegerType.i8, length);
+        } else if (initVal.getExps() != null) {
+            ConstArray constArray = new ConstArray(length);
+            for (Exp exp : initVal.getExps()) {
+                visitExp(exp);
+                if (isGlobal) {
+                    tempValue = new ConstInt(immediate, IntegerType.i32);
+                }
+                constArray.addElement(tempValue);
+            }
+            constArray.setFilled();
+            int unfilled = length - initVal.getExps().size();
+            for (int i = 0; i < unfilled; i++) {
+                constArray.addElement(new ConstInt(0, IntegerType.i32));
+            }
+            constArray.resetType();
+            tempValue = constArray;
+            tempValueType = new ArrayType(IntegerType.i32, length);
+        } else {
+            throw new RuntimeException("Shouldn't reach here");
         }
     }
 
@@ -223,6 +308,20 @@ public class IRVisitor {
     private void visitUnaryExp(UnaryExp unaryExp) {
         if (unaryExp.getPrimaryExp() != null) {
             visitPrimaryExp(unaryExp.getPrimaryExp());
+        } else if (unaryExp.getUnaryExp() != null) {
+            visitUnaryExp(unaryExp.getUnaryExp());
+            TokenType op = unaryExp.getUnaryOp().getOperator().getType();
+            if (op == TokenType.MINU) {
+                if (isGlobal || isCalculable) {
+                    immediate = -immediate;
+                } else {
+                    tempValue = Builder.buildBinaryInst(ConstInt.i32ZERO, OperatorType.SUB,
+                            tempValue, curBlock);
+                }
+            } else if (op == TokenType.NOT) {
+                tempValue = Builder.buildBinaryInst(ConstInt.i32ZERO, OperatorType.ICMP_EQ,
+                        tempValue, curBlock);
+            }
         }
     }
 

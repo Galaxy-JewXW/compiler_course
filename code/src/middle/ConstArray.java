@@ -5,17 +5,23 @@ import middle.types.ArrayType;
 import middle.types.ValueType;
 
 import java.util.ArrayList;
-import java.util.StringJoiner;
 
 public class ConstArray extends ConstVar {
+    // length为数组定义时所设置的长度
+    private final int length;
+    // filled是指定义时被填充的值的个数
+    // int a[10] = {1}; 此时filled = 1
+    private int filled = 0;
     private final ArrayList<Value> elements = new ArrayList<>();
 
-    public ConstArray() {
+    public ConstArray(int length) {
         super("", null);
+        this.length = length;
     }
 
-    public ConstArray(ValueType type) {
+    public ConstArray(ValueType type, int length) {
         super("", type);
+        this.length = length;
     }
 
     public ArrayList<Value> getElements() {
@@ -26,31 +32,27 @@ public class ConstArray extends ConstVar {
         elements.add(element);
     }
 
-    public void resetType() {
-        setValueType(new ArrayType(elements.get(0).getValueType(), elements.size()));
+    public void setFilled() {
+        filled = elements.size();
     }
 
-    public boolean allZero() {
-        for (Value value : elements) {
-            if (value instanceof ConstInt constInt) {
-                if (constInt.getIntValue() != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public void resetType() {
+        setValueType(new ArrayType(elements.get(0).getValueType(), length));
     }
 
     @Override
     public String toString() {
-        if (allZero()) {
-            return getValueType().toString() + " zeroinitializer";
-        } else {
-            StringJoiner sj = new StringJoiner(", ", getValueType().toString() + " [", "]");
-            for (Value value : elements) {
-                sj.add(value.toString());
-            }
-            return sj.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(getValueType().toString()).append(" [");
+        for (int i = 0; i < filled; i++) {
+            sb.append(elements.get(i).toString()).append(", ");
         }
+        if (filled == length) {
+            sb.delete(sb.length() - 2, sb.length());
+        } else {
+            sb.append("zeroinitializer");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
