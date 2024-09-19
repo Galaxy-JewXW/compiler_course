@@ -147,6 +147,9 @@ public class Lexer {
     private void getConstString() {
         type = TokenType.STRCON;
         do {
+            if (inputString.charAt(pos) == '\\') {
+                addChar();
+            }
             addChar();
         } while (inputString.charAt(pos) != '\"');
         addChar();

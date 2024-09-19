@@ -1,56 +1,7 @@
 CHARTK char
-IDENFR c
-LBRACK [
-INTCON 4
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-RBRACK ]
-ASSIGN =
-LBRACE {
-CHRCON '\0'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'b'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'c'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'd'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACE }
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
 IDENFR s
 LBRACK [
-INTCON 5
+INTCON 3
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -59,7 +10,7 @@ INTCON 5
 <ConstExp>
 RBRACK ]
 ASSIGN =
-STRCON "Helo"
+STRCON "\'\'\'"
 <InitVal>
 <VarDef>
 SEMICN ;

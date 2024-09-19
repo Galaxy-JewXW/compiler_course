@@ -3,8 +3,7 @@ declare i32 @getchar()
 declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
-@c = dso_local global [4 x i8] [i8 0, i8 98, i8 99, i8 100]
-@s = dso_local global [5 x i8] [i8 72, i8 101, i8 108, i8 111, zeroinitializer]
+@s = dso_local global [3 x i8] [i8 39, i8 39, i8 39]
 
 define dso_local i32 @main() {
 0:

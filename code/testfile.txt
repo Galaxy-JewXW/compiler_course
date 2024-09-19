@@ -1,5 +1,5 @@
-char c[4] = {'\0', 'b', 'c', 'd'};
-char s[5] = "Helo";
+char s[3] = "\'\'\'";
+
 int main() {
-return 0;
+    return 0;
 }

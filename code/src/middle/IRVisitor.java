@@ -129,6 +129,25 @@ public class IRVisitor {
             String stringConst = constInitVal.getStringConst().getContent();
             ConstArray constArray = new ConstArray(length);
             for (int i = 1; i < stringConst.length() - 1; i++) {
+                if (stringConst.charAt(i) == '\\') {
+                    i++;
+                    int value = switch (stringConst.charAt(i)) {
+                        case 'a' -> 7;
+                        case 'b' -> 8;
+                        case 't' -> 9;
+                        case 'n' -> 10;
+                        case 'v' -> 11;
+                        case 'f' -> 12;
+                        case '\"' -> 34;
+                        case '\'' -> 39;
+                        case '\\' -> 92;
+                        case '0' -> 0;
+                        default -> throw new RuntimeException("Invalid character '"
+                                + stringConst.charAt(i) + "'");
+                    };
+                    constArray.addElement(Builder.buildConstInt(value, IntegerType.i8));
+                    continue;
+                }
                 constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
             constArray.setFilled();
@@ -213,6 +232,25 @@ public class IRVisitor {
             String stringConst = initVal.getStringConst().getContent();
             ConstArray constArray = new ConstArray(length);
             for (int i = 1; i < stringConst.length() - 1; i++) {
+                if (stringConst.charAt(i) == '\\') {
+                    i++;
+                    int value = switch (stringConst.charAt(i)) {
+                        case 'a' -> 7;
+                        case 'b' -> 8;
+                        case 't' -> 9;
+                        case 'n' -> 10;
+                        case 'v' -> 11;
+                        case 'f' -> 12;
+                        case '\"' -> 34;
+                        case '\'' -> 39;
+                        case '\\' -> 92;
+                        case '0' -> 0;
+                        default -> throw new RuntimeException("Invalid character '"
+                                + stringConst.charAt(i) + "'");
+                    };
+                    constArray.addElement(Builder.buildConstInt(value, IntegerType.i8));
+                    continue;
+                }
                 constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
             constArray.setFilled();
