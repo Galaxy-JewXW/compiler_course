@@ -5,7 +5,7 @@ import middle.component.types.ValueType;
 
 public class Argument extends Value {
     public Argument(ValueType valueType) {
-        super("%" + valueIdCount++, valueType);
+        super("%" + Value.allocIdCount(), valueType);
     }
 
     @Override

@@ -5,7 +5,7 @@ import middle.component.types.ValueType;
 import java.util.ArrayList;
 
 public class Value {
-    public static int valueIdCount = 0;
+    private static int valueIdCount = 0;
     private String name;
     private ValueType valueType;
     private final ArrayList<Use> uses = new ArrayList<>();
@@ -13,6 +13,14 @@ public class Value {
     public Value(String name, ValueType valueType) {
         this.name = name;
         this.valueType = valueType;
+    }
+
+    public static void resetIdCount() {
+        valueIdCount = 0;
+    }
+
+    public static int allocIdCount() {
+        return valueIdCount++;
     }
 
     public String getName() {

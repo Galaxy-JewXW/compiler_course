@@ -14,7 +14,7 @@ public class CallInst extends Instruction implements Assignable {
     public CallInst(BasicBlock basicBlock, Function function, ArrayList<Value> args) {
         super(((FunctionType) function.getValueType()).getReturnType(), OperatorType.CALL, basicBlock);
         if (getValueType() != VoidType.VOID) {
-            setName("%" + valueIdCount++);
+            setName("%" + allocIdCount());
         }
         addOperand(function);
         for (Value arg : args) {

@@ -13,7 +13,5 @@ define dso_local i32 @main() {
 	br label %3
 3:
 	br label %1
-4:
-	ret i32 0
 }
 

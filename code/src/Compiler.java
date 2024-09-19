@@ -6,6 +6,7 @@ import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.IRVisitor;
 import middle.Module;
+import optimize.Optimizer;
 import tools.Printer;
 
 import java.nio.file.Files;
@@ -18,6 +19,7 @@ public class Compiler {
     private static final String parserOutput = "parser.txt";
     private static final String errorOutput = "error.txt";
     private static final String llvmOutput = "llvm_ir.txt";
+    private static final String irOutput = "ir.txt"; // 优化后的中间代码
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
@@ -48,5 +50,11 @@ public class Compiler {
         IRVisitor irVisitor = new IRVisitor(compUnit);
         irVisitor.build();
         Printer.printLLVM(Module.getInstance(), llvmOutput);
+
+        // 代码优化
+        Optimizer optimizer = new Optimizer(Module.getInstance());
+        optimizer.optimize();
+
+        Printer.printLLVM(Module.getInstance(), irOutput);
     }
 }

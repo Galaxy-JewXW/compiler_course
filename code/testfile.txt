@@ -1,11 +1,4 @@
-char foo() {
-return 114514;
-}
-
-int sb() {
-return 'a' + 3 + '3';
-}
-
 int main() {
+for(;;) {}
 return 0;
 }

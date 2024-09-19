@@ -34,7 +34,7 @@ public class GepInst extends MemInst {
         for (Value index : indexes) {
             addOperand(index);
         }
-        setName("%" + valueIdCount++);
+        setName("%" + allocIdCount());
     }
 
     public Value getPointer() {

@@ -1,60 +1,18 @@
-CHARTK char
-<FuncType>
-IDENFR foo
-LPARENT (
-RPARENT )
-LBRACE {
-RETURNTK return
-INTCON 114514
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<FuncDef>
-INTTK int
-<FuncType>
-IDENFR sb
-LPARENT (
-RPARENT )
-LBRACE {
-RETURNTK return
-CHRCON 'a'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-INTCON 3
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-CHRCON '3'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<FuncDef>
 INTTK int
 MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
+FORTK for
+LPARENT (
+SEMICN ;
+SEMICN ;
+RPARENT )
+LBRACE {
+RBRACE }
+<Block>
+<Stmt>
+<Stmt>
 RETURNTK return
 INTCON 0
 <Number>

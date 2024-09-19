@@ -15,7 +15,7 @@ public class Function extends Value {
 
     public Function(String name, ValueType valueType, boolean isBuiltIn) {
         super(name, valueType);
-        valueIdCount = 0;
+        resetIdCount();
         this.isBuiltIn = isBuiltIn;
         for (ValueType type : ((FunctionType) getValueType()).getParametersTypes()) {
             this.arguments.add(new Argument(type));
@@ -27,6 +27,10 @@ public class Function extends Value {
 
     public ArrayList<Argument> getArguments() {
         return arguments;
+    }
+
+    public ArrayList<BasicBlock> getBasicBlocks() {
+        return basicBlocks;
     }
 
     public void addBasicBlock(BasicBlock basicBlock) {

@@ -158,11 +158,21 @@ public class Builder {
     }
 
     public static BrInst buildBrInst(BasicBlock basicBlock, BasicBlock trueBlock) {
+        if (!basicBlock.isTerminated()) {
+            basicBlock.addNextBlock(trueBlock);
+            trueBlock.addPrevBlock(basicBlock);
+        }
         return new BrInst(basicBlock, trueBlock);
     }
 
     public static BrInst buildBrInst(BasicBlock basicBlock, Value cond,
                                      BasicBlock trueBlock, BasicBlock falseBlock) {
+        if (!basicBlock.isTerminated()) {
+            basicBlock.addNextBlock(trueBlock);
+            trueBlock.addPrevBlock(basicBlock);
+            basicBlock.addNextBlock(falseBlock);
+            falseBlock.addPrevBlock(basicBlock);
+        }
         return new BrInst(basicBlock, trueBlock, falseBlock, cond);
     }
 

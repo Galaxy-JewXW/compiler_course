@@ -1,6 +1,7 @@
 package middle.component.instructions;
 
 import middle.component.BasicBlock;
+import middle.component.model.Value;
 import middle.component.types.PointerType;
 import middle.component.types.ValueType;
 
@@ -16,7 +17,7 @@ public class AllocInst extends MemInst {
 
     public AllocInst(ValueType allocType, BasicBlock basicBlock) {
         super(new PointerType(allocType), OperatorType.ALLOC, basicBlock);
-        setName("%" + valueIdCount++);
+        setName("%" + Value.allocIdCount());
         this.allocType = allocType;
     }
 

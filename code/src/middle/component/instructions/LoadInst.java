@@ -14,7 +14,7 @@ public class LoadInst extends MemInst implements Assignable {
     public LoadInst(BasicBlock basicBlock, Value pointer) {
         super(((PointerType) pointer.getValueType()).getTargetType(), OperatorType.LOAD, basicBlock);
         addOperand(pointer);
-        setName("%" + valueIdCount++);
+        setName("%" + allocIdCount());
     }
 
     public Value getPointer() {

@@ -14,7 +14,7 @@ public class BinaryInst extends Instruction implements Assignable {
         }
         addOperand(lValue);
         addOperand(rValue);
-        setName("%" + valueIdCount++);
+        setName("%" + allocIdCount());
     }
 
     public boolean isLogical() {

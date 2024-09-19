@@ -8,7 +8,7 @@ public class TruncInst extends Instruction {
     public TruncInst(Value value, BasicBlock basicBlock, ValueType targetType) {
         super(targetType, OperatorType.TRUNC, basicBlock);
         addOperand(value);
-        setName("%" + valueIdCount++);
+        setName("%" + allocIdCount());
     }
 
     public Value getValue() {

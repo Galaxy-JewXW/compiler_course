@@ -8,7 +8,7 @@ public class ZextInst extends Instruction {
     public ZextInst(Value value, BasicBlock basicBlock, ValueType targetType) {
         super(targetType, OperatorType.ZEXT, basicBlock);
         addOperand(value);
-        setName("%" + valueIdCount++);
+        setName("%" + allocIdCount());
     }
 
     public Value getValue() {
