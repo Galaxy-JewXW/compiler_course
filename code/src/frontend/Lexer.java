@@ -111,7 +111,7 @@ public class Lexer {
             addChar();
         } else if (c == '/') {
             // 判断是除号、单行注释还是多行注释
-            getDivOrCmt();
+            return getDivOrCmt();
         } else if (c == '<' || c == '>' || c == '=') {
             // 此时可能是一个符号或两个符号组成单元，需要进一步判断
             getCmpOrAgn(c);
@@ -154,10 +154,12 @@ public class Lexer {
 
     private void getConstChar() {
         type = TokenType.CHRCON;
-        do {
+        addChar(); // 第一个单引号
+        if (inputString.charAt(pos) == '\\') {
             addChar();
-        } while (inputString.charAt(pos) != '\'');
+        }
         addChar();
+        addChar(); // 第二个单引号
     }
 
     private void getNot() {
@@ -199,22 +201,23 @@ public class Lexer {
         }
     }
 
-    private void getDivOrCmt() {
+    private boolean getDivOrCmt() {
         if (inputString.charAt(pos + 1) == '/') {
             while (inputString.charAt(pos) != '\n') {
                 pos++;
             }
-            hasNext();
+            return hasNext();
         } else if (inputString.charAt(pos + 1) == '*') {
             pos += 2;
             while (!(inputString.charAt(pos) == '*' && inputString.charAt(pos + 1) == '/')) {
                 pos++;
             }
             pos += 2;
-            hasNext();
+            return hasNext();
         } else {
             addChar();
             type = TokenType.DIV;
+            return true;
         }
     }
 

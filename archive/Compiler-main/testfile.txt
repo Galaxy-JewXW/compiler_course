@@ -1,11 +1,4 @@
-int a = 5;
-int change() {
-    a = 6;
-    return a;
-}
 int main() {
-    if (0 && change()) {
-        printf("%d\n", a);
-    }
     return 0;
 }
+//主函数块

@@ -1,4 +1,2 @@
-int main() {
-for(;;) {}
-return 0;
-}
+char c = '\'';
+char d = '\a';

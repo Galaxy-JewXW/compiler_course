@@ -1,16 +1,4 @@
-int a = 1;
-int b = 3;
-int c = 5;
 int main() {
-    int d = 4 + c;
-    int e = 5 * d;
-    {
-        a = a + 5;
-        int b = a * 2;
-        a = b;
-        int f = 20;
-        e = e + a * 20;
-    }
-    int f = 10;
-    return e * f;
+return 0;
 }
+//111
