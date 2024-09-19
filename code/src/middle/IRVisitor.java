@@ -29,8 +29,8 @@ public class IRVisitor {
     private BasicBlock curBlock = null;
     private BasicBlock curTrueBlock = null;
     private BasicBlock curFalseBlock = null;
-    private BasicBlock curEndBlock = null;
-    private BasicBlock curForEndBlock = null;
+    private BasicBlock curEndBlock = null; // 负责更新循环值的block
+    private BasicBlock curForEndBlock = null; // 整个for结束之后跟着的block
     private int immediate = 0;
     private Value tempValue = null;
     private ValueType tempValueType = null;
@@ -339,17 +339,24 @@ public class IRVisitor {
             visitPrintfStmt(printfStmt);
         } else if (stmt instanceof IfStmt ifStmt) {
             visitIfStmt(ifStmt);
+        } else if (stmt instanceof ForStruct forStruct) {
+            visitForStruct(forStruct);
+        } else if (stmt instanceof BreakStmt) {
+            visitBreakStmt();
+        } else if (stmt instanceof ContinueStmt) {
+            visitContinueStmt();
         }
     }
 
     private void visitIfStmt(IfStmt ifStmt) {
         BasicBlock tempTrueBlock = curTrueBlock;
         BasicBlock tempFalseBlock = curFalseBlock;
+        BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
+        BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
+        curTrueBlock = trueBlock;
+        curFalseBlock = falseBlock;
+        // if条件运算所属的基本块可以是当前基本块，不需要新建block
         if (ifStmt.getStmt2() == null) {
-            BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
-            BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
-            curTrueBlock = trueBlock;
-            curFalseBlock = falseBlock;
             visitCond(ifStmt.getCond());
             trueBlock.refill(curFunction);
             curBlock = trueBlock;
@@ -358,11 +365,7 @@ public class IRVisitor {
             falseBlock.refill(curFunction);
             curBlock = falseBlock;
         } else {
-            BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
-            BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
             BasicBlock endBlock = Builder.buildUnnamedBasicBlock();
-            curTrueBlock = trueBlock;
-            curFalseBlock = falseBlock;
             visitCond(ifStmt.getCond());
             trueBlock.refill(curFunction);
             curBlock = trueBlock;
@@ -375,8 +378,68 @@ public class IRVisitor {
             endBlock.refill(curFunction);
             curBlock = endBlock;
         }
+        // 类似入栈出栈，恢复至初始状态
         curTrueBlock = tempTrueBlock;
         curFalseBlock = tempFalseBlock;
+    }
+
+    private void visitForStruct(ForStruct forStruct) {
+        BasicBlock tempTrueBlock = curTrueBlock;
+        BasicBlock tempFalseBlock = curFalseBlock;
+        visitForStmt(forStruct.getForStmt1());
+        // 计算cond，可以往trueBlock或for的后继块跳转
+        BasicBlock conditionBlock = Builder.buildBasicBlock(curFunction);
+        // 计算forStmt2，一般为循环变量的更新，往conditionBlock跳转
+        BasicBlock forStmt2Block = Builder.buildUnnamedBasicBlock();
+        // for循环体所包含的stmts，往forStmt2Block跳转
+        BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
+        // for结构体之后的后继块
+        BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
+
+        Builder.buildBrInst(curBlock, conditionBlock);
+        // 解析Cond
+        curBlock = conditionBlock;
+        curTrueBlock = trueBlock;
+        curFalseBlock = falseBlock;
+        curEndBlock = forStmt2Block;
+        curForEndBlock = falseBlock;
+        if (forStruct.getCond() != null) {
+            visitCond(forStruct.getCond());
+        } else {
+            Builder.buildBrInst(conditionBlock, trueBlock);
+        }
+        // 循环体内的stmts
+        trueBlock.refill(curFunction);
+        curBlock = trueBlock;
+        visitStmt(forStruct.getStmt());
+        Builder.buildBrInst(curBlock, forStmt2Block);
+
+        // 更新循环量
+        forStmt2Block.refill(curFunction);
+        curBlock = forStmt2Block;
+        visitForStmt(forStruct.getForStmt2());
+        Builder.buildBrInst(curBlock, conditionBlock);
+
+        // for循环体结束
+        falseBlock.refill(curFunction);
+        curBlock = falseBlock;
+        curTrueBlock = tempTrueBlock;
+        curFalseBlock = tempFalseBlock;
+    }
+
+    private void visitForStmt(ForStmt forStmt) {
+        if (forStmt == null) {
+            return;
+        }
+        visitLValAssignStruct(forStmt.getLVal(), forStmt.getExp());
+    }
+
+    private void visitBreakStmt() {
+        Builder.buildBrInst(curBlock, curForEndBlock);
+    }
+
+    private void visitContinueStmt() {
+        Builder.buildBrInst(curBlock, curEndBlock);
     }
 
     private void visitReturnStmt(ReturnStmt returnStmt) {
@@ -513,6 +576,7 @@ public class IRVisitor {
     }
 
     private void visitCond(Cond cond) {
+        // LOrExp只存在在条件表达式Cond里
         visitLOrExp(cond.getLOrExp());
     }
 
@@ -739,13 +803,26 @@ public class IRVisitor {
         }
     }
 
+    /* 假设有if (A && B && C && D) {stmt}
+     * 从左到右，从A依次解析到D
+     * 解析的结果类似于
+     * if (A) then {
+     *    if (B) then {
+     *      ***
+     *    } else goto endLabel;
+     * } else goto endLabel;
+     *
+     * endLabel: ***
+     * 基于以上思路，只需要更新thenBlock就行，因为所有的条件表达式
+     * 共用一个falseBlock，而彼此嵌套thenBlock
+     */
     private void visitLAndExp(LAndExp lAndExp) {
         BasicBlock trueBlock = curTrueBlock;
         BasicBlock falseBlock = curFalseBlock;
         for (int i = 0; i < lAndExp.getEqExps().size() - 1; i++) {
             visitEqExp(lAndExp.getEqExps().get(i));
             BasicBlock thenBlock = Builder.buildBasicBlock(curFunction);
-            Builder.buildBrInst(curBlock, tempValue, thenBlock, curFalseBlock);
+            Builder.buildBrInst(curBlock, tempValue, thenBlock, falseBlock);
             curBlock = thenBlock;
         }
         visitEqExp(lAndExp.getEqExps().get(lAndExp.getEqExps().size() - 1));
@@ -754,7 +831,25 @@ public class IRVisitor {
         curFalseBlock = falseBlock;
     }
 
-    // LOrExp只存在在条件表达式Cond里
+    /* 与visitLAndExp同理，假设有
+     * if (A || B || C || D) {stmts}
+     * 类比于：
+     * if A goto label1
+     * else if B goto label1
+     * else goto label2
+     *
+     * label1:
+     * (stmts的内容)
+     * (只要一个表达式为真，直接跳转)
+     * goto label3
+     *
+     * label2
+     * (所有表达式为假时，跳转到这里)
+     * goto label3
+     *
+     * label3
+     * 基于以上思路，本函数不需要更新trueBlock
+     */
     private void visitLOrExp(LOrExp lOrExp) {
         BasicBlock trueBlock = curTrueBlock;
         BasicBlock falseBlock = curFalseBlock;

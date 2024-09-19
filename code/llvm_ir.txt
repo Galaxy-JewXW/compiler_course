@@ -3,31 +3,70 @@ declare i32 @getchar()
 declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
-@a = dso_local global i32 5
-@.str.0 = dso_local constant [7 x i8] c"%f%f%f\00"
-
-define dso_local i32 @change() {
-0:
-	store i32 6, i32* @a
-	%1 = load i32, i32* @a
-	ret i32 %1
-}
+@.str.0 = dso_local constant [7 x i8] c"round \00"
+@.str.1 = dso_local constant [3 x i8] c": \00"
 
 define dso_local i32 @main() {
 0:
-	%1 = icmp ne i32 1, 0
-	br i1 %1, label %5, label %2
-2:
-	%3 = call i32 @change()
-	%4 = icmp ne i32 %3, 0
-	br i1 %4, label %5, label %8
-5:
-	%6 = getelementptr inbounds [7 x i8], [7 x i8]* @.str.0, i32 0, i32 0
-	call void @putstr(i8* %6)
-	%7 = load i32, i32* @a
-	call void @putint(i32 %7)
-	br label %8
-8:
+	%1 = alloca i32
+	store i32 1, i32* %1
+	%2 = alloca i32
+	%3 = load i32, i32* %1
+	store i32 %3, i32* %2
+	%4 = alloca i32
+	%5 = alloca i32
+	%6 = alloca i32
+	%7 = call i32 @getint()
+	store i32 %7, i32* %5
+	%8 = load i32, i32* %1
+	%9 = load i32, i32* %1
+	%10 = mul i32 %8, %9
+	store i32 %10, i32* %6
+	br label %11
+11:
+	%12 = load i32, i32* %6
+	%13 = load i32, i32* %5
+	%14 = add i32 %13, 1
+	%15 = icmp slt i32 %12, %14
+	br i1 %15, label %16, label %38
+16:
+	%17 = load i32, i32* %2
+	store i32 %17, i32* %4
+	%18 = load i32, i32* %1
+	%19 = load i32, i32* %2
+	%20 = add i32 %18, %19
+	store i32 %20, i32* %2
+	%21 = load i32, i32* %4
+	store i32 %21, i32* %1
+	%22 = load i32, i32* %6
+	%23 = srem i32 %22, 2
+	%24 = icmp eq i32 %23, 1
+	br i1 %24, label %25, label %26
+25:
+	br label %35
+26:
+	%27 = getelementptr inbounds [7 x i8], [7 x i8]* @.str.0, i32 0, i32 0
+	call void @putstr(i8* %27)
+	%28 = load i32, i32* %6
+	call void @putint(i32 %28)
+	%29 = getelementptr inbounds [3 x i8], [3 x i8]* @.str.1, i32 0, i32 0
+	call void @putstr(i8* %29)
+	%30 = load i32, i32* %1
+	call void @putint(i32 %30)
+	call void @putch(i8 10)
+	%31 = load i32, i32* %6
+	%32 = icmp sgt i32 %31, 19
+	br i1 %32, label %33, label %34
+33:
+	br label %38
+34:
+	br label %35
+35:
+	%36 = load i32, i32* %6
+	%37 = add i32 %36, 1
+	store i32 %37, i32* %6
+	br label %11
+38:
 	ret i32 0
 }
 

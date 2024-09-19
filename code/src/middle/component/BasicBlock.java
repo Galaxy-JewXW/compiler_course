@@ -35,6 +35,7 @@ public class BasicBlock extends Value {
         return instructions;
     }
 
+    // 当有新的变量引入时，需要重填
     public void refill(Function function) {
         setName(Integer.toString(valueIdCount));
         valueIdCount++;

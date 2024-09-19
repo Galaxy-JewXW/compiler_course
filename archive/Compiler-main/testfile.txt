@@ -4,8 +4,8 @@ int change() {
     return a;
 }
 int main() {
-    if (1 || change()) {
-        printf("%d", a);
+    if (0 && change()) {
+        printf("%d\n", a);
     }
     return 0;
 }

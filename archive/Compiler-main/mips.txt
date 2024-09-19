@@ -35,15 +35,14 @@ lw $v0, 0($sp)
 jr $ra
 main:
 main_0:
-#%1 = icmp ne i32 1, 0
-li $k0, 1
+#%1 = icmp ne i32 0, 0
+li $k0, 0
 li $k1, 0
 sne $k0, $k0, $k1
 sw $k0, -4($sp)
-#br i1 %1, label %5, label %2
+#br i1 %1, label %2, label %7
 lw $k1, -4($sp)
-blez $k1, main_2
-j main_5
+blez $k1, main_7
 main_2:
 #%3 = call i32 @change() 
 sw $ra, -12($sp)
@@ -68,6 +67,9 @@ sw $k0, -16($sp)
 #call void @putint(i32 %6)
 lw $a0, -16($sp)
 putInt
+#call void @putch(i32 10)
+li $a0, 10
+putCh
 #br label %7
 main_7:
 #ret i32 0
