@@ -1,18 +1,74 @@
+CHARTK char
+IDENFR c
+LBRACK [
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+CHRCON '\0'
+<Character>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+CHRCON 'b'
+<Character>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+CHRCON 'c'
+<Character>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+CHRCON 'd'
+<Character>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACE }
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+CHARTK char
+IDENFR s
+LBRACK [
+INTCON 5
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+STRCON "Helo"
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
 INTTK int
 MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
-FORTK for
-LPARENT (
-SEMICN ;
-SEMICN ;
-RPARENT )
-LBRACE {
-RBRACE }
-<Block>
-<Stmt>
-<Stmt>
 RETURNTK return
 INTCON 0
 <Number>

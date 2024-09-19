@@ -228,18 +228,18 @@ public class IRVisitor {
             for (Exp exp : initVal.getExps()) {
                 visitExp(exp);
                 if (isGlobal) {
-                    tempValue = Builder.buildConstInt(immediate, IntegerType.i32);
+                    tempValue = Builder.buildConstInt(immediate, tempValueType);
                 }
                 constArray.addElement(tempValue);
             }
             constArray.setFilled();
             int unfilled = length - initVal.getExps().size();
             for (int i = 0; i < unfilled; i++) {
-                constArray.addElement(Builder.buildConstInt(0, IntegerType.i32));
+                constArray.addElement(Builder.buildConstInt(0, tempValueType));
             }
             constArray.resetType();
             tempValue = constArray;
-            tempValueType = new ArrayType(IntegerType.i32, length);
+            tempValueType = new ArrayType(tempValueType, length);
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
