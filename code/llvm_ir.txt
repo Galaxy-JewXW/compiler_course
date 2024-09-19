@@ -3,70 +3,83 @@ declare i32 @getchar()
 declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
-@.str.0 = dso_local constant [7 x i8] c"round \00"
-@.str.1 = dso_local constant [3 x i8] c": \00"
+@a = dso_local global i32 1
+@.str.0 = dso_local constant [4 x i8] c"--1\00"
+@.str.1 = dso_local constant [4 x i8] c"--2\00"
+@.str.2 = dso_local constant [4 x i8] c"--3\00"
+
+define dso_local i32 @func() {
+0:
+	store i32 2, i32* @a
+	ret i32 1
+}
+
+define dso_local i32 @func2() {
+0:
+	store i32 4, i32* @a
+	ret i32 10
+}
+
+define dso_local i32 @func3() {
+0:
+	store i32 3, i32* @a
+	ret i32 0
+}
 
 define dso_local i32 @main() {
 0:
-	%1 = alloca i32
-	store i32 1, i32* %1
-	%2 = alloca i32
-	%3 = load i32, i32* %1
-	store i32 %3, i32* %2
-	%4 = alloca i32
-	%5 = alloca i32
-	%6 = alloca i32
-	%7 = call i32 @getint()
-	store i32 %7, i32* %5
-	%8 = load i32, i32* %1
-	%9 = load i32, i32* %1
-	%10 = mul i32 %8, %9
-	store i32 %10, i32* %6
-	br label %11
+	%1 = icmp ne i32 0, 0
+	br i1 %1, label %11, label %2
+2:
+	%3 = call i32 @func()
+	%4 = icmp ne i32 %3, 0
+	br i1 %4, label %5, label %8
+5:
+	%6 = call i32 @func3()
+	%7 = icmp ne i32 %6, 0
+	br i1 %7, label %11, label %8
+8:
+	%9 = call i32 @func2()
+	%10 = icmp ne i32 %9, 0
+	br i1 %10, label %11, label %14
 11:
-	%12 = load i32, i32* %6
-	%13 = load i32, i32* %5
-	%14 = add i32 %13, 1
-	%15 = icmp slt i32 %12, %14
-	br i1 %15, label %16, label %38
+	%12 = load i32, i32* @a
+	call void @putint(i32 %12)
+	%13 = getelementptr inbounds [4 x i8], [4 x i8]* @.str.0, i32 0, i32 0
+	call void @putstr(i8* %13)
+	br label %14
+14:
+	%15 = icmp ne i32 1, 0
+	br i1 %15, label %19, label %16
 16:
-	%17 = load i32, i32* %2
-	store i32 %17, i32* %4
-	%18 = load i32, i32* %1
-	%19 = load i32, i32* %2
-	%20 = add i32 %18, %19
-	store i32 %20, i32* %2
-	%21 = load i32, i32* %4
-	store i32 %21, i32* %1
-	%22 = load i32, i32* %6
-	%23 = srem i32 %22, 2
-	%24 = icmp eq i32 %23, 1
-	br i1 %24, label %25, label %26
-25:
-	br label %35
-26:
-	%27 = getelementptr inbounds [7 x i8], [7 x i8]* @.str.0, i32 0, i32 0
-	call void @putstr(i8* %27)
-	%28 = load i32, i32* %6
-	call void @putint(i32 %28)
-	%29 = getelementptr inbounds [3 x i8], [3 x i8]* @.str.1, i32 0, i32 0
-	call void @putstr(i8* %29)
-	%30 = load i32, i32* %1
-	call void @putint(i32 %30)
-	call void @putch(i8 10)
-	%31 = load i32, i32* %6
-	%32 = icmp sgt i32 %31, 19
-	br i1 %32, label %33, label %34
-33:
-	br label %38
+	%17 = call i32 @func3()
+	%18 = icmp ne i32 %17, 0
+	br i1 %18, label %19, label %22
+19:
+	%20 = load i32, i32* @a
+	call void @putint(i32 %20)
+	%21 = getelementptr inbounds [4 x i8], [4 x i8]* @.str.1, i32 0, i32 0
+	call void @putstr(i8* %21)
+	br label %22
+22:
+	%23 = icmp ne i32 0, 0
+	br i1 %23, label %31, label %24
+24:
+	%25 = call i32 @func3()
+	%26 = icmp ne i32 %25, 0
+	br i1 %26, label %31, label %27
+27:
+	%28 = call i32 @func()
+	%29 = call i32 @func2()
+	%30 = icmp slt i32 %28, %29
+	br i1 %30, label %31, label %34
+31:
+	%32 = load i32, i32* @a
+	call void @putint(i32 %32)
+	%33 = getelementptr inbounds [4 x i8], [4 x i8]* @.str.2, i32 0, i32 0
+	call void @putstr(i8* %33)
+	br label %34
 34:
-	br label %35
-35:
-	%36 = load i32, i32* %6
-	%37 = add i32 %36, 1
-	store i32 %37, i32* %6
-	br label %11
-38:
 	ret i32 0
 }
 
