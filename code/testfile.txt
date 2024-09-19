@@ -1,13 +1,11 @@
-char foo(int a) {
-return '1';
+int a = 5;
+int change() {
+    a = 6;
+    return a;
 }
-
-int bar(char c) {
-return -2;
-}
-
 int main() {
-    int x = foo('k');
-    char kk = bar(9856);
+    if (1 || change()) {
+        printf("%f%f%f%d", a);
+    }
     return 0;
 }

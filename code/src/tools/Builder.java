@@ -157,6 +157,15 @@ public class Builder {
         return new BasicBlock();
     }
 
+    public static BrInst buildBrInst(BasicBlock basicBlock, BasicBlock trueBlock) {
+        return new BrInst(basicBlock, trueBlock);
+    }
+
+    public static BrInst buildBrInst(BasicBlock basicBlock, Value cond,
+                                     BasicBlock trueBlock, BasicBlock falseBlock) {
+        return new BrInst(basicBlock, trueBlock, falseBlock, cond);
+    }
+
     public static ConstInt buildConstInt(int val, ValueType intType) {
         int value = val;
         if (intType.equals(IntegerType.i8)) {

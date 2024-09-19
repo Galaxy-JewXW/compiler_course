@@ -1,56 +1,20 @@
 package middle;
 
-import frontend.syntax.Block;
-import frontend.syntax.BlockItem;
 import frontend.syntax.Character;
-import frontend.syntax.CompUnit;
-import frontend.syntax.Decl;
-import frontend.syntax.LVal;
 import frontend.syntax.Number;
-import frontend.syntax.expression.AddExp;
-import frontend.syntax.expression.Cond;
-import frontend.syntax.expression.ConstExp;
-import frontend.syntax.expression.EqExp;
-import frontend.syntax.expression.Exp;
-import frontend.syntax.expression.MulExp;
-import frontend.syntax.expression.PrimaryExp;
-import frontend.syntax.expression.RelExp;
-import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.*;
+import frontend.syntax.expression.*;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.BlockStmt;
-import frontend.syntax.statement.ExpStmt;
-import frontend.syntax.statement.GetcharStmt;
-import frontend.syntax.statement.GetintStmt;
-import frontend.syntax.statement.IfStmt;
-import frontend.syntax.statement.LValExpStmt;
-import frontend.syntax.statement.PrintfStmt;
-import frontend.syntax.statement.ReturnStmt;
-import frontend.syntax.statement.Stmt;
-import frontend.syntax.variable.ConstDecl;
-import frontend.syntax.variable.ConstDef;
-import frontend.syntax.variable.ConstInitVal;
-import frontend.syntax.variable.InitVal;
-import frontend.syntax.variable.VarDecl;
-import frontend.syntax.variable.VarDef;
+import frontend.syntax.statement.*;
+import frontend.syntax.variable.*;
 import frontend.token.TokenType;
-import middle.component.Argument;
-import middle.component.BasicBlock;
-import middle.component.ConstArray;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.Function;
-import middle.component.GlobalVar;
+import middle.component.*;
 import middle.component.instructions.BinaryInst;
 import middle.component.instructions.OperatorType;
 import middle.component.model.Value;
-import middle.component.types.ArrayType;
-import middle.component.types.Assignable;
-import middle.component.types.IntegerType;
-import middle.component.types.PointerType;
-import middle.component.types.ValueType;
-import middle.component.types.VoidType;
+import middle.component.types.*;
 import tools.Builder;
 
 import java.util.ArrayList;
@@ -374,12 +338,45 @@ public class IRVisitor {
         } else if (stmt instanceof PrintfStmt printfStmt) {
             visitPrintfStmt(printfStmt);
         } else if (stmt instanceof IfStmt ifStmt) {
-
+            visitIfStmt(ifStmt);
         }
     }
 
     private void visitIfStmt(IfStmt ifStmt) {
-
+        BasicBlock tempTrueBlock = curTrueBlock;
+        BasicBlock tempFalseBlock = curFalseBlock;
+        if (ifStmt.getStmt2() == null) {
+            BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
+            BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
+            curTrueBlock = trueBlock;
+            curFalseBlock = falseBlock;
+            visitCond(ifStmt.getCond());
+            trueBlock.refill(curFunction);
+            curBlock = trueBlock;
+            visitStmt(ifStmt.getStmt1());
+            Builder.buildBrInst(curBlock, falseBlock);
+            falseBlock.refill(curFunction);
+            curBlock = falseBlock;
+        } else {
+            BasicBlock trueBlock = Builder.buildUnnamedBasicBlock();
+            BasicBlock falseBlock = Builder.buildUnnamedBasicBlock();
+            BasicBlock endBlock = Builder.buildUnnamedBasicBlock();
+            curTrueBlock = trueBlock;
+            curFalseBlock = falseBlock;
+            visitCond(ifStmt.getCond());
+            trueBlock.refill(curFunction);
+            curBlock = trueBlock;
+            visitStmt(ifStmt.getStmt1());
+            Builder.buildBrInst(curBlock, endBlock);
+            falseBlock.refill(curFunction);
+            curBlock = falseBlock;
+            visitStmt(ifStmt.getStmt2());
+            Builder.buildBrInst(curBlock, endBlock);
+            endBlock.refill(curFunction);
+            curBlock = endBlock;
+        }
+        curTrueBlock = tempTrueBlock;
+        curFalseBlock = tempFalseBlock;
     }
 
     private void visitReturnStmt(ReturnStmt returnStmt) {
@@ -425,7 +422,7 @@ public class IRVisitor {
             if (tempString.length() == 1) {
                 args.add(Builder.buildConstInt(tempString.charAt(0), IntegerType.i8));
                 tempValue = Builder.buildCallInst(putCh, args, curBlock);
-            } else {
+            } else if (tempString.length() > 1) {
                 Value strValue = symbolTable.getSymbol(checkStringName(tempString));
                 args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
                 tempValue = Builder.buildCallInst(putStr, args, curBlock);
@@ -463,7 +460,7 @@ public class IRVisitor {
             if (tempString.length() == 1) {
                 args.add(Builder.buildConstInt(tempString.charAt(0), IntegerType.i8));
                 tempValue = Builder.buildCallInst(putCh, args, curBlock);
-            } else {
+            } else if (tempString.length() > 1) {
                 Value strValue = symbolTable.getSymbol(checkStringName(tempString));
                 args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
                 tempValue = Builder.buildCallInst(putStr, args, curBlock);
@@ -516,7 +513,7 @@ public class IRVisitor {
     }
 
     private void visitCond(Cond cond) {
-
+        visitLOrExp(cond.getLOrExp());
     }
 
     private void visitLVal(LVal lVal) {
@@ -740,6 +737,37 @@ public class IRVisitor {
             };
             tempValue = Builder.buildBinaryInst(curValue, op, tempValue, curBlock);
         }
+    }
+
+    private void visitLAndExp(LAndExp lAndExp) {
+        BasicBlock trueBlock = curTrueBlock;
+        BasicBlock falseBlock = curFalseBlock;
+        for (int i = 0; i < lAndExp.getEqExps().size() - 1; i++) {
+            visitEqExp(lAndExp.getEqExps().get(i));
+            BasicBlock thenBlock = Builder.buildBasicBlock(curFunction);
+            Builder.buildBrInst(curBlock, tempValue, thenBlock, curFalseBlock);
+            curBlock = thenBlock;
+        }
+        visitEqExp(lAndExp.getEqExps().get(lAndExp.getEqExps().size() - 1));
+        Builder.buildBrInst(curBlock, tempValue, trueBlock, falseBlock);
+        curTrueBlock = trueBlock;
+        curFalseBlock = falseBlock;
+    }
+
+    // LOrExp只存在在条件表达式Cond里
+    private void visitLOrExp(LOrExp lOrExp) {
+        BasicBlock trueBlock = curTrueBlock;
+        BasicBlock falseBlock = curFalseBlock;
+        for (int i = 0; i < lOrExp.getlAndExps().size() - 1; i++) {
+            BasicBlock thenBlock = Builder.buildUnnamedBasicBlock();
+            curFalseBlock = thenBlock;
+            visitLAndExp(lOrExp.getlAndExps().get(i));
+            thenBlock.refill(curFunction);
+            curBlock = thenBlock;
+        }
+        curTrueBlock = trueBlock;
+        curFalseBlock = falseBlock;
+        visitLAndExp(lOrExp.getlAndExps().get(lOrExp.getlAndExps().size() - 1));
     }
 
     private void visitConstExp(ConstExp constExp) {
