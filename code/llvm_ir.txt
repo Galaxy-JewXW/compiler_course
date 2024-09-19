@@ -3,10 +3,24 @@ declare i32 @getchar()
 declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
-@s = dso_local global [3 x i8] [i8 39, i8 39, i8 39]
 
 define dso_local i32 @main() {
 0:
-	ret i32 0
+	%1 = alloca i32
+	%2 = alloca i32
+	store i32 1, i32* %2
+	%3 = load i32, i32* %2
+	%4 = icmp sgt i32 %3, 0
+	br i1 %4, label %5, label %6
+5:
+	store i32 1, i32* %1
+	br label %8
+6:
+	%7 = sub i32 0, 1
+	store i32 %7, i32* %1
+	br label %8
+8:
+	%9 = load i32, i32* %1
+	ret i32 %9
 }
 

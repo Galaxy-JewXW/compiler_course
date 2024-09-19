@@ -19,6 +19,9 @@ public class BasicBlock extends Value {
     private HashSet<BasicBlock> dominantees = null;
     // 被直接支配的基本块
     private BasicBlock immediateDominator = null;
+    // 支配边界
+    private HashSet<BasicBlock> dominantFrontier = new HashSet<>();
+    // 自身直接支配的基本块
     private HashSet<BasicBlock> immediateDominants = new HashSet<>();
     private boolean isTerminated = false;
 
@@ -87,9 +90,21 @@ public class BasicBlock extends Value {
         return dominantees.contains(block) && !block.equals(this);
     }
 
+    public BasicBlock getImmediateDominator() {
+        return immediateDominator;
+    }
+
     public void setImmediateDominator(BasicBlock immediateDominator) {
         this.immediateDominator = immediateDominator;
         immediateDominator.immediateDominants.add(this);
+    }
+
+    public void addDominantFrontier(BasicBlock frontier) {
+        dominantFrontier.add(frontier);
+    }
+
+    public HashSet<BasicBlock> getDominantFrontier() {
+        return dominantFrontier;
     }
 
     // 当有新的变量引入时，需要跳转到之后还未构建的基本块，进行重填

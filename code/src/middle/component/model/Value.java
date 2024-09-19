@@ -43,6 +43,10 @@ public class Value {
         uses.add(use);
     }
 
+    public ArrayList<Use> getUses() {
+        return uses;
+    }
+
     @Override
     public String toString() {
         return valueType.toString() + " " + name;

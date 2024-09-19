@@ -21,6 +21,10 @@ public class AllocInst extends MemInst {
         this.allocType = allocType;
     }
 
+    public ValueType getAllocType() {
+        return allocType;
+    }
+
     @Override
     public String toString() {
         return getName() + " = alloca " + allocType;
