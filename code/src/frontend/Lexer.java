@@ -65,6 +65,9 @@ public class Lexer {
     private int line = 1;
 
     public Lexer(String inputString) {
+        if (inputString == null) {
+            throw new IllegalArgumentException("Input string cannot be null");
+        }
         this.inputString = inputString;
     }
 
@@ -87,13 +90,14 @@ public class Lexer {
         type = null;
         char c = inputString.charAt(pos);
         if (isIdHead(c)) {
-            while (isIdHead(inputString.charAt(pos)) || Character.isDigit(inputString.charAt(pos))) {
+            while (pos < inputString.length() && (isIdHead(inputString.charAt(pos))
+                    || Character.isDigit(inputString.charAt(pos)))) {
                 addChar();
             }
             type = reservedMap.getOrDefault(curToken.toString(), TokenType.IDENFR);
         } else if (Character.isDigit(c)) {
             type = TokenType.INTCON;
-            while (Character.isDigit(inputString.charAt(pos))) {
+            while (pos < inputString.length() && Character.isDigit(inputString.charAt(pos))) {
                 addChar();
             }
         } else if (c == '\"') {
@@ -116,7 +120,8 @@ public class Lexer {
             // 此时可能是一个符号或两个符号组成单元，需要进一步判断
             getCmpOrAgn(c);
         } else {
-            throw new RuntimeException("Unrecognized character: " + c);
+            throw new RuntimeException("Unrecognized character: " + c + " at line "
+                    + line + ", position " + pos);
         }
         return true;
     }
@@ -146,28 +151,44 @@ public class Lexer {
 
     private void getConstString() {
         type = TokenType.STRCON;
-        do {
+        addChar(); // 开始的双引号
+        while (pos < inputString.length() && inputString.charAt(pos) != '\"') {
             if (inputString.charAt(pos) == '\\') {
-                addChar();
+                addChar(); // 转义字符
+            }
+            if (pos >= inputString.length()) {
+                throw new RuntimeException("Unexpected end of string at line " + line);
             }
             addChar();
-        } while (inputString.charAt(pos) != '\"');
-        addChar();
+        }
+        if (pos < inputString.length()) {
+            addChar(); // 结束的双引号
+        } else {
+            throw new RuntimeException("Unterminated string at line " + line);
+        }
     }
 
     private void getConstChar() {
         type = TokenType.CHRCON;
         addChar(); // 第一个单引号
-        if (inputString.charAt(pos) == '\\') {
-            addChar();
+        if (pos < inputString.length()) {
+            if (inputString.charAt(pos) == '\\') {
+                addChar(); // 转义字符
+            }
+            addChar(); // 字符本身
+        } else {
+            throw new RuntimeException("Unexpected end of char constant at line " + line);
         }
-        addChar();
-        addChar(); // 第二个单引号
+        if (pos < inputString.length() && inputString.charAt(pos) == '\'') {
+            addChar(); // 第二个单引号
+        } else {
+            throw new RuntimeException("Unterminated char constant at line " + line);
+        }
     }
 
     private void getNot() {
         addChar();
-        if (inputString.charAt(pos) == '=') {
+        if (pos < inputString.length() && inputString.charAt(pos) == '=') {
             addChar();
             type = TokenType.NEQ;
         } else {
@@ -175,71 +196,81 @@ public class Lexer {
         }
     }
 
-    /**
-     * 非法符号，指出现了 '&' 和 '|' 这两个符号，应该将其当做 '&&' 与 '||' 进行处理
-     * 但是在记录单词名称的时候仍记录'&'和'|'，报错行号为'&'和'|'所在的行号
-     */
-
     private void getAnd() {
         addChar();
         type = TokenType.AND;
-        if (inputString.charAt(pos) == '&') {
+        if (pos < inputString.length() && inputString.charAt(pos) == '&') {
             addChar();
         } else {
-            pos++;
-            ErrorHandler.getInstance().addError(
-                    new Error(ErrorType.IllegalSymbol, line));
+            ErrorHandler.getInstance().addError(new Error(ErrorType.IllegalSymbol, line));
         }
     }
 
     private void getOr() {
         addChar();
         type = TokenType.OR;
-        if (inputString.charAt(pos) == '|') {
+        if (pos < inputString.length() && inputString.charAt(pos) == '|') {
             addChar();
         } else {
-            pos++;
-            ErrorHandler.getInstance().addError(
-                    new Error(ErrorType.IllegalSymbol, line));
+            ErrorHandler.getInstance().addError(new Error(ErrorType.IllegalSymbol, line));
         }
     }
 
     private boolean getDivOrCmt() {
-        if (inputString.charAt(pos + 1) == '/') {
-            while (inputString.charAt(pos) != '\n') {
-                pos++;
+        if (pos + 1 < inputString.length()) {
+            if (inputString.charAt(pos + 1) == '/') {
+                while (pos < inputString.length() && inputString.charAt(pos) != '\n') {
+                    pos++;
+                }
+                return hasNext();
+            } else if (inputString.charAt(pos + 1) == '*') {
+                pos += 2;
+                int commentStartLine = line;
+                int commentLevel = 1;
+                while (pos + 1 < inputString.length() && commentLevel > 0) {
+                    if (inputString.charAt(pos) == '*' && inputString.charAt(pos + 1) == '/') {
+                        commentLevel--;
+                        pos += 2;
+                    } else if (inputString.charAt(pos) == '/' && inputString.charAt(pos + 1) == '*') {
+                        commentLevel++;
+                        pos += 2;
+                    } else {
+                        if (inputString.charAt(pos) == '\n') {
+                            line++;
+                        }
+                        pos++;
+                    }
+                }
+                if (commentLevel > 0) {
+                    throw new RuntimeException("Unterminated comment starting at line "
+                            + commentStartLine);
+                }
+                return hasNext();
             }
-            return hasNext();
-        } else if (inputString.charAt(pos + 1) == '*') {
-            pos += 2;
-            while (!(inputString.charAt(pos) == '*' && inputString.charAt(pos + 1) == '/')) {
-                pos++;
-            }
-            pos += 2;
-            return hasNext();
-        } else {
-            addChar();
-            type = TokenType.DIV;
-            return true;
         }
+        addChar();
+        type = TokenType.DIV;
+        return true;
     }
 
     private void getCmpOrAgn(char ch) {
         addChar();
-        if (inputString.charAt(pos) == '=') {
+        if (pos < inputString.length() && inputString.charAt(pos) == '=') {
             addChar();
             switch (ch) {
                 case '<' -> type = TokenType.LEQ;
                 case '>' -> type = TokenType.GEQ;
                 case '=' -> type = TokenType.EQL;
-                default -> throw new RuntimeException();
+                default -> throw new RuntimeException("Unexpected character combination " +
+                        "at line " + line);
             }
         } else {
             switch (ch) {
                 case '<' -> type = TokenType.LSS;
                 case '>' -> type = TokenType.GRE;
                 case '=' -> type = TokenType.ASSIGN;
-                default -> throw new RuntimeException();
+                default -> throw new RuntimeException("Unexpected character " +
+                        "at line " + line);
             }
         }
     }
