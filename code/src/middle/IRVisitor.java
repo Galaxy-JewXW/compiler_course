@@ -445,7 +445,24 @@ public class IRVisitor {
     private void visitReturnStmt(ReturnStmt returnStmt) {
         if (returnStmt.getExp() != null) {
             visitExp(returnStmt.getExp());
-            Builder.buildRetInst(curBlock, tempValue);
+            Value returnValue = tempValue;
+            FunctionType functionType = (FunctionType) curFunction.getValueType();
+            if (returnValue.getValueType().equals(IntegerType.i8)
+                    && functionType.getReturnType().equals(IntegerType.i32)) {
+                if (returnValue instanceof ConstInt constInt) {
+                    returnValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i32);
+                } else {
+                    returnValue = Builder.buildZextInst(returnValue, IntegerType.i32, curBlock);
+                }
+            } else if (returnValue.getValueType().equals(IntegerType.i32)
+                    && functionType.getReturnType().equals(IntegerType.i8)) {
+                if (returnValue instanceof ConstInt constInt) {
+                    returnValue = Builder.buildConstInt(constInt.getIntValue(), IntegerType.i8);
+                } else {
+                    returnValue = Builder.buildTruncInst(returnValue, IntegerType.i8, curBlock);
+                }
+            }
+            Builder.buildRetInst(curBlock, returnValue);
         } else {
             Builder.buildRetInst(curBlock);
         }
