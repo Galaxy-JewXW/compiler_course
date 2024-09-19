@@ -11,6 +11,7 @@ public class Optimizer {
 
     public void optimize() {
         UnusedBasicBlock.build(module);
+        Mem2Reg.build(module);
         SlotTracker.build(module);
     }
 }
