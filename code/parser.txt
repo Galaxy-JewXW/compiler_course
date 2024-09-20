@@ -1,15 +1,124 @@
+CONSTTK const
+INTTK int
+IDENFR N
+ASSIGN =
+INTCON 10
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
+INTTK int
+IDENFR a
+LBRACK [
+INTCON 10
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+INTCON 0
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 5
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 6
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 7
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 8
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+COMMA ,
+INTCON 9
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACE }
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
 INTTK int
 MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
 INTTK int
-IDENFR x
-<VarDef>
-COMMA ,
-IDENFR cond
+IDENFR i
 ASSIGN =
-INTCON 1
+INTCON 2
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -20,17 +129,18 @@ INTCON 1
 <VarDef>
 SEMICN ;
 <VarDecl>
-IFTK if
+FORTK for
 LPARENT (
-IDENFR cond
+SEMICN ;
+IDENFR i
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <RelExp>
-GRE >
-INTCON 0
+LEQ <=
+INTCON 100
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -41,34 +151,22 @@ INTCON 0
 <LAndExp>
 <LOrExp>
 <Cond>
+SEMICN ;
 RPARENT )
 LBRACE {
-IDENFR x
+IDENFR i
 <LVal>
 ASSIGN =
-INTCON 1
-<Number>
+IDENFR i
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
-ELSETK else
-LBRACE {
-IDENFR x
-<LVal>
-ASSIGN =
-MINU -
-<UnaryOp>
+PLUS +
 INTCON 1
 <Number>
 <PrimaryExp>
-<UnaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
@@ -80,8 +178,8 @@ RBRACE }
 <Stmt>
 <Stmt>
 RETURNTK return
-IDENFR x
-<LVal>
+INTCON 0
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

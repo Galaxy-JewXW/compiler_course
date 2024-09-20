@@ -19,4 +19,15 @@ public class User extends Value {
         operands.add(operand);
         operand.addUse(new Use(operand, this, operands.size() - 1));
     }
+
+    public void deleteUse() {
+        for (Value value : operands) {
+            value.deleteUser(this);
+        }
+        this.operands.clear();
+    }
+
+    public void replaceValue(Value newValue, int index) {
+        operands.set(index, newValue);
+    }
 }

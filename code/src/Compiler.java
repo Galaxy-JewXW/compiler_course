@@ -29,16 +29,19 @@ public class Compiler {
         Lexer lexer = new Lexer(inputString);
         ArrayList<Token> tokens = lexer.tokenize();
         Printer.printTokens(tokens, lexerOutput);
+        System.out.println("lexer complete");
 
         // 语法分析部分
         // compUnit是源程序所生成的语法树的根节点
         Parser parser = new Parser(tokens);
         CompUnit compUnit = parser.parse();
         Printer.printCompUnit(compUnit, parserOutput);
+        System.out.println("parser complete");
 
         // 语义分析，建立符号表
         Visitor visitor = new Visitor(compUnit);
         visitor.visit();
+        System.out.println("visitor complete");
 
         // 异常处理
         Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);
@@ -50,11 +53,11 @@ public class Compiler {
         IRVisitor irVisitor = new IRVisitor(compUnit);
         irVisitor.build();
         Printer.printLLVM(Module.getInstance(), llvmOutput);
+        System.out.println("ir visitor complete");
 
         // 代码优化
         Optimizer optimizer = new Optimizer(Module.getInstance());
         optimizer.optimize();
-
         Printer.printLLVM(Module.getInstance(), irOutput);
     }
 }

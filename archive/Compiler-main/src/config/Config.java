@@ -15,7 +15,7 @@ public class Config {
     public static boolean checkError = true;
     public static boolean genLLVM = true;
     public static boolean genMIPS = true;
-    public static boolean optimize = false;
+    public static boolean optimize =true;
     public static boolean char2str = true;
 
     public static void setOutLLVM(String path) {

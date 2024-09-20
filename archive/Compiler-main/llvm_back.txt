@@ -1,24 +1,22 @@
 declare i32 @getint()
-declare i32 @getchar()
 declare void @putint(i32)
-declare void @putch(i8)
+declare void @putch(i32)
 declare void @putstr(i8*)
 @N = dso_local constant i32 10
 @a = dso_local global [10 x i32] [i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9]
-
 define dso_local i32 @main() {
 0:
-	br label %1
-1:
-	%2 = phi i32 [ 2, %0 ], [ %2, %6 ], [ %5, %6 ]
-	%3 = icmp sle i32 %2, 100
-	br i1 %3, label %4, label %7
-4:
-	%5 = add i32 %2, 1
-	br label %6
-6:
-	br label %1
-7:
+	move %10 <- 2
+	br label %2
+2:
+	%4 = icmp sle i32 %10, 100
+	br i1 %4, label %5, label %9
+5:
+	%7 = add i32 %10, 1
+	br label %8
+8:
+	move %10 <- %7
+	br label %2
+9:
 	ret i32 0
 }
-

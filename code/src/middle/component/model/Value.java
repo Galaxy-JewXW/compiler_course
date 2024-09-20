@@ -47,6 +47,18 @@ public class Value {
         return uses;
     }
 
+    public void deleteUser(User user) {
+        uses.removeIf(use -> use.getUser() == user);
+    }
+
+    public void replace(Value newValue) {
+        for (Use use : uses) {
+            use.getUser().replaceValue(newValue, use.getPos());
+            use.setValue(newValue);
+            newValue.addUse(use);
+        }
+    }
+
     @Override
     public String toString() {
         return valueType.toString() + " " + name;

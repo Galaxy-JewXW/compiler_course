@@ -1,6 +1,7 @@
 package middle.component.instructions;
 
 import middle.component.BasicBlock;
+import middle.component.model.Value;
 import middle.component.types.ValueType;
 
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ public class PhiInst extends MemInst {
         setName("%" + allocIdCount());
     }
 
-    public void addBlock(BasicBlock block) {
+    public void addValue(BasicBlock block, Value value) {
         blocks.add(block);
-        addOperand(block);
+        addOperand(value);
     }
 
     public ArrayList<BasicBlock> getBlocks() {

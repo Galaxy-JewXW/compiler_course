@@ -94,6 +94,10 @@ public class BasicBlock extends Value {
         return immediateDominator;
     }
 
+    public HashSet<BasicBlock> getImmediateDominants() {
+        return immediateDominants;
+    }
+
     public void setImmediateDominator(BasicBlock immediateDominator) {
         this.immediateDominator = immediateDominator;
         immediateDominator.immediateDominants.add(this);

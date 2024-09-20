@@ -3,21 +3,20 @@ package optimize;
 import middle.Module;
 import middle.component.BasicBlock;
 import middle.component.Function;
-import middle.component.instructions.AllocInst;
-import middle.component.instructions.Instruction;
-import middle.component.instructions.LoadInst;
-import middle.component.instructions.PhiInst;
-import middle.component.instructions.StoreInst;
+import middle.component.NullValue;
+import middle.component.instructions.*;
 import middle.component.model.Use;
 import middle.component.model.Value;
 import middle.component.types.IntegerType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Stack;
 
 public class Mem2Reg {
     // 当前正在处理的分配指令
-    private static Instruction curAllocInst;
+    private static AllocInst curAllocInst;
     // 所有使用当前变量的指令
     private static HashSet<Instruction> varUses;
     // 所有定义当前变量的指令
@@ -36,11 +35,15 @@ public class Mem2Reg {
         for (Function function : module.getFunctions()) {
             BasicBlock first = function.getBasicBlocks().get(0);
             for (BasicBlock block : function.getBasicBlocks()) {
-                for (Instruction instruction : block.getInstructions()) {
+                ArrayList<Instruction> tempList = new ArrayList<>(block.getInstructions());
+                // 同时进行遍历与修改，防止异常
+                for (Instruction instruction : tempList) {
                     if (instruction instanceof AllocInst allocInst
                             && (allocInst.getAllocType().equals(IntegerType.i32)
                             || (allocInst.getAllocType().equals(IntegerType.i8)))) {
-                        makeInfo(instruction);
+                        makeInfo(allocInst);
+                        insertPhiInst();
+                        rename(first);
                     }
                 }
             }
@@ -126,13 +129,13 @@ public class Mem2Reg {
         }
     }
 
-    private static void makeInfo(Instruction instruction) {
-        curAllocInst = instruction;
+    private static void makeInfo(AllocInst allocInst) {
+        curAllocInst = allocInst;
         varUses = new HashSet<>();
         varDefs = new HashSet<>();
         defBlocks = new HashSet<>();
         reachDef = new Stack<>();
-        for (Use use : instruction.getUses()) {
+        for (Use use : allocInst.getUses()) {
             Instruction user = (Instruction) use.getUser();
             if (user instanceof StoreInst) {
                 // store定义了变量的新值
@@ -155,6 +158,7 @@ public class Mem2Reg {
             BasicBlock x = w.pop();
             for (BasicBlock y : x.getDominantFrontier()) {
                 if (!f.contains(y)) {
+                    insertPhiInstToBlock(y);
                     f.add(y);
                     if (!defBlocks.contains(y)) {
                         w.push(y);
@@ -165,10 +169,53 @@ public class Mem2Reg {
     }
 
     private static void insertPhiInstToBlock(BasicBlock block) {
-        PhiInst phiInst = new PhiInst(IntegerType.i32);
+        PhiInst phiInst = new PhiInst(curAllocInst.getAllocType());
         phiInst.setBasicBlock(block);
         block.getInstructions().add(0, phiInst);
         varUses.add(phiInst);
         varDefs.add(phiInst);
+    }
+
+    private static void rename(BasicBlock firstBlock) {
+        Iterator<Instruction> iter = firstBlock.getInstructions().iterator();
+        int cnt = 0;
+        while (iter.hasNext()) {
+            Instruction instruction = iter.next();
+            // 直接移除当前的alloc指令
+            if (instruction.equals(curAllocInst)) {
+                iter.remove();
+            } else if (instruction instanceof StoreInst storeInst
+                    && varDefs.contains(instruction)) {
+                reachDef.push(storeInst.getStoreValue());
+                cnt++;
+                storeInst.deleteUse();
+                iter.remove();
+            } else if (instruction instanceof LoadInst loadInst
+                    && varUses.contains(instruction)) {
+                Value newDef = reachDef.isEmpty() ? new NullValue() : reachDef.peek();
+                // 用新值来替换原来的load
+                loadInst.replace(newDef);
+                loadInst.deleteUse();
+                iter.remove();
+            } else if (instruction instanceof PhiInst phiInst
+                    && varDefs.contains(instruction)) {
+                reachDef.push(phiInst);
+                cnt++;
+            }
+        }
+        for (BasicBlock block : firstBlock.getNextBlocks()) {
+            Instruction firstInstruction = block.getInstructions().get(0);
+            if (firstInstruction instanceof PhiInst phiInst
+                    && varUses.contains(phiInst)) {
+                Value newValue = reachDef.isEmpty() ? new NullValue() : reachDef.peek();
+                phiInst.addValue(firstBlock, newValue);
+            }
+        }
+        for (BasicBlock block : firstBlock.getImmediateDominants()) {
+            rename(block);
+        }
+        for (int i = 0; i < cnt; i++) {
+            reachDef.pop();
+        }
     }
 }

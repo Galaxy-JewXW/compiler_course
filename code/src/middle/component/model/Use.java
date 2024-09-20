@@ -19,6 +19,10 @@ public class Use {
         return user;
     }
 
+    public void setValue(Value value) {
+        this.value = value;
+    }
+
     public int getPos() {
         return pos;
     }
