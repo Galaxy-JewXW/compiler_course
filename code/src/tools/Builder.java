@@ -1,10 +1,28 @@
 package tools;
 
 import frontend.token.TokenType;
-import middle.component.*;
-import middle.component.instructions.*;
+import middle.component.BasicBlock;
+import middle.component.ConstArray;
+import middle.component.ConstInt;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.instructions.AllocInst;
+import middle.component.instructions.BinaryInst;
+import middle.component.instructions.BrInst;
+import middle.component.instructions.CallInst;
+import middle.component.instructions.GepInst;
+import middle.component.instructions.LoadInst;
+import middle.component.instructions.OperatorType;
+import middle.component.instructions.RetInst;
+import middle.component.instructions.StoreInst;
+import middle.component.instructions.TruncInst;
+import middle.component.instructions.ZextInst;
 import middle.component.model.Value;
-import middle.component.types.*;
+import middle.component.types.ArrayType;
+import middle.component.types.FunctionType;
+import middle.component.types.IntegerType;
+import middle.component.types.PointerType;
+import middle.component.types.ValueType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,6 +95,11 @@ public class Builder {
         ArrayList<Value> indexes = new ArrayList<>();
         indexes.add(ConstInt.i32ZERO);
         indexes.add(index);
+        return new GepInst(pointerBase, indexes, basicBlock);
+    }
+
+    public static GepInst buildGEPInst(Value pointerBase, ArrayList<Value> indexes,
+                                       BasicBlock basicBlock) {
         return new GepInst(pointerBase, indexes, basicBlock);
     }
 

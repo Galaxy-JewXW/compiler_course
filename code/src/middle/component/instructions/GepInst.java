@@ -23,7 +23,9 @@ public class GepInst extends MemInst {
 
     private static ValueType preWork(Value pointer) {
         ValueType type = ((PointerType) pointer.getValueType()).getTargetType();
-        type = ((ArrayType) type).getElementType();
+        if (type instanceof ArrayType arrayType) {
+            type = arrayType.getElementType();
+        }
         return type;
     }
 

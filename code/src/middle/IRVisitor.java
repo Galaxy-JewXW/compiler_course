@@ -1,20 +1,63 @@
 package middle;
 
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
 import frontend.syntax.Character;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
 import frontend.syntax.Number;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.ConstExp;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.ConstInitVal;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
-import middle.component.*;
+import middle.component.Argument;
+import middle.component.BasicBlock;
+import middle.component.ConstArray;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.Function;
+import middle.component.GlobalVar;
 import middle.component.instructions.BinaryInst;
 import middle.component.instructions.OperatorType;
 import middle.component.model.Value;
-import middle.component.types.*;
+import middle.component.types.ArrayType;
+import middle.component.types.Assignable;
+import middle.component.types.FunctionType;
+import middle.component.types.IntegerType;
+import middle.component.types.PointerType;
+import middle.component.types.ValueType;
+import middle.component.types.VoidType;
 import tools.Builder;
 
 import java.util.ArrayList;
@@ -661,12 +704,15 @@ public class IRVisitor {
                 if (!(((PointerType) pointer.getValueType()).getTargetType() instanceof ArrayType)) {
                     tempValue = Builder.buildLoadInst(pointer, curBlock);
                 } else {
-                    throw new RuntimeException("Shouldn't reach here");
+                    tempValue = Builder.buildGEPInst(pointer, ConstInt.i32ZERO, curBlock);
                 }
             } else {
+                Value curPointer = Builder.buildLoadInst(pointer, curBlock);
                 visitExp(lVal.getExp());
-                Value pos = Builder.buildGEPInst(pointer, tempValue, curBlock);
-                tempValue = Builder.buildLoadInst(pos, curBlock);
+                ArrayList<Value> indexes = new ArrayList<>();
+                indexes.add(tempValue);
+                curPointer = Builder.buildGEPInst(curPointer, indexes, curBlock);
+                tempValue = Builder.buildLoadInst(curPointer, curBlock);
             }
         }
     }
