@@ -22,6 +22,10 @@ public class CallInst extends Instruction implements Assignable {
         }
     }
 
+    public Function getFunction() {
+        return (Function) getOperands().get(0);
+    }
+
     public String getCallee() {
         StringJoiner sj = new StringJoiner(", ", "@" + getOperands().get(0).getName() + "(", ")");
         ArrayList<Value> operands = getOperands();

@@ -11,12 +11,13 @@ import java.util.StringJoiner;
 public class Function extends Value {
     private final ArrayList<Argument> arguments = new ArrayList<>();
     private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
+    private boolean hasSideEffect = false;
     private final boolean isBuiltIn;
 
     public Function(String name, ValueType valueType, boolean isBuiltIn) {
         super(name, valueType);
-        resetIdCount();
         this.isBuiltIn = isBuiltIn;
+        resetIdCount();
         for (ValueType type : ((FunctionType) getValueType()).getParametersTypes()) {
             this.arguments.add(new Argument(type));
         }
@@ -35,6 +36,18 @@ public class Function extends Value {
 
     public void addBasicBlock(BasicBlock basicBlock) {
         basicBlocks.add(basicBlock);
+    }
+
+    public boolean hasSideEffect() {
+        return hasSideEffect;
+    }
+
+    public void setHasSideEffect(boolean hasSideEffect) {
+        this.hasSideEffect = hasSideEffect;
+    }
+
+    public boolean isBuiltIn() {
+        return isBuiltIn;
     }
 
     public void toLLVM() {
