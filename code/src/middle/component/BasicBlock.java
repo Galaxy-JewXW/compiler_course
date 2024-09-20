@@ -15,14 +15,15 @@ public class BasicBlock extends Value {
     private final ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
     // 后继基本块的集合
     private final ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
-    // 支配的基本块的集合
-    private HashSet<BasicBlock> dominantees = null;
+    // 自身支配的基本块的集合
+    private HashSet<BasicBlock> dominatedBlocks = null;
     // 被直接支配的基本块
     private BasicBlock immediateDominator = null;
     // 支配边界
-    private HashSet<BasicBlock> dominantFrontier = new HashSet<>();
+    private HashSet<BasicBlock> dominanceFrontier = new HashSet<>();
     // 自身直接支配的基本块
-    private HashSet<BasicBlock> immediateDominants = new HashSet<>();
+    // 区分 支配 和 直接支配
+    private HashSet<BasicBlock> immediateDominatedBlocks = new HashSet<>();
     private boolean isTerminated = false;
 
     public BasicBlock(Function function) {
@@ -68,47 +69,47 @@ public class BasicBlock extends Value {
         nextBlocks.add(nextBlock);
     }
 
-    public void setDominantees(HashSet<BasicBlock> dominantees) {
-        this.dominantees = dominantees;
+    public void setDominatedBlocks(HashSet<BasicBlock> dominatedBlocks) {
+        this.dominatedBlocks = dominatedBlocks;
     }
 
-    public HashSet<BasicBlock> getDominantees() {
-        return dominantees;
+    public HashSet<BasicBlock> getDominatedBlocks() {
+        return dominatedBlocks;
     }
 
     public boolean dominant(BasicBlock block) {
-        if (dominantees == null) {
-            throw new IllegalStateException("dominantees not set");
+        if (dominatedBlocks == null) {
+            throw new IllegalStateException("dominatedBlocks not set");
         }
-        return dominantees.contains(block);
+        return dominatedBlocks.contains(block);
     }
 
     public boolean strictDominant(BasicBlock block) {
-        if (dominantees == null) {
-            throw new IllegalStateException("dominantees not set");
+        if (dominatedBlocks == null) {
+            throw new IllegalStateException("dominatedBlocks not set");
         }
-        return dominantees.contains(block) && !block.equals(this);
+        return dominatedBlocks.contains(block) && !block.equals(this);
     }
 
     public BasicBlock getImmediateDominator() {
         return immediateDominator;
     }
 
-    public HashSet<BasicBlock> getImmediateDominants() {
-        return immediateDominants;
+    public HashSet<BasicBlock> getImmediateDominatedBlocks() {
+        return immediateDominatedBlocks;
     }
 
     public void setImmediateDominator(BasicBlock immediateDominator) {
         this.immediateDominator = immediateDominator;
-        immediateDominator.immediateDominants.add(this);
+        immediateDominator.immediateDominatedBlocks.add(this);
     }
 
     public void addDominantFrontier(BasicBlock frontier) {
-        dominantFrontier.add(frontier);
+        dominanceFrontier.add(frontier);
     }
 
-    public HashSet<BasicBlock> getDominantFrontier() {
-        return dominantFrontier;
+    public HashSet<BasicBlock> getDominanceFrontier() {
+        return dominanceFrontier;
     }
 
     // 当有新的变量引入时，需要跳转到之后还未构建的基本块，进行重填

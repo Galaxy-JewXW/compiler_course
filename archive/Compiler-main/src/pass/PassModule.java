@@ -17,6 +17,6 @@ public class PassModule {
         // new DelDeadCode(irModule).run();
         // new LVN(irModule).run();
         // new DelDeadCode(irModule).run();
-        // irModule.refreshName();
+        irModule.refreshName();
     }
 }

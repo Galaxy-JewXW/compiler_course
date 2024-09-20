@@ -3,7 +3,7 @@ package optimize;
 import middle.Module;
 import middle.component.BasicBlock;
 import middle.component.Function;
-import middle.component.NullValue;
+import middle.component.UndefinedValue;
 import middle.component.instructions.*;
 import middle.component.model.Use;
 import middle.component.model.Value;
@@ -28,108 +28,97 @@ public class Mem2Reg {
 
     public static void build(Module module) {
         for (Function function : module.getFunctions()) {
-            getJoinSet(function);
-            runImmediateDominator(function);
-            getDominanceFrontier(function);
-        }
-        for (Function function : module.getFunctions()) {
-            BasicBlock first = function.getBasicBlocks().get(0);
-            for (BasicBlock block : function.getBasicBlocks()) {
-                ArrayList<Instruction> tempList = new ArrayList<>(block.getInstructions());
-                // 同时进行遍历与修改，防止异常
-                for (Instruction instruction : tempList) {
-                    if (instruction instanceof AllocInst allocInst
-                            && (allocInst.getAllocType().equals(IntegerType.i32)
-                            || (allocInst.getAllocType().equals(IntegerType.i8)))) {
-                        makeInfo(allocInst);
-                        insertPhiInst();
-                        rename(first);
-                    }
-                }
-            }
+            analyze(function);
+            transform(function);
         }
     }
 
-    private static void getJoinSet(Function function) {
-        // 计算函数中每个基本块的支配关系
-        getDominance(function);
+    // 对函数的基本块进行支配分析
+    private static void analyze(Function function) {
+        calculateDominators(function);
+        calculateAllImmediateDominators(function);
+        calculateDominanceFrontier(function);
     }
 
-    // 由CFG构建支配关系
-    private static void getDominance(Function function) {
-        BasicBlock firstBlock = function.getBasicBlocks().get(0);
-        for (BasicBlock targetBlock : function.getBasicBlocks()) {
+    // 计算函数中每个基本块的支配者
+    private static void calculateDominators(Function function) {
+        BasicBlock entryBlock = function.getBasicBlocks().get(0);
+        for (BasicBlock target : function.getBasicBlocks()) {
             HashSet<BasicBlock> visited = new HashSet<>();
-            visit(firstBlock, targetBlock, visited);
-            HashSet<BasicBlock> dominatee = new HashSet<>();
-            for (BasicBlock block : function.getBasicBlocks()) {
-                if (!visited.contains(block)) {
-                    dominatee.add(block);
-                }
-            }
-            targetBlock.setDominantees(dominatee);
+            dfs(target, entryBlock, visited);
+            HashSet<BasicBlock> dominatedBlocks =
+                    new HashSet<>(function.getBasicBlocks());
+            dominatedBlocks.removeAll(visited);
+            target.setDominatedBlocks(dominatedBlocks);
         }
     }
 
-    private static void visit(BasicBlock block, BasicBlock target, HashSet<BasicBlock> visited) {
-        if (target.equals(block)) {
+    // dfs搜索所有不被target支配的基本块
+    private static void dfs(BasicBlock target, BasicBlock curBlock, HashSet<BasicBlock> visited) {
+        if (curBlock.equals(target)) {
             return;
         }
-        visited.add(block);
-        for (BasicBlock basicBlock : block.getNextBlocks()) {
-            if (!visited.contains(basicBlock)) {
-                visit(basicBlock, target, visited);
+        visited.add(curBlock);
+        for (BasicBlock next : curBlock.getNextBlocks()) {
+            if (!visited.contains(next)) {
+                dfs(target, next, visited);
             }
         }
     }
 
-    private static void runImmediateDominator(Function function) {
-        for (BasicBlock basicBlock : function.getBasicBlocks()) {
-            getImmediateDominator(basicBlock);
-        }
-    }
-
-    // 计算直接支配者
-    private static void getImmediateDominator(BasicBlock basicBlock) {
-        // 创建一个新的集合，包含所有被basicBlock支配的基本块
-        // 使用HashSet提高查找效率
-        HashSet<BasicBlock> dominantees = new HashSet<>(basicBlock.getDominantees());
-        // 从集合中移除basicBlock自身，因为一个块不能是自己的直接支配者
-        dominantees.remove(basicBlock);
-        // 遍历所有被basicBlock支配的基本块
-        for (BasicBlock block : dominantees) {
-            // 初始化immediateDOM为basicBlock
-            BasicBlock immediateDOM = basicBlock;
-            // 在所有被支配的块中寻找最接近的支配者
-            for (BasicBlock potentialIdom : dominantees) {
-                // 跳过block自身，并检查potentialIdom是否支配block
-                if (potentialIdom != block && potentialIdom.dominant(block)) {
-                    // 如果immediateDOM仍为basicBlock，或者potentialIdom支配当前的immediateDOM
-                    // 则更新immediateDOM为potentialIdom
-                    if (immediateDOM == basicBlock || potentialIdom.dominant(immediateDOM)) {
-                        immediateDOM = potentialIdom;
+    private static void calculateAllImmediateDominators(Function function) {
+        for (BasicBlock dominator : function.getBasicBlocks()) {
+            for (BasicBlock block : dominator.getDominatedBlocks()) {
+                if (block.equals(dominator)) {
+                    continue;
+                }
+                boolean isImmediateDominator = true;
+                for (BasicBlock otherBlock : dominator.getDominatedBlocks()) {
+                    if (otherBlock.equals(dominator)) {
+                        continue;
+                    }
+                    if (otherBlock.strictDominant(block)) {
+                        isImmediateDominator = false;
+                        break;
                     }
                 }
-            }
-            // 设置找到的最接近的支配者为block的直接支配者
-            block.setImmediateDominator(immediateDOM);
-        }
-    }
-
-    // 计算支配边界
-    private static void getDominanceFrontier(Function function) {
-        for (BasicBlock basicBlock : function.getBasicBlocks()) {
-            for (BasicBlock basicBlock1 : basicBlock.getNextBlocks()) {
-                BasicBlock block = basicBlock;
-                while (!block.strictDominant(basicBlock1)) {
-                    block.addDominantFrontier(basicBlock1);
-                    block = block.getImmediateDominator();
+                if (isImmediateDominator) {
+                    block.setImmediateDominator(dominator);
                 }
             }
         }
     }
 
-    private static void makeInfo(AllocInst allocInst) {
+    private static void calculateDominanceFrontier(Function function) {
+        for (BasicBlock block : function.getBasicBlocks()) {
+            for (BasicBlock block1 : block.getNextBlocks()) {
+                BasicBlock temp = block;
+                while (!temp.strictDominant(block1)) {
+                    temp.addDominantFrontier(block1);
+                    temp = temp.getImmediateDominator();
+                }
+            }
+        }
+    }
+
+    private static void transform(Function function) {
+        BasicBlock entryBlock = function.getBasicBlocks().get(0);
+        for (BasicBlock basicBlock : function.getBasicBlocks()) {
+            ArrayList<Instruction> instructions =
+                    new ArrayList<>(basicBlock.getInstructions());
+            for (Instruction instruction : instructions) {
+                if (instruction instanceof AllocInst allocInst
+                        && (allocInst.getAllocType().equals(IntegerType.i32)
+                        || allocInst.getAllocType().equals(IntegerType.i8))) {
+                    setAttr(allocInst);
+                    insertPhi();
+                    renameVariables(entryBlock);
+                }
+            }
+        }
+    }
+
+    private static void setAttr(AllocInst allocInst) {
         curAllocInst = allocInst;
         varUses = new HashSet<>();
         varDefs = new HashSet<>();
@@ -138,81 +127,72 @@ public class Mem2Reg {
         for (Use use : allocInst.getUses()) {
             Instruction user = (Instruction) use.getUser();
             if (user instanceof StoreInst) {
-                // store定义了变量的新值
+                // 存储指令定义了变量
                 varDefs.add(user);
                 defBlocks.add(user.getBasicBlock());
             } else if (user instanceof LoadInst) {
-                // load代表变量的使用
+                // 加载指令使用了变量
                 varUses.add(user);
             }
         }
     }
 
-    private static void insertPhiInst() {
-        HashSet<BasicBlock> f = new HashSet<>();
-        Stack<BasicBlock> w = new Stack<>();
-        for (BasicBlock basicBlock : defBlocks) {
-            w.push(basicBlock);
-        }
-        while (!w.isEmpty()) {
-            BasicBlock x = w.pop();
-            for (BasicBlock y : x.getDominantFrontier()) {
-                if (!f.contains(y)) {
-                    insertPhiInstToBlock(y);
-                    f.add(y);
-                    if (!defBlocks.contains(y)) {
-                        w.push(y);
+    private static void insertPhi() {
+        // 需要添加phi的基本块的集合
+        HashSet<BasicBlock> F = new HashSet<>();
+        // 定义变量的基本块的集合
+        Stack<BasicBlock> W = new Stack<>();
+        // 将defBlocks中的基本块推入栈
+        W.addAll(defBlocks);
+        while (!W.isEmpty()) {
+            BasicBlock X = W.pop();
+            for (BasicBlock Y : X.getDominanceFrontier()) {
+                if (!F.contains(Y)) {
+                    PhiInst phiInst = new PhiInst(curAllocInst.getAllocType());
+                    phiInst.setBasicBlock(Y);
+                    Y.getInstructions().add(0, phiInst);
+                    varUses.add(phiInst);
+                    varDefs.add(phiInst);
+                    F.add(Y);
+                    if (!defBlocks.contains(Y)) {
+                        W.push(Y);
                     }
                 }
             }
         }
     }
 
-    private static void insertPhiInstToBlock(BasicBlock block) {
-        PhiInst phiInst = new PhiInst(curAllocInst.getAllocType());
-        phiInst.setBasicBlock(block);
-        block.getInstructions().add(0, phiInst);
-        varUses.add(phiInst);
-        varDefs.add(phiInst);
-    }
-
-    private static void rename(BasicBlock firstBlock) {
-        Iterator<Instruction> iter = firstBlock.getInstructions().iterator();
+    private static void renameVariables(BasicBlock entryBlock) {
         int cnt = 0;
+        Iterator<Instruction> iter = entryBlock.getInstructions().iterator();
         while (iter.hasNext()) {
             Instruction instruction = iter.next();
-            // 直接移除当前的alloc指令
             if (instruction.equals(curAllocInst)) {
                 iter.remove();
-            } else if (instruction instanceof StoreInst storeInst
-                    && varDefs.contains(instruction)) {
+            } else if (instruction instanceof LoadInst loadInst && varUses.contains(instruction)) {
+                Value newValue = reachDef.isEmpty() ? new UndefinedValue() : reachDef.peek();
+                loadInst.replace(newValue);
+                loadInst.deleteUse();
+                iter.remove();
+            } else if (instruction instanceof StoreInst storeInst && varDefs.contains(instruction)) {
                 reachDef.push(storeInst.getStoreValue());
                 cnt++;
                 storeInst.deleteUse();
                 iter.remove();
-            } else if (instruction instanceof LoadInst loadInst
-                    && varUses.contains(instruction)) {
-                Value newDef = reachDef.isEmpty() ? new NullValue() : reachDef.peek();
-                // 用新值来替换原来的load
-                loadInst.replace(newDef);
-                loadInst.deleteUse();
-                iter.remove();
-            } else if (instruction instanceof PhiInst phiInst
-                    && varDefs.contains(instruction)) {
+            } else if (instruction instanceof PhiInst phiInst && varDefs.contains(instruction)) {
                 reachDef.push(phiInst);
                 cnt++;
             }
         }
-        for (BasicBlock block : firstBlock.getNextBlocks()) {
-            Instruction firstInstruction = block.getInstructions().get(0);
-            if (firstInstruction instanceof PhiInst phiInst
-                    && varUses.contains(phiInst)) {
-                Value newValue = reachDef.isEmpty() ? new NullValue() : reachDef.peek();
-                phiInst.addValue(firstBlock, newValue);
+        for (BasicBlock block : entryBlock.getNextBlocks()) {
+            Instruction first = block.getInstructions().get(0);
+            if (first instanceof PhiInst phiInst && varUses.contains(first)) {
+                Value newVal = reachDef.isEmpty() ? new UndefinedValue() : reachDef.peek();
+                phiInst.addValue(entryBlock, newVal);
             }
         }
-        for (BasicBlock block : firstBlock.getImmediateDominants()) {
-            rename(block);
+        for (BasicBlock block : entryBlock.getImmediateDominatedBlocks()) {
+            renameVariables(block);
         }
         for (int i = 0; i < cnt; i++) {
             reachDef.pop();
