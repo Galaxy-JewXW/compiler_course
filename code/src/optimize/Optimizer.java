@@ -13,6 +13,7 @@ public class Optimizer {
         UnusedBasicBlock.build(module);
         UnusedFunction.build(module);
         Mem2Reg.build(module);
+        DeadCode.build(module);
         SlotTracker.build(module);
     }
 }
