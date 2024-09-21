@@ -4,8 +4,6 @@ import frontend.Parser;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
-import middle.IRVisitor;
-import middle.Module;
 import tools.Printer;
 
 import java.nio.file.Files;
@@ -49,9 +47,9 @@ public class Compiler {
         }
 
         // 中间代码生成
-        IRVisitor irVisitor = new IRVisitor(compUnit);
-        irVisitor.build();
-        Printer.printLLVM(Module.getInstance(), llvmOutput);
+//        IRVisitor irVisitor = new IRVisitor(compUnit);
+//        irVisitor.build();
+//        Printer.printLLVM(Module.getInstance(), llvmOutput);
         System.out.println("ir visitor complete");
 
         // 代码优化
