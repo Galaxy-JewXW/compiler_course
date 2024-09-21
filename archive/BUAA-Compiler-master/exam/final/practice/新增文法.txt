@@ -1,4 +1,0 @@
-Stmt -> LVal '+' '+' ';'
-
-Stmt -> 'for' '(' Stmt ';' Cond ';' Stmt ')' Stmt
-

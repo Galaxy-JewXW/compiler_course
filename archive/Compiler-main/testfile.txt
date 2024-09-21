@@ -1,7 +1,0 @@
-const int MAXINT = 2147483647;
-int MININT = -2147483648;
-
-int main()
-{
-    return 0;
-}

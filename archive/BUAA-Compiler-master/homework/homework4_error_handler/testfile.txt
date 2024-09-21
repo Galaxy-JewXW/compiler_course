@@ -1,7 +1,0 @@
-int c(int y) {
-return 0;
-}
-int main() {
-c(9;
-return 0;
-}

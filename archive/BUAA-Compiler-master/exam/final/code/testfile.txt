@@ -1,8 +1,0 @@
-int main()
-{
-	//int i = getint();
-	int i = getint(), j = getint();
-	//printf("%d\n", i);
-	//printf("%d", j);
-	return 0;
-}
