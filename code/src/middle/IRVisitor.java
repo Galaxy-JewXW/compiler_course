@@ -193,6 +193,7 @@ public class IRVisitor {
                 }
                 constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
+            constArray.addElement(Builder.buildConstInt(0, IntegerType.i8));
             constArray.setFilled();
             int unfilled = length - (stringConst.length() - 2);
             for (int i = 0; i < unfilled; i++) {
@@ -205,7 +206,7 @@ public class IRVisitor {
             ConstArray constArray = new ConstArray(length);
             for (ConstExp constExp : constInitVal.getConstExps()) {
                 visitConstExp(constExp);
-                constArray.addElement(Builder.buildConstInt(immediate, IntegerType.i32));
+                constArray.addElement(Builder.buildConstInt(immediate, tempValueType));
             }
             constArray.setFilled();
             int unfilled = length - constInitVal.getConstExps().size();
@@ -296,6 +297,7 @@ public class IRVisitor {
                 }
                 constArray.addElement(Builder.buildConstInt(stringConst.charAt(i), IntegerType.i8));
             }
+            constArray.addElement(Builder.buildConstInt(0, IntegerType.i8));
             constArray.setFilled();
             int unfilled = length - (stringConst.length() - 2);
             for (int i = 0; i < unfilled; i++) {
@@ -585,7 +587,10 @@ public class IRVisitor {
                 tempValue = Builder.buildCallInst(putCh, args, curBlock);
             } else if (tempString.length() > 1) {
                 Value strValue = symbolTable.getSymbol(checkStringName(tempString));
-                args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
+                ArrayList<Value> values = new ArrayList<>();
+                values.add(ConstInt.i32ZERO);
+                values.add(ConstInt.i32ZERO);
+                args.add(Builder.buildGEPInst(strValue, values, curBlock));
                 tempValue = Builder.buildCallInst(putStr, args, curBlock);
             }
             if (typeString.equals("%d")) {
@@ -623,7 +628,10 @@ public class IRVisitor {
                 tempValue = Builder.buildCallInst(putCh, args, curBlock);
             } else if (tempString.length() > 1) {
                 Value strValue = symbolTable.getSymbol(checkStringName(tempString));
-                args.add(Builder.buildGEPInst(strValue, ConstInt.i32ZERO, curBlock));
+                ArrayList<Value> values = new ArrayList<>();
+                values.add(ConstInt.i32ZERO);
+                values.add(ConstInt.i32ZERO);
+                args.add(Builder.buildGEPInst(strValue, values, curBlock));
                 tempValue = Builder.buildCallInst(putStr, args, curBlock);
             }
         }
@@ -662,7 +670,10 @@ public class IRVisitor {
         if (lVal.getExp() != null
                 && pointer.getValueType() instanceof PointerType) {
             visitExp(lVal.getExp());
-            pointer = Builder.buildGEPInst(pointer, tempValue, curBlock);
+            ArrayList<Value> values = new ArrayList<>();
+            values.add(ConstInt.i32ZERO);
+            values.add(tempValue);
+            pointer = Builder.buildGEPInst(pointer, values, curBlock);
         }
         tempValue = Builder.buildStoreInst(result, pointer, curBlock);
     }
@@ -704,15 +715,20 @@ public class IRVisitor {
                 if (!(((PointerType) pointer.getValueType()).getTargetType() instanceof ArrayType)) {
                     tempValue = Builder.buildLoadInst(pointer, curBlock);
                 } else {
-                    tempValue = Builder.buildGEPInst(pointer, ConstInt.i32ZERO, curBlock);
+                    ArrayList<Value> indexes = new ArrayList<>();
+                    indexes.add(ConstInt.i32ZERO);
+                    indexes.add(ConstInt.i32ZERO);
+                    tempValue = Builder.buildGEPInst(pointer, indexes, curBlock);
                 }
             } else {
-                Value curPointer = Builder.buildLoadInst(pointer, curBlock);
-                visitExp(lVal.getExp());
                 ArrayList<Value> indexes = new ArrayList<>();
-                indexes.add(tempValue);
-                curPointer = Builder.buildGEPInst(curPointer, indexes, curBlock);
-                tempValue = Builder.buildLoadInst(curPointer, curBlock);
+                indexes.add(ConstInt.i32ZERO);
+                if (lVal.getExp() != null) {
+                    visitExp(lVal.getExp());
+                    indexes.add(tempValue);
+                }
+                pointer = Builder.buildGEPInst(pointer, indexes, curBlock);
+                tempValue = Builder.buildLoadInst(pointer, curBlock);
             }
         }
     }

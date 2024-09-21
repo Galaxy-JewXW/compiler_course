@@ -1,7 +1,4 @@
-int f3(int arr1[],int arr2[],int para1,int para2){
-    return arr1[1];
-}
-int main(){
+const char ABCDEFGHIJ[11] = {'A', 'B', 'C' , 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+int main() {
     return 0;
 }
-

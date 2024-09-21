@@ -81,21 +81,14 @@ public class Builder {
                 for (int i = 0; i < constArray.getFilled(); i++) {
                     Value value = constArray.getElements().get(i);
                     ConstInt index = new ConstInt(i, IntegerType.i32);
-                    buildStoreInst(value, buildGEPInst(allocInst, index, basicBlock), basicBlock);
+                    ArrayList<Value> constInts = new ArrayList<>();
+                    constInts.add(ConstInt.i32ZERO);
+                    constInts.add(index);
+                    buildStoreInst(value, buildGEPInst(allocInst, constInts, basicBlock), basicBlock);
                 }
             }
         }
         return allocInst;
-    }
-
-    // 对于一维数组，gep第一个“基地址偏移量”始终为0
-    // 因此只需要改变第二个“元素偏移量”即可
-    public static GepInst buildGEPInst(Value pointerBase, Value index,
-                                       BasicBlock basicBlock) {
-        ArrayList<Value> indexes = new ArrayList<>();
-        indexes.add(ConstInt.i32ZERO);
-        indexes.add(index);
-        return new GepInst(pointerBase, indexes, basicBlock);
     }
 
     public static GepInst buildGEPInst(Value pointerBase, ArrayList<Value> indexes,

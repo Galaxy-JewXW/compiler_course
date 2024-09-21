@@ -14,7 +14,13 @@ public class Number extends SyntaxNode {
     }
 
     public int getIntConstValue() {
-        return Integer.parseInt(intConst.getContent());
+        int value;
+        try {
+            value = Integer.parseInt(intConst.getContent());
+        } catch (NumberFormatException e) {
+            value = Integer.MIN_VALUE;
+        }
+        return value;
     }
 
     @Override

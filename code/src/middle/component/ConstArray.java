@@ -2,7 +2,6 @@ package middle.component;
 
 import middle.component.model.Value;
 import middle.component.types.ArrayType;
-import middle.component.types.IntegerType;
 import middle.component.types.ValueType;
 
 import java.util.ArrayList;
@@ -42,11 +41,7 @@ public class ConstArray extends ConstVar {
     }
 
     public int getFilled() {
-        if (elements.get(0).getValueType().equals(IntegerType.i32)) {
-            return filled;
-        } else {
-            return filled + 1;
-        }
+        return filled;
     }
 
     @Override

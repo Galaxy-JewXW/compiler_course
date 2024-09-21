@@ -6,7 +6,6 @@ import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.IRVisitor;
 import middle.Module;
-import optimize.Optimizer;
 import tools.Printer;
 
 import java.nio.file.Files;
@@ -56,8 +55,8 @@ public class Compiler {
         System.out.println("ir visitor complete");
 
         // 代码优化
-        Optimizer optimizer = new Optimizer(Module.getInstance());
-        optimizer.optimize();
-        Printer.printLLVM(Module.getInstance(), irOutput);
+//        Optimizer optimizer = new Optimizer(Module.getInstance());
+//        optimizer.optimize();
+//        Printer.printLLVM(Module.getInstance(), irOutput);
     }
 }

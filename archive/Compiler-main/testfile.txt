@@ -1,6 +1,7 @@
-int f3(int arr1[],int arr2[],int para1,int para2){
-    return arr1[1];
-}
-int main(){
+const int MAXINT = 2147483647;
+int MININT = -2147483648;
+
+int main()
+{
     return 0;
 }
