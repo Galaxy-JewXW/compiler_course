@@ -3,7 +3,7 @@ package frontend.symbol;
 public class TableManager {
     private static final TableManager INSTANCE = new TableManager();
     private int loopLevel = 0;
-    private boolean isGlobal = false;
+    private boolean inGlobal = false;
     private SymbolTable currentTable = new SymbolTable(null);
 
     public static TableManager getInstance() {
@@ -46,12 +46,12 @@ public class TableManager {
         currentTable.put(symbol.getName(), symbol);
     }
 
-    public boolean isGlobal() {
-        return isGlobal;
+    public boolean isInGlobal() {
+        return inGlobal;
     }
 
-    public void setGlobal(boolean isGlobal) {
-        this.isGlobal = isGlobal;
+    public void setInGlobal(boolean isGlobal) {
+        this.inGlobal = isGlobal;
     }
 
     // 维护循环层数loopLevel，进出循环体时更改计数

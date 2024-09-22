@@ -3,34 +3,32 @@ package frontend.symbol;
 import middle.component.InitialValue;
 import middle.component.model.Value;
 
-import java.util.ArrayList;
-
 public class VarSymbol extends Symbol {
     private VarType varType;
     private int dimension;
-    private ArrayList<Integer> indexes;
+    private int length;
     private InitialValue initialValue;
     private boolean isGlobal;
     private Value value = null;
 
     public VarSymbol(String name, VarType varType,
-                     int dimension, ArrayList<Integer> indexes) {
+                     int dimension, int length) {
         super(name, SymbolType.VARIABLE);
         this.varType = varType;
         this.dimension = dimension;
-        this.indexes = indexes;
+        this.length = length;
         this.initialValue = null;
-        this.isGlobal = TableManager.getInstance().isGlobal();
+        this.isGlobal = TableManager.getInstance().isInGlobal();
     }
 
     public VarSymbol(String name, VarType varType, int dimension,
-                     ArrayList<Integer> indexes, InitialValue initialValue) {
-        this(name, varType, dimension, indexes);
+                     int length, InitialValue initialValue) {
+        this(name, varType, dimension, length);
         this.initialValue = initialValue;
     }
 
     public int getLength() {
-        return indexes.get(0);
+        return length;
     }
 
     public VarType getVarType() {
@@ -39,10 +37,6 @@ public class VarSymbol extends Symbol {
 
     public int getDimension() {
         return dimension;
-    }
-
-    public ArrayList<Integer> getIndexes() {
-        return indexes;
     }
 
     public InitialValue getInitialValue() {

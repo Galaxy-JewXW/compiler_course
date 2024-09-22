@@ -18,7 +18,7 @@ public class ConstSymbol extends Symbol {
         this.dimension = dimension;
         this.length = length;
         this.initialValue = null;
-        this.isGlobal = TableManager.getInstance().isGlobal();
+        this.isGlobal = TableManager.getInstance().isInGlobal();
     }
 
     public ConstSymbol(String name, VarType varType, int dimension,
