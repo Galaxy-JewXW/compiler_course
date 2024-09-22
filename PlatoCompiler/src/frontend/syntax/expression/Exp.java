@@ -1,9 +1,10 @@
 package frontend.syntax.expression;
 
+import frontend.syntax.Calculable;
 import frontend.syntax.SyntaxNode;
 
 // 表达式 Exp → AddExp // 存在即可
-public class Exp extends SyntaxNode {
+public class Exp extends SyntaxNode implements Calculable {
     private final AddExp addExp;
 
     public Exp(AddExp addExp) {
@@ -18,5 +19,10 @@ public class Exp extends SyntaxNode {
     public void print() {
         addExp.print();
         System.out.println("<Exp>");
+    }
+
+    @Override
+    public int calculate() {
+        return addExp.calculate();
     }
 }

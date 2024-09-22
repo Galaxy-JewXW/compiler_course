@@ -1,5 +1,6 @@
 package frontend.syntax.expression;
 
+import frontend.syntax.Calculable;
 import frontend.syntax.Character;
 import frontend.syntax.LVal;
 import frontend.syntax.Number;
@@ -7,7 +8,7 @@ import frontend.syntax.SyntaxNode;
 import frontend.token.TokenType;
 
 // 基本表达式 PrimaryExp → '(' Exp ')' | LVal | Number | Character// 四种情况均需覆盖
-public class PrimaryExp extends SyntaxNode {
+public class PrimaryExp extends SyntaxNode implements Calculable {
     private final Exp exp;
     private final LVal lVal;
     private final Number number;
@@ -71,5 +72,22 @@ public class PrimaryExp extends SyntaxNode {
             character.print();
         }
         System.out.println("<PrimaryExp>");
+    }
+
+    @Override
+    public int calculate() {
+        int ans;
+        if (exp != null) {
+            ans = exp.calculate();
+        } else if (lVal != null) {
+            ans = lVal.calculate();
+        } else if (number != null) {
+            ans = number.calculate();
+        } else if (character != null) {
+            ans = character.calculate();
+        } else {
+            throw new RuntimeException("Shouldn't reach here");
+        }
+        return ans;
     }
 }

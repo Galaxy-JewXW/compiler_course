@@ -2,7 +2,7 @@ package frontend.syntax;
 
 import frontend.token.Token;
 
-public class Character extends SyntaxNode {
+public class Character extends SyntaxNode implements Calculable {
     private final Token charConst;
 
     public Character(Token charConst) {
@@ -32,6 +32,11 @@ public class Character extends SyntaxNode {
                 default -> throw new RuntimeException("Invalid character '" + constChar + "'");
             };
         }
+    }
+
+    @Override
+    public int calculate() {
+        return getCharConstValue();
     }
 
     @Override

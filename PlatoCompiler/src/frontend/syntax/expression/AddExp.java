@@ -1,11 +1,12 @@
 package frontend.syntax.expression;
 
+import frontend.syntax.Calculable;
 import frontend.syntax.SyntaxNode;
 import frontend.token.Token;
 
 import java.util.ArrayList;
 
-public class AddExp extends SyntaxNode {
+public class AddExp extends SyntaxNode implements Calculable {
     private final ArrayList<MulExp> mulExps;
     private final ArrayList<Token> operators;
 
@@ -31,5 +32,18 @@ public class AddExp extends SyntaxNode {
             mulExps.get(i).print();
         }
         System.out.println("<AddExp>");
+    }
+
+    @Override
+    public int calculate() {
+        int ans = mulExps.get(0).calculate();
+        for (int i = 1; i < mulExps.size(); i++) {
+            ans = switch (operators.get(i - 1).getType()) {
+                case PLUS -> ans + mulExps.get(i).calculate();
+                case MINU -> ans - mulExps.get(i).calculate();
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
+        }
+        return ans;
     }
 }

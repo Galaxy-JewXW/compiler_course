@@ -2,7 +2,7 @@ package frontend.syntax;
 
 import frontend.token.Token;
 
-public class Number extends SyntaxNode {
+public class Number extends SyntaxNode implements Calculable {
     private final Token intConst;
 
     public Number(Token intConst) {
@@ -21,6 +21,11 @@ public class Number extends SyntaxNode {
             value = Integer.MIN_VALUE;
         }
         return value;
+    }
+
+    @Override
+    public int calculate() {
+        return getIntConstValue();
     }
 
     @Override

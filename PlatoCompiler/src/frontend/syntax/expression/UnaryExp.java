@@ -1,12 +1,13 @@
 package frontend.syntax.expression;
 
+import frontend.syntax.Calculable;
 import frontend.syntax.SyntaxNode;
 import frontend.syntax.function.FuncRParams;
 import frontend.token.Token;
 import frontend.token.TokenType;
 
 // 一元表达式 UnaryExp → PrimaryExp | Ident '(' [FuncRParams] ')' | UnaryOp UnaryExp
-public class UnaryExp extends SyntaxNode {
+public class UnaryExp extends SyntaxNode implements Calculable {
     private final PrimaryExp primaryExp;
     private final Token ident;
     private final FuncRParams funcRParams;
@@ -73,5 +74,21 @@ public class UnaryExp extends SyntaxNode {
             unaryExp.print();
         }
         System.out.println("<UnaryExp>");
+    }
+
+    @Override
+    public int calculate() {
+        int ans = 0;
+        if (unaryOp != null && unaryExp != null) {
+            ans = switch (unaryOp.getOperator().getType()) {
+                case PLUS -> unaryExp.calculate();
+                case MINU -> -unaryExp.calculate();
+                case NOT -> unaryExp.calculate() == 0 ? 1 : 0;
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
+        } else if (primaryExp != null) {
+            ans = primaryExp.calculate();
+        }
+        return ans;
     }
 }
