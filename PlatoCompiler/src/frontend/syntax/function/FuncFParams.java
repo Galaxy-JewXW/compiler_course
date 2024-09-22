@@ -1,5 +1,6 @@
 package frontend.syntax.function;
 
+import frontend.symbol.VarType;
 import frontend.syntax.SyntaxNode;
 import frontend.token.TokenType;
 
@@ -27,5 +28,30 @@ public class FuncFParams extends SyntaxNode {
             funcFParams.get(i).print();
         }
         System.out.println("<FuncFParams>");
+    }
+
+    public ArrayList<VarType> getTypes() {
+        ArrayList<VarType> types = new ArrayList<>();
+        for (FuncFParam f : funcFParams) {
+            VarType type = switch (f.getBType().getToken().getType()) {
+                case INTTK -> VarType.INT;
+                case CHARTK -> VarType.CHAR;
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
+            types.add(type);
+        }
+        return types;
+    }
+
+    public ArrayList<Integer> getDims() {
+        ArrayList<Integer> dims = new ArrayList<>();
+        for (FuncFParam f : funcFParams) {
+            if (f.isArray()) {
+                dims.add(1);
+            } else {
+                dims.add(0);
+            }
+        }
+        return dims;
     }
 }

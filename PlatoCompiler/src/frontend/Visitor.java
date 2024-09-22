@@ -11,6 +11,8 @@ import frontend.syntax.Decl;
 import frontend.syntax.expression.ConstExp;
 import frontend.syntax.expression.Exp;
 import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
 import frontend.syntax.function.MainFuncDef;
 import frontend.syntax.statement.ReturnStmt;
 import frontend.syntax.statement.Stmt;
@@ -206,7 +208,75 @@ public class Visitor {
     }
 
     private void visitFuncDef(FuncDef funcDef) {
+        String name = funcDef.getIdent().getContent();
+        VarType returnType = switch (funcDef.getFuncType()
+                .getFuncType().getType()) {
+            case INTTK -> VarType.INT;
+            case CHARTK -> VarType.CHAR;
+            case VOIDTK -> VarType.VOID;
+            default -> throw new RuntimeException("Shouldn't reach here");
+        };
+        FuncSymbol funcSymbol = new FuncSymbol(name, returnType);
+        // 检查名字重定义
+        if (tableManager.inCurrentTable(funcDef.getIdent().getContent())) {
+            ErrorHandler.getInstance().addError(new Error(
+                    ErrorType.IdentRedefined, funcDef.getIdent().getLine()
+            ));
+        }
+        // 对于一个名字重定义的函数，也应该完整分析函数内部是否具有其它错误
+        tableManager.addSymbol(funcSymbol);
+        tableManager.enterFunction(funcSymbol);
+        if (funcDef.getFuncFParams() != null) {
+            visitFuncFParams(funcDef.getFuncFParams(), funcSymbol);
+        }
+        visitBlock(funcDef.getBlock());
+        ArrayList<BlockItem> items = funcDef.getBlock().getBlockItems();
+        if (funcSymbol.getReturnType() != VarType.VOID && (items.isEmpty()
+                || items.get(items.size() - 1).getStmt() == null
+                || !(items.get(items.size() - 1).getStmt() instanceof ReturnStmt))) {
+            ErrorHandler.getInstance().addError(new Error(
+                    ErrorType.ReturnMissing,
+                    funcDef.getBlock().getEndLine()
+            ));
+        } else if (funcSymbol.getReturnType() != VarType.VOID
+                && ((ReturnStmt) items.get(items.size() - 1).getStmt()).getExp() == null) {
+            ErrorHandler.getInstance().addError(new Error(
+                    ErrorType.ReturnMissing,
+                    funcDef.getBlock().getEndLine()
+            ));
+        }
+    }
 
+    private void visitFuncFParams(FuncFParams funcFParams, FuncSymbol funcSymbol) {
+        for (FuncFParam fParam : funcFParams.getFuncFParams()) {
+            visitFuncFParam(fParam);
+        }
+        funcSymbol.setParam(funcFParams.getTypes(),
+                funcFParams.getDims());
+    }
+
+    private void visitFuncFParam(FuncFParam fParam) {
+        String name = fParam.getIdent().getContent();
+        if (tableManager.inCurrentTable(name)) {
+            ErrorHandler.getInstance().addError(new Error(
+                    ErrorType.IdentRedefined, fParam.getIdent().getLine()
+            ));
+            return;
+        }
+        VarType type = switch (fParam.getBType().getToken().getType()) {
+            case INTTK -> VarType.INT;
+            case CHARTK -> VarType.CHAR;
+            default -> throw new RuntimeException("Shouldn't reach here");
+        };
+        int dimension = 0;
+        VarSymbol varSymbol;
+        if (fParam.isArray()) {
+            dimension = 1;
+            varSymbol = new VarSymbol(name, type, dimension, -1);
+        } else {
+            varSymbol = new VarSymbol(name, type, dimension, 0);
+        }
+        tableManager.addSymbol(varSymbol);
     }
 
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {

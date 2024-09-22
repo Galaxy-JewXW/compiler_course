@@ -31,6 +31,10 @@ public class FuncSymbol extends Symbol {
         this.paramDims = paramDims;
     }
 
+    public VarType getReturnType() {
+        return returnType;
+    }
+
     public Function getValue() {
         return value;
     }
