@@ -19,8 +19,4 @@ public class Exp extends SyntaxNode {
         addExp.print();
         System.out.println("<Exp>");
     }
-
-    public int calculate() {
-        return addExp.calculate();
-    }
 }

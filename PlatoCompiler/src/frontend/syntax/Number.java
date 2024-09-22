@@ -28,8 +28,4 @@ public class Number extends SyntaxNode {
         System.out.println(intConst);
         System.out.println("<Number>");
     }
-
-    public int calculate() {
-        return getIntConstValue();
-    }
 }

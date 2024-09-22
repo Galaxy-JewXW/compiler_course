@@ -39,8 +39,4 @@ public class Character extends SyntaxNode {
         System.out.println(charConst);
         System.out.println("<Character>");
     }
-
-    public int calculate() {
-        return getCharConstValue();
-    }
 }

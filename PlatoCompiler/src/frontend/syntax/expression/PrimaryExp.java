@@ -72,18 +72,4 @@ public class PrimaryExp extends SyntaxNode {
         }
         System.out.println("<PrimaryExp>");
     }
-
-    public int calculate() {
-        int ans = 0;
-        if (exp != null) {
-            ans = exp.calculate();
-        } else if (lVal != null) {
-            ans = lVal.calculate();
-        } else if (number != null) {
-            ans = number.calculate();
-        } else if (character != null) {
-            ans = character.calculate();
-        }
-        return ans;
-    }
 }

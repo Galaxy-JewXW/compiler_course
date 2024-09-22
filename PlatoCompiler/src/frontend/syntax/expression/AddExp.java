@@ -32,15 +32,4 @@ public class AddExp extends SyntaxNode {
         }
         System.out.println("<AddExp>");
     }
-
-    public int calculate() {
-        int ans = mulExps.get(0).calculate();
-        for (int i = 1; i < mulExps.size(); i++) {
-            switch (operators.get(i - 1).getType()) {
-                case PLUS -> ans += mulExps.get(i).calculate();
-                case MINU -> ans -= mulExps.get(i).calculate();
-            }
-        }
-        return ans;
-    }
 }
