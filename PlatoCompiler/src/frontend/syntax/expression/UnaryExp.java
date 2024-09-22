@@ -74,4 +74,18 @@ public class UnaryExp extends SyntaxNode {
         }
         System.out.println("<UnaryExp>");
     }
+
+    public int calculate() {
+        int ans = 0;
+        if (unaryExp != null && unaryOp != null) {
+            switch (unaryOp.getOperator().getType()) {
+                case PLUS -> ans = unaryExp.calculate();
+                case MINU -> ans = -unaryExp.calculate();
+                case NOT -> ans = unaryExp.calculate() == 0 ? 1 : 0;
+            }
+        } else if (primaryExp != null) {
+            ans = primaryExp.calculate();
+        }
+        return ans;
+    }
 }

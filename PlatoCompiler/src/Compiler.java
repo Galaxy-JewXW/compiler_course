@@ -1,6 +1,7 @@
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
+import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import tools.Printer;
@@ -35,7 +36,8 @@ public class Compiler {
         System.out.println("parser complete.");
 
         // 语义分析，建立符号表
-
+        Visitor visitor = new Visitor(compUnit);
+        visitor.build();
 
         // 异常处理
         Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);

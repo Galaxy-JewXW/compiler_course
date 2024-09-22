@@ -32,4 +32,16 @@ public class MulExp extends SyntaxNode {
         }
         System.out.println("<MulExp>");
     }
+
+    public int calculate() {
+        int ans = unaryExps.get(0).calculate();
+        for (int i = 1; i < unaryExps.size(); i++) {
+            switch (operators.get(i - 1).getType()) {
+                case MULT -> ans *= unaryExps.get(i).calculate();
+                case DIV -> ans /= unaryExps.get(i).calculate();
+                case MOD -> ans %= unaryExps.get(i).calculate();
+            }
+        }
+        return ans;
+    }
 }

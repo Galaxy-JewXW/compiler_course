@@ -18,4 +18,8 @@ public class ConstExp extends SyntaxNode {
         addExp.print();
         System.out.println("<ConstExp>");
     }
+
+    public int calculate() {
+        return addExp.calculate();
+    }
 }
