@@ -1,0 +1,6 @@
+const int arr[2] = {1, 2};
+
+int main() {
+const int as = arr[arr[0]];
+return 0;
+}

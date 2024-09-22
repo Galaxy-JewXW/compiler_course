@@ -1,0 +1,86 @@
+CONSTTK const
+INTTK int
+IDENFR arr
+LBRACK [
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+COMMA ,
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACE }
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
+INTTK int
+MAINTK main
+LPARENT (
+RPARENT )
+LBRACE {
+CONSTTK const
+INTTK int
+IDENFR as
+ASSIGN =
+IDENFR arr
+LBRACK [
+IDENFR arr
+LBRACK [
+INTCON 0
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACK ]
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACK ]
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
+RETURNTK return
+INTCON 0
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<MainFuncDef>
+<CompUnit>

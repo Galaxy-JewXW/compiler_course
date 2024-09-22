@@ -1,4 +1,0 @@
-const char ABCDEFGHIJ[11] = {'A', 'B', 'C' , 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-int main() {
-    return 0;
-}

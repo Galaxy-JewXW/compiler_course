@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="error">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/error.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
