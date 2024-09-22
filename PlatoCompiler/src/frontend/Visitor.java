@@ -3,14 +3,17 @@ package frontend;
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
-import frontend.symbol.ConstSymbol;
-import frontend.symbol.TableManager;
-import frontend.symbol.VarSymbol;
-import frontend.symbol.VarType;
+import frontend.symbol.*;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
 import frontend.syntax.CompUnit;
 import frontend.syntax.Decl;
 import frontend.syntax.expression.ConstExp;
 import frontend.syntax.expression.Exp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
 import frontend.syntax.variable.*;
 import frontend.token.TokenType;
 import middle.component.InitialValue;
@@ -37,6 +40,11 @@ public class Visitor {
         for (Decl decl : compUnit.getDecls()) {
             visitDecl(decl);
         }
+        tableManager.setInGlobal(false);
+        for (FuncDef funcDef : compUnit.getFuncDefs()) {
+            visitFuncDef(funcDef);
+        }
+        visitMainFuncDef(compUnit.getMainFuncDef());
     }
 
     private void visitDecl(Decl decl) {
@@ -83,7 +91,6 @@ public class Visitor {
         }
         ArrayList<Integer> values = visitConstInitVal(constDef.getConstInitVal(), type);
         initialValue = new InitialValue(valueType, length, values);
-        System.out.println(initialValue);
         ConstSymbol constSymbol = new ConstSymbol(name, varType, dimension,
                 length, initialValue);
         tableManager.addSymbol(constSymbol);
@@ -196,5 +203,48 @@ public class Visitor {
         }
         ans.add(0);
         return ans;
+    }
+
+    private void visitFuncDef(FuncDef funcDef) {
+
+    }
+
+    private void visitMainFuncDef(MainFuncDef mainFuncDef) {
+        FuncSymbol mainFuncSymbol = new FuncSymbol("main", VarType.INT);
+        tableManager.addSymbol(mainFuncSymbol);
+        tableManager.enterFunction(mainFuncSymbol);
+        visitBlock(mainFuncDef.getBlock());
+        tableManager.exitFunction();
+        ArrayList<BlockItem> items = mainFuncDef.getBlock().getBlockItems();
+        if (items.isEmpty()
+                || items.get(items.size() - 1).getStmt() == null
+                || !(items.get(items.size() - 1).getStmt() instanceof ReturnStmt)
+                || ((ReturnStmt)items.get(items.size() - 1)
+                .getStmt()).getExp() == null) {
+            // int或char函数缺少显性的return with value语句
+            // 这里并不关心返回的值是int型还是char型
+            ErrorHandler.getInstance().addError(new Error(
+                    ErrorType.ReturnMissing,
+                    mainFuncDef.getBlock().getEndLine()
+            ));
+        }
+    }
+
+    private void visitBlock(Block block) {
+        for (BlockItem blockItem : block.getBlockItems()) {
+            visitBlockItem(blockItem);
+        }
+    }
+
+    private void visitBlockItem(BlockItem blockItem) {
+        if (blockItem.getStmt() != null) {
+            visitStmt(blockItem.getStmt());
+        } else if (blockItem.getDecl() != null) {
+            visitDecl(blockItem.getDecl());
+        }
+    }
+
+    private void visitStmt(Stmt stmt) {
+
     }
 }

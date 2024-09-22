@@ -5,6 +5,7 @@ public class TableManager {
     private int loopLevel = 0;
     private boolean inGlobal = false;
     private SymbolTable currentTable = new SymbolTable(null);
+    private FuncSymbol currentFunction = null;
 
     public static TableManager getInstance() {
         return INSTANCE;
@@ -65,5 +66,15 @@ public class TableManager {
 
     public boolean notInLoop() {
         return loopLevel == 0;
+    }
+
+    public void enterFunction(FuncSymbol function) {
+        currentFunction = function;
+        createTable();
+    }
+
+    public void exitFunction() {
+        currentFunction = null;
+        removeTable();
     }
 }
