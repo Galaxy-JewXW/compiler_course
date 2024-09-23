@@ -14,6 +14,7 @@ import middle.component.InitialValue;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
+import tools.StrToArray;
 import tools.ToParam;
 
 import java.util.ArrayList;
@@ -114,37 +115,8 @@ public class Visitor {
                 ans.add(constExp.calculate());
             }
         } else if (constInitVal.getStringConst() != null) {
-            ans.addAll(str2Array(constInitVal.getStringConst().getContent()));
+            ans.addAll(StrToArray.str2Array(constInitVal.getStringConst().getContent()));
         }
-        return ans;
-    }
-
-    private ArrayList<Integer> str2Array(String stringConst) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        for (int i = 1; i < stringConst.length() - 1; i++) {
-            if (stringConst.charAt(i) == '\\') {
-                i++;
-                int value = switch (stringConst.charAt(i)) {
-                    case 'a' -> 7;
-                    case 'b' -> 8;
-                    case 't' -> 9;
-                    case 'n' -> 10;
-                    case 'v' -> 11;
-                    case 'f' -> 12;
-                    case '\"' -> 34;
-                    case '\'' -> 39;
-                    case '\\' -> 92;
-                    case '0' -> 0;
-                    default -> throw new RuntimeException("Invalid character '"
-                            + stringConst.charAt(i) + "'");
-                };
-                ans.add(value);
-                continue;
-            }
-            ans.add((int) stringConst.charAt(i));
-        }
-        // stringConst结尾有一个默认的0
-        ans.add(0);
         return ans;
     }
 
@@ -237,7 +209,7 @@ public class Visitor {
                 ans.add(exp.calculate());
             }
         } else if (initVal.getStringConst() != null) {
-            ans.addAll(str2Array(initVal.getStringConst().getContent()));
+            ans.addAll(StrToArray.str2Array(initVal.getStringConst().getContent()));
         }
         return ans;
     }
@@ -605,6 +577,9 @@ public class Visitor {
             for (int i = 0; i < funcSymbol.getFuncParams().size(); i++) {
                 ParamSymbol paramSymbol = ToParam.expToParam(
                         unaryExp.getFuncRParams().getExps().get(i));
+                if (paramSymbol == null) {
+                    continue;
+                }
                 int dimension;
                 if (paramSymbol.getName() == null) {
                     dimension = 0;

@@ -23,7 +23,7 @@ public class CallInst extends Instruction {
     }
 
     public ArrayList<Value> getParameters() {
-        return (ArrayList<Value>) getOperands().subList(1, getOperands().size());
+        return new ArrayList<>(getOperands().subList(1, getOperands().size()));
     }
 
     @Override

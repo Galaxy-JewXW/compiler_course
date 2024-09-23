@@ -19,11 +19,8 @@ public class IRData {
         localVarCnts.put(function, 0);
     }
 
-    public static String getLocalVarName(Function function, boolean update) {
+    public static String getLocalVarName(Function function) {
         int p = localVarCnts.getOrDefault(function, 0);
-        if (!update) {
-            return "%v" + p;
-        }
         localVarCnts.put(function, p + 1);
         return "%v" + p;
     }

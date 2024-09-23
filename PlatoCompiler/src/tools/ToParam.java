@@ -57,6 +57,9 @@ public class ToParam {
     private static ParamSymbol lValToParam(LVal lval) {
         TableManager tableManager = TableManager.getInstance();
         VarSymbol symbol = (VarSymbol) tableManager.getSymbol(lval.getIdent().getContent());
+        if (symbol == null) {
+            return null;
+        }
         return new ParamSymbol(
                 lval.getIdent().getContent(),
                 symbol.getType(),
