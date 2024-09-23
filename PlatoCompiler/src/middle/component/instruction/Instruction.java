@@ -9,10 +9,12 @@ public abstract class Instruction extends User {
     // 指令所处的基本块
     private BasicBlock basicBlock;
 
-    public Instruction(String name, ValueType valueType, OperatorType opType) {
+    public Instruction(String name, ValueType valueType,
+                       OperatorType opType, BasicBlock basicBlock) {
         super(name, valueType);
         this.opType = opType;
-        this.basicBlock = null;
+        this.basicBlock = basicBlock;
+        basicBlock.addInstruction(this);
     }
 
     public BasicBlock getBasicBlock() {

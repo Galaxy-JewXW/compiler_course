@@ -5,6 +5,8 @@ import frontend.TableManager;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
+import middle.IRBuilder;
+import middle.component.Module;
 import tools.Printer;
 
 import java.nio.file.Files;
@@ -49,5 +51,11 @@ public class Compiler {
 
         // bonus part:打印符号表
         TableManager.getInstance().print();
+
+        // 生成未优化中间代码
+        IRBuilder irBuilder = new IRBuilder(compUnit);
+        irBuilder.build();
+
+        System.out.println(Module.getInstance());
     }
 }

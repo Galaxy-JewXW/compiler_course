@@ -42,6 +42,10 @@ public class VarSymbol extends Symbol {
         return initialValue.getElements().get(index);
     }
 
+    public InitialValue getInitialValue() {
+        return initialValue;
+    }
+
     public Value getLlvmValue() {
         return llvmValue;
     }

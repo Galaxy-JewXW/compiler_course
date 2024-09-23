@@ -10,15 +10,19 @@ import java.util.Stack;
 
 public class IRData {
     // 计数器
-    private static int globalVarCnt = 0;
     private static int constStringCnt = 0;
     private static int basicBlockCnt = 0;
     private static int paramCnt = 0;
     private static HashMap<Function, Integer> localVarCnts = new HashMap<>();
 
-    private static Module currentModule = null;
-    private static Function currentFunction = null;
-    private static BasicBlock currentBasicBlock = null;
+    public static void setCurrentFunction(Function function) {
+        localVarCnts.put(function, 0);
+    }
 
-    private static Stack<ForLoop> forLoopStack = new Stack<>();
+    public static String getLocalVarName(Function function) {
+        int p = localVarCnts.getOrDefault(function, 0);
+        localVarCnts.put(function, p + 1);
+        return "%v" + p;
+    }
+
 }

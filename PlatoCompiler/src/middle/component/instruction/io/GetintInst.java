@@ -1,11 +1,12 @@
 package middle.component.instruction.io;
 
+import middle.component.BasicBlock;
 import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
 
 public class GetintInst extends IOInst {
-    public GetintInst(String name) {
-        super(name, IntegerType.i32, OperatorType.IO);
+    public GetintInst(String name, BasicBlock block) {
+        super(name, IntegerType.i32, OperatorType.IO, block);
     }
 
     @Override

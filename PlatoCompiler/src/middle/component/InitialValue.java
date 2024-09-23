@@ -17,6 +17,10 @@ public class InitialValue {
         this.elements = elements;
     }
 
+    public ValueType getValueType() {
+        return valueType;
+    }
+
     public ArrayList<Integer> getElements() {
         return elements;
     }

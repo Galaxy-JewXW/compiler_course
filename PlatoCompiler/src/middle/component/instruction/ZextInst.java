@@ -1,11 +1,12 @@
 package middle.component.instruction;
 
+import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.ValueType;
 
 public class ZextInst extends Instruction {
-    public ZextInst(String name, Value value, ValueType targetType) {
-        super(name, targetType, OperatorType.ZEXT);
+    public ZextInst(String name, Value value, ValueType targetType, BasicBlock block) {
+        super(name, targetType, OperatorType.ZEXT, block);
         addOperands(value);
     }
 

@@ -1,11 +1,13 @@
 package middle.component.instruction;
 
+import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 public class StoreInst extends Instruction {
-    public StoreInst(String name, Value pointer, Value storedValue) {
-        super(name, IntegerType.VOID, OperatorType.STORE);
+    public StoreInst(String name, Value pointer,
+                     Value storedValue, BasicBlock block) {
+        super(name, IntegerType.VOID, OperatorType.STORE, block);
         addOperands(pointer);
         addOperands(storedValue);
     }
