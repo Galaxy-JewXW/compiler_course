@@ -44,6 +44,12 @@ public class Module extends Value {
         functions.add(function);
     }
 
+    public void updateId() {
+        for (Function function : functions) {
+            function.updateId();
+        }
+    }
+
     @Override
     public String toString() {
         return String.join("\n", builtInFunctions) + "\n\n" +

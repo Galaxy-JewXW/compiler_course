@@ -4,127 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="change 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/error/Error.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/error/ErrorHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/error/ErrorType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Lexer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Parser$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Parser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/TableManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/FuncSymbol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/ParamSymbol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/Symbol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/SymbolType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/VarSymbol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/BType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/Block.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/BlockItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/Calculable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/Character.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/CompUnit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/Decl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/LVal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/Number.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/SyntaxNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/AddExp$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/AddExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/Cond.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/ConstExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/EqExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/Exp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/LAndExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/LOrExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/MulExp$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/MulExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/PrimaryExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/RelExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/UnaryExp$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/UnaryExp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/UnaryOp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncDef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncFParam.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncFParams.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncRParams.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/MainFuncDef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/BlockStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/BreakStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/ContinueStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/ExpStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/ForStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/ForStruct.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/GetcharStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/GetintStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/IfStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/LValExpStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/PrintfStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/ReturnStmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/statement/Stmt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/ConstDecl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/ConstDef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/ConstInitVal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/InitVal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/VarDecl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/variable/VarDef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/token/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/token/TokenType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/kobe.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/man.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ConstInt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ConstString.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ForLoop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/FuncParam.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Function.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/GlobalVar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Module.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Undefined.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/AllocInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BinaryInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BrInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/CallInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/GepInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/Instruction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/LoadInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/OperatorType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/RetInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/StoreInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/TruncInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/ZextInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/GetcharInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/GetintInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/IOInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/model/Use.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/model/Value.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/ArrayType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/IntegerType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/LabelType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/PointerType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/ValueType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/Printer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/StrToArray.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/ToParam.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/FuncParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/FuncParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Function.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" afterDir="false" />
@@ -142,7 +29,7 @@
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutchInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutchInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/Printer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/model/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/model/Value.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +51,9 @@
     "accountId": "7e69d295-b0ef-4293-81cc-173b50d78e7a"
   }
 }]]></component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "customColor": "",
   "associatedIndex": 4
@@ -176,6 +66,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -186,9 +77,25 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Compiler.executor": "Run"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Compiler" />
+      <module name="PlatoCompiler" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.Compiler" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -205,11 +112,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1727104094593</updated>
-      <workItem from="1727104095815" duration="1084000" />
+      <workItem from="1727104095815" duration="4372000" />
     </task>
+    <task id="LOCAL-00001" summary="change 1">
+      <option name="closed" value="true" />
+      <created>1727105243723</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727105243724</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="change 1" />
   </component>
 </project>

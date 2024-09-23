@@ -1,12 +1,11 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 public class RetInst extends Instruction {
-    public RetInst(String name, Value returnValue) {
-        super(name, IntegerType.VOID, OperatorType.RET);
+    public RetInst(Value returnValue) {
+        super("", IntegerType.VOID, OperatorType.RET);
         if (returnValue != null) {
             addOperands(returnValue);
         }

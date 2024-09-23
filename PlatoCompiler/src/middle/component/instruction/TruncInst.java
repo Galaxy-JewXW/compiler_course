@@ -1,12 +1,11 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.ValueType;
 
 public class TruncInst extends Instruction {
-    public TruncInst(String name, Value value, ValueType targetType) {
-        super(name, targetType, OperatorType.ZEXT);
+    public TruncInst(Value value, ValueType targetType) {
+        super(targetType, OperatorType.ZEXT);
         addOperands(value);
     }
 

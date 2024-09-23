@@ -5,8 +5,8 @@ import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
 
 public class GetintInst extends IOInst {
-    public GetintInst(String name) {
-        super(name, IntegerType.i32, OperatorType.IO);
+    public GetintInst() {
+        super(IntegerType.i32, OperatorType.IO);
     }
 
     @Override

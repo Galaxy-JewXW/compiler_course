@@ -1,5 +1,6 @@
 package middle.component;
 
+import middle.IRData;
 import middle.component.model.User;
 import middle.component.type.LabelType;
 import middle.component.type.ValueType;
@@ -36,6 +37,16 @@ public class Function extends User {
 
     public ArrayList<BasicBlock> getBasicBlocks() {
         return basicBlocks;
+    }
+
+    public void updateId() {
+        IRData.reset();
+        for (FuncParam funcParam : funcParams) {
+            funcParam.updateId();
+        }
+        for (BasicBlock basicBlock : basicBlocks) {
+            basicBlock.updateId();
+        }
     }
 
     @Override

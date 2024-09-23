@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Value {
-    private final String name;
+    private String name;
     private final ValueType valueType;
     private final LinkedHashSet<Use> useList = new LinkedHashSet<>();
 
@@ -18,6 +18,10 @@ public class Value {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ValueType getValueType() {

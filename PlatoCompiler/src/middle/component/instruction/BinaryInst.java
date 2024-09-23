@@ -12,9 +12,9 @@ public class BinaryInst extends Instruction {
         return OperatorType.isLogicalOperator(opType) ? IntegerType.i1 : IntegerType.i32;
     }
 
-    public BinaryInst(String name, OperatorType opType,
+    public BinaryInst(OperatorType opType,
                       Value operand1, Value operand2) {
-        super(name, getValueType(opType), opType);
+        super(getValueType(opType), opType);
         this.opType = opType;
         addOperands(operand1);
         addOperands(operand2);

@@ -1,6 +1,6 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
+import middle.IRData;
 import middle.component.Function;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class CallInst extends Instruction {
-    public CallInst(String name, Function calledFunction,
+    public CallInst(Function calledFunction,
                     ArrayList<Value> parameters) {
-        super(name, calledFunction.getReturnType(), OperatorType.CALL);
+        super("", calledFunction.getReturnType(), OperatorType.CALL);
         addOperands(calledFunction);
         for (Value param : parameters) {
             addOperands(param);
+        }
+        if (!getValueType().equals(IntegerType.VOID)) {
+            setName(IRData.getVarName());
         }
     }
 

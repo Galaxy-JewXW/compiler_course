@@ -10,6 +10,13 @@ public abstract class Instruction extends User {
     // 指令所处的基本块
     private BasicBlock basicBlock;
 
+    public Instruction(ValueType valueType, OperatorType opType) {
+        super(IRData.getVarName(), valueType);
+        this.opType = opType;
+        this.basicBlock = IRData.getCurrentBlock();
+        basicBlock.addInstruction(this);
+    }
+
     public Instruction(String name, ValueType valueType,
                        OperatorType opType) {
         super(name, valueType);
@@ -24,6 +31,12 @@ public abstract class Instruction extends User {
 
     public void setBasicBlock(BasicBlock basicBlock) {
         this.basicBlock = basicBlock;
+    }
+
+    public void updateId() {
+        if (!getName().isEmpty()) {
+            setName(IRData.getVarName());
+        }
     }
 
     public abstract boolean hasSideEffect();

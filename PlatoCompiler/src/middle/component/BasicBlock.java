@@ -1,5 +1,6 @@
 package middle.component;
 
+import middle.IRData;
 import middle.component.instruction.Instruction;
 import middle.component.model.Value;
 import middle.component.type.LabelType;
@@ -11,9 +12,9 @@ public class BasicBlock extends Value {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
     private Function function;
 
-    public BasicBlock(String name, Function function) {
+    public BasicBlock(String name) {
         super(name, new LabelType());
-        this.function = function;
+        this.function = IRData.getCurrentFunction();
         function.addBasicBlock(this);
     }
 
@@ -43,6 +44,13 @@ public class BasicBlock extends Value {
 
     public void setFunction(Function function) {
         this.function = function;
+    }
+
+    public void updateId() {
+        setName(IRData.getBlockName());
+        for (Instruction instruction : instructions) {
+            instruction.updateId();
+        }
     }
 
     @Override

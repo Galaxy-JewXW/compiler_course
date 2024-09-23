@@ -1,12 +1,11 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.PointerType;
 
 public class LoadInst extends Instruction {
-    public LoadInst(String name, Value pointer) {
-        super(name, ((PointerType) pointer.getValueType()).getTargetType(),
+    public LoadInst(Value pointer) {
+        super(((PointerType) pointer.getValueType()).getTargetType(),
                 OperatorType.LOAD);
         addOperands(pointer);
     }

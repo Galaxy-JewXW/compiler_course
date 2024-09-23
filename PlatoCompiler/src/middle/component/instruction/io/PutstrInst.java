@@ -1,6 +1,5 @@
 package middle.component.instruction.io;
 
-import middle.component.BasicBlock;
 import middle.component.ConstString;
 import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
@@ -11,8 +10,8 @@ public class PutstrInst extends IOInst {
     // 单个字符也按照string处理，主要是懒
     private final ConstString constString;
 
-    public PutstrInst(String name, ConstString constString) {
-        super(name, IntegerType.VOID, OperatorType.IO);
+    public PutstrInst(ConstString constString) {
+        super("", IntegerType.VOID, OperatorType.IO);
         this.constString = constString;
     }
 
