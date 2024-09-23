@@ -31,7 +31,6 @@ public class IRBuilder {
     private SymbolTable currentTable = rootTable;
     private final CompUnit compUnit;
     private Function currentFunction = null;
-    private BasicBlock currentBlock = null;
     private boolean isGlobal = false;
 
     public IRBuilder(CompUnit compUnit) {
@@ -80,25 +79,22 @@ public class IRBuilder {
             varSymbol.setLlvmValue(globalVar);
         } else {
             Instruction instruction = new AllocInst(IRData.getLocalVarName(
-                    currentFunction), initialValue.getValueType(), currentBlock);
+                    currentFunction), initialValue.getValueType());
             varSymbol.setLlvmValue(instruction);
             if (varSymbol.getDimension() == 0) {
                 int init = initialValue.getElements().get(0);
                 new StoreInst(IRData.getLocalVarName(currentFunction),
-                        instruction, new ConstInt(initialValue.getValueType(), init),
-                        currentBlock);
+                        instruction, new ConstInt(initialValue.getValueType(), init));
             } else if (varSymbol.getDimension() == 1) {
                 Value pointer = instruction;
                 for (int i = 0; i < initialValue.getElements().size(); i++) {
                     instruction = new GepInst(IRData.getLocalVarName(currentFunction),
                             pointer,
-                            new ConstInt(IntegerType.i32, i),
-                            currentBlock
+                            new ConstInt(IntegerType.i32, i)
                     );
                     new StoreInst(IRData.getLocalVarName(currentFunction),
                             instruction,
-                            new ConstInt(IntegerType.i32, initialValue.getElements().get(i)),
-                            currentBlock);
+                            new ConstInt(IntegerType.i32, initialValue.getElements().get(i)));
                 }
             } else {
                 throw new RuntimeException("Shouldn't reach here");
@@ -138,7 +134,7 @@ public class IRBuilder {
             if (varSymbol.getDimension() == 0) {
                 instruction = new AllocInst(IRData.getLocalVarName(
                         currentFunction),
-                        valueType, currentBlock);
+                        valueType);
                 varSymbol.setLlvmValue(instruction);
                 if (varDef.getInitVal() != null) {
                     ArrayList<Value> inits = buildInitVal(varDef.getInitVal());
@@ -151,7 +147,7 @@ public class IRBuilder {
                             storeValue = new ConstInt(IntegerType.i8, constInt.getIntValue());
                         } else {
                             storeValue = new TruncInst(IRData.getLocalVarName(currentFunction),
-                                    storeValue, IntegerType.i8, currentBlock);
+                                    storeValue, IntegerType.i8);
                         }
                     } else if (storeValue.getValueType().equals(IntegerType.i8)
                             && targetType.equals(IntegerType.i32)) {
@@ -159,25 +155,25 @@ public class IRBuilder {
                             storeValue = new ConstInt(IntegerType.i32, constInt.getIntValue());
                         } else {
                             storeValue = new ZextInst(IRData.getLocalVarName(currentFunction),
-                                    storeValue, IntegerType.i8, currentBlock);
+                                    storeValue, IntegerType.i8);
                         }
                     }
                     new StoreInst(IRData.getLocalVarName(currentFunction), instruction,
-                            storeValue, currentBlock);
+                            storeValue);
                 }
             } else {
                 valueType = new ArrayType(varSymbol.getLength(), valueType);
                 instruction = new AllocInst(IRData.getLocalVarName(
                         currentFunction),
-                        valueType, currentBlock);
+                        valueType);
                 varSymbol.setLlvmValue(instruction);
                 if (varDef.getInitVal() != null) {
                     ArrayList<Value> inits = buildInitVal(varDef.getInitVal());
                     for (int i = 0; i < inits.size(); i++) {
                         Instruction inst = new GepInst(IRData.getLocalVarName(currentFunction), instruction,
-                                new ConstInt(IntegerType.i32, i), currentBlock);
+                                new ConstInt(IntegerType.i32, i));
                         new StoreInst(IRData.getLocalVarName(currentFunction), inst,
-                                inits.get(i), currentBlock);
+                                inits.get(i));
                     }
                 }
             }
@@ -211,7 +207,7 @@ public class IRBuilder {
         Value left = buildMulExp(addExp.getMulExps().get(0));
         if (left.getValueType().equals(IntegerType.i8)) {
             left = new ZextInst(IRData.getLocalVarName(currentFunction),
-                    left, IntegerType.i32, currentBlock);
+                    left, IntegerType.i32);
         }
         Value right;
         Instruction instruction;
@@ -220,15 +216,15 @@ public class IRBuilder {
             right = buildMulExp(addExp.getMulExps().get(i));
             if (right.getValueType().equals(IntegerType.i8)) {
                 right = new ZextInst(IRData.getLocalVarName(currentFunction),
-                        right, IntegerType.i32, currentBlock);
+                        right, IntegerType.i32);
             }
             if (op == TokenType.PLUS) {
                 instruction = new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.ADD, left, right, currentBlock
+                        OperatorType.ADD, left, right
                 );
             } else {
                 instruction = new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.SUB, left, right, currentBlock
+                        OperatorType.SUB, left, right
                 );
             }
             left = instruction;
@@ -240,7 +236,7 @@ public class IRBuilder {
         Value left = buildUnaryExp(mulExp.getUnaryExps().get(0));
         if (left.getValueType().equals(IntegerType.i8)) {
             left = new ZextInst(IRData.getLocalVarName(currentFunction),
-                    left, IntegerType.i32, currentBlock);
+                    left, IntegerType.i32);
         }
         Value right;
         Instruction instruction;
@@ -249,22 +245,22 @@ public class IRBuilder {
             right = buildUnaryExp(mulExp.getUnaryExps().get(i));
             if (right.getValueType().equals(IntegerType.i8)) {
                 right = new ZextInst(IRData.getLocalVarName(currentFunction),
-                        right, IntegerType.i32, currentBlock);
+                        right, IntegerType.i32);
             }
             if (op == TokenType.MULT) {
                 instruction = new BinaryInst(IRData.getLocalVarName(
                         currentFunction),
-                        OperatorType.MUL, left, right, currentBlock
+                        OperatorType.MUL, left, right
                 );
             } else if (op == TokenType.DIV) {
                 instruction = new BinaryInst(IRData.getLocalVarName(
                         currentFunction),
-                        OperatorType.SDIV, left, right, currentBlock
+                        OperatorType.SDIV, left, right
                 );
             } else if (op == TokenType.MOD) {
                 instruction = new BinaryInst(IRData.getLocalVarName(
                         currentFunction),
-                        OperatorType.SREM, left, right, currentBlock
+                        OperatorType.SREM, left, right
                 );
             } else {
                 throw new RuntimeException("Shouldn't reach here");
@@ -285,13 +281,13 @@ public class IRBuilder {
                 return left;
             } else if (type == TokenType.MINU) {
                 return new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.SUB, right, left, currentBlock);
+                        OperatorType.SUB, right, left);
             } else if (type == TokenType.NOT) {
                 Instruction instruction = new BinaryInst(IRData.getLocalVarName(
                         currentFunction),
-                        OperatorType.ICMP_EQ, right, left, currentBlock);
+                        OperatorType.ICMP_EQ, right, left);
                 return new ZextInst(IRData.getLocalVarName(currentFunction),
-                        instruction, IntegerType.i32, currentBlock);
+                        instruction, IntegerType.i32);
             } else {
                 throw new RuntimeException("Shouldn't reach here");
             }
@@ -307,7 +303,7 @@ public class IRBuilder {
                 arguments.addAll(buildFuncRParams(unaryExp.getFuncRParams()));
             }
             return new CallInst(IRData.getLocalVarName(currentFunction),
-                    function, arguments, currentBlock);
+                    function, arguments);
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
@@ -349,18 +345,15 @@ public class IRBuilder {
         int dimension = varSymbol.getDimension();
         if (dimension == 0) {
             return new LoadInst(IRData.getLocalVarName(currentFunction),
-                    varSymbol.getLlvmValue(), currentBlock);
+                    varSymbol.getLlvmValue());
         } else if (dimension == 1) {
             if (indexes.isEmpty()) {
                 return new GepInst(IRData.getLocalVarName(currentFunction),
-                        varSymbol.getLlvmValue(), new ConstInt(IntegerType.i32, 0),
-                        currentBlock);
+                        varSymbol.getLlvmValue(), new ConstInt(IntegerType.i32, 0));
             } else {
                 Instruction inst = new GepInst(IRData.getLocalVarName(currentFunction),
-                        varSymbol.getLlvmValue(), indexes.get(0),
-                        currentBlock);
-                return new LoadInst(IRData.getLocalVarName(currentFunction),
-                        inst, currentBlock);
+                        varSymbol.getLlvmValue(), indexes.get(0));
+                return new LoadInst(IRData.getLocalVarName(currentFunction), inst);
             }
         } else {
             throw new RuntimeException("Shouldn't reach here");
@@ -381,7 +374,7 @@ public class IRBuilder {
             return varSymbol.getLlvmValue();
         } else if (dimension == 1) {
             return new GepInst(IRData.getLocalVarName(currentFunction),
-                    varSymbol.getLlvmValue(), indexes.get(0), currentBlock);
+                    varSymbol.getLlvmValue(), indexes.get(0));
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
@@ -400,21 +393,21 @@ public class IRBuilder {
         funcSymbol.setLlvmValue(function);
         currentFunction = function;
         currentTable = currentTable.getChild();
-        IRData.setCurrentFunction(function);
+        IRData.setCurFuncCnt(function);
         IRData.resetBasicBlockCnt();
-        currentBlock = new BasicBlock(IRData.getBasicBlockName(), function);
+        IRData.setCurrentBlock(new BasicBlock(IRData.getBasicBlockName(), function));
         if (funcDef.getFuncFParams() != null) {
             buildFuncFParams(funcDef.getFuncFParams());
         }
         buildBlock(funcDef.getBlock());
-        BasicBlock lastBlock = currentBlock;
+        BasicBlock lastBlock = IRData.getCurrentBlock();
         if (lastBlock.isEmpty() || !(lastBlock.getLastInstruction() instanceof RetInst)) {
             if (funcReturnType.equals(IntegerType.i32)
                     || funcReturnType.equals(IntegerType.i8)) {
                 new RetInst(IRData.getLocalVarName(function),
-                        new ConstInt(funcReturnType, 0), lastBlock);
+                        new ConstInt(funcReturnType, 0));
             } else {
-                new RetInst(IRData.getLocalVarName(function), null, lastBlock);
+                new RetInst(IRData.getLocalVarName(function), null);
             }
         }
         currentTable = currentTable.getParent();
@@ -443,12 +436,11 @@ public class IRBuilder {
         if (fParamType instanceof IntegerType integerType) {
             Instruction instruction = new AllocInst(
                     IRData.getLocalVarName(currentFunction),
-                    integerType, currentBlock);
+                    integerType);
             fParamSymbol.setLlvmValue(instruction);
             new StoreInst(
                     IRData.getLocalVarName(currentFunction),
-                    instruction, funcParam, currentBlock
-            );
+                    instruction, funcParam);
         } else {
             fParamSymbol.setLlvmValue(funcParam);
         }
@@ -465,9 +457,9 @@ public class IRBuilder {
         Function mainFunction = new Function(name, funcReturnType);
         mainFuncSymbol.setLlvmValue(mainFunction);
         currentFunction = mainFunction;
-        IRData.setCurrentFunction(mainFunction);
+        IRData.setCurFuncCnt(mainFunction);
         IRData.resetBasicBlockCnt();
-        currentBlock = new BasicBlock(IRData.getBasicBlockName(), mainFunction);
+        IRData.setCurrentBlock(new BasicBlock(IRData.getBasicBlockName(), mainFunction));
         currentTable = currentTable.getChild();
         buildBlock(mainFuncDef.getBlock());
         currentTable = currentTable.getParent();
@@ -527,7 +519,7 @@ public class IRBuilder {
                 rvalue = new ConstInt(IntegerType.i8, constInt.getIntValue());
             } else {
                 rvalue = new TruncInst(IRData.getLocalVarName(currentFunction),
-                        rvalue, IntegerType.i8, currentBlock);
+                        rvalue, IntegerType.i8);
             }
         } else if (rvalue.getValueType().equals(IntegerType.i8)
                 && targetType.equals(IntegerType.i32)) {
@@ -535,11 +527,11 @@ public class IRBuilder {
                 rvalue = new ConstInt(IntegerType.i32, constInt.getIntValue());
             } else {
                 rvalue = new ZextInst(IRData.getLocalVarName(currentFunction),
-                        rvalue, IntegerType.i8, currentBlock);
+                        rvalue, IntegerType.i8);
             }
         }
         new StoreInst(IRData.getLocalVarName(currentFunction),
-                lvalue, rvalue, currentBlock);
+                lvalue, rvalue);
     }
 
     private void buildCond(Cond cond, BasicBlock trueBlock, BasicBlock falseBlock) {
@@ -556,7 +548,7 @@ public class IRBuilder {
                 BasicBlock nextBlock = new BasicBlock(IRData.getBasicBlockName(),
                         currentFunction);
                 buildLAndExp(lAndExp, trueBlock, nextBlock);
-                currentBlock = nextBlock;
+                IRData.setCurrentBlock(nextBlock);
             }
         }
     }
@@ -568,14 +560,14 @@ public class IRBuilder {
             if (i == eqExps.size() - 1) {
                 Value condition = buildEqExp(eqExp);
                 new BrInst(IRData.getLocalVarName(currentFunction), condition, trueBlock,
-                        falseBlock, currentBlock);
+                        falseBlock);
             } else {
                 BasicBlock nextBlock = new BasicBlock(IRData.getBasicBlockName(),
                         currentFunction);
                 Value condition = buildEqExp(eqExp);
                 new BrInst(IRData.getLocalVarName(currentFunction), condition, nextBlock,
-                        falseBlock, currentBlock);
-                currentBlock = nextBlock;
+                        falseBlock);
+                IRData.setCurrentBlock(nextBlock);
             }
         }
     }
@@ -586,24 +578,24 @@ public class IRBuilder {
             if (left.getValueType().equals(IntegerType.i32)) {
                 left = new BinaryInst(IRData.getLocalVarName(currentFunction),
                         OperatorType.ICMP_NE, left,
-                        new ConstInt(IntegerType.i32, 0), currentBlock);
+                        new ConstInt(IntegerType.i32, 0));
                 return left;
             }
         }
         for (int i = 1; i < eqExp.getRelExps().size(); i++) {
             if (!left.getValueType().equals(IntegerType.i32)) {
                 left = new ZextInst(IRData.getLocalVarName(currentFunction),
-                        left, IntegerType.i32, currentBlock);
+                        left, IntegerType.i32);
                 Value right = buildRelExp(eqExp.getRelExps().get(i));
                 if (!right.getValueType().equals(IntegerType.i32)) {
                     right = new ZextInst(IRData.getLocalVarName(currentFunction),
-                            right, IntegerType.i32, currentBlock);
+                            right, IntegerType.i32);
                 }
                 left = switch (eqExp.getOperators().get(i - 1).getType()) {
                     case EQL -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                            OperatorType.ICMP_EQ, left, right, currentBlock);
+                            OperatorType.ICMP_EQ, left, right);
                     case NEQ -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                            OperatorType.ICMP_NE, left, right, currentBlock);
+                            OperatorType.ICMP_NE, left, right);
                     default -> throw new RuntimeException("Shouldn't reach here");
                 };
             }
@@ -619,18 +611,18 @@ public class IRBuilder {
         for (int i = 1; i < relExp.getAddExps().size(); i++) {
             if (!left.getValueType().equals(IntegerType.i32)) {
                 left = new ZextInst(IRData.getLocalVarName(currentFunction),
-                        left, IntegerType.i32, currentBlock);
+                        left, IntegerType.i32);
             }
             Value right = buildAddExp(relExp.getAddExps().get(i));
             left = switch (relExp.getOperators().get(i - 1).getType()) {
                 case GRE -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.ICMP_SGT, left, right, currentBlock);
+                        OperatorType.ICMP_SGT, left, right);
                 case GEQ -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.ICMP_SGE, left, right, currentBlock);
+                        OperatorType.ICMP_SGE, left, right);
                 case LSS -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.ICMP_SLT, left, right, currentBlock);
+                        OperatorType.ICMP_SLT, left, right);
                 case LEQ -> new BinaryInst(IRData.getLocalVarName(currentFunction),
-                        OperatorType.ICMP_SLE, left, right, currentBlock);
+                        OperatorType.ICMP_SLE, left, right);
                 default -> throw new RuntimeException("Shouldn't reach here");
             };
         }
@@ -646,21 +638,21 @@ public class IRBuilder {
             BasicBlock followBlock = new BasicBlock(IRData.getBasicBlockName(),
                     currentFunction);
             buildCond(ifStmt.getCond(), trueBlock, falseBlock);
-            currentBlock = trueBlock;
+            IRData.setCurrentBlock(trueBlock);
             buildStmt(ifStmt.getStmt1());
-            new BrInst(IRData.getLocalVarName(currentFunction), followBlock, trueBlock);
-            currentBlock = falseBlock;
+            new BrInst(IRData.getLocalVarName(currentFunction), followBlock);
+            IRData.setCurrentBlock(falseBlock);
             buildStmt(ifStmt.getStmt2());
-            new BrInst(IRData.getLocalVarName(currentFunction), followBlock, falseBlock);
-            currentBlock = followBlock;
+            new BrInst(IRData.getLocalVarName(currentFunction), followBlock);
+            IRData.setCurrentBlock(followBlock);
         } else {
             BasicBlock followBlock = new BasicBlock(IRData.getBasicBlockName(),
                     currentFunction);
             buildCond(ifStmt.getCond(), trueBlock, followBlock);
-            currentBlock = trueBlock;
+            IRData.setCurrentBlock(trueBlock);
             buildStmt(ifStmt.getStmt1());
-            new BrInst(IRData.getLocalVarName(currentFunction), followBlock, trueBlock);
-            currentBlock = followBlock;
+            new BrInst(IRData.getLocalVarName(currentFunction), followBlock);
+            IRData.setCurrentBlock(followBlock);
         }
     }
 
@@ -673,35 +665,33 @@ public class IRBuilder {
         } else if (currentFunction.getReturnType().equals(IntegerType.i32)) {
             returnValue = new ConstInt(IntegerType.i32, 0);
         }
-        new RetInst(IRData.getLocalVarName(currentFunction), returnValue, currentBlock);
+        new RetInst(IRData.getLocalVarName(currentFunction), returnValue);
     }
 
     private void buildGetintStmt(GetintStmt getintStmt) {
         Value pointer = buildLValAssign(getintStmt.getLVal());
-        Value storeValue = new GetintInst(IRData.getLocalVarName(currentFunction)
-                , currentBlock);
+        Value storeValue = new GetintInst(IRData.getLocalVarName(currentFunction));
         ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();
         if (storeValue.getValueType().equals(IntegerType.i32)
                 && targetType.equals(IntegerType.i8)) {
             storeValue = new TruncInst(IRData.getLocalVarName(currentFunction),
-                    storeValue, IntegerType.i8, currentBlock);
+                    storeValue, IntegerType.i8);
         }
         new StoreInst(IRData.getLocalVarName(currentFunction),
-                pointer, storeValue, currentBlock);
+                pointer, storeValue);
     }
 
     private void buildGetcharStmt(GetcharStmt getcharStmt) {
         Value pointer = buildLValAssign(getcharStmt.getLVal());
-        Value storeValue = new GetcharInst(IRData.getLocalVarName(currentFunction)
-                , currentBlock);
+        Value storeValue = new GetcharInst(IRData.getLocalVarName(currentFunction));
         ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();
         if (storeValue.getValueType().equals(IntegerType.i32)
                 && targetType.equals(IntegerType.i8)) {
             storeValue = new TruncInst(IRData.getLocalVarName(currentFunction),
-                    storeValue, IntegerType.i8, currentBlock);
+                    storeValue, IntegerType.i8);
         }
         new StoreInst(IRData.getLocalVarName(currentFunction),
-                pointer, storeValue, currentBlock);
+                pointer, storeValue);
     }
 
     private void buildPrintfStmt(PrintfStmt printfStmt) {
@@ -723,8 +713,7 @@ public class IRBuilder {
             String tempString = formatString.substring(pos, start);
             ConstString constString = new ConstString(
                     IRData.getConstStringName(), tempString);
-            new PutstrInst(IRData.getLocalVarName(currentFunction),
-                    constString, currentBlock);
+            new PutstrInst(IRData.getLocalVarName(currentFunction), constString);
             if (typeString.equals("%d")) {
                 Value value = values.get(cnt++);
                 if (!value.getValueType().equals(IntegerType.i32)) {
@@ -732,11 +721,10 @@ public class IRBuilder {
                         value = new ConstInt(IntegerType.i32, constInt.getIntValue());
                     } else {
                         value = new ZextInst(IRData.getLocalVarName(currentFunction),
-                                value, IntegerType.i32, currentBlock);
+                                value, IntegerType.i32);
                     }
                 }
-                new PutintInst(IRData.getLocalVarName(currentFunction),
-                        value, currentBlock);
+                new PutintInst(IRData.getLocalVarName(currentFunction), value);
             } else if (typeString.equals("%c")) {
                 Value value = values.get(cnt++);
                 if (value.getValueType().equals(IntegerType.i32)) {
@@ -744,11 +732,10 @@ public class IRBuilder {
                         value = new ConstInt(IntegerType.i8, constInt.getIntValue());
                     } else {
                         value = new TruncInst(IRData.getLocalVarName(currentFunction),
-                                value, IntegerType.i8, currentBlock);
+                                value, IntegerType.i8);
                     }
                 }
-                new PutchInst(IRData.getLocalVarName(currentFunction),
-                        value, currentBlock);
+                new PutchInst(IRData.getLocalVarName(currentFunction), value);
             }
             pos = start + 2;
         }
@@ -756,8 +743,7 @@ public class IRBuilder {
             String tempString = formatString.substring(pos);
             ConstString constString = new ConstString(
                     IRData.getConstStringName(), tempString);
-            new PutstrInst(IRData.getLocalVarName(currentFunction),
-                    constString, currentBlock);
+            new PutstrInst(IRData.getLocalVarName(currentFunction), constString);
         }
     }
 
@@ -774,35 +760,32 @@ public class IRBuilder {
         BasicBlock followBlock = new BasicBlock(IRData.getBasicBlockName(),
                 currentFunction);
         IRData.push(new ForLoop(conditionBlock, bodyBlock, followBlock));
-        new BrInst(IRData.getLocalVarName(currentFunction),
-                conditionBlock, currentBlock);
-        currentBlock = conditionBlock;
+        new BrInst(IRData.getLocalVarName(currentFunction), conditionBlock);
+        IRData.setCurrentBlock(conditionBlock);
         if (forStruct.getCond() != null) {
             buildCond(forStruct.getCond(), bodyBlock, followBlock);
         } else {
-            new BrInst(IRData.getLocalVarName(currentFunction),
-                    bodyBlock, currentBlock);
+            new BrInst(IRData.getLocalVarName(currentFunction), bodyBlock);
         }
-        currentBlock = bodyBlock;
+        IRData.setCurrentBlock(bodyBlock);
         buildStmt(forStruct.getStmt());
         // 循环量更新直接嵌入bodyBlock
         if (forStruct.getForStmt2() != null) {
             buildAssign(forStruct.getForStmt2().getLVal(),
                     forStruct.getForStmt2().getExp());
         }
-        new BrInst(IRData.getLocalVarName(currentFunction),
-                conditionBlock, currentBlock);
-        currentBlock = followBlock;
+        new BrInst(IRData.getLocalVarName(currentFunction), conditionBlock);
+        IRData.setCurrentBlock(followBlock);
         IRData.pop();
     }
 
     private void buildBreakStmt() {
         new BrInst(IRData.getLocalVarName(currentFunction),
-                IRData.peek().getFollowBlock(), currentBlock);
+                IRData.peek().getFollowBlock());
     }
 
     private void buildContinueStmt() {
         new BrInst(IRData.getLocalVarName(currentFunction),
-                IRData.peek().getConditionBlock(), currentBlock);
+                IRData.peek().getConditionBlock());
     }
 }

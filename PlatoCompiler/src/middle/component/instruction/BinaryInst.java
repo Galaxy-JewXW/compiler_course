@@ -13,8 +13,8 @@ public class BinaryInst extends Instruction {
     }
 
     public BinaryInst(String name, OperatorType opType,
-                      Value operand1, Value operand2, BasicBlock block) {
-        super(name, getValueType(opType), opType, block);
+                      Value operand1, Value operand2) {
+        super(name, getValueType(opType), opType);
         this.opType = opType;
         addOperands(operand1);
         addOperands(operand2);

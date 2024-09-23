@@ -20,8 +20,8 @@ public class GepInst extends Instruction {
         }
     }
 
-    public GepInst(String name, Value pointer, Value index, BasicBlock block) {
-        super(name, getType(pointer), OperatorType.GEP, block);
+    public GepInst(String name, Value pointer, Value index) {
+        super(name, getType(pointer), OperatorType.GEP);
         addOperands(pointer);
         addOperands(index);
     }

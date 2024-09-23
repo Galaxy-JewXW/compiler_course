@@ -3,6 +3,7 @@ package tools;
 import error.Error;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
+import middle.component.Module;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -39,5 +40,12 @@ public class Printer {
             writer.newLine();
         }
         writer.close();
+    }
+
+    public static void printIr(Module module, String path) throws FileNotFoundException {
+        PrintStream origin = System.out;
+        System.setOut(new PrintStream(path));
+        System.out.println(module);
+        System.setOut(origin);
     }
 }

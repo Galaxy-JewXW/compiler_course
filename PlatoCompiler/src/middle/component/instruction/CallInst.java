@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class CallInst extends Instruction {
     public CallInst(String name, Function calledFunction,
-                    ArrayList<Value> parameters, BasicBlock block) {
-        super(name, calledFunction.getReturnType(), OperatorType.CALL, block);
+                    ArrayList<Value> parameters) {
+        super(name, calledFunction.getReturnType(), OperatorType.CALL);
         addOperands(calledFunction);
         for (Value param : parameters) {
             addOperands(param);

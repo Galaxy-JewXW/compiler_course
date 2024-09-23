@@ -56,6 +56,6 @@ public class Compiler {
         IRBuilder irBuilder = new IRBuilder(compUnit);
         irBuilder.build();
 
-        System.out.println(Module.getInstance());
+        Printer.printIr(Module.getInstance(), llvmOutput);
     }
 }

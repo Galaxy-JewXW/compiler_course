@@ -5,8 +5,8 @@ import middle.component.model.Value;
 import middle.component.type.ValueType;
 
 public class TruncInst extends Instruction {
-    public TruncInst(String name, Value value, ValueType targetType, BasicBlock block) {
-        super(name, targetType, OperatorType.ZEXT, block);
+    public TruncInst(String name, Value value, ValueType targetType) {
+        super(name, targetType, OperatorType.ZEXT);
         addOperands(value);
     }
 

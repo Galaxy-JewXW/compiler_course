@@ -6,8 +6,8 @@ import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 public class PutchInst extends IOInst {
-    public PutchInst(String name, Value target, BasicBlock block) {
-        super(name, IntegerType.VOID, OperatorType.IO, block);
+    public PutchInst(String name, Value target) {
+        super(name, IntegerType.VOID, OperatorType.IO);
         addOperands(target);
     }
 

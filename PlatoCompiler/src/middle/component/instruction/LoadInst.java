@@ -5,9 +5,9 @@ import middle.component.model.Value;
 import middle.component.type.PointerType;
 
 public class LoadInst extends Instruction {
-    public LoadInst(String name, Value pointer, BasicBlock block) {
+    public LoadInst(String name, Value pointer) {
         super(name, ((PointerType) pointer.getValueType()).getTargetType(),
-                OperatorType.LOAD, block);
+                OperatorType.LOAD);
         addOperands(pointer);
     }
 

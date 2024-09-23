@@ -8,8 +8,8 @@ public class BrInst extends Instruction {
     private final boolean isConditional;
     // 有条件跳转
     public BrInst(String name, Value condition, BasicBlock trueBlock,
-                  BasicBlock falseBlock, BasicBlock block) {
-        super(name, IntegerType.VOID, OperatorType.BR, block);
+                  BasicBlock falseBlock) {
+        super(name, IntegerType.VOID, OperatorType.BR);
         addOperands(condition);
         addOperands(trueBlock);
         addOperands(falseBlock);
@@ -17,8 +17,8 @@ public class BrInst extends Instruction {
     }
 
     // 无条件跳转
-    public BrInst(String name, BasicBlock targetBlock, BasicBlock block) {
-        super(name, IntegerType.VOID, OperatorType.BR, block);
+    public BrInst(String name, BasicBlock targetBlock) {
+        super(name, IntegerType.VOID, OperatorType.BR);
         addOperands(targetBlock);
         isConditional = false;
     }
