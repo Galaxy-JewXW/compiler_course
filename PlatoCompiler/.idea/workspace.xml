@@ -4,28 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="识别全局常量">
+    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="a">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Module.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Module.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/FuncParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/ParamSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/FuncSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/FuncSymbol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Function.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/GepInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/GepInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/Instruction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/LoadInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/LoadInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/RetInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/RetInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/StoreInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/StoreInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/TruncInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/TruncInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/ZextInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/ZextInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/GetcharInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/GetcharInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/GetintInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/GetintInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/IOInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/IOInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/ToParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/ToParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +88,7 @@
       <option name="presentableId" value="Default" />
       <updated>1727056942433</updated>
       <workItem from="1727056944063" duration="4985000" />
-      <workItem from="1727065015796" duration="4055000" />
+      <workItem from="1727065015796" duration="8197000" />
     </task>
     <task id="LOCAL-00001" summary="111">
       <option name="closed" value="true" />
@@ -127,7 +122,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727067565611</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="a">
+      <option name="closed" value="true" />
+      <created>1727069156239</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727069156239</updated>
+    </task>
+    <task id="LOCAL-00006" summary="a">
+      <option name="closed" value="true" />
+      <created>1727069267170</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727069267170</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,20 +149,130 @@
     <MESSAGE value="111222" />
     <MESSAGE value="kobe" />
     <MESSAGE value="识别全局常量" />
-    <option name="LAST_COMMIT_MESSAGE" value="识别全局常量" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/frontend/syntax/LVal.java</url>
-          <line>59</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/frontend/syntax/LVal.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>128</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>130</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>131</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>132</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>133</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/middle/IRBuilder.java</url>
+          <line>145</line>
+          <properties class="middle.IRBuilder" method="buildFuncFParam">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

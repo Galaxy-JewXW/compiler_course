@@ -13,16 +13,35 @@ public class IRData {
     private static int constStringCnt = 0;
     private static int basicBlockCnt = 0;
     private static int paramCnt = 0;
-    private static HashMap<Function, Integer> localVarCnts = new HashMap<>();
+    private static final HashMap<Function, Integer> localVarCnts = new HashMap<>();
 
     public static void setCurrentFunction(Function function) {
         localVarCnts.put(function, 0);
     }
 
-    public static String getLocalVarName(Function function) {
+    public static String getLocalVarName(Function function, boolean update) {
         int p = localVarCnts.getOrDefault(function, 0);
+        if (!update) {
+            return "%v" + p;
+        }
         localVarCnts.put(function, p + 1);
         return "%v" + p;
+    }
+
+    public static String getBasicBlockName() {
+        return "b" + basicBlockCnt++;
+    }
+
+    public static String getParamName() {
+        return "%a" + paramCnt++;
+    }
+
+    public static void resetParamCnt() {
+        paramCnt = 0;
+    }
+
+    public static void resetBasicBlockCnt() {
+        basicBlockCnt = 0;
     }
 
 }

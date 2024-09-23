@@ -46,12 +46,12 @@ public class Module extends Value {
 
     @Override
     public String toString() {
-        return String.join("\n", builtInFunctions) + "\n" +
+        return String.join("\n", builtInFunctions) +
                 constStrings.stream().map(Object::toString)
-                        .collect(Collectors.joining("\n")) + "\n" +
+                        .collect(Collectors.joining("\n")) + "\n\n" +
                 globalVars.stream().map(GlobalVar::toString)
-                        .collect(Collectors.joining("\n")) + "\n" +
+                        .collect(Collectors.joining("\n")) + "\n\n" +
                 functions.stream().map(Function::toString)
-                        .collect(Collectors.joining("\n"));
+                        .collect(Collectors.joining("\n\n"));
     }
 }

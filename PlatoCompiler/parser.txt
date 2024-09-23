@@ -240,6 +240,38 @@ STRCON "Hello"
 <ConstDef>
 SEMICN ;
 <ConstDecl>
+VOIDTK void
+<FuncType>
+IDENFR foo
+LPARENT (
+INTTK int
+IDENFR a
+<FuncFParam>
+COMMA ,
+INTTK int
+IDENFR b
+LBRACK [
+RBRACK ]
+<FuncFParam>
+COMMA ,
+CHARTK char
+IDENFR c
+<FuncFParam>
+COMMA ,
+CHARTK char
+IDENFR d
+LBRACK [
+RBRACK ]
+<FuncFParam>
+<FuncFParams>
+RPARENT )
+LBRACE {
+RETURNTK return
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<FuncDef>
 INTTK int
 MAINTK main
 LPARENT (

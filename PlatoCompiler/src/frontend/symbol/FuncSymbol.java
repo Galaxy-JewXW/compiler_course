@@ -5,16 +5,16 @@ import middle.component.Function;
 import java.util.ArrayList;
 
 public class FuncSymbol extends Symbol {
-    private final ArrayList<FuncParam> funcParams;
+    private final ArrayList<ParamSymbol> paramSymbols;
     private Function llvmValue = null;
 
-    public FuncSymbol(String name, SymbolType returnType, ArrayList<FuncParam> funcParams) {
+    public FuncSymbol(String name, SymbolType returnType, ArrayList<ParamSymbol> paramSymbols) {
         super(name, returnType);
-        this.funcParams = funcParams;
+        this.paramSymbols = paramSymbols;
     }
 
-    public ArrayList<FuncParam> getFuncParams() {
-        return funcParams;
+    public ArrayList<ParamSymbol> getFuncParams() {
+        return paramSymbols;
     }
 
     public Function getLlvmValue() {
@@ -29,7 +29,7 @@ public class FuncSymbol extends Symbol {
     public String toString() {
         return "FuncSymbol{" + "name='" + super.getName() + '\'' +
                 ", returnType=" + super.getType() +
-                ", funcParams=" + funcParams +
+                ", paramSymbols=" + paramSymbols +
                 ", llvmValue=" + llvmValue + '}';
     }
 }

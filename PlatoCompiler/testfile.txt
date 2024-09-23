@@ -9,6 +9,10 @@ const char woshishabi[3] = {cona, conca, 10000};
 const char conarrca[3] = "He";
 const char conarrcb[60] = "Hello";
 
+void foo(int a, int b[], char c, char d[]) {
+return;
+}
+
 int main() {
 return 0;
 }

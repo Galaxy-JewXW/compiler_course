@@ -271,10 +271,10 @@ public class Visitor {
             ));
         }
         // 对于一个名字重定义的函数，也应该完整分析函数内部是否具有其它错误
-        ArrayList<FuncParam> funcParams = new ArrayList<>();
+        ArrayList<ParamSymbol> paramSymbols = new ArrayList<>();
         if (funcDef.getFuncFParams() != null) {
             for (FuncFParam funcFParam : funcDef.getFuncFParams().getFuncFParams()) {
-                funcParams.add(new FuncParam(
+                paramSymbols.add(new ParamSymbol(
                         funcFParam.getIdent().getContent(),
                         funcFParam.getBType().getToken().getType() ==
                                 TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
@@ -282,7 +282,7 @@ public class Visitor {
             }
         }
         tableManager.addSymbol(new FuncSymbol(
-                funcDef.getIdent().getContent(), funcReturnType, funcParams
+                funcDef.getIdent().getContent(), funcReturnType, paramSymbols
         ));
         // 函数形参不在Block块中，但实际上应该属于Block块中定义的变量
         tableManager.createTable(funcReturnType);
@@ -603,13 +603,13 @@ public class Visitor {
          */
         if (unaryExp.getFuncRParams() != null) {
             for (int i = 0; i < funcSymbol.getFuncParams().size(); i++) {
-                FuncParam funcParam = ToParam.expToParam(
+                ParamSymbol paramSymbol = ToParam.expToParam(
                         unaryExp.getFuncRParams().getExps().get(i));
                 int dimension;
-                if (funcParam.getName() == null) {
+                if (paramSymbol.getName() == null) {
                     dimension = 0;
                 } else {
-                    Symbol symbol = tableManager.getSymbol(funcParam.getName());
+                    Symbol symbol = tableManager.getSymbol(paramSymbol.getName());
                     if (symbol.getType() == SymbolType.VOID) {
                         // void类型的函数返回值如果作为参数进行传递（传递到一个如需要int的函数参数位置）
                         // 需要报参数类型不匹配的错误。
@@ -620,7 +620,7 @@ public class Visitor {
                         一维数组名为实参，如a[2], foo(a)，则此时funcParam将其识别为0维的左值
                         从符号表查询得到a是1维，相减得这里的实参维数是1
                          */
-                        dimension = varSymbol.getDimension() - funcParam.getDimension();
+                        dimension = varSymbol.getDimension() - paramSymbol.getDimension();
                     } else {
                         dimension = 0;
                     }
@@ -637,7 +637,7 @@ public class Visitor {
                 if (funcSymbol.getFuncParams().get(i).getDimension() == 1
                         || dimension == 1) {
                     // 两者均是数组
-                    if (funcSymbol.getFuncParams().get(i).getType() != funcParam.getType()) {
+                    if (funcSymbol.getFuncParams().get(i).getType() != paramSymbol.getType()) {
                         ErrorHandler.getInstance().addError(new Error(
                                 ErrorType.ParamTypeMismatch,
                                 unaryExp.getIdent().getLine()

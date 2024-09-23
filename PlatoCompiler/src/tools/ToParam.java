@@ -1,11 +1,8 @@
 package tools;
 
 import frontend.TableManager;
-import frontend.symbol.FuncParam;
-import frontend.symbol.FuncSymbol;
-import frontend.symbol.Symbol;
-import frontend.symbol.SymbolType;
-import frontend.symbol.VarSymbol;
+import frontend.symbol.*;
+import frontend.symbol.ParamSymbol;
 import frontend.syntax.LVal;
 import frontend.syntax.expression.AddExp;
 import frontend.syntax.expression.Exp;
@@ -19,22 +16,22 @@ import frontend.syntax.expression.UnaryExp;
  * 即可判断其类型是否符合要求
  */
 public class ToParam {
-    public static FuncParam expToParam(Exp exp) {
+    public static ParamSymbol expToParam(Exp exp) {
         return addExpToParam(exp.getAddExp());
     }
 
-    private static FuncParam addExpToParam(AddExp addExp) {
+    private static ParamSymbol addExpToParam(AddExp addExp) {
         return unaryExpToParam(addExp.getMulExps().get(0).getUnaryExps().get(0));
     }
 
-    private static FuncParam unaryExpToParam(UnaryExp unaryExp) {
+    private static ParamSymbol unaryExpToParam(UnaryExp unaryExp) {
         if (unaryExp.getPrimaryExp() != null) {
             return primaryExpToParam(unaryExp.getPrimaryExp());
         } else if (unaryExp.getIdent() != null) {
             TableManager tableManager = TableManager.getInstance();
             Symbol symbol = tableManager.getSymbol(unaryExp.getIdent().getContent());
             if (symbol instanceof FuncSymbol funcSymbol) {
-                return new FuncParam(unaryExp.getIdent().getContent(),
+                return new ParamSymbol(unaryExp.getIdent().getContent(),
                         funcSymbol.getType(), 0);
             } else {
                 throw new RuntimeException("Unrecognized symbol: " +
@@ -45,22 +42,22 @@ public class ToParam {
         }
     }
 
-    private static FuncParam primaryExpToParam(PrimaryExp primaryExp) {
+    private static ParamSymbol primaryExpToParam(PrimaryExp primaryExp) {
         if (primaryExp.getLVal() != null) {
             return lValToParam(primaryExp.getLVal());
         } else if (primaryExp.getExp() != null) {
             return expToParam(primaryExp.getExp());
         } else if (primaryExp.getNumber() != null) {
-            return new FuncParam(null, SymbolType.INT, 0);
+            return new ParamSymbol(null, SymbolType.INT, 0);
         } else {
-            return new FuncParam(null, SymbolType.CHAR, 0);
+            return new ParamSymbol(null, SymbolType.CHAR, 0);
         }
     }
 
-    private static FuncParam lValToParam(LVal lval) {
+    private static ParamSymbol lValToParam(LVal lval) {
         TableManager tableManager = TableManager.getInstance();
         VarSymbol symbol = (VarSymbol) tableManager.getSymbol(lval.getIdent().getContent());
-        return new FuncParam(
+        return new ParamSymbol(
                 lval.getIdent().getContent(),
                 symbol.getType(),
                 lval.getExp() == null ? 0 : 1

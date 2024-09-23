@@ -5,13 +5,16 @@ import middle.component.model.Value;
 import middle.component.type.LabelType;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class BasicBlock extends Value {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
-    private Function function = null;
+    private Function function;
 
-    public BasicBlock(String name) {
+    public BasicBlock(String name, Function function) {
         super(name, new LabelType());
+        this.function = function;
+        function.addBasicBlock(this);
     }
 
     public void addInstruction(Instruction instruction) {
@@ -40,5 +43,12 @@ public class BasicBlock extends Value {
 
     public void setFunction(Function function) {
         this.function = function;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + ":\n\t" +
+                instructions.stream().map(Object::toString)
+                .collect(Collectors.joining("\n\t"));
     }
 }
