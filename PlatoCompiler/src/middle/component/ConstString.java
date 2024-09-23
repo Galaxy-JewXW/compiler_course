@@ -11,7 +11,8 @@ public class ConstString extends Value {
     public ConstString(String name, String content) {
         super(name, new PointerType(new ArrayType(content.length() + 1,
                 IntegerType.i8)));
-        this.content = content;
+        this.content = content.replace("\n", "\\0A");
+        Module.getInstance().addConstString(this);
     }
 
     @Override

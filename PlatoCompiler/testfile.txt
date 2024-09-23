@@ -1,11 +1,4 @@
-int a = 5;
-int change() {
-    a = 6;
-    return a;
-}
 int main() {
-    if (1 || change()) {
-        printf("%d", a);
-    }
-    return 0;
+printf("woshida%dsha%cbi%d\n", -100, 70, 'c');
+return 0;
 }

@@ -46,7 +46,7 @@ public class Module extends Value {
 
     @Override
     public String toString() {
-        return String.join("\n", builtInFunctions) +
+        return String.join("\n", builtInFunctions) + "\n\n" +
                 constStrings.stream().map(Object::toString)
                         .collect(Collectors.joining("\n")) + "\n\n" +
                 globalVars.stream().map(GlobalVar::toString)

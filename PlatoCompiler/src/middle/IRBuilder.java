@@ -12,6 +12,7 @@ import frontend.syntax.variable.*;
 import frontend.token.TokenType;
 import middle.component.*;
 import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -20,6 +21,8 @@ import middle.component.type.ValueType;
 import tools.StrToArray;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class IRBuilder {
@@ -334,7 +337,7 @@ public class IRBuilder {
         }
     }
 
-    // 左值形式出现在等号右边时
+    // 左值形式出现在等号右边时，或作为实参时
     private Value buildLValValue(LVal lVal) {
         ArrayList<Value> indexes = new ArrayList<>();
         if (lVal.getExp() != null) {
@@ -364,7 +367,7 @@ public class IRBuilder {
         }
     }
 
-    // 左值形式出现在函数左边
+    // 左值形式出现在等号左边
     private Value buildLValAssign(LVal lVal) {
         ArrayList<Value> indexes = new ArrayList<>();
         if (lVal.getExp() != null) {
@@ -499,6 +502,12 @@ public class IRBuilder {
             }
         } else if (stmt instanceof IfStmt ifStmt) {
             buildIfStmt(ifStmt);
+        } else if (stmt instanceof GetintStmt getintStmt) {
+            buildGetintStmt(getintStmt);
+        } else if (stmt instanceof GetcharStmt getcharStmt) {
+            buildGetcharStmt(getcharStmt);
+        } else if (stmt instanceof PrintfStmt printfStmt) {
+            buildPrintfStmt(printfStmt);
         }
     }
 
@@ -659,5 +668,90 @@ public class IRBuilder {
             returnValue = new ConstInt(IntegerType.i32, 0);
         }
         new RetInst(IRData.getLocalVarName(currentFunction), returnValue, currentBlock);
+    }
+
+    private void buildGetintStmt(GetintStmt getintStmt) {
+        Value pointer = buildLValAssign(getintStmt.getLVal());
+        Value storeValue = new GetintInst(IRData.getLocalVarName(currentFunction)
+                , currentBlock);
+        ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();
+        if (storeValue.getValueType().equals(IntegerType.i32)
+                && targetType.equals(IntegerType.i8)) {
+            storeValue = new TruncInst(IRData.getLocalVarName(currentFunction),
+                    storeValue, IntegerType.i8, currentBlock);
+        }
+        new StoreInst(IRData.getLocalVarName(currentFunction),
+                pointer, storeValue, currentBlock);
+    }
+
+    private void buildGetcharStmt(GetcharStmt getcharStmt) {
+        Value pointer = buildLValAssign(getcharStmt.getLVal());
+        Value storeValue = new GetcharInst(IRData.getLocalVarName(currentFunction)
+                , currentBlock);
+        ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();
+        if (storeValue.getValueType().equals(IntegerType.i32)
+                && targetType.equals(IntegerType.i8)) {
+            storeValue = new TruncInst(IRData.getLocalVarName(currentFunction),
+                    storeValue, IntegerType.i8, currentBlock);
+        }
+        new StoreInst(IRData.getLocalVarName(currentFunction),
+                pointer, storeValue, currentBlock);
+    }
+
+    private void buildPrintfStmt(PrintfStmt printfStmt) {
+        ArrayList<Value> values = new ArrayList<>();
+        for (Exp exp : printfStmt.getExps()) {
+            values.add(buildExp(exp));
+        }
+        String formatString = printfStmt.getStringConst().getContent();
+        formatString = formatString.substring(1, formatString.length() - 1);
+        formatString = formatString.replace("\\n", "\n");
+        Pattern pattern = Pattern.compile("%[cd]");
+        Matcher matcher = pattern.matcher(formatString);
+        int pos = 0;
+        int cnt = 0;
+        while (matcher.find()) {
+            // typeString是"%d"或"%c"
+            String typeString = matcher.group();
+            int start = matcher.start();
+            String tempString = formatString.substring(pos, start);
+            ConstString constString = new ConstString(
+                    IRData.getConstStringName(), tempString);
+            new PutstrInst(IRData.getLocalVarName(currentFunction),
+                    constString, currentBlock);
+            if (typeString.equals("%d")) {
+                Value value = values.get(cnt++);
+                if (!value.getValueType().equals(IntegerType.i32)) {
+                    if (value instanceof ConstInt constInt) {
+                        value = new ConstInt(IntegerType.i32, constInt.getIntValue());
+                    } else {
+                        value = new ZextInst(IRData.getLocalVarName(currentFunction),
+                                value, IntegerType.i32, currentBlock);
+                    }
+                }
+                new PutintInst(IRData.getLocalVarName(currentFunction),
+                        value, currentBlock);
+            } else if (typeString.equals("%c")) {
+                Value value = values.get(cnt++);
+                if (value.getValueType().equals(IntegerType.i32)) {
+                    if (value instanceof ConstInt constInt) {
+                        value = new ConstInt(IntegerType.i8, constInt.getIntValue());
+                    } else {
+                        value = new TruncInst(IRData.getLocalVarName(currentFunction),
+                                value, IntegerType.i8, currentBlock);
+                    }
+                }
+                new PutchInst(IRData.getLocalVarName(currentFunction),
+                        value, currentBlock);
+            }
+            pos = start + 2;
+        }
+        if (pos < formatString.length()) {
+            String tempString = formatString.substring(pos);
+            ConstString constString = new ConstString(
+                    IRData.getConstStringName(), tempString);
+            new PutstrInst(IRData.getLocalVarName(currentFunction),
+                    constString, currentBlock);
+        }
     }
 }

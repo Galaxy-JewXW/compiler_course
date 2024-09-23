@@ -1,12 +1,8 @@
 package middle;
 
-import middle.component.BasicBlock;
-import middle.component.ForLoop;
 import middle.component.Function;
-import middle.component.Module;
 
 import java.util.HashMap;
-import java.util.Stack;
 
 public class IRData {
     // 计数器
@@ -39,6 +35,10 @@ public class IRData {
 
     public static void resetBasicBlockCnt() {
         basicBlockCnt = 0;
+    }
+
+    public static String getConstStringName() {
+        return "@.s." + constStringCnt++;
     }
 
 }
