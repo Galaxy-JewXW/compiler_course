@@ -4,26 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="添加对函数定义的解析">
-      <change afterPath="$PROJECT_DIR$/src/tools/StrToArray.java" afterDir="false" />
+    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="a">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/CallInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/CallInst.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/ToParam.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/ToParam.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/AllocInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/AllocInst.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/IRData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/ToParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/ToParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/ConstInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/ConstInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/AllocInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,8 +29,14 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -64,6 +61,7 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "actions.on.save",
     "vue.rearranger.settings.migration": "true",
     "应用程序.Compiler.executor": "Run"
   }
@@ -99,7 +97,8 @@
       <option name="presentableId" value="Default" />
       <updated>1727056942433</updated>
       <workItem from="1727056944063" duration="4985000" />
-      <workItem from="1727065015796" duration="18215000" />
+      <workItem from="1727065015796" duration="18637000" />
+      <workItem from="1727093116103" duration="5077000" />
     </task>
     <task id="LOCAL-00001" summary="111">
       <option name="closed" value="true" />
@@ -157,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727073586504</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="a">
+      <option name="closed" value="true" />
+      <created>1727083418330</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727083418330</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,8 +175,24 @@
     <MESSAGE value="111222" />
     <MESSAGE value="kobe" />
     <MESSAGE value="识别全局常量" />
-    <MESSAGE value="a" />
     <MESSAGE value="添加对函数定义的解析" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加对函数定义的解析" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/frontend/syntax/expression/PrimaryExp.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/frontend/Visitor.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

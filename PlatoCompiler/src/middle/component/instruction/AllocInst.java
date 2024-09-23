@@ -13,6 +13,10 @@ public class AllocInst extends Instruction {
         this.targetType = targetType;
     }
 
+    public ValueType getTargetType() {
+        return targetType;
+    }
+
     @Override
     public boolean hasSideEffect() {
         return true;
