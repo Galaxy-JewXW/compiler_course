@@ -92,7 +92,7 @@ CONSTTK const
 INTTK int
 IDENFR conarra
 LBRACK [
-INTCON 1
+INTCON 3
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -104,6 +104,22 @@ ASSIGN =
 LBRACE {
 INTCON 1
 <Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+COMMA ,
+IDENFR concb
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+COMMA ,
+IDENFR conb
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -136,6 +152,57 @@ INTCON 1
 MULT *
 INTCON 7
 <Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACE }
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
+CONSTTK const
+CHARTK char
+IDENFR woshishabi
+LBRACK [
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+RBRACK ]
+ASSIGN =
+LBRACE {
+IDENFR cona
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+COMMA ,
+IDENFR conca
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+COMMA ,
+IDENFR conarrb
+LBRACK [
+INTCON 0
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RBRACK ]
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -587,8 +654,8 @@ LBRACE {
 INTTK int
 IDENFR cccddd
 LBRACK [
-INTCON 4
-<Number>
+IDENFR conb
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

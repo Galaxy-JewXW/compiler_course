@@ -2,10 +2,10 @@ const int cona = 1;
 const int conb = 2 * 3 , conc = 4;
 const char conca = 'a';
 const char concb = '\n',concc = 'c';
-const int conarra[1] = {1};
+const int conarra[3] = {1, concb, conb};
 const int conarrb[1] = {1 * 7};
 //const int ctry[1];
-
+const char woshishabi[3] = {cona, conca, conarrb[0]};
 const char conarrca[3] = "He";
 const char conarrcb[6] = "Hello";
 
@@ -50,7 +50,7 @@ char charfoo3(int g) {
 }
 
 int main() {
-    int cccddd[4];
+    int cccddd[conb];
     printf("22373300\n");
     printf("%d",1 + 1);
     if(1 == 2 || 1 != 2 && 1 == 3 || 4 > 6);
