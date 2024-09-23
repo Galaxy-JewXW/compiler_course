@@ -25,4 +25,13 @@ public class FuncParam {
     public int getDimension() {
         return dimension;
     }
+
+    @Override
+    public String toString() {
+        return "FuncParam{" +
+                "name='" + name + '\'' +
+                ", type=" + type.name() +
+                ", dimension=" + dimension +
+                '}';
+    }
 }

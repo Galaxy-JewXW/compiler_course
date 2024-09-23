@@ -52,4 +52,13 @@ public class SymbolTable {
     public void addSymbol(Symbol symbol) {
         symbols.put(symbol.getName(), symbol);
     }
+
+    public void print() {
+        for (Symbol symbol : symbols.values()) {
+            System.out.println(symbol);
+        }
+        for (SymbolTable child : children) {
+            child.print();
+        }
+    }
 }

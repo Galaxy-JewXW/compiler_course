@@ -1,6 +1,7 @@
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
+import frontend.TableManager;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
@@ -45,5 +46,8 @@ public class Compiler {
         if (!ErrorHandler.getInstance().getErrors().isEmpty()) {
             return;
         }
+
+        // bonus part:打印符号表
+        TableManager.getInstance().print();
     }
 }

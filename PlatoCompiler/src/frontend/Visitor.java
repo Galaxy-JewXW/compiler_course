@@ -10,6 +10,10 @@ import frontend.syntax.function.*;
 import frontend.syntax.statement.*;
 import frontend.syntax.variable.*;
 import frontend.token.TokenType;
+import middle.component.InitialValue;
+import middle.component.type.ArrayType;
+import middle.component.type.IntegerType;
+import middle.component.type.ValueType;
 import tools.ToParam;
 
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import java.util.regex.Pattern;
 public class Visitor {
     private final TableManager tableManager = TableManager.getInstance();
     private final CompUnit compUnit;
+    private boolean isGlobal = true;
 
     public Visitor(CompUnit compUnit) {
         this.compUnit = compUnit;
@@ -29,9 +34,11 @@ public class Visitor {
     }
 
     private void visitCompUnit() {
+        isGlobal = true;
         for (Decl decl : compUnit.getDecls()) {
             visitDecl(decl);
         }
+        isGlobal = false;
         for (FuncDef funcDef : compUnit.getFuncDefs()) {
             visitFuncDef(funcDef);
         }
@@ -63,13 +70,74 @@ public class Visitor {
         if (constDef.getConstExp() != null) {
             visitConstExp(constDef.getConstExp());
         }
+        int dimension = 0;
+        int length = 0;
+        if (constDef.getConstExp() != null) {
+            dimension = 1;
+            length = constDef.getConstExp().calculate();
+        }
+        ValueType valueType = switch (type) {
+            case INTTK -> IntegerType.i32;
+            case CHARTK -> IntegerType.i8;
+            default -> throw new RuntimeException("Shouldn't reacn here");
+        };
+        if (dimension == 1) {
+            valueType = new ArrayType(length, valueType);
+        }
+        InitialValue initialValue = new InitialValue(valueType, length,
+                calculateConstInitVal(constDef.getConstInitVal()));
         tableManager.addSymbol(new VarSymbol(
                 constDef.getIdent().getContent(),
                 type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
                 true,
-                constDef.getConstExp() == null ? 0 : 1
+                constDef.getConstExp() == null ? 0 : 1,
+                length,
+                initialValue
         ));
         visitConstInitVal(constDef.getConstInitVal());
+    }
+
+    private ArrayList<Integer> calculateConstInitVal(ConstInitVal constInitVal) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (constInitVal.getConstExp() != null) {
+            ans.add(constInitVal.getConstExp().calculate());
+        } else if (constInitVal.getConstExps() != null) {
+            for (ConstExp constExp : constInitVal.getConstExps()) {
+                ans.add(constExp.calculate());
+            }
+        } else if (constInitVal.getStringConst() != null) {
+            ans.addAll(str2Array(constInitVal.getStringConst().getContent()));
+        }
+        return ans;
+    }
+
+    private ArrayList<Integer> str2Array(String stringConst) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 1; i < stringConst.length() - 1; i++) {
+            if (stringConst.charAt(i) == '\\') {
+                i++;
+                int value = switch (stringConst.charAt(i)) {
+                    case 'a' -> 7;
+                    case 'b' -> 8;
+                    case 't' -> 9;
+                    case 'n' -> 10;
+                    case 'v' -> 11;
+                    case 'f' -> 12;
+                    case '\"' -> 34;
+                    case '\'' -> 39;
+                    case '\\' -> 92;
+                    case '0' -> 0;
+                    default -> throw new RuntimeException("Invalid character '"
+                            + stringConst.charAt(i) + "'");
+                };
+                ans.add(value);
+                continue;
+            }
+            ans.add((int) stringConst.charAt(i));
+        }
+        // stringConst结尾有一个默认的0
+        ans.add(0);
+        return ans;
     }
 
     private void visitConstInitVal(ConstInitVal constInitVal) {
@@ -99,15 +167,66 @@ public class Visitor {
         if (varDef.getConstExp() != null) {
             visitConstExp(varDef.getConstExp());
         }
-        tableManager.addSymbol(new VarSymbol(
-                varDef.getIdent().getContent(),
-                type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
-                false,
-                varDef.getConstExp() == null ? 0 : 1
-        ));
+        int dimension = 0;
+        int length = 0;
+        if (varDef.getConstExp() != null) {
+            dimension = 1;
+            length = varDef.getConstExp().calculate();
+        }
+        VarSymbol varSymbol;
+        if (isGlobal) {
+            ValueType valueType = switch (type) {
+                case INTTK -> IntegerType.i32;
+                case CHARTK -> IntegerType.i8;
+                default -> throw new RuntimeException("Shouldn't reacn here");
+            };
+            if (dimension == 1) {
+                valueType = new ArrayType(length, valueType);
+            }
+            InitialValue initialValue;
+            if (varDef.getInitVal() != null) {
+                initialValue = new InitialValue(valueType, length,
+                        calculateInitVal(varDef.getInitVal()));
+            } else {
+                initialValue = new InitialValue(valueType, length, null);
+            }
+            varSymbol = new VarSymbol(
+                    varDef.getIdent().getContent(),
+                    type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                    false,
+                    varDef.getConstExp() == null ? 0 : 1,
+                    length,
+                    initialValue
+            );
+        } else {
+            varSymbol = new VarSymbol(
+                    varDef.getIdent().getContent(),
+                    type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                    false,
+                    varDef.getConstExp() == null ? 0 : 1,
+                    length,
+                    null
+            );
+        }
+        tableManager.addSymbol(varSymbol);
         if (varDef.getInitVal() != null) {
             visitInitVal(varDef.getInitVal());
         }
+    }
+
+    // 全局定义变量，理论上可以算出其初值
+    private ArrayList<Integer> calculateInitVal(InitVal initVal) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (initVal.getExp() != null) {
+            ans.add(initVal.getExp().calculate());
+        } else if (initVal.getExps() != null) {
+            for (Exp exp : initVal.getExps()) {
+                ans.add(exp.calculate());
+            }
+        } else if (initVal.getStringConst() != null) {
+            ans.addAll(str2Array(initVal.getStringConst().getContent()));
+        }
+        return ans;
     }
 
     private void visitInitVal(InitVal initVal) {
@@ -191,7 +310,9 @@ public class Visitor {
                 funcFParam.getBType().getToken().getType() ==
                         TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
                 false,
-                funcFParam.isArray() ? 1 : 0
+                funcFParam.isArray() ? 1 : 0,
+                funcFParam.isArray() ? -1 : 0,
+                null
         ));
     }
 

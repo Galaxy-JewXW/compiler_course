@@ -87,4 +87,8 @@ public class TableManager {
     public boolean notInLoop() {
         return loopLevel == 0;
     }
+
+    public void print() {
+        currentTable.print();
+    }
 }

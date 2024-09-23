@@ -49,4 +49,17 @@ public class VarSymbol extends Symbol {
     public void setLlvmValue(Value llvmValue) {
         this.llvmValue = llvmValue;
     }
+
+    @Override
+    public String toString() {
+        return "VarSymbol{" +
+                "name='" + getName() + '\'' +
+                ", type=" + getType() +
+                ", isConstant=" + isConstant +
+                ", dimension=" + dimension +
+                ", length=" + length +
+                ", initialValue=" + initialValue +
+                ", llvmValue=" + llvmValue +
+                '}';
+    }
 }
