@@ -51,9 +51,9 @@ public class ToParam {
         } else if (primaryExp.getExp() != null) {
             return expToParam(primaryExp.getExp());
         } else if (primaryExp.getNumber() != null) {
-            return new FuncParam(null, SymbolType.INT32, 0);
+            return new FuncParam(null, SymbolType.INT, 0);
         } else {
-            return new FuncParam(null, SymbolType.INT8, 0);
+            return new FuncParam(null, SymbolType.CHAR, 0);
         }
     }
 

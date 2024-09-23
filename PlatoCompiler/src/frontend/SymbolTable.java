@@ -4,10 +4,10 @@ import frontend.symbol.Symbol;
 import frontend.symbol.SymbolType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SymbolTable {
-    private final HashMap<String, Symbol> symbols = new HashMap<>();
+    private final LinkedHashMap<String, Symbol> symbols = new LinkedHashMap<>();
     private final SymbolType blockType;
     private final SymbolTable parent;
     private final ArrayList<SymbolTable> children = new ArrayList<>();
@@ -30,11 +30,11 @@ public class SymbolTable {
     }
 
     public boolean isInt32Func() {
-        return blockType == SymbolType.INT32;
+        return blockType == SymbolType.INT;
     }
 
     public boolean isInt8Func() {
-        return blockType == SymbolType.INT8;
+        return blockType == SymbolType.CHAR;
     }
 
     public boolean isVoidFunc() {
@@ -54,9 +54,11 @@ public class SymbolTable {
     }
 
     public void print() {
+        System.out.println("----------------");
         for (Symbol symbol : symbols.values()) {
             System.out.println(symbol);
         }
+        System.out.println("----------------");
         for (SymbolTable child : children) {
             child.print();
         }

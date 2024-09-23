@@ -88,7 +88,7 @@ public class Visitor {
                 calculateConstInitVal(constDef.getConstInitVal()));
         tableManager.addSymbol(new VarSymbol(
                 constDef.getIdent().getContent(),
-                type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                type == TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                 true,
                 constDef.getConstExp() == null ? 0 : 1,
                 length,
@@ -192,7 +192,7 @@ public class Visitor {
             }
             varSymbol = new VarSymbol(
                     varDef.getIdent().getContent(),
-                    type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                    type == TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                     false,
                     varDef.getConstExp() == null ? 0 : 1,
                     length,
@@ -201,7 +201,7 @@ public class Visitor {
         } else {
             varSymbol = new VarSymbol(
                     varDef.getIdent().getContent(),
-                    type == TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                    type == TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                     false,
                     varDef.getConstExp() == null ? 0 : 1,
                     length,
@@ -247,8 +247,8 @@ public class Visitor {
     private void visitFuncDef(FuncDef funcDef) {
         SymbolType funcReturnType;
         switch (funcDef.getFuncType().getFuncType().getType()) {
-            case INTTK -> funcReturnType = SymbolType.INT32;
-            case CHARTK -> funcReturnType = SymbolType.INT8;
+            case INTTK -> funcReturnType = SymbolType.INT;
+            case CHARTK -> funcReturnType = SymbolType.CHAR;
             default -> funcReturnType = SymbolType.VOID;
         }
         // 检查名字重定义
@@ -264,7 +264,7 @@ public class Visitor {
                 funcParams.add(new FuncParam(
                         funcFParam.getIdent().getContent(),
                         funcFParam.getBType().getToken().getType() ==
-                                TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                                TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                         funcFParam.isArray() ? 1 : 0));
             }
         }
@@ -283,10 +283,10 @@ public class Visitor {
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {
         tableManager.addSymbol(new FuncSymbol(
                 "main",
-                SymbolType.INT32,
+                SymbolType.INT,
                 new ArrayList<>() // main函数形参表为空
         ));
-        tableManager.createTable(SymbolType.INT32);
+        tableManager.createTable(SymbolType.INT);
         visitBlock(mainFuncDef.getBlock());
         tableManager.recoverTable();
     }
@@ -308,7 +308,7 @@ public class Visitor {
         tableManager.addSymbol(new VarSymbol(
                 funcFParam.getIdent().getContent(),
                 funcFParam.getBType().getToken().getType() ==
-                        TokenType.INTTK ? SymbolType.INT32 : SymbolType.INT8,
+                        TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                 false,
                 funcFParam.isArray() ? 1 : 0,
                 funcFParam.isArray() ? -1 : 0,

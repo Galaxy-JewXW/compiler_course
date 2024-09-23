@@ -4,23 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
+    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="111">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/FuncParam.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/FuncParam.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/FuncSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/FuncSymbol.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/VarSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/VarSymbol.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/ConstExp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/expression/ConstExp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/TableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/TableManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/FuncParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/FuncParam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/symbol/FuncSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/FuncSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/VarSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/VarSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/syntax/expression/ConstExp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/syntax/expression/ConstExp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/SymbolType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/SymbolType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/ToParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/ToParam.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,11 +78,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1727056942433</updated>
-      <workItem from="1727056944063" duration="3123000" />
+      <workItem from="1727056944063" duration="4230000" />
     </task>
+    <task id="LOCAL-00001" summary="111">
+      <option name="closed" value="true" />
+      <created>1727060524081</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727060524081</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="111" />
+    <option name="LAST_COMMIT_MESSAGE" value="111" />
   </component>
 </project>

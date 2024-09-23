@@ -27,15 +27,9 @@ public class FuncSymbol extends Symbol {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("FuncSymbol{");
-        sb.append("name='").append(super.getName()).append('\'');
-        sb.append(", returnType=").append(super.getType());
-        sb.append(", funcParams=[");
-        for (FuncParam fp : funcParams) {
-            sb.append(fp.toString());
-            sb.append(", ");
-        }
-        sb.append("], llvmValue=").append(llvmValue).append('}');
-        return sb.toString();
+        return "FuncSymbol{" + "name='" + super.getName() + '\'' +
+                ", returnType=" + super.getType() +
+                ", funcParams=" + funcParams +
+                ", llvmValue=" + llvmValue + '}';
     }
 }
