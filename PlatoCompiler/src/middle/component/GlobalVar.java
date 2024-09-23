@@ -9,6 +9,7 @@ public class GlobalVar extends User {
     public GlobalVar(String name, ValueType type, InitialValue initialValue) {
         super(name, type);
         this.initialValue = initialValue;
+        Module.getInstance().addGlobalVar(this);
     }
 
     @Override

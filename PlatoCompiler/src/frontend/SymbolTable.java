@@ -11,10 +11,16 @@ public class SymbolTable {
     private final SymbolType blockType;
     private final SymbolTable parent;
     private final ArrayList<SymbolTable> children = new ArrayList<>();
+    // 生成中间代码时在子表中查找
+    private int childrenPointer = 0;
 
     public SymbolTable(SymbolType blockType, SymbolTable parent) {
         this.blockType = blockType;
         this.parent = parent;
+    }
+
+    public SymbolTable getChild() {
+        return children.get(childrenPointer++);
     }
 
     public SymbolTable getParent() {

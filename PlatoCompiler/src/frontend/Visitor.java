@@ -19,6 +19,7 @@ import tools.ToParam;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Visitor {
     private final TableManager tableManager = TableManager.getInstance();
@@ -84,8 +85,15 @@ public class Visitor {
         if (dimension == 1) {
             valueType = new ArrayType(length, valueType);
         }
-        InitialValue initialValue = new InitialValue(valueType, length,
-                calculateConstInitVal(constDef.getConstInitVal()));
+        ArrayList<Integer> integers = calculateConstInitVal(constDef.getConstInitVal());
+        // 如果是char类型的常量or数组，需要对元素进行截断处理
+        // 下面解析varDef的流程同理
+        if (type == TokenType.CHARTK) {
+            integers = integers.stream()
+                    .map(i -> i & 0xFF)
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
+        InitialValue initialValue = new InitialValue(valueType, length, integers);
         tableManager.addSymbol(new VarSymbol(
                 constDef.getIdent().getContent(),
                 type == TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
@@ -185,8 +193,13 @@ public class Visitor {
             }
             InitialValue initialValue;
             if (varDef.getInitVal() != null) {
-                initialValue = new InitialValue(valueType, length,
-                        calculateInitVal(varDef.getInitVal()));
+                ArrayList<Integer> integers = calculateInitVal(varDef.getInitVal());
+                if (type == TokenType.CHARTK) {
+                    integers = integers.stream()
+                            .map(i -> i & 0xFF)
+                            .collect(Collectors.toCollection(ArrayList::new));
+                }
+                initialValue = new InitialValue(valueType, length, integers);
             } else {
                 initialValue = new InitialValue(valueType, length, null);
             }

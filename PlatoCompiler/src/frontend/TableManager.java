@@ -75,6 +75,10 @@ public class TableManager {
         }
     }
 
+    public SymbolTable getCurrentTable() {
+        return currentTable;
+    }
+
     // 维护循环层数loopLevel，进出循环体时更改计数
     public void enterLoop() {
         loopLevel++;

@@ -12,7 +12,14 @@ public class Module extends Value {
     private final ArrayList<GlobalVar> globalVars = new ArrayList<>();
     private final ArrayList<Function> functions = new ArrayList<>();
 
-    public Module() {
+    // 一个文件只有一个module，可以使用单例模式
+    public static final Module INSTANCE = new Module();
+
+    public static Module getInstance() {
+        return INSTANCE;
+    }
+
+    private Module() {
         super("zxw", new LabelType());
         builtInFunctions.add("declare i32 @getint()");
         builtInFunctions.add("declare i32 @getchar()");

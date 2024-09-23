@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="111222">
+    <list default="true" id="5b1dac51-5c72-43be-939b-8c6c6b8162d8" name="更改" comment="kobe">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/SymbolTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/VarSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/VarSymbol.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/SymbolTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/TableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/TableManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/VarSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/VarSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/IRVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/GlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/GlobalVar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/InitialValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/InitialValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,32 +30,32 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2mS53bSFe2GK6tcLhlZmyejN6Cf" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Compiler.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Compiler" />
@@ -73,7 +86,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1727056942433</updated>
-      <workItem from="1727056944063" duration="4680000" />
+      <workItem from="1727056944063" duration="4985000" />
+      <workItem from="1727065015796" duration="2194000" />
     </task>
     <task id="LOCAL-00001" summary="111">
       <option name="closed" value="true" />
@@ -91,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727061320567</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="kobe">
+      <option name="closed" value="true" />
+      <created>1727061768710</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727061768710</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +122,23 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="111" />
     <MESSAGE value="111222" />
-    <option name="LAST_COMMIT_MESSAGE" value="111222" />
+    <MESSAGE value="kobe" />
+    <option name="LAST_COMMIT_MESSAGE" value="kobe" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/frontend/syntax/LVal.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/frontend/syntax/LVal.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
