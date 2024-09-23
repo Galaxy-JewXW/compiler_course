@@ -1,8 +1,10 @@
 package middle;
 
+import middle.component.ForLoop;
 import middle.component.Function;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 public class IRData {
     // 计数器
@@ -10,6 +12,7 @@ public class IRData {
     private static int basicBlockCnt = 0;
     private static int paramCnt = 0;
     private static final HashMap<Function, Integer> localVarCnts = new HashMap<>();
+    private static final Stack<ForLoop> loops = new Stack<>();
 
     public static void setCurrentFunction(Function function) {
         localVarCnts.put(function, 0);
@@ -39,6 +42,18 @@ public class IRData {
 
     public static String getConstStringName() {
         return "@.s." + constStringCnt++;
+    }
+
+    public static void push(ForLoop forLoop) {
+        loops.push(forLoop);
+    }
+
+    public static ForLoop pop() {
+        return loops.pop();
+    }
+
+    public static ForLoop peek() {
+        return loops.peek();
     }
 
 }

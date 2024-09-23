@@ -508,6 +508,12 @@ public class IRBuilder {
             buildGetcharStmt(getcharStmt);
         } else if (stmt instanceof PrintfStmt printfStmt) {
             buildPrintfStmt(printfStmt);
+        } else if (stmt instanceof ForStruct forStruct) {
+            buildForStruct(forStruct);
+        } else if (stmt instanceof BreakStmt) {
+            buildBreakStmt();
+        } else if (stmt instanceof ContinueStmt) {
+            buildContinueStmt();
         }
     }
 
@@ -753,5 +759,50 @@ public class IRBuilder {
             new PutstrInst(IRData.getLocalVarName(currentFunction),
                     constString, currentBlock);
         }
+    }
+
+    private void buildForStruct(ForStruct forStruct) {
+        // forStmt和LValAssignExp本质上是一样的
+        if (forStruct.getForStmt1() != null) {
+            buildAssign(forStruct.getForStmt1().getLVal(),
+                    forStruct.getForStmt1().getExp());
+        }
+        BasicBlock conditionBlock = new BasicBlock(IRData.getBasicBlockName(),
+                currentFunction);
+        BasicBlock bodyBlock = new BasicBlock(IRData.getBasicBlockName(),
+                currentFunction);
+        BasicBlock followBlock = new BasicBlock(IRData.getBasicBlockName(),
+                currentFunction);
+        IRData.push(new ForLoop(conditionBlock, bodyBlock, followBlock));
+        new BrInst(IRData.getLocalVarName(currentFunction),
+                conditionBlock, currentBlock);
+        currentBlock = conditionBlock;
+        if (forStruct.getCond() != null) {
+            buildCond(forStruct.getCond(), bodyBlock, followBlock);
+        } else {
+            new BrInst(IRData.getLocalVarName(currentFunction),
+                    bodyBlock, currentBlock);
+        }
+        currentBlock = bodyBlock;
+        buildStmt(forStruct.getStmt());
+        // 循环量更新直接嵌入bodyBlock
+        if (forStruct.getForStmt2() != null) {
+            buildAssign(forStruct.getForStmt2().getLVal(),
+                    forStruct.getForStmt2().getExp());
+        }
+        new BrInst(IRData.getLocalVarName(currentFunction),
+                conditionBlock, currentBlock);
+        currentBlock = followBlock;
+        IRData.pop();
+    }
+
+    private void buildBreakStmt() {
+        new BrInst(IRData.getLocalVarName(currentFunction),
+                IRData.peek().getFollowBlock(), currentBlock);
+    }
+
+    private void buildContinueStmt() {
+        new BrInst(IRData.getLocalVarName(currentFunction),
+                IRData.peek().getConditionBlock(), currentBlock);
     }
 }

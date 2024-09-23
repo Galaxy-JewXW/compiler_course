@@ -12,9 +12,9 @@ public class GepInst extends Instruction {
         PointerType pointerType = (PointerType) pointer.getValueType();
         ValueType targetType = pointerType.getTargetType();
         if (targetType instanceof ArrayType arrayType) {
-            return arrayType.getElementType();
+            return new PointerType(arrayType.getElementType());
         } else if (targetType instanceof IntegerType integerType) {
-            return integerType;
+            return new PointerType(integerType);
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
