@@ -1,16 +1,48 @@
 INTTK int
-<FuncType>
-IDENFR f
+MAINTK main
 LPARENT (
-INTTK int
-IDENFR n
-<FuncFParam>
-<FuncFParams>
 RPARENT )
 LBRACE {
+INTTK int
+IDENFR y
+<VarDef>
+SEMICN ;
+<VarDecl>
+CONSTTK const
+INTTK int
+IDENFR x
+ASSIGN =
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
 IFTK if
 LPARENT (
-IDENFR n
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<RelExp>
+<EqExp>
+EQL ==
+INTCON 3
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<RelExp>
+LSS <
+IDENFR x
 <LVal>
 <PrimaryExp>
 <UnaryExp>
@@ -26,104 +58,8 @@ INTCON 1
 <MulExp>
 <AddExp>
 <RelExp>
-<EqExp>
-<LAndExp>
-<LOrExp>
-<Cond>
-RPARENT )
-LBRACE {
-RETURNTK return
-INTCON 1
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
-ELSETK else
-LBRACE {
-RETURNTK return
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-IDENFR f
-LPARENT (
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-MINU -
-INTCON 1
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<FuncRParams>
-RPARENT )
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
-<Stmt>
-RETURNTK return
-INTCON 0
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<FuncDef>
-INTTK int
-MAINTK main
-LPARENT (
-RPARENT )
-LBRACE {
-CHARTK char
-IDENFR x
-<VarDef>
-SEMICN ;
-<VarDecl>
-IFTK if
-LPARENT (
-INTCON 1
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<RelExp>
 GRE >
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<RelExp>
-LSS <
-INTCON 1
+INTCON 9
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -131,23 +67,39 @@ INTCON 1
 <AddExp>
 <RelExp>
 <EqExp>
-<LAndExp>
-<LOrExp>
-<Cond>
-RPARENT )
-LBRACE {
+EQL ==
+LPARENT (
 IDENFR x
 <LVal>
-ASSIGN =
-CHRCON 'a'
-<Character>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 PLUS +
-CHRCON 'a'
-<Character>
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<RelExp>
+<EqExp>
+<LAndExp>
+<LOrExp>
+<Cond>
+RPARENT )
+LBRACE {
+IDENFR y
+<LVal>
+ASSIGN =
+INTCON 1
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -160,11 +112,11 @@ RBRACE }
 <Stmt>
 ELSETK else
 LBRACE {
-IDENFR x
+IDENFR y
 <LVal>
 ASSIGN =
-CHRCON 'c'
-<Character>
+INTCON 9
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -180,21 +132,6 @@ PRINTFTK printf
 LPARENT (
 STRCON "%d\n"
 COMMA ,
-IDENFR f
-LPARENT (
-INTCON 10
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<FuncRParams>
-RPARENT )
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
 IDENFR x
 <LVal>
 <PrimaryExp>

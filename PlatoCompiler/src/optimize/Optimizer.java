@@ -10,6 +10,8 @@ public class Optimizer {
         DeadCode.run(module);
         GVN.run(module);
         DeadCode.run(module);
+        CalcCond.run(module);
+        DeadCode.run(module);
         // 序号重命名必须是最后一条
         module.updateId();
     }
