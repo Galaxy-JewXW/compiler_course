@@ -12,7 +12,7 @@ public class StoreInst extends Instruction {
 
     @Override
     public boolean hasSideEffect() {
-        return true;
+        return false;
     }
 
     public Value getPointer() {

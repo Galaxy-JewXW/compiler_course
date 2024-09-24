@@ -28,4 +28,9 @@ public class PutintInst extends IOInst {
                 getSymbol("putint");
         return funcSymbol.getLlvmValue();
     }
+
+    @Override
+    public boolean hasSideEffect() {
+        return false;
+    }
 }

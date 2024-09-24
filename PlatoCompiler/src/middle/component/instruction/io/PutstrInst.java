@@ -34,4 +34,9 @@ public class PutstrInst extends IOInst {
                 getSymbol("putstr");
         return funcSymbol.getLlvmValue();
     }
+
+    @Override
+    public boolean hasSideEffect() {
+        return false;
+    }
 }

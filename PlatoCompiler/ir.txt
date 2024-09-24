@@ -10,5 +10,6 @@ declare void @putstr(i8*)
 
 define dso_local i32 @main() {
 0:
-	ret i32 0
+	%1 = add i32 24, 2
+	%2 = add i32 %1, 1
 }

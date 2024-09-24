@@ -28,4 +28,9 @@ public class PutchInst extends IOInst {
                 getSymbol("putch");
         return funcSymbol.getLlvmValue();
     }
+
+    @Override
+    public boolean hasSideEffect() {
+        return false;
+    }
 }
