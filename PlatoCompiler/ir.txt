@@ -6,17 +6,29 @@ declare void @putstr(i8*)
 
 @.s.0 = constant [2 x i8] c"\0A\00"
 
+@a = dso_local global i32 1000
 
+define dso_local i32 @foo(i32 %0, i32 %1) {
+2:
+	%3 = add i32 %0, %1
+	ret i32 %3
+}
+
+define dso_local void @bar() {
+0:
+	store i32* @a, i32 1200
+	ret void
+}
 
 define dso_local i32 @main() {
 0:
-	br i1 0, label %1, label %2
-1:
-	br label %3
-2:
-	br label %3
-3:
-	call void @putint(i32 4)
+	call void @bar()
+	%1 = load i32, i32* @a
+	%2 = call i32 @getint()
+	store i32* @a, i32 %2
+	%3 = load i32, i32* @a
+	%4 = call i32 @foo(i32 %3, i32 %1)
+	call void @putint(i32 %4)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }
