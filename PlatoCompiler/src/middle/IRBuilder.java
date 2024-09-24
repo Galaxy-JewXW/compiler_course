@@ -558,16 +558,16 @@ public class IRBuilder {
         for (int i = 1; i < eqExp.getRelExps().size(); i++) {
             if (!left.getValueType().equals(IntegerType.i32)) {
                 left = new ZextInst(left, IntegerType.i32);
-                Value right = buildRelExp(eqExp.getRelExps().get(i));
-                if (!right.getValueType().equals(IntegerType.i32)) {
-                    right = new ZextInst(right, IntegerType.i32);
-                }
-                left = switch (eqExp.getOperators().get(i - 1).getType()) {
-                    case EQL -> new BinaryInst(OperatorType.ICMP_EQ, left, right);
-                    case NEQ -> new BinaryInst(OperatorType.ICMP_NE, left, right);
-                    default -> throw new RuntimeException("Shouldn't reach here");
-                };
             }
+            Value right = buildRelExp(eqExp.getRelExps().get(i));
+            if (!right.getValueType().equals(IntegerType.i32)) {
+                right = new ZextInst(right, IntegerType.i32);
+            }
+            left = switch (eqExp.getOperators().get(i - 1).getType()) {
+                case EQL -> new BinaryInst(OperatorType.ICMP_EQ, left, right);
+                case NEQ -> new BinaryInst(OperatorType.ICMP_NE, left, right);
+                default -> throw new RuntimeException("Shouldn't reach here");
+            };
         }
         return left;
     }
@@ -667,15 +667,17 @@ public class IRBuilder {
             String typeString = matcher.group();
             int start = matcher.start();
             String tempString = formatString.substring(pos, start);
-            ConstString constString;
-            if (IRData.containsString(tempString)) {
-                constString = IRData.getConstString(tempString);
-            } else {
-                constString = new ConstString(
-                        IRData.getConstStringName(), tempString);
-                IRData.putConstString(tempString, constString);
+            if (!tempString.isEmpty()) {
+                ConstString constString;
+                if (IRData.containsString(tempString)) {
+                    constString = IRData.getConstString(tempString);
+                } else {
+                    constString = new ConstString(
+                            IRData.getConstStringName(), tempString);
+                    IRData.putConstString(tempString, constString);
+                }
+                new PutstrInst(constString);
             }
-            new PutstrInst(constString);
             if (typeString.equals("%d")) {
                 Value value = values.get(cnt++);
                 if (!value.getValueType().equals(IntegerType.i32)) {
@@ -701,6 +703,9 @@ public class IRBuilder {
         }
         if (pos < formatString.length()) {
             String tempString = formatString.substring(pos);
+            if (tempString.isEmpty()) {
+                return;
+            }
             ConstString constString;
             if (IRData.containsString(tempString)) {
                 constString = IRData.getConstString(tempString);

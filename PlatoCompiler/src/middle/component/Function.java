@@ -71,6 +71,14 @@ public class Function extends User {
         this.hasSideEffect = hasSideEffect;
     }
 
+    public HashMap<Value, Register> getVar2reg() {
+        return var2reg;
+    }
+
+    public void setVar2reg(HashMap<Value, Register> var2reg) {
+        this.var2reg = var2reg;
+    }
+
     @Override
     public String toString() {
         String paramInfo = funcParams.stream().map(Object::toString)
