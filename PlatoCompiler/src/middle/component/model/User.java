@@ -15,9 +15,16 @@ public class User extends Value {
         return operands;
     }
 
-    public void addOperands(Value value) {
+    public void addOperand(Value value) {
         operands.add(value);
         value.addUse(this);
+    }
+
+    public void deleteUse() {
+        for (Value value : operands) {
+            value.deleteUser(this);
+        }
+        this.operands.clear();
     }
 
     public void modifyOperand(Value value, Value newValue) {

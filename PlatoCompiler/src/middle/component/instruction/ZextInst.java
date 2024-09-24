@@ -6,7 +6,7 @@ import middle.component.type.ValueType;
 public class ZextInst extends Instruction {
     public ZextInst(Value value, ValueType targetType) {
         super(targetType, OperatorType.ZEXT);
-        addOperands(value);
+        addOperand(value);
     }
 
     public Value getOriginValue() {

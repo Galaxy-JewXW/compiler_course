@@ -1,6 +1,5 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -22,8 +21,8 @@ public class GepInst extends Instruction {
 
     public GepInst(Value pointer, Value index) {
         super(getType(pointer), OperatorType.GEP);
-        addOperands(pointer);
-        addOperands(index);
+        addOperand(pointer);
+        addOperand(index);
     }
 
     public Value getPointer() {

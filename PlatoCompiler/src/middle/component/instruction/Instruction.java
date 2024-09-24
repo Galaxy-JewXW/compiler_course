@@ -13,8 +13,12 @@ public abstract class Instruction extends User {
     public Instruction(ValueType valueType, OperatorType opType) {
         super(IRData.getVarName(), valueType);
         this.opType = opType;
-        this.basicBlock = IRData.getCurrentBlock();
-        basicBlock.addInstruction(this);
+        if (opType == OperatorType.PHI) {
+            this.basicBlock = null;
+        } else {
+            this.basicBlock = IRData.getCurrentBlock();
+            basicBlock.addInstruction(this);
+        }
     }
 
     public Instruction(String name, ValueType valueType,

@@ -11,9 +11,9 @@ public class BrInst extends Instruction implements Terminator {
     public BrInst(Value condition, BasicBlock trueBlock,
                   BasicBlock falseBlock) {
         super("", IntegerType.VOID, OperatorType.BR);
-        addOperands(condition);
-        addOperands(trueBlock);
-        addOperands(falseBlock);
+        addOperand(condition);
+        addOperand(trueBlock);
+        addOperand(falseBlock);
         isConditional = true;
         // 设置前驱后继关系
         IRData.getCurrentBlock().addNextBlock(trueBlock);
@@ -25,7 +25,7 @@ public class BrInst extends Instruction implements Terminator {
     // 无条件跳转
     public BrInst(BasicBlock targetBlock) {
         super("", IntegerType.VOID, OperatorType.BR);
-        addOperands(targetBlock);
+        addOperand(targetBlock);
         isConditional = false;
         // 设置前驱后继关系
         IRData.getCurrentBlock().addNextBlock(targetBlock);

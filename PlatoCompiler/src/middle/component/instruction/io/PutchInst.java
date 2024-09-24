@@ -10,7 +10,7 @@ import middle.component.type.IntegerType;
 public class PutchInst extends IOInst {
     public PutchInst(Value target) {
         super("", IntegerType.VOID, OperatorType.IO);
-        addOperands(target);
+        addOperand(target);
     }
 
     public Value getTarget() {

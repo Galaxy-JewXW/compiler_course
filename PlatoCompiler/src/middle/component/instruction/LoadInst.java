@@ -7,7 +7,7 @@ public class LoadInst extends Instruction {
     public LoadInst(Value pointer) {
         super(((PointerType) pointer.getValueType()).getTargetType(),
                 OperatorType.LOAD);
-        addOperands(pointer);
+        addOperand(pointer);
     }
 
     public Value getPointer() {

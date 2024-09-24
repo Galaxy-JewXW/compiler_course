@@ -133,12 +133,7 @@ public class IRBuilder {
 
     private void buildVarDecl(VarDecl varDecl) {
         for (VarDef varDef : varDecl.getVarDefs()) {
-            try {
-                buildVarDef(varDef);
-            } catch (NullPointerException e) {
-                System.out.println(varDef.getIdent().getContent());
-                currentTable.print();
-            }
+            buildVarDef(varDef);
         }
     }
 

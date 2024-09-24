@@ -7,7 +7,7 @@ public class RetInst extends Instruction implements Terminator {
     public RetInst(Value returnValue) {
         super("", IntegerType.VOID, OperatorType.RET);
         if (returnValue != null) {
-            addOperands(returnValue);
+            addOperand(returnValue);
         }
     }
 

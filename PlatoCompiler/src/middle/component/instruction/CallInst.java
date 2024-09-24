@@ -12,9 +12,9 @@ public class CallInst extends Instruction implements Call {
     public CallInst(Function calledFunction,
                     ArrayList<Value> parameters) {
         super("", calledFunction.getReturnType(), OperatorType.CALL);
-        addOperands(calledFunction);
+        addOperand(calledFunction);
         for (Value param : parameters) {
-            addOperands(param);
+            addOperand(param);
         }
         if (!getValueType().equals(IntegerType.VOID)) {
             setName(IRData.getVarName());

@@ -20,7 +20,6 @@ public class ConstInt extends Value {
         super(setName(valueType, intValue), valueType);
         if (valueType.equals(IntegerType.i8)) {
             this.intValue = intValue & 0xFF;
-            System.out.println(this.intValue);
         } else {
             this.intValue = intValue;
         }

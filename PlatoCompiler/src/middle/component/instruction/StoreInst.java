@@ -6,8 +6,8 @@ import middle.component.type.IntegerType;
 public class StoreInst extends Instruction {
     public StoreInst(Value pointer, Value storedValue) {
         super("", IntegerType.VOID, OperatorType.STORE);
-        addOperands(pointer);
-        addOperands(storedValue);
+        addOperand(pointer);
+        addOperand(storedValue);
     }
 
     @Override
