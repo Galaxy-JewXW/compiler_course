@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="add GVN" />
+    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="0" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +60,7 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true",
     "应用程序.Compiler.executor": "Run"
   }
@@ -101,6 +101,7 @@
       <workItem from="1727157972173" duration="940000" />
       <workItem from="1727159340308" duration="3949000" />
       <workItem from="1727163689481" duration="5937000" />
+      <workItem from="1727169751142" duration="165000" />
     </task>
     <task id="LOCAL-00001" summary="change 1">
       <option name="closed" value="true" />
@@ -190,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727169653128</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="0">
+      <option name="closed" value="true" />
+      <created>1727169770725</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727169770725</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,7 +217,8 @@
     <MESSAGE value="fix" />
     <MESSAGE value="add LVN" />
     <MESSAGE value="add GVN" />
-    <option name="LAST_COMMIT_MESSAGE" value="add GVN" />
+    <MESSAGE value="0" />
+    <option name="LAST_COMMIT_MESSAGE" value="0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
