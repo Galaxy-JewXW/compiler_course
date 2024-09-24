@@ -32,8 +32,11 @@ public class User extends Value {
             return;
         }
         int index = operands.indexOf(value);
-        value.deleteUser(this);
-        operands.set(index, newValue);
-        newValue.addUse(this);
+        while (index != -1) {
+            value.deleteUser(this);
+            operands.set(index, newValue);
+            newValue.addUse(this);
+            index = operands.indexOf(value);
+        }
     }
 }

@@ -107,7 +107,7 @@ public class IRBuilder {
         if (isGlobal) {
             String name = "@" + constDef.getIdent().getContent();
             ValueType type = new PointerType(initialValue.getValueType());
-            GlobalVar globalVar = new GlobalVar(name, type, initialValue);
+            GlobalVar globalVar = new GlobalVar(name, type, initialValue, true);
             varSymbol.setLlvmValue(globalVar);
         } else {
             Instruction instruction = new AllocInst(initialValue.getValueType());
@@ -146,7 +146,7 @@ public class IRBuilder {
             // initialValue中的elements数组可能为null
             String name = "@" + varDef.getIdent().getContent();
             ValueType type = new PointerType(initialValue.getValueType());
-            GlobalVar globalVar = new GlobalVar(name, type, initialValue);
+            GlobalVar globalVar = new GlobalVar(name, type, initialValue, false);
             varSymbol.setLlvmValue(globalVar);
         } else {
             AllocInst instruction;

@@ -39,4 +39,14 @@ public class PutstrInst extends IOInst {
     public boolean hasSideEffect() {
         return false;
     }
+
+    @Override
+    public String getCallee() {
+        PointerType pointerType = (PointerType) constString.getValueType();
+        return "@putstr(i8* getelementptr inbounds (" +
+                pointerType.getTargetType() + ", " +
+                pointerType + " " +
+                constString.getName() +
+                ", i64 0, i64 0))";
+    }
 }

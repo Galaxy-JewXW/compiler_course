@@ -36,11 +36,16 @@ public class CallInst extends Instruction implements Call {
     }
 
     @Override
-    public String toString() {
+    public String getCallee() {
         String paramInfo = getParameters().stream()
                 .map(param -> param.getValueType() + " " + param.getName())
                 .collect(Collectors.joining(", "));
-        String functionCall = String.format("%s(%s)", getCalledFunction().getName(), paramInfo);
+        return String.format("%s(%s)", getCalledFunction().getName(), paramInfo);
+    }
+
+    @Override
+    public String toString() {
+        String functionCall = getCallee();
         return getValueType().equals(IntegerType.VOID)
                 ? String.format("call void %s", functionCall)
                 : String.format("%s = call %s %s", getName(), getValueType(), functionCall);

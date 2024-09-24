@@ -4,4 +4,5 @@ import middle.component.Function;
 
 public interface Call {
     Function getCalledFunction();
+    String getCallee();
 }

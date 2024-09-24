@@ -22,4 +22,9 @@ public class GetintInst extends IOInst {
                 getSymbol("getint");
         return funcSymbol.getLlvmValue();
     }
+
+    @Override
+    public String getCallee() {
+        return "@getint()";
+    }
 }

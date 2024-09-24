@@ -33,4 +33,9 @@ public class PutintInst extends IOInst {
     public boolean hasSideEffect() {
         return false;
     }
+
+    @Override
+    public String getCallee() {
+        return "@putint(i32 " + getTarget().getName() + ")";
+    }
 }

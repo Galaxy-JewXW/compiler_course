@@ -33,4 +33,9 @@ public class PutchInst extends IOInst {
     public boolean hasSideEffect() {
         return false;
     }
+
+    @Override
+    public String getCallee() {
+        return "@putch(i8 " + getTarget().getName() + ")";
+    }
 }
