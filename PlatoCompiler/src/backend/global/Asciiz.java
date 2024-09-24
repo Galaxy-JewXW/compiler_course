@@ -6,7 +6,7 @@ public class Asciiz extends GlobalAssembly {
 
     public Asciiz(String name, String content) {
         this.name = name;
-        this.content = content;
+        this.content = content.replace("\\0A", "\\n");
     }
 
     @Override

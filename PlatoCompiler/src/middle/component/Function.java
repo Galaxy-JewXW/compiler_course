@@ -1,17 +1,23 @@
 package middle.component;
 
+import backend.enums.Register;
 import middle.IRData;
 import middle.component.model.User;
+import middle.component.model.Value;
 import middle.component.type.LabelType;
 import middle.component.type.ValueType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Function extends User {
     private final ValueType returnType;
     private final ArrayList<FuncParam> funcParams = new ArrayList<>();
     private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
+
+    // 寄存器分配
+    private HashMap<Value, Register> var2reg;
 
     public Function(String name, ValueType returnType) {
         super(name, new LabelType());

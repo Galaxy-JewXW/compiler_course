@@ -12,6 +12,12 @@ public class BasicBlock extends Value {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
     private Function function;
 
+    // 前驱基本块的集合
+    private final ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
+    // 后继基本块的集合
+    private final ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
+
+
     public BasicBlock(String name) {
         super(name, new LabelType());
         this.function = IRData.getCurrentFunction();
@@ -51,6 +57,22 @@ public class BasicBlock extends Value {
         for (Instruction instruction : instructions) {
             instruction.updateId();
         }
+    }
+
+    public ArrayList<BasicBlock> getPrevBlocks() {
+        return prevBlocks;
+    }
+
+    public ArrayList<BasicBlock> getNextBlocks() {
+        return nextBlocks;
+    }
+
+    public void addPrevBlock(BasicBlock prevBlock) {
+        prevBlocks.add(prevBlock);
+    }
+
+    public void addNextBlock(BasicBlock nextBlock) {
+        nextBlocks.add(nextBlock);
     }
 
     @Override

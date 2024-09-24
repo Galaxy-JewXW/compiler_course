@@ -1,116 +1,18 @@
 INTTK int
-IDENFR jj
-LBRACK [
-INTCON 100
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-RBRACK ]
-ASSIGN =
-LBRACE {
-INTCON 3
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-INTCON 9
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-MINU -
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-INTCON 8
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACE }
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
-IDENFR sb
-LBRACK [
-INTCON 60
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-RBRACK ]
-ASSIGN =
-STRCON "Hello"
-<InitVal>
-<VarDef>
-COMMA ,
-IDENFR sbb
-LBRACK [
-INTCON 4
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-RBRACK ]
-ASSIGN =
-LBRACE {
-CHRCON 'a'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'b'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'c'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-CHRCON 'd'
-<Character>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACE }
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-INTTK int
 MAINTK main
 LPARENT (
 RPARENT )
 LBRACE {
+FORTK for
+LPARENT (
+SEMICN ;
+SEMICN ;
+RPARENT )
+LBRACE {
+RBRACE }
+<Block>
+<Stmt>
+<Stmt>
 RETURNTK return
 INTCON 0
 <Number>

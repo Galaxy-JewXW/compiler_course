@@ -1,5 +1,8 @@
 package backend;
 
+import backend.global.GlobalAssembly;
+import backend.text.TextAssembly;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -13,14 +16,14 @@ public class MipsFile {
         return INSTANCE;
     }
 
-    private final ArrayList<Assembly> dataSegment = new ArrayList<>();
-    private final ArrayList<Assembly> textSegment = new ArrayList<>();
+    private final ArrayList<GlobalAssembly> dataSegment = new ArrayList<>();
+    private final ArrayList<TextAssembly> textSegment = new ArrayList<>();
 
-    public void addToDataSegment(Assembly assembly) {
+    public void addToDataSegment(GlobalAssembly assembly) {
         dataSegment.add(assembly);
     }
 
-    public void addToTextSegment(Assembly assembly) {
+    public void addToTextSegment(TextAssembly assembly) {
         textSegment.add(assembly);
     }
 

@@ -1,10 +1,11 @@
 package middle.component.instruction;
 
+import middle.IRData;
 import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
-public class BrInst extends Instruction {
+public class BrInst extends Instruction implements Terminator {
     private final boolean isConditional;
     // 有条件跳转
     public BrInst(Value condition, BasicBlock trueBlock,
@@ -14,6 +15,11 @@ public class BrInst extends Instruction {
         addOperands(trueBlock);
         addOperands(falseBlock);
         isConditional = true;
+        // 设置前驱后继关系
+        IRData.getCurrentBlock().addNextBlock(trueBlock);
+        IRData.getCurrentBlock().addNextBlock(falseBlock);
+        trueBlock.addPrevBlock(IRData.getCurrentBlock());
+        falseBlock.addPrevBlock(IRData.getCurrentBlock());
     }
 
     // 无条件跳转
@@ -21,6 +27,9 @@ public class BrInst extends Instruction {
         super("", IntegerType.VOID, OperatorType.BR);
         addOperands(targetBlock);
         isConditional = false;
+        // 设置前驱后继关系
+        IRData.getCurrentBlock().addNextBlock(targetBlock);
+        targetBlock.addPrevBlock(IRData.getCurrentBlock());
     }
 
     public boolean isConditional() {

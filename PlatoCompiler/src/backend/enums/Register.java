@@ -1,4 +1,4 @@
-package backend;
+package backend.enums;
 
 public enum Register {
     ZERO("$zero"),

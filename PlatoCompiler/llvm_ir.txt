@@ -6,11 +6,15 @@ declare void @putstr(i8*)
 
 
 
-@jj = dso_local global [100 x i32] [i32 11, zeroinitializer]
-@sb = dso_local global [60 x i8] [i8 72, i8 101, i8 108, i8 108, i8 111, i8 0, zeroinitializer]
-@sbb = dso_local global [4 x i8] [i8 97, i8 98, i8 99, i8 100]
+
 
 define dso_local i32 @main() {
 0:
+	br label %1
+1:
+	br label %2
+2:
+	br label %1
+3:
 	ret i32 0
 }

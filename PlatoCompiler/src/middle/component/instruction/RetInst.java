@@ -3,7 +3,7 @@ package middle.component.instruction;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
-public class RetInst extends Instruction {
+public class RetInst extends Instruction implements Terminator {
     public RetInst(Value returnValue) {
         super("", IntegerType.VOID, OperatorType.RET);
         if (returnValue != null) {

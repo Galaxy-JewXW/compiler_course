@@ -15,6 +15,10 @@ public class ConstString extends Value {
         Module.getInstance().addConstString(this);
     }
 
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public String toString() {
         return getName() + " = constant " + ((PointerType) getValueType()).getTargetType()

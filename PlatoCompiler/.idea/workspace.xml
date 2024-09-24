@@ -4,24 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="finish all bugs">
-      <change afterPath="$PROJECT_DIR$/src/backend/Assembly.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/MipsFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/Register.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/global/Asciiz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/global/GlobalAssembly.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/global/Word.java" afterDir="false" />
+    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="全局数组与变量的定义">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/enums/AsmOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/BrAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/CalcAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/CmpAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/JumpAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/LaAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/Label.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/LiAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/MDAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/MDRegAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/MemAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/MoveAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/SyscallAsm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/text/TextAssembly.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middle/component/instruction/Terminator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/optimize/UnusedBasicBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ConstString.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ConstString.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Function.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Function.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/GlobalVar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/GlobalVar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Module.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Module.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/GlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/GlobalVar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/InitialValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/InitialValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/enums/Register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/global/Asciiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/global/Asciiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/ConstString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/ConstString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Function.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/RetInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/RetInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/文法.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/文法.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,25 +89,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "actions.on.save",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Compiler.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Compiler" />
@@ -113,6 +139,7 @@
       <option name="presentableId" value="Default" />
       <updated>1727104094593</updated>
       <workItem from="1727104095815" duration="4895000" />
+      <workItem from="1727142175750" duration="4389000" />
     </task>
     <task id="LOCAL-00001" summary="change 1">
       <option name="closed" value="true" />
@@ -130,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727108962672</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="全局数组与变量的定义">
+      <option name="closed" value="true" />
+      <created>1727140322426</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727140322426</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,156 +175,12 @@
     <MESSAGE value="change 1" />
     <MESSAGE value="done" />
     <MESSAGE value="finish all bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish all bugs" />
+    <MESSAGE value="全局数组与变量的定义" />
+    <option name="LAST_COMMIT_MESSAGE" value="全局数组与变量的定义" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="106" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="107" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="108" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="109" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="110" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="120" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="126" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="128" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="129" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="130" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>14</line>
-          <option name="timeStamp" value="131" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="132" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="133" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
           <line>18</line>
@@ -307,15 +198,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/backend/global/Word.java</url>
-          <line>26</line>
-          <properties class="backend.global.Word" method="toString">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="123" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

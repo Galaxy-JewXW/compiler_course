@@ -1,5 +1,4 @@
-int jj[100] = {3 * 9 - 2 * 8};
-char sb[60] = "Hello", sbb[4] = {'a', 'b', 'c', 'd'};
 int main() {
+for(;;) {}
 return 0;
 }
