@@ -52,7 +52,7 @@ public class DeadCode {
 
     // br store ret 部分call output call 是没有副作用的
     private static boolean isUseful(Instruction instruction) {
-        return instruction.hasSideEffect() || instruction instanceof Call;
+        return instruction.getName().isEmpty() || instruction instanceof Call;
     }
 
     private static void removeUseless(Function function, HashSet<Instruction> useful) {

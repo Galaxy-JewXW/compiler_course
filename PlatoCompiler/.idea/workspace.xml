@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="添加死代码删除">
+    <list default="true" id="a561a691-5cdd-4175-bbdf-40845f9386a7" name="更改" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/DeadCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/DeadCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/DeadCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/DeadCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +106,8 @@
       <updated>1727104094593</updated>
       <workItem from="1727104095815" duration="4895000" />
       <workItem from="1727142175750" duration="5857000" />
-      <workItem from="1727151503293" duration="5442000" />
+      <workItem from="1727151503293" duration="5866000" />
+      <workItem from="1727157972173" duration="940000" />
     </task>
     <task id="LOCAL-00001" summary="change 1">
       <option name="closed" value="true" />
@@ -157,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727156584949</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix">
+      <option name="closed" value="true" />
+      <created>1727157386513</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727157386513</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,45 +188,75 @@
     <MESSAGE value="清除未被调用的函数" />
     <MESSAGE value="添加mem2Reg" />
     <MESSAGE value="添加死代码删除" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加死代码删除" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Compiler.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="170" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>53</line>
+          <properties class="optimize.DeadCode" method="isUseful">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="185" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Compiler.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="171" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="186" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tools/Printer.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="172" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="187" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tools/Printer.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="173" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tools/Printer.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="174" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="189" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Compiler.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="175" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="190" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Compiler.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="176" />
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/DeadCode.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="196" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
