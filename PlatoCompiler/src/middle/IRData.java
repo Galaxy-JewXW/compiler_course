@@ -1,9 +1,11 @@
 package middle;
 
 import middle.component.BasicBlock;
+import middle.component.ConstString;
 import middle.component.ForLoop;
 import middle.component.Function;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 public class IRData {
@@ -13,6 +15,7 @@ public class IRData {
     private static BasicBlock currentBlock = null;
     private static int cnt = 0;
     private static final Stack<ForLoop> loops = new Stack<>();
+    private static final HashMap<String, ConstString> constStrings = new HashMap<>();
 
     public static String getVarName() {
         return "%" + cnt++;
@@ -56,6 +59,18 @@ public class IRData {
 
     public static ForLoop peek() {
         return loops.peek();
+    }
+
+    public static boolean containsString(String string) {
+        return constStrings.containsKey(string);
+    }
+
+    public static void putConstString(String string, ConstString constString) {
+        constStrings.put(string, constString);
+    }
+
+    public static ConstString getConstString(String string) {
+        return constStrings.get(string);
     }
 
 }

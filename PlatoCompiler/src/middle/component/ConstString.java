@@ -24,4 +24,20 @@ public class ConstString extends Value {
         return getName() + " = constant " + ((PointerType) getValueType()).getTargetType()
                 + " c\"" + content + "\\00\"";
     }
+
+    @Override
+    public int hashCode() {
+        return content.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof ConstString) {
+            return content.equals(((ConstString) obj).content);
+        }
+        return false;
+    }
 }

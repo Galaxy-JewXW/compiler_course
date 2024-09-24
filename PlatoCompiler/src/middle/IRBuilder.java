@@ -667,8 +667,14 @@ public class IRBuilder {
             String typeString = matcher.group();
             int start = matcher.start();
             String tempString = formatString.substring(pos, start);
-            ConstString constString = new ConstString(
-                    IRData.getConstStringName(), tempString);
+            ConstString constString;
+            if (IRData.containsString(tempString)) {
+                constString = IRData.getConstString(tempString);
+            } else {
+                constString = new ConstString(
+                        IRData.getConstStringName(), tempString);
+                IRData.putConstString(tempString, constString);
+            }
             new PutstrInst(constString);
             if (typeString.equals("%d")) {
                 Value value = values.get(cnt++);
@@ -695,8 +701,14 @@ public class IRBuilder {
         }
         if (pos < formatString.length()) {
             String tempString = formatString.substring(pos);
-            ConstString constString = new ConstString(
-                    IRData.getConstStringName(), tempString);
+            ConstString constString;
+            if (IRData.containsString(tempString)) {
+                constString = IRData.getConstString(tempString);
+            } else {
+                constString = new ConstString(
+                        IRData.getConstStringName(), tempString);
+                IRData.putConstString(tempString, constString);
+            }
             new PutstrInst(constString);
         }
     }

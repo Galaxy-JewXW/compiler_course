@@ -26,7 +26,7 @@ public class Mem2Reg {
     // 用栈来维护当前变量的最新定义
     private static Stack<Value> reachDef;
 
-    public static void build(Module module) {
+    public static void run(Module module) {
         for (Function function : module.getFunctions()) {
             analyze(function);
             transform(function);
