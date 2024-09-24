@@ -10,9 +10,5 @@ declare void @putstr(i8*)
 
 define dso_local i32 @main() {
 0:
-	br label %1
-1:
-	br label %2
-2:
-	br label %1
+	ret i32 0
 }

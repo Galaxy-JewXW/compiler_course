@@ -1,6 +1,9 @@
 package middle.component.instruction.io;
 
+import frontend.TableManager;
+import frontend.symbol.FuncSymbol;
 import middle.component.ConstString;
+import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
@@ -23,5 +26,12 @@ public class PutstrInst extends IOInst {
                 pointerType + " " +
                 constString.getName() +
                 ", i64 0, i64 0))";
+    }
+
+    @Override
+    public Function getCalledFunction() {
+        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance().
+                getSymbol("putstr");
+        return funcSymbol.getLlvmValue();
     }
 }

@@ -8,7 +8,7 @@ import middle.component.type.IntegerType;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class CallInst extends Instruction {
+public class CallInst extends Instruction implements Call {
     public CallInst(Function calledFunction,
                     ArrayList<Value> parameters) {
         super("", calledFunction.getReturnType(), OperatorType.CALL);
@@ -21,6 +21,7 @@ public class CallInst extends Instruction {
         }
     }
 
+    @Override
     public Function getCalledFunction() {
         return (Function) getOperands().get(0);
     }

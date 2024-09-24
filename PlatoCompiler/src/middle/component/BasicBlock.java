@@ -6,6 +6,7 @@ import middle.component.model.Value;
 import middle.component.type.LabelType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class BasicBlock extends Value {
@@ -16,6 +17,15 @@ public class BasicBlock extends Value {
     private final ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
     // 后继基本块的集合
     private final ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
+    // 可支配的基本块的集合
+    private HashSet<BasicBlock> dominatedBlocks = null;
+    // 被直接支配的基本块，或支配树的根节点
+    private BasicBlock immediateDominator = null;
+    // 自身直接支配的基本块，区分 支配 和 直接支配
+    // 或支配树的子节点
+    private HashSet<BasicBlock> immediateDominatedBlocks = new HashSet<>();
+    // 支配边界
+    private HashSet<BasicBlock> dominanceFrontier = new HashSet<>();
 
 
     public BasicBlock(String name) {
@@ -73,6 +83,49 @@ public class BasicBlock extends Value {
 
     public void addNextBlock(BasicBlock nextBlock) {
         nextBlocks.add(nextBlock);
+    }
+
+    public void setDominatedBlocks(HashSet<BasicBlock> dominatedBlocks) {
+        this.dominatedBlocks = dominatedBlocks;
+    }
+
+    public HashSet<BasicBlock> getDominatedBlocks() {
+        return dominatedBlocks;
+    }
+
+    public boolean dominant(BasicBlock block) {
+        if (dominatedBlocks == null) {
+            throw new IllegalStateException("dominatedBlocks not set");
+        }
+        return dominatedBlocks.contains(block);
+    }
+
+    public boolean strictDominant(BasicBlock block) {
+        if (dominatedBlocks == null) {
+            throw new IllegalStateException("dominatedBlocks not set");
+        }
+        return dominatedBlocks.contains(block) && !block.equals(this);
+    }
+
+    public BasicBlock getImmediateDominator() {
+        return immediateDominator;
+    }
+
+    public HashSet<BasicBlock> getImmediateDominatedBlocks() {
+        return immediateDominatedBlocks;
+    }
+
+    public void setImmediateDominator(BasicBlock immediateDominator) {
+        this.immediateDominator = immediateDominator;
+        immediateDominator.immediateDominatedBlocks.add(this);
+    }
+
+    public void addDominantFrontier(BasicBlock frontier) {
+        dominanceFrontier.add(frontier);
+    }
+
+    public HashSet<BasicBlock> getDominanceFrontier() {
+        return dominanceFrontier;
     }
 
     @Override

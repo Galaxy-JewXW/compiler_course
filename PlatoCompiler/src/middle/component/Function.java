@@ -15,6 +15,8 @@ public class Function extends User {
     private final ValueType returnType;
     private final ArrayList<FuncParam> funcParams = new ArrayList<>();
     private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
+    private boolean hasSideEffect = false;
+    private boolean isBuiltIn = false;
 
     // 寄存器分配
     private HashMap<Value, Register> var2reg;
@@ -23,6 +25,12 @@ public class Function extends User {
         super(name, new LabelType());
         this.returnType = returnType;
         Module.getInstance().addFunction(this);
+    }
+
+    public Function(String name, ValueType returnType, boolean isBuiltIn) {
+        super(name, new LabelType());
+        this.returnType = returnType;
+        this.isBuiltIn = isBuiltIn;
     }
 
     public ValueType getReturnType() {
@@ -55,6 +63,14 @@ public class Function extends User {
         }
     }
 
+    public boolean hasSideEffect() {
+        return hasSideEffect;
+    }
+
+    public void setHasSideEffect(boolean hasSideEffect) {
+        this.hasSideEffect = hasSideEffect;
+    }
+
     @Override
     public String toString() {
         String paramInfo = funcParams.stream().map(Object::toString)
@@ -64,5 +80,9 @@ public class Function extends User {
                 basicBlocks.stream().map(Object::toString)
                         .collect(Collectors.joining("\n")) +
                 "\n}";
+    }
+
+    public boolean isBuiltIn() {
+        return isBuiltIn;
     }
 }
