@@ -1,17 +1,5 @@
-int x[10],i=0;
-
-int main()
-{
-	for(;i<=10;)
-{if(i==2)
-{
-i=4;
-continue;
-}
- x[i]=i;
-i = i + 1;
-if(i==5)
-break;}
-
-	return 0;
+int jj[100] = {3 * 9 - 2 * 8};
+char sb[60] = "Hello", sbb[4] = {'a', 'b', 'c', 'd'};
+int main() {
+return 0;
 }

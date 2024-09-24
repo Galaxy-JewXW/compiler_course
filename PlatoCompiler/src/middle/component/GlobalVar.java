@@ -12,6 +12,10 @@ public class GlobalVar extends User {
         Module.getInstance().addGlobalVar(this);
     }
 
+    public InitialValue getInitialValue() {
+        return initialValue;
+    }
+
     @Override
     public String toString() {
         return getName() + " = dso_local global " + initialValue;

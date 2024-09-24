@@ -1,7 +1,7 @@
+import backend.MipsBuilder;
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.TableManager;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
@@ -23,39 +23,33 @@ public class Compiler {
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
-
         // 词法分析
         // tokens是已划分好的源程序的词法单元
         Lexer lexer = new Lexer(inputString);
         ArrayList<Token> tokens = lexer.tokenize();
         Printer.printTokens(tokens, lexerOutput);
         System.out.println("lexer complete");
-
         // 语法分析部分
         // compUnit是源程序所生成的语法树的根节点
         Parser parser = new Parser(tokens);
         CompUnit compUnit = parser.parse();
         Printer.printCompUnit(compUnit, parserOutput);
         System.out.println("parser complete");
-
         // 语义分析，建立符号表
         Visitor visitor = new Visitor(compUnit);
         visitor.visit();
         System.out.println("visitor complete");
-
         // 异常处理
         Printer.printErrors(ErrorHandler.getInstance().getErrors(), errorOutput);
         if (!ErrorHandler.getInstance().getErrors().isEmpty()) {
             return;
         }
-
-        // bonus part:打印符号表
-        TableManager.getInstance().print();
-
         // 生成未优化中间代码
         IRBuilder irBuilder = new IRBuilder(compUnit);
         irBuilder.build();
-
         Printer.printIr(Module.getInstance(), llvmOutput);
+        // 生成目标代码
+        MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance());
+        mipsBuilder.build();
     }
 }

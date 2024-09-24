@@ -25,6 +25,10 @@ public class InitialValue {
         return elements;
     }
 
+    public int getLength() {
+        return length;
+    }
+
     @Override
     public String toString() {
         boolean flag = valueType.equals(IntegerType.i8)

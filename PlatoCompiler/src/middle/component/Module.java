@@ -28,10 +28,6 @@ public class Module extends Value {
         builtInFunctions.add("declare void @putstr(i8*)");
     }
 
-    public ArrayList<Function> getFunctions() {
-        return functions;
-    }
-
     public void addConstString(ConstString constString) {
         constStrings.add(constString);
     }
@@ -48,6 +44,18 @@ public class Module extends Value {
         for (Function function : functions) {
             function.updateId();
         }
+    }
+
+    public ArrayList<ConstString> getConstStrings() {
+        return constStrings;
+    }
+
+    public ArrayList<GlobalVar> getGlobalVars() {
+        return globalVars;
+    }
+
+    public ArrayList<Function> getFunctions() {
+        return functions;
     }
 
     @Override

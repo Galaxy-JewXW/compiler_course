@@ -158,7 +158,7 @@ public class Visitor {
             ValueType valueType = switch (type) {
                 case INTTK -> IntegerType.i32;
                 case CHARTK -> IntegerType.i8;
-                default -> throw new RuntimeException("Shouldn't reacn here");
+                default -> throw new RuntimeException("Shouldn't reach here");
             };
             if (dimension == 1) {
                 valueType = new ArrayType(length, valueType);
