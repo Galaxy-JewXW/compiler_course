@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class LVN {
+public class GVN {
     public static HashMap<String, Instruction> map;
 
     public static void run(Module module) {
