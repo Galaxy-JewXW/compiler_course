@@ -7,6 +7,7 @@ import middle.component.type.IntegerType;
 
 public class BrInst extends Instruction implements Terminator {
     private final boolean isConditional;
+
     // 有条件跳转
     public BrInst(Value condition, BasicBlock trueBlock,
                   BasicBlock falseBlock) {
@@ -30,6 +31,14 @@ public class BrInst extends Instruction implements Terminator {
         // 设置前驱后继关系
         IRData.getCurrentBlock().addNextBlock(targetBlock);
         targetBlock.addPrevBlock(IRData.getCurrentBlock());
+    }
+
+    // 指定了指令所属的block
+    // 指定block时，不自动加入block，也不自动更新前后驱关系
+    public BrInst(BasicBlock block, BasicBlock targetBlock) {
+        super("", IntegerType.VOID, OperatorType.BR, block);
+        addOperand(targetBlock);
+        isConditional = false;
     }
 
     public boolean isConditional() {
@@ -56,6 +65,10 @@ public class BrInst extends Instruction implements Terminator {
         }
     }
 
+    public void setTrueBlock(BasicBlock trueBlock) {
+        getOperands().set(1, trueBlock);
+    }
+
     public BasicBlock getFalseBlock() {
         if (getOperands().size() == 3) {
             return (BasicBlock) getOperands().get(2);
@@ -64,10 +77,6 @@ public class BrInst extends Instruction implements Terminator {
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
-    }
-
-    public void setTrueBlock(BasicBlock trueBlock) {
-        getOperands().set(1, trueBlock);
     }
 
     public void setFalseBlock(BasicBlock falseBlock) {
@@ -82,7 +91,7 @@ public class BrInst extends Instruction implements Terminator {
     @Override
     public String toString() {
         if (getOperands().size() == 3) {
-            return "br " + getCondition().getValueType() + " " + getCondition().getName()
+            return "br i1 " + getCondition().getName()
                     + ", label %" + getTrueBlock().getName()
                     + ", label %" + getFalseBlock().getName();
         } else if (getOperands().size() == 1) {

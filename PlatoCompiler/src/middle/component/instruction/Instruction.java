@@ -21,12 +21,26 @@ public abstract class Instruction extends User {
         }
     }
 
+    public Instruction(ValueType valueType, OperatorType opType,
+                       BasicBlock basicBlock) {
+        super(IRData.getVarName(), valueType);
+        this.opType = opType;
+        this.basicBlock = basicBlock;
+    }
+
     public Instruction(String name, ValueType valueType,
                        OperatorType opType) {
         super(name, valueType);
         this.opType = opType;
         this.basicBlock = IRData.getCurrentBlock();
         basicBlock.addInstruction(this);
+    }
+
+    public Instruction(String name, ValueType valueType,
+                       OperatorType opType, BasicBlock basicBlock) {
+        super(name, valueType);
+        this.opType = opType;
+        this.basicBlock = basicBlock;
     }
 
     public BasicBlock getBasicBlock() {

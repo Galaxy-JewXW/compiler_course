@@ -4,31 +4,41 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = constant [2 x i8] c"\0A\00"
+@.s.0 = constant [19 x i8] c"Final value of x: \00"
+@.s.1 = constant [2 x i8] c"\0A\00"
 
-@a = dso_local global i32 1000
 
-define dso_local i32 @foo(i32 %0, i32 %1) {
-2:
-	%3 = add i32 %0, %1
-	ret i32 %3
-}
-
-define dso_local void @bar() {
-0:
-	store i32* @a, i32 1200
-	ret void
-}
 
 define dso_local i32 @main() {
 0:
-	call void @bar()
-	%1 = load i32, i32* @a
-	%2 = call i32 @getint()
-	store i32* @a, i32 %2
-	%3 = load i32, i32* @a
-	%4 = call i32 @foo(i32 %3, i32 %1)
-	call void @putint(i32 %4)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
+	br label %1
+1:
+	br label %2
+2:
+	%3 = phi i32 [ 20, %2 ], [ 10, %1 ]
+	br label %4
+4:
+	%5 = phi i32 [ 0, %2 ], [ %18, %16 ]
+	%6 = phi i32 [ %3, %2 ], [ %17, %16 ]
+	%7 = icmp slt i32 %5, 5
+	br i1 %7, label %8, label %11
+8:
+	%9 = srem i32 %5, 2
+	%10 = icmp eq i32 %9, 0
+	br i1 %10, label %12, label %14
+11:
+	call void @putstr(i8* getelementptr inbounds ([19 x i8], [19 x i8]* @.s.0, i64 0, i64 0))
+	call void @putint(i32 %6)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
 	ret i32 0
+12:
+	%13 = add i32 %6, %5
+	br label %16
+14:
+	%15 = mul i32 %6, 2
+	br label %16
+16:
+	%17 = phi i32 [ %15, %14 ], [ %13, %12 ]
+	%18 = add i32 %5, 1
+	br label %4
 }

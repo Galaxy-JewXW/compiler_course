@@ -4,14 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="添加常数条件表达式计算">
-      <change afterPath="$PROJECT_DIR$/src/optimize/InlineFunc.java" afterDir="false" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="man">
+      <change afterPath="$PROJECT_DIR$/src/optimize/CertainBranch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BinaryInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BinaryInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BrInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BrInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/Instruction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/Instruction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/InlineFunc.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/InlineFunc.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BrInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/Instruction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/CalcCond.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GVN.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
@@ -33,25 +44,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Galaxy-JewXW"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Galaxy-JewXW&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:Galaxy-JewXW/compiler_course.git",
-    "accountId": "7e69d295-b0ef-4293-81cc-173b50d78e7a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Galaxy-JewXW/compiler_course.git&quot;,
+    &quot;accountId&quot;: &quot;7e69d295-b0ef-4293-81cc-173b50d78e7a&quot;
   }
-}]]></component>
+}</component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2mWDK2Es587qqNXqqmI19ieDXrF" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -74,7 +85,7 @@
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "actions.on.save",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Compiler.executor": "Debug"
+    "应用程序.Compiler.executor": "Run"
   }
 }]]></component>
   <component name="RunManager">
@@ -125,6 +136,290 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="添加常数条件表达式计算" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加常数条件表达式计算" />
+    <MESSAGE value="man" />
+    <option name="LAST_COMMIT_MESSAGE" value="man" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>62</line>
+          <properties>
+            <option name="lambda-ordinal" value="0" />
+          </properties>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/optimize/CertainBranch.java</url>
+          <line>66</line>
+          <properties class="optimize.CertainBranch" method="optimizePhi">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

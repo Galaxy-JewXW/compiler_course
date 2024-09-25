@@ -13,21 +13,27 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class GVN {
-    public static HashMap<String, Instruction> map;
+    private static HashMap<String, Instruction> map;
+    private static HashSet<BasicBlock> deletingBlock;
 
     public static void run(Module module) {
         for (Function function : module.getFunctions()) {
             map = new HashMap<>();
             visit(function.getBasicBlocks().get(0));
         }
-        for (Function function : module.getFunctions()) {
-            for (BasicBlock basicBlock : function.getBasicBlocks()) {
-                optimizeCalc(basicBlock);
-            }
-        }
-        for (Function function : module.getFunctions()) {
-            for (BasicBlock basicBlock : function.getBasicBlocks()) {
-                optimizeCalc(basicBlock);
+        for (int i = 0; i < 5; i++) {
+            for (Function function : module.getFunctions()) {
+                deletingBlock = new HashSet<>();
+                for (BasicBlock basicBlock : function.getBasicBlocks()) {
+                    optimizeCalc(basicBlock);
+                }
+                for (BasicBlock basicBlock : deletingBlock) {
+                    for (Instruction instruction : basicBlock.getInstructions()) {
+                        instruction.deleteUse();
+                    }
+                }
+                function.getBasicBlocks().removeIf(basicBlock
+                        -> deletingBlock.contains(basicBlock));
             }
         }
     }
@@ -85,42 +91,86 @@ public class GVN {
                     } else {
                         valueInt = 0;
                     }
-                    ValueType valueType = ((ArrayType)initialValue.getValueType())
+                    ValueType valueType = ((ArrayType) initialValue.getValueType())
                             .getElementType();
                     Value value = new ConstInt(valueType, valueInt);
                     loadInst.replaceByNewValue(value);
                     iterator.remove();
                 }
             }
-            if (!(instruction instanceof BinaryInst binaryInst
-                    && binaryInst.getValueType().equals(IntegerType.i32))) {
-                continue;
-            }
-            Value operand1 = binaryInst.getOperand1();
-            Value operand2 = binaryInst.getOperand2();
-            OperatorType op = binaryInst.getOpType();
-            int cnt = 0;
-            if (operand1 instanceof ConstInt) {
-                cnt++;
-            }
-            if (operand2 instanceof ConstInt) {
-                cnt++;
-            }
-            if (cnt == 2) {
-                Value ans = calcTwoConst(operand1, operand2, op);
-                instruction.replaceByNewValue(ans);
-                iterator.remove();
-            } else if (cnt == 1) {
-                Value ans = calcOneConst(operand1, operand2, op);
-                if (ans != null) {
-                    instruction.replaceByNewValue(ans);
-                    iterator.remove();
+            if (instruction instanceof BinaryInst binaryInst
+                    && binaryInst.getValueType().equals(IntegerType.i32)) {
+                Value operand1 = binaryInst.getOperand1();
+                Value operand2 = binaryInst.getOperand2();
+                OperatorType op = binaryInst.getOpType();
+                int cnt = 0;
+                if (operand1 instanceof ConstInt) {
+                    cnt++;
                 }
-            } else {
-                Value ans = calcDefault(instruction);
-                if (ans != null) {
+                if (operand2 instanceof ConstInt) {
+                    cnt++;
+                }
+                if (cnt == 2) {
+                    Value ans = calcTwoConst(operand1, operand2, op);
                     instruction.replaceByNewValue(ans);
                     iterator.remove();
+                } else if (cnt == 1) {
+                    Value ans = calcOneConst(operand1, operand2, op);
+                    if (ans != null) {
+                        instruction.replaceByNewValue(ans);
+                        iterator.remove();
+                    }
+                } else {
+                    Value ans = calcDefault(instruction);
+                    if (ans != null) {
+                        instruction.replaceByNewValue(ans);
+                        iterator.remove();
+                    }
+                }
+            } else if (instruction instanceof BinaryInst binaryInst
+                    && binaryInst.getValueType().equals(IntegerType.i1)) {
+                OperatorType op = binaryInst.getOpType();
+                if (op == OperatorType.ICMP_SLE || op == OperatorType.ICMP_SLT
+                        || op == OperatorType.ICMP_SGE || op == OperatorType.ICMP_SGT) {
+                    Value operand1 = binaryInst.getOperand1();
+                    Value operand2 = binaryInst.getOperand2();
+                    if (operand1 instanceof ConstInt constInt1
+                            && operand2 instanceof ConstInt constInt2) {
+                        ConstInt newInt = getRelInt(constInt1, constInt2, op);
+                        instruction.replaceByNewValue(newInt);
+                        iterator.remove();
+                    }
+                } else if (op == OperatorType.ICMP_EQ || op == OperatorType.ICMP_NE) {
+                    Value operand1 = binaryInst.getOperand1();
+                    Value operand2 = binaryInst.getOperand2();
+                    if (operand1 instanceof ConstInt constInt1
+                            && operand2 instanceof ConstInt constInt2) {
+                        ConstInt newInt = getEqInt(constInt1, constInt2, op);
+                        instruction.replaceByNewValue(newInt);
+                        iterator.remove();
+                    } else if (operand1 instanceof ConstInt constInt1
+                            && operand2 instanceof ZextInst zextInst) {
+                        if (zextInst.getOriginValue() instanceof ConstInt constInt2) {
+                            ConstInt newInt = getEqInt(constInt1, constInt2, op);
+                            instruction.replaceByNewValue(newInt);
+                            iterator.remove();
+                        }
+                    } else if (operand1 instanceof ZextInst zextInst
+                            && operand2 instanceof ConstInt constInt2) {
+                        if (zextInst.getOriginValue() instanceof ConstInt constInt1) {
+                            ConstInt newInt = getEqInt(constInt1, constInt2, op);
+                            instruction.replaceByNewValue(newInt);
+                            iterator.remove();
+                        }
+                    } else if (operand1 instanceof ZextInst zextInst1
+                            && operand2 instanceof ZextInst zextInst2) {
+                        if (zextInst1.getOriginValue() instanceof ConstInt constInt1
+                                && zextInst2.getOriginValue() instanceof ConstInt constInt2) {
+                            ConstInt newInt = getEqInt(constInt1, constInt2, op);
+                            instruction.replaceByNewValue(newInt);
+                            iterator.remove();
+                        }
+                    }
                 }
             }
         }
@@ -302,5 +352,32 @@ public class GVN {
                     && ((ConstInt) a).getIntValue() == ((ConstInt) b).getIntValue();
         }
         return a == b;
+    }
+
+    private static ConstInt getRelInt(ConstInt constInt1, ConstInt constInt2, OperatorType op) {
+        int left = constInt1.getIntValue();
+        int right = constInt2.getIntValue();
+        int ans = switch (op) {
+            case ICMP_SLT -> left < right ? 1 : 0;
+            case ICMP_SGT -> left > right ? 1 : 0;
+            case ICMP_SGE -> left <= right ? 1 : 0;
+            case ICMP_SLE -> left >= right ? 1 : 0;
+            default -> throw new IllegalStateException(
+                    "Unexpected value: " + op);
+        };
+        return new ConstInt(IntegerType.i1, ans);
+    }
+
+    private static ConstInt getEqInt(ConstInt constInt1, ConstInt constInt2,
+                                     OperatorType op) {
+        int left = constInt1.getIntValue();
+        int right = constInt2.getIntValue();
+        int ans = switch (op) {
+            case ICMP_EQ -> left == right ? 1 : 0;
+            case ICMP_NE -> left != right ? 1 : 0;
+            default -> throw new IllegalStateException(
+                    "Unexpected value: " + op);
+        };
+        return new ConstInt(IntegerType.i1, ans);
     }
 }

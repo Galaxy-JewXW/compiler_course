@@ -7,16 +7,16 @@ import middle.component.type.ValueType;
 public class BinaryInst extends Instruction {
     private final OperatorType opType;
 
-    private static ValueType getValueType(OperatorType opType) {
-        return OperatorType.isLogicalOperator(opType) ? IntegerType.i1 : IntegerType.i32;
-    }
-
     public BinaryInst(OperatorType opType,
                       Value operand1, Value operand2) {
         super(getValueType(opType), opType);
         this.opType = opType;
         addOperand(operand1);
         addOperand(operand2);
+    }
+
+    private static ValueType getValueType(OperatorType opType) {
+        return OperatorType.isLogicalOperator(opType) ? IntegerType.i1 : IntegerType.i32;
     }
 
     @Override
@@ -34,8 +34,7 @@ public class BinaryInst extends Instruction {
 
     @Override
     public String toString() {
-        return getName() + " = " + opType + " "
-                + getOperand1().getValueType() + " " + getOperand1().getName()
+        return getName() + " = " + opType + " i32 " + getOperand1().getName()
                 + ", " + getOperand2().getName();
     }
 }
