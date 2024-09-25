@@ -38,7 +38,14 @@ public class UnusedBasicBlock {
         for (Function function : module.getFunctions()) {
             HashSet<BasicBlock> visited = new HashSet<>();
             dfs(function.getBasicBlocks().get(0), visited);
-            function.getBasicBlocks().removeIf(b -> !visited.contains(b));
+            Iterator<BasicBlock> iterator = function.getBasicBlocks().iterator();
+            while (iterator.hasNext()) {
+                BasicBlock basicBlock = iterator.next();
+                if (!visited.contains(basicBlock)) {
+                    basicBlock.setDeleted(true);
+                    iterator.remove();
+                }
+            }
         }
     }
 

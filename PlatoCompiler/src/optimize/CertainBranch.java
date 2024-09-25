@@ -55,6 +55,7 @@ public class CertainBranch {
                 }
             }
             for (BasicBlock block : deleteBuffer) {
+                block.setDeleted(true);
                 for (Instruction instruction : block.getInstructions()) {
                     instruction.deleteUse();
                 }

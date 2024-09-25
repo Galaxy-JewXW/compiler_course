@@ -1,9 +1,12 @@
 package optimize;
 
 import middle.component.Module;
+import tools.Printer;
+
+import java.io.FileNotFoundException;
 
 public class Optimizer {
-    public static void build(Module module) {
+    public static void build(Module module) throws FileNotFoundException {
         UnusedBasicBlock.run(module);
         UnusedFunction.run(module);
         Mem2Reg.run(module);
@@ -12,8 +15,9 @@ public class Optimizer {
         DeadCode.run(module);
         DeadCode.run(module);
         module.updateId();
-        System.out.println(module);
+        Printer.printIr(module, "ir_phi.txt");
         CertainBranch.run(module);
+        OptimizePhi.run(module);
         // InlineFunc.run(module);
         // 序号重命名必须是最后一条
         module.updateId();

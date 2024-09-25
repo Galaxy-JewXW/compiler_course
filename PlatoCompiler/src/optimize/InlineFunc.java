@@ -7,6 +7,7 @@ import middle.component.Module;
 import middle.component.instruction.Call;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
+import middle.component.instruction.PhiInst;
 import middle.component.instruction.io.IOInst;
 import middle.component.type.ValueType;
 
@@ -86,10 +87,41 @@ public class InlineFunc {
     }
 
     public static void replace(CallInst callInst, Function caller, Function callee) {
-        BasicBlock block = callInst.getBasicBlock();
+        BasicBlock curBlock = callInst.getBasicBlock();
         ValueType returnType = caller.getReturnType();
         BasicBlock nextBlock = new BasicBlock(IRData.getBlockName());
-        caller.getBasicBlocks().add(caller.getBasicBlocks().indexOf(block) + 1, nextBlock);
-        
+        caller.getBasicBlocks().add(caller.getBasicBlocks().indexOf(curBlock) + 1, nextBlock);
+        boolean isAfterCall = false;
+        ArrayList<Instruction> instructions = new ArrayList<>(curBlock.getInstructions());
+        for (Instruction instruction : instructions) {
+            if (!isAfterCall && instruction instanceof CallInst) {
+                isAfterCall = true;
+                continue;
+            }
+            if (isAfterCall) {
+                curBlock.getInstructions().remove(instruction);
+                nextBlock.getInstructions().add(instruction);
+                instruction.setBasicBlock(nextBlock);
+            }
+        }
+        for (BasicBlock child : curBlock.getNextBlocks()) {
+            for (Instruction instruction : child.getInstructions()) {
+                if (instruction instanceof PhiInst phiInst
+                        && phiInst.getBlocks().contains(curBlock)) {
+                    phiInst.getBlocks().set(
+                            phiInst.getBlocks().indexOf(curBlock), nextBlock);
+                    nextBlock.addUse(phiInst);
+                    curBlock.getUseList().removeIf(use -> use.getUser().equals(phiInst));
+                }
+            }
+        }
+        nextBlock.setNextBlocks(curBlock.getNextBlocks());
+        for (BasicBlock child : curBlock.getNextBlocks()) {
+            child.getPrevBlocks().set(
+                    child.getPrevBlocks().indexOf(curBlock), nextBlock);
+        }
+        curBlock.setNextBlocks(new ArrayList<>());
+        // 解决浅拷贝沈拷贝的问题
+        Function copied = FunctionCopy.build(caller, callee);
     }
 }

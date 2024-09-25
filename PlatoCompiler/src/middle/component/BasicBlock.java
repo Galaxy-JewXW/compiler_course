@@ -11,27 +11,34 @@ import java.util.stream.Collectors;
 
 public class BasicBlock extends Value {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
-    private Function function;
-
+    // 自身直接支配的基本块，区分 支配 和 直接支配
+    // 或支配树的子节点
+    private final HashSet<BasicBlock> immediateDominatedBlocks = new HashSet<>();
+    // 支配边界
+    private final HashSet<BasicBlock> dominanceFrontier = new HashSet<>();
     // 前驱基本块的集合
-    private final ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
+    private ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
     // 后继基本块的集合
-    private final ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
+    private ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
+    private Function function;
     // 可支配的基本块的集合
     private HashSet<BasicBlock> dominatedBlocks = null;
     // 被直接支配的基本块，或支配树的根节点
     private BasicBlock immediateDominator = null;
-    // 自身直接支配的基本块，区分 支配 和 直接支配
-    // 或支配树的子节点
-    private HashSet<BasicBlock> immediateDominatedBlocks = new HashSet<>();
-    // 支配边界
-    private HashSet<BasicBlock> dominanceFrontier = new HashSet<>();
+    // 标记是否在优化过程中被删除
+    private boolean isDeleted = false;
 
 
     public BasicBlock(String name) {
         super(name, new LabelType());
         this.function = IRData.getCurrentFunction();
         function.addBasicBlock(this);
+    }
+
+    // 指定所属函数时，不自动嵌入
+    public BasicBlock(String name, Function function) {
+        super(name, new LabelType());
+        this.function = function;
     }
 
     public void addInstruction(Instruction instruction) {
@@ -77,6 +84,10 @@ public class BasicBlock extends Value {
         return nextBlocks;
     }
 
+    public void setNextBlocks(ArrayList<BasicBlock> nextBlocks) {
+        this.nextBlocks = new ArrayList<>(nextBlocks);
+    }
+
     public void addPrevBlock(BasicBlock prevBlock) {
         prevBlocks.add(prevBlock);
     }
@@ -85,12 +96,12 @@ public class BasicBlock extends Value {
         nextBlocks.add(nextBlock);
     }
 
-    public void setDominatedBlocks(HashSet<BasicBlock> dominatedBlocks) {
-        this.dominatedBlocks = dominatedBlocks;
-    }
-
     public HashSet<BasicBlock> getDominatedBlocks() {
         return dominatedBlocks;
+    }
+
+    public void setDominatedBlocks(HashSet<BasicBlock> dominatedBlocks) {
+        this.dominatedBlocks = dominatedBlocks;
     }
 
     public boolean dominant(BasicBlock block) {
@@ -111,13 +122,13 @@ public class BasicBlock extends Value {
         return immediateDominator;
     }
 
-    public HashSet<BasicBlock> getImmediateDominatedBlocks() {
-        return immediateDominatedBlocks;
-    }
-
     public void setImmediateDominator(BasicBlock immediateDominator) {
         this.immediateDominator = immediateDominator;
         immediateDominator.immediateDominatedBlocks.add(this);
+    }
+
+    public HashSet<BasicBlock> getImmediateDominatedBlocks() {
+        return immediateDominatedBlocks;
     }
 
     public void addDominantFrontier(BasicBlock frontier) {
@@ -128,10 +139,18 @@ public class BasicBlock extends Value {
         return dominanceFrontier;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public String toString() {
         return getName() + ":\n\t" +
                 instructions.stream().map(Object::toString)
-                .collect(Collectors.joining("\n\t"));
+                        .collect(Collectors.joining("\n\t"));
     }
 }
