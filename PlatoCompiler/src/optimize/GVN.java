@@ -8,6 +8,7 @@ import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +26,16 @@ public class GVN {
             for (Function function : module.getFunctions()) {
                 deletingBlock = new HashSet<>();
                 for (BasicBlock basicBlock : function.getBasicBlocks()) {
+                    ArrayList<Instruction> list =
+                            new ArrayList<>(basicBlock.getInstructions());
+                    for (Instruction instruction : list) {
+                        if (instruction instanceof BinaryInst binaryInst
+                                && binaryInst.getOpType() == OperatorType.SREM) {
+                            srem2div(binaryInst);
+                        }
+                    }
+                }
+                for (BasicBlock basicBlock : function.getBasicBlocks()) {
                     optimizeCalc(basicBlock);
                 }
                 for (BasicBlock basicBlock : deletingBlock) {
@@ -35,6 +46,24 @@ public class GVN {
                 function.getBasicBlocks().removeIf(basicBlock
                         -> deletingBlock.contains(basicBlock));
             }
+        }
+    }
+
+    // a % b = a - a / b * b;
+    // 这里要求b是一个ConstInt，后端翻译除法指令的时候可以继续优化
+    private static void srem2div(BinaryInst inst) {
+        Value a = inst.getOperand1();
+        Value b = inst.getOperand2();
+        BasicBlock curBlock = inst.getBasicBlock();
+        if (!(a instanceof ConstInt) && (b instanceof ConstInt constInt)) {
+            BinaryInst div = new BinaryInst(OperatorType.SDIV, a, b, curBlock);
+            BinaryInst mul = new BinaryInst(OperatorType.MUL, div, b, curBlock);
+            BinaryInst sub = new BinaryInst(OperatorType.SUB, a, mul, curBlock);
+            curBlock.getInstructions().set(curBlock.getInstructions().indexOf(inst), div);
+            curBlock.getInstructions().add(curBlock.getInstructions().indexOf(div) + 1, mul);
+            curBlock.getInstructions().add(curBlock.getInstructions().indexOf(mul) + 1, sub);
+            inst.replaceByNewValue(sub);
+            curBlock.getInstructions().remove(inst);
         }
     }
 

@@ -1,5 +1,6 @@
 package middle.component.instruction;
 
+import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -10,6 +11,14 @@ public class BinaryInst extends Instruction {
     public BinaryInst(OperatorType opType,
                       Value operand1, Value operand2) {
         super(getValueType(opType), opType);
+        this.opType = opType;
+        addOperand(operand1);
+        addOperand(operand2);
+    }
+
+    public BinaryInst(OperatorType opType, Value operand1,
+                      Value operand2, BasicBlock block) {
+        super(getValueType(opType), opType, block);
         this.opType = opType;
         addOperand(operand1);
         addOperand(operand2);
