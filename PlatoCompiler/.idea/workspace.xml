@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="aaa">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ir_phi.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir_phi.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BinaryInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/BinaryInst.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GVN.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/BinaryInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/FunctionCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FunctionCopy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GVN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
-    </list>
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="完成取模优化" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,7 +100,7 @@
       <workItem from="1727183373763" duration="9898000" />
       <workItem from="1727229022465" duration="5529000" />
       <workItem from="1727246954081" duration="114000" />
-      <workItem from="1727249114398" duration="5230000" />
+      <workItem from="1727249114398" duration="5487000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -141,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727234596914</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="完成取模优化">
+      <option name="closed" value="true" />
+      <created>1727254619740</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727254619740</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,7 +144,8 @@
     <MESSAGE value="添加常数条件表达式计算" />
     <MESSAGE value="man" />
     <MESSAGE value="aaa" />
-    <option name="LAST_COMMIT_MESSAGE" value="aaa" />
+    <MESSAGE value="完成取模优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成取模优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
