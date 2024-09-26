@@ -1,22 +1,20 @@
-int a = 1000;
-
-int frac(int n) {
-    if (n == 1) {
-        return 1;
-    } else {
-        return n * frac( n - 1 );
-    }
-    return 0;
-}
-
-char fu(int s, int b) {
-    int x;
-    x = getint();
-    if (s > b) { x = -x; } else {x = x % 3;}
-    return x;
-}
-
 int main() {
-    printf("%d%d\n", frac(10), fu(9, 'a'));
+    int a1 = 1, a2;
+    a2 = a1;
+    int temp;
+    int n, i;
+    n = getint();
+    for (i = a1 * a1; i < n + 1; i = i + 1) {
+        temp = a2;
+        a2 = a1 + a2;
+        a1 = temp;
+        if (i % 2 == 1) {
+            continue;
+        }
+        printf("round %d: %d\n", i, a1);
+        if (i > 19) {
+            break;
+        }
+    }
     return 0;
 }

@@ -4,47 +4,44 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.s.0 = private unnamed_addr constant [7 x i8] c"round \00", align 1
+@.s.1 = private unnamed_addr constant [3 x i8] c": \00", align 1
+@.s.2 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
-@a = dso_local global i32 1000
 
-define dso_local i32 @frac(i32 %0) {
-1:
-	%2 = icmp eq i32 %0, 1
-	br i1 %2, label %3, label %4
-3:
-	ret i32 1
-4:
-	%5 = sub i32 %0, 1
-	%6 = call i32 @frac(i32 %5)
-	%7 = mul i32 %0, %6
-	ret i32 %7
-8:
-	ret i32 0
-}
 
 define dso_local i32 @main() {
 0:
-	%1 = call i32 @frac(i32 10)
-	br label %2
-2:
-	%3 = call i32 @getint()
-	%4 = icmp sgt i32 9, 97
-	br i1 %4, label %5, label %7
-5:
-	%6 = sub i32 0, %3
-	br label %9
-7:
-	%8 = srem i32 %3, 3
-	br label %9
+	%1 = call i32 @getint()
+	%2 = mul i32 1, 1
+	br label %3
+3:
+	%4 = phi i32 [ %2, %0 ], [ %19, %18 ], [ %4, %14 ]
+	%5 = phi i32 [ 1, %0 ], [ %10, %18 ], [ %10, %14 ]
+	%6 = phi i32 [ 1, %0 ], [ %5, %18 ], [ %5, %14 ]
+	%7 = add i32 %1, 1
+	%8 = icmp slt i32 %4, %7
+	br i1 %8, label %9, label %13
 9:
-	%10 = phi i32 [ %6, %5 ], [ %8, %7 ]
-	br label %11
-11:
-	%12 = phi i8 [ %10, %9 ]
-	%13 = zext i8 %12 to i32
-	call void @putint(i32 %1)
-	call void @putint(i32 %13)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
+	%10 = add i32 %6, %5
+	%11 = srem i32 %4, 2
+	%12 = icmp eq i32 %11, 1
+	br i1 %12, label %14, label %15
+13:
 	ret i32 0
+14:
+	br label %3
+15:
+	call void @putstr(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.s.0, i64 0, i64 0))
+	call void @putint(i32 %4)
+	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))
+	call void @putint(i32 %5)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
+	%16 = icmp sgt i32 %4, 19
+	br i1 %16, label %17, label %18
+17:
+	br label %13
+18:
+	%19 = add i32 %4, 1
+	br label %3
 }
