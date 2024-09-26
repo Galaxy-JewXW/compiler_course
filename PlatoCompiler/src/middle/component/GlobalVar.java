@@ -1,5 +1,6 @@
 package middle.component;
 
+import middle.IRData;
 import middle.component.model.User;
 import middle.component.type.ValueType;
 
@@ -11,7 +12,9 @@ public class GlobalVar extends User {
         super(name, type);
         this.initialValue = initialValue;
         this.isConstant = isConstant;
-        Module.getInstance().addGlobalVar(this);
+        if (IRData.isInsect()) {
+            Module.getInstance().addGlobalVar(this);
+        }
     }
 
     public InitialValue getInitialValue() {

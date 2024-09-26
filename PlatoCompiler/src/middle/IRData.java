@@ -9,13 +9,22 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class IRData {
+    private static final Stack<ForLoop> loops = new Stack<>();
+    private static final HashMap<String, ConstString> constStrings = new HashMap<>();
     // 计数器
     private static int constStringCnt = 0;
     private static Function currentFunction = null;
     private static BasicBlock currentBlock = null;
     private static int cnt = 0;
-    private static final Stack<ForLoop> loops = new Stack<>();
-    private static final HashMap<String, ConstString> constStrings = new HashMap<>();
+    private static boolean insect = true;
+
+    public static boolean isInsect() {
+        return insect;
+    }
+
+    public static void setInsect(boolean insect) {
+        IRData.insect = insect;
+    }
 
     public static String getVarName() {
         return "%" + cnt++;
@@ -33,12 +42,12 @@ public class IRData {
         return currentFunction;
     }
 
-    public static BasicBlock getCurrentBlock() {
-        return currentBlock;
-    }
-
     public static void setCurrentFunction(Function function) {
         currentFunction = function;
+    }
+
+    public static BasicBlock getCurrentBlock() {
+        return currentBlock;
     }
 
     public static void setCurrentBlock(BasicBlock currentBlock) {

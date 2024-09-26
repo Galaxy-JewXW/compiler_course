@@ -13,34 +13,20 @@ public abstract class Instruction extends User {
     public Instruction(ValueType valueType, OperatorType opType) {
         super(IRData.getVarName(), valueType);
         this.opType = opType;
-        if (opType == OperatorType.PHI) {
-            this.basicBlock = null;
-        } else {
+        if (IRData.isInsect()) {
             this.basicBlock = IRData.getCurrentBlock();
-            basicBlock.addInstruction(this);
+            this.basicBlock.addInstruction(this);
         }
-    }
-
-    public Instruction(ValueType valueType, OperatorType opType,
-                       BasicBlock basicBlock) {
-        super(IRData.getVarName(), valueType);
-        this.opType = opType;
-        this.basicBlock = basicBlock;
     }
 
     public Instruction(String name, ValueType valueType,
                        OperatorType opType) {
         super(name, valueType);
         this.opType = opType;
-        this.basicBlock = IRData.getCurrentBlock();
-        basicBlock.addInstruction(this);
-    }
-
-    public Instruction(String name, ValueType valueType,
-                       OperatorType opType, BasicBlock basicBlock) {
-        super(name, valueType);
-        this.opType = opType;
-        this.basicBlock = basicBlock;
+        if (IRData.isInsect()) {
+            this.basicBlock = IRData.getCurrentBlock();
+            this.basicBlock.addInstruction(this);
+        }
     }
 
     public BasicBlock getBasicBlock() {

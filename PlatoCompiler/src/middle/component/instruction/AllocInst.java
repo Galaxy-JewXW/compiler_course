@@ -1,6 +1,5 @@
 package middle.component.instruction;
 
-import middle.component.BasicBlock;
 import middle.component.type.PointerType;
 import middle.component.type.ValueType;
 
@@ -10,11 +9,6 @@ public class AllocInst extends Instruction {
 
     public AllocInst(ValueType targetType) {
         super(new PointerType(targetType), OperatorType.ALLOC);
-        this.targetType = targetType;
-    }
-
-    public AllocInst(ValueType targetType, BasicBlock block) {
-        super(new PointerType(targetType), OperatorType.ALLOC, block);
         this.targetType = targetType;
     }
 

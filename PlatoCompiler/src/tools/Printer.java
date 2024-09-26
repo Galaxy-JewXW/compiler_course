@@ -44,6 +44,7 @@ public class Printer {
 
     public static void printIr(Module module, String path) throws FileNotFoundException {
         PrintStream origin = System.out;
+        module.updateId();
         System.setOut(new PrintStream(path));
         System.out.println(module);
         System.setOut(origin);

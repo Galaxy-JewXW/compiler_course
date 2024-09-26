@@ -31,14 +31,10 @@ public class BasicBlock extends Value {
 
     public BasicBlock(String name) {
         super(name, new LabelType());
-        this.function = IRData.getCurrentFunction();
-        function.addBasicBlock(this);
-    }
-
-    // 指定所属函数时，不自动嵌入
-    public BasicBlock(String name, Function function) {
-        super(name, new LabelType());
-        this.function = function;
+        if (IRData.isInsect()) {
+            this.function = IRData.getCurrentFunction();
+            function.addBasicBlock(this);
+        }
     }
 
     public void addInstruction(Instruction instruction) {

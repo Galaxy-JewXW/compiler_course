@@ -24,7 +24,9 @@ public class Function extends User {
     public Function(String name, ValueType returnType) {
         super(name, new LabelType());
         this.returnType = returnType;
-        Module.getInstance().addFunction(this);
+        if (IRData.isInsect()) {
+            Module.getInstance().addFunction(this);
+        }
     }
 
     public Function(String name, ValueType returnType, boolean isBuiltIn) {
