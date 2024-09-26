@@ -21,8 +21,9 @@ public class ConstString extends Value {
 
     @Override
     public String toString() {
-        return getName() + " = constant " + ((PointerType) getValueType()).getTargetType()
-                + " c\"" + content + "\\00\"";
+        return getName() + " = private unnamed_addr constant "
+                + ((PointerType) getValueType()).getTargetType()
+                + " c\"" + content + "\\00\"" + ", align 1";
     }
 
     @Override

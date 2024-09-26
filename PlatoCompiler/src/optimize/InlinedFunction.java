@@ -120,7 +120,7 @@ public class InlinedFunction {
         }
         currentBlock.setNextBlocks(new ArrayList<>());
 
-        Function copiedFunction = FunctionCopy.copyFunction(calledFunction, callerFunction);
+        Function copiedFunction = FunctionCopy.copyFunction(calledFunction);
         replaceFParams(copiedFunction, call);
         linkInlinedFunction(currentBlock, copiedFunction);
         handleReturnInstructions(copiedFunction, nextBlock, returnType, call);

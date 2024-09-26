@@ -4,31 +4,47 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = constant [2 x i8] c"\0A\00"
+@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 @a = dso_local global i32 1000
 
-define dso_local i32 @foo(i32 %0, i32 %1) {
-2:
-	%3 = add i32 %0, %1
-	ret i32 %3
-}
-
-define dso_local void @bar() {
-0:
-	store i32* @a, i32 1200
-	ret void
+define dso_local i32 @frac(i32 %0) {
+1:
+	%2 = icmp eq i32 %0, 1
+	br i1 %2, label %3, label %4
+3:
+	ret i32 1
+4:
+	%5 = sub i32 %0, 1
+	%6 = call i32 @frac(i32 %5)
+	%7 = mul i32 %0, %6
+	ret i32 %7
+8:
+	ret i32 0
 }
 
 define dso_local i32 @main() {
 0:
-	call void @bar()
-	%1 = load i32, i32* @a
-	%2 = call i32 @getint()
-	store i32* @a, i32 %2
-	%3 = load i32, i32* @a
-	%4 = call i32 @foo(i32 %3, i32 %1)
-	call void @putint(i32 %4)
+	%1 = call i32 @frac(i32 10)
+	br label %2
+2:
+	%3 = call i32 @getint()
+	%4 = icmp sgt i32 9, 97
+	br i1 %4, label %5, label %7
+5:
+	%6 = sub i32 0, %3
+	br label %9
+7:
+	%8 = srem i32 %3, 3
+	br label %9
+9:
+	%10 = phi i32 [ %6, %5 ], [ %8, %7 ]
+	br label %11
+11:
+	%12 = phi i8 [ %10, %9 ]
+	%13 = zext i8 %12 to i32
+	call void @putint(i32 %1)
+	call void @putint(i32 %13)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }
