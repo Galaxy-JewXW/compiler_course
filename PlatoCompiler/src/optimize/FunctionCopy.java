@@ -3,9 +3,7 @@ package optimize;
 import middle.IRData;
 import middle.component.*;
 import middle.component.instruction.*;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.instruction.io.*;
 import middle.component.model.Value;
 
 import java.util.HashMap;
@@ -127,8 +125,12 @@ public class FunctionCopy {
         BasicBlock clonedBlock = (BasicBlock) getOrCreate(parentBlock);
         if (originalInstr instanceof GetintInst) {
             return new GetintInst(clonedBlock);
+        } else if (originalInstr instanceof GetcharInst) {
+            return new GetcharInst(clonedBlock);
         } else if (originalInstr instanceof PutintInst putintInst) {
             return new PutintInst(getOrCreate(putintInst.getTarget()), clonedBlock);
+        } else if (originalInstr instanceof PutchInst putchInst) {
+            return new PutchInst(getOrCreate(putchInst.getTarget()), clonedBlock);
         } else if (originalInstr instanceof PutstrInst putstrInst) {
             return new PutstrInst(putstrInst.getConstString(), clonedBlock);
         } else if (originalInstr instanceof AllocInst allocInst) {

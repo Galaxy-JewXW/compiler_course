@@ -5,9 +5,11 @@ import middle.component.model.Value;
 import middle.component.type.ValueType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PhiInst extends Instruction {
     private final ArrayList<BasicBlock> blocks = new ArrayList<>();
+    private final HashSet<BasicBlock> gotBlocks = new HashSet<>();
 
     public PhiInst(ValueType valueType) {
         super(valueType, OperatorType.PHI);
@@ -19,8 +21,11 @@ public class PhiInst extends Instruction {
 
 
     public void addValue(BasicBlock block, Value value) {
-        blocks.add(block);
-        addOperand(value);
+        if (!gotBlocks.contains(block)) {
+            gotBlocks.add(block);
+            blocks.add(block);
+            addOperand(value);
+        }
     }
 
     public ArrayList<BasicBlock> getBlocks() {

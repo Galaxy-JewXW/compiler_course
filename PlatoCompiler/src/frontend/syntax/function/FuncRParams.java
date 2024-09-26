@@ -22,7 +22,7 @@ public class FuncRParams extends SyntaxNode {
     public void print() {
         for (int i = 0; i < exps.size(); i++) {
             if (i > 0) {
-                System.out.print(TokenType.printType(TokenType.COMMA));
+                System.out.println(TokenType.printType(TokenType.COMMA));
             }
             exps.get(i).print();
         }

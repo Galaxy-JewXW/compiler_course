@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="大概实现了函数内联">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="man">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir_phi.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir_phi.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncRParams.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/syntax/function/FuncRParams.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/PhiInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/PhiInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/FunctionCopy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/FunctionCopy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/syntax/function/FuncRParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/syntax/function/FuncRParams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/PhiInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/PhiInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/FunctionCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FunctionCopy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +118,8 @@
       <workItem from="1727315797359" duration="8929000" />
       <workItem from="1727329252902" duration="102000" />
       <workItem from="1727330162827" duration="5253000" />
-      <workItem from="1727335498896" duration="586000" />
+      <workItem from="1727335498896" duration="675000" />
+      <workItem from="1727341038100" duration="724000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -172,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727333667259</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="man">
+      <option name="closed" value="true" />
+      <created>1727336154035</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727336154035</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,12 +193,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="添加常数条件表达式计算" />
-    <MESSAGE value="man" />
     <MESSAGE value="完成取模优化" />
     <MESSAGE value="aaa" />
     <MESSAGE value="初步完成函数内联，还没有调试" />
     <MESSAGE value="大概实现了函数内联" />
-    <option name="LAST_COMMIT_MESSAGE" value="大概实现了函数内联" />
+    <MESSAGE value="man" />
+    <option name="LAST_COMMIT_MESSAGE" value="man" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -467,97 +480,97 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>141</line>
+          <line>143</line>
           <option name="timeStamp" value="442" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>142</line>
+          <line>144</line>
           <option name="timeStamp" value="443" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>143</line>
+          <line>145</line>
           <option name="timeStamp" value="444" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>144</line>
+          <line>146</line>
           <option name="timeStamp" value="445" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>146</line>
+          <line>148</line>
           <option name="timeStamp" value="446" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>147</line>
+          <line>149</line>
           <option name="timeStamp" value="447" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>148</line>
+          <line>150</line>
           <option name="timeStamp" value="448" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>150</line>
+          <line>152</line>
           <option name="timeStamp" value="449" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>151</line>
+          <line>153</line>
           <option name="timeStamp" value="450" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>152</line>
+          <line>154</line>
           <option name="timeStamp" value="451" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>145</line>
+          <line>147</line>
           <option name="timeStamp" value="452" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>149</line>
+          <line>151</line>
           <option name="timeStamp" value="453" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>184</line>
+          <line>186</line>
           <option name="timeStamp" value="454" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>185</line>
+          <line>187</line>
           <option name="timeStamp" value="455" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>186</line>
+          <line>188</line>
           <option name="timeStamp" value="456" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>187</line>
+          <line>189</line>
           <option name="timeStamp" value="457" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>188</line>
+          <line>190</line>
           <option name="timeStamp" value="458" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>189</line>
+          <line>191</line>
           <option name="timeStamp" value="459" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/optimize/FunctionCopy.java</url>
-          <line>140</line>
+          <line>142</line>
           <option name="timeStamp" value="460" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
