@@ -1,5 +1,6 @@
 package middle.component.instruction;
 
+import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -7,6 +8,18 @@ import middle.component.type.PointerType;
 import middle.component.type.ValueType;
 
 public class GepInst extends Instruction {
+    public GepInst(Value pointer, Value index) {
+        super(getType(pointer), OperatorType.GEP);
+        addOperand(pointer);
+        addOperand(index);
+    }
+
+    public GepInst(Value pointer, Value index, BasicBlock block) {
+        super(getType(pointer), OperatorType.GEP, block);
+        addOperand(pointer);
+        addOperand(index);
+    }
+
     public static ValueType getType(Value pointer) {
         PointerType pointerType = (PointerType) pointer.getValueType();
         ValueType targetType = pointerType.getTargetType();
@@ -17,12 +30,6 @@ public class GepInst extends Instruction {
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
-    }
-
-    public GepInst(Value pointer, Value index) {
-        super(getType(pointer), OperatorType.GEP);
-        addOperand(pointer);
-        addOperand(index);
     }
 
     public Value getPointer() {

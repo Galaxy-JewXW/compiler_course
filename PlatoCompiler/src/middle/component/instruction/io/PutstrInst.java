@@ -2,6 +2,7 @@ package middle.component.instruction.io;
 
 import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
+import middle.component.BasicBlock;
 import middle.component.ConstString;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
@@ -16,6 +17,15 @@ public class PutstrInst extends IOInst {
     public PutstrInst(ConstString constString) {
         super("", IntegerType.VOID, OperatorType.IO);
         this.constString = constString;
+    }
+
+    public PutstrInst(ConstString constString, BasicBlock block) {
+        super("", IntegerType.VOID, OperatorType.IO, block);
+        this.constString = constString;
+    }
+
+    public ConstString getConstString() {
+        return constString;
     }
 
     @Override

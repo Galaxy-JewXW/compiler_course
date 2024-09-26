@@ -23,6 +23,16 @@ public class BrInst extends Instruction implements Terminator {
         falseBlock.addPrevBlock(IRData.getCurrentBlock());
     }
 
+    // 指定了指令所属的block
+    // 指定block时，不自动加入block，也不自动更新前后驱关系
+    public BrInst(BasicBlock block, Value condition, BasicBlock trueBlock, BasicBlock falseBlock) {
+        super("", IntegerType.VOID, OperatorType.BR, block);
+        addOperand(condition);
+        addOperand(trueBlock);
+        addOperand(falseBlock);
+        isConditional = true;
+    }
+
     // 无条件跳转
     public BrInst(BasicBlock targetBlock) {
         super("", IntegerType.VOID, OperatorType.BR);

@@ -1,11 +1,19 @@
 package middle.component.instruction;
 
+import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 public class RetInst extends Instruction implements Terminator {
     public RetInst(Value returnValue) {
         super("", IntegerType.VOID, OperatorType.RET);
+        if (returnValue != null) {
+            addOperand(returnValue);
+        }
+    }
+
+    public RetInst(Value returnValue, BasicBlock block) {
+        super("", IntegerType.VOID, OperatorType.RET, block);
         if (returnValue != null) {
             addOperand(returnValue);
         }

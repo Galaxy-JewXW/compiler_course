@@ -2,6 +2,7 @@ package middle.component.instruction.io;
 
 import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
+import middle.component.BasicBlock;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.model.Value;
@@ -10,6 +11,11 @@ import middle.component.type.IntegerType;
 public class PutintInst extends IOInst {
     public PutintInst(Value target) {
         super("", IntegerType.VOID, OperatorType.IO);
+        addOperand(target);
+    }
+
+    public PutintInst(Value target, BasicBlock block) {
+        super("", IntegerType.VOID, OperatorType.IO, block);
         addOperand(target);
     }
 

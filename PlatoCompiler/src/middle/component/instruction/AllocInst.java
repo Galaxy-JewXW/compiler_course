@@ -13,6 +13,11 @@ public class AllocInst extends Instruction {
         this.targetType = targetType;
     }
 
+    public AllocInst(ValueType targetType, BasicBlock block) {
+        super(new PointerType(targetType), OperatorType.ALLOC, block);
+        this.targetType = targetType;
+    }
+
     public ValueType getTargetType() {
         return targetType;
     }

@@ -13,6 +13,11 @@ public class PhiInst extends Instruction {
         super(valueType, OperatorType.PHI);
     }
 
+    public PhiInst(ValueType valueType, BasicBlock block) {
+        super(valueType, OperatorType.PHI, block);
+    }
+
+
     public void addValue(BasicBlock block, Value value) {
         blocks.add(block);
         addOperand(value);
