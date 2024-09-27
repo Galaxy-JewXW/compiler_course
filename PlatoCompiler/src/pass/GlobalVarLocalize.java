@@ -80,6 +80,7 @@ public class GlobalVarLocalize {
                     initValue = varSymbol.getConstValue();
                 }
                 StoreInst storeInst = new StoreInst(allocInst, new ConstInt(gvType, initValue));
+                storeInst.setBasicBlock(entryBlock);
                 entryBlock.getInstructions().add(1, storeInst);
                 gv.replaceByNewValue(allocInst);
                 toRemove.add(gv);

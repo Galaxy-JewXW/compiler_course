@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="try gvn">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="一定要先mem2reg！">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Mem2Reg.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Mem2Reg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GVN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +125,7 @@
       <workItem from="1727416498760" duration="2784000" />
       <workItem from="1727420435180" duration="50000" />
       <workItem from="1727431491520" duration="2530000" />
-      <workItem from="1727434852503" duration="13491000" />
+      <workItem from="1727434852503" duration="14443000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -287,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727448678132</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="一定要先mem2reg！">
+      <option name="closed" value="true" />
+      <created>1727450042646</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1727450042646</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,81 +318,7 @@
     <MESSAGE value="gosh" />
     <MESSAGE value="win" />
     <MESSAGE value="try gvn" />
-    <option name="LAST_COMMIT_MESSAGE" value="try gvn" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/Optimizer.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="229" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="230" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="231" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="232" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="233" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="234" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="235" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="236" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>73</line>
-          <option name="timeStamp" value="237" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="238" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="239" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
-          <line>64</line>
-          <properties class="pass.GVN" method="visitBlock">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="228" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="一定要先mem2reg！" />
+    <option name="LAST_COMMIT_MESSAGE" value="一定要先mem2reg！" />
   </component>
 </project>

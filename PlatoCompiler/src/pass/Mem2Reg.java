@@ -28,18 +28,20 @@ public class Mem2Reg {
     private static ArrayList<BasicBlock> useBlocks;
     private static Stack<Value> defStack;
 
-    public static void run(Module module) {
+    public static void run(Module module, boolean simplify) {
         for (Function function : module.getFunctions()) {
-            optimize(function);
+            optimize(function, simplify);
         }
     }
 
-    private static void optimize(Function function) {
+    private static void optimize(Function function, boolean simplify) {
         currentFunction = function;
         calcControlFlowGraph();
         calcDominatorTree();
         calcDominanceFrontier();
-
+        if (!simplify) {
+            return;
+        }
         for (BasicBlock block : function.getBasicBlocks()) {
             ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
             for (Instruction instruction : instructions) {
