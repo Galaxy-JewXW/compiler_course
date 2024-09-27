@@ -7,6 +7,7 @@ import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.IRBuilder;
 import middle.component.Module;
+import pass.Optimizer;
 import tools.Printer;
 
 import java.nio.file.Files;
@@ -48,7 +49,10 @@ public class Compiler {
         IRBuilder irBuilder = new IRBuilder(compUnit);
         irBuilder.build();
         Printer.printIr(Module.getInstance(), llvmOutput);
-        // TODO: 中间代码优化
+        // 中间代码优化
+        Optimizer optimizer = new Optimizer(Module.getInstance());
+        optimizer.optimize();
+        Printer.printIr(Module.getInstance(), irOutput);
         // TODO: 目标代码生成
         MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance());
         mipsBuilder.build();

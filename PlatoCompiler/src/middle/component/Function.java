@@ -65,14 +65,6 @@ public class Function extends User {
         }
     }
 
-    public boolean hasSideEffect() {
-        return hasSideEffect;
-    }
-
-    public void setHasSideEffect(boolean hasSideEffect) {
-        this.hasSideEffect = hasSideEffect;
-    }
-
     public HashMap<Value, Register> getVar2reg() {
         return var2reg;
     }

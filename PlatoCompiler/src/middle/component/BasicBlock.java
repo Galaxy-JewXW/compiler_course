@@ -2,14 +2,14 @@ package middle.component;
 
 import middle.IRData;
 import middle.component.instruction.Instruction;
-import middle.component.model.Value;
+import middle.component.model.User;
 import middle.component.type.LabelType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-public class BasicBlock extends Value {
+public class BasicBlock extends User {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
     // 自身直接支配的基本块，区分 支配 和 直接支配
     // 或支配树的子节点
