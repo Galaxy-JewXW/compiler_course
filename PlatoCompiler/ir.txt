@@ -4,23 +4,25 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-
+@.s.0 = private unnamed_addr constant [10 x i8] c"21373457\0A\00", align 1
 
 
 
 define dso_local i32 @main() {
 0:
-	%1 = alloca i32
-	store i32 9, i32* %1
-	%2 = alloca i32
-	%3 = load i32, i32* %1
-	%4 = load i32, i32* %1
-	%5 = mul i32 %3, %4
-	%6 = load i32, i32* %1
-	%7 = add i32 %5, %6
-	%8 = load i32, i32* %1
-	%9 = mul i32 %8, 2
-	%10 = sub i32 %7, %9
-	store i32 %10, i32* %2
+	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.0, i64 0, i64 0))
+	br label %1
+1:
+	%2 = phi i32 [ 0, %0 ],[ %8, %7 ]
+	%3 = phi i32 [ 0, %0 ],[ %9, %7 ]
+	%4 = mul i32 %3, %3
+	%5 = mul i32 5, 5
+	%6 = icmp slt i32 %4, %5
+	br i1 %6, label %7, label %10
+7:
+	%8 = call i32 @getint()
+	%9 = add i32 %3, 1
+	br label %1
+10:
 	ret i32 0
 }

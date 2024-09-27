@@ -24,7 +24,6 @@ public class User extends Value {
         for (Value value : operands) {
             value.deleteUser(this);
         }
-        this.operands.clear();
     }
 
     public void modifyOperand(Value value, Value newValue) {

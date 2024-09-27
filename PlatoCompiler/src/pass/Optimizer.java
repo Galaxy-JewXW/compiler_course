@@ -15,5 +15,6 @@ public class Optimizer {
         SurplusBlock.build(module);
         GlobalVarLocalize.build(module);
         ConstToValue.run(module);
+        Mem2Reg.run(module);
     }
 }

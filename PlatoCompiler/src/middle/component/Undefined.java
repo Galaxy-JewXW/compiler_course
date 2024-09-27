@@ -1,11 +1,10 @@
 package middle.component;
 
-import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
-public class Undefined extends Value {
+public class Undefined extends ConstInt {
     public Undefined() {
-        super("undefined", IntegerType.VOID);
+        super(IntegerType.i32, 0);
     }
 
     @Override

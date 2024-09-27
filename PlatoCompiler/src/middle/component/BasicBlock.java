@@ -6,27 +6,27 @@ import middle.component.model.User;
 import middle.component.type.LabelType;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class BasicBlock extends User {
     private final ArrayList<Instruction> instructions = new ArrayList<>();
+    // 支配边界
+    private ArrayList<BasicBlock> dominanceFrontier = new ArrayList<>();
     // 自身直接支配的基本块，区分 支配 和 直接支配
     // 或支配树的子节点
-    private final HashSet<BasicBlock> immediateDominatedBlocks = new HashSet<>();
-    // 支配边界
-    private final HashSet<BasicBlock> dominanceFrontier = new HashSet<>();
+    private ArrayList<BasicBlock> immediateDominateBlocks = new ArrayList<>();
     // 前驱基本块的集合
     private ArrayList<BasicBlock> prevBlocks = new ArrayList<>();
     // 后继基本块的集合
     private ArrayList<BasicBlock> nextBlocks = new ArrayList<>();
     private Function function;
     // 可支配的基本块的集合
-    private HashSet<BasicBlock> dominatedBlocks = null;
+    private ArrayList<BasicBlock> dominateBlocks = null;
     // 被直接支配的基本块，或支配树的根节点
     private BasicBlock immediateDominator = null;
     // 标记是否在优化过程中被删除
     private boolean isDeleted = false;
+    private int imdomDepth;
 
     public BasicBlock(String name) {
         super(name, new LabelType());
@@ -75,6 +75,10 @@ public class BasicBlock extends User {
         return prevBlocks;
     }
 
+    public void setPrevBlocks(ArrayList<BasicBlock> prevBlocks) {
+        this.prevBlocks = new ArrayList<>(prevBlocks);
+    }
+
     public ArrayList<BasicBlock> getNextBlocks() {
         return nextBlocks;
     }
@@ -83,34 +87,26 @@ public class BasicBlock extends User {
         this.nextBlocks = new ArrayList<>(nextBlocks);
     }
 
-    public void addPrevBlock(BasicBlock prevBlock) {
-        prevBlocks.add(prevBlock);
+    public ArrayList<BasicBlock> getDominateBlocks() {
+        return dominateBlocks;
     }
 
-    public void addNextBlock(BasicBlock nextBlock) {
-        nextBlocks.add(nextBlock);
-    }
-
-    public HashSet<BasicBlock> getDominatedBlocks() {
-        return dominatedBlocks;
-    }
-
-    public void setDominatedBlocks(HashSet<BasicBlock> dominatedBlocks) {
-        this.dominatedBlocks = dominatedBlocks;
+    public void setDominateBlocks(ArrayList<BasicBlock> dominateBlocks) {
+        this.dominateBlocks = dominateBlocks;
     }
 
     public boolean dominant(BasicBlock block) {
-        if (dominatedBlocks == null) {
-            throw new IllegalStateException("dominatedBlocks not set");
+        if (dominateBlocks == null) {
+            throw new IllegalStateException("dominateBlocks not set");
         }
-        return dominatedBlocks.contains(block);
+        return dominateBlocks.contains(block);
     }
 
     public boolean strictDominant(BasicBlock block) {
-        if (dominatedBlocks == null) {
-            throw new IllegalStateException("dominatedBlocks not set");
+        if (dominateBlocks == null) {
+            throw new IllegalStateException("dominateBlocks not set");
         }
-        return dominatedBlocks.contains(block) && !block.equals(this);
+        return dominateBlocks.contains(block) && !block.equals(this);
     }
 
     public BasicBlock getImmediateDominator() {
@@ -119,19 +115,26 @@ public class BasicBlock extends User {
 
     public void setImmediateDominator(BasicBlock immediateDominator) {
         this.immediateDominator = immediateDominator;
-        immediateDominator.immediateDominatedBlocks.add(this);
     }
 
-    public HashSet<BasicBlock> getImmediateDominatedBlocks() {
-        return immediateDominatedBlocks;
+    public ArrayList<BasicBlock> getImmediateDominateBlocks() {
+        return immediateDominateBlocks;
+    }
+
+    public void setImmediateDominateBlocks(ArrayList<BasicBlock> immediateDominateBlocks) {
+        this.immediateDominateBlocks = immediateDominateBlocks;
     }
 
     public void addDominantFrontier(BasicBlock frontier) {
         dominanceFrontier.add(frontier);
     }
 
-    public HashSet<BasicBlock> getDominanceFrontier() {
+    public ArrayList<BasicBlock> getDominanceFrontier() {
         return dominanceFrontier;
+    }
+
+    public void setDominanceFrontier(ArrayList<BasicBlock> dominanceFrontier) {
+        this.dominanceFrontier = new ArrayList<>(dominanceFrontier);
     }
 
     public boolean isDeleted() {
@@ -140,6 +143,14 @@ public class BasicBlock extends User {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public int getImdomDepth() {
+        return imdomDepth;
+    }
+
+    public void setImdomDepth(int imdomDepth) {
+        this.imdomDepth = imdomDepth;
     }
 
     @Override

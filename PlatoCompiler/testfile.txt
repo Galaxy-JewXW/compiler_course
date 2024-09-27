@@ -1,8 +1,8 @@
-const int a[9] = {1, 2, 3, 4, 5};
-
-
-int main() {
-const int b = 9;
-int a = b * b + b - b * 2;
-return 0;
+int main(){
+    printf("21373457\n");
+    int i=0,j=5,k;
+    for(i=0;i*i<j*j;i=i+1){
+        k=getint();
+    }
+    return 0;
 }
