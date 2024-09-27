@@ -7,18 +7,17 @@ import frontend.symbol.VarSymbol;
 public class TableManager {
     // 单例模式
     private static final TableManager INSTANCE = new TableManager();
-
-    public static TableManager getInstance() {
-        return INSTANCE;
-    }
-
-    private TableManager() {
-    }
-
     // 初始化为CompUnit对应的最高级的符号表
     private SymbolTable currentTable = new SymbolTable(null, null);
     // 当前处于的循环层数
     private int loopLevel = 0;
+
+    private TableManager() {
+    }
+
+    public static TableManager getInstance() {
+        return INSTANCE;
+    }
 
     public void createTable(SymbolType blockType) {
         /*

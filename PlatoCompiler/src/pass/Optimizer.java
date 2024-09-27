@@ -14,5 +14,6 @@ public class Optimizer {
     public void optimize() {
         SurplusBlock.build(module);
         GlobalVarLocalize.build(module);
+        ConstToValue.run(module);
     }
 }

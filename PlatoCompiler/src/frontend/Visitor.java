@@ -475,6 +475,9 @@ public class Visitor {
 
     // printf中格式字符与表达式个数不匹配
     private void visitPrintfStmt(PrintfStmt printfStmt) {
+        for (Exp exp : printfStmt.getExps()) {
+            visitExp(exp);
+        }
         int res = 0;
         Pattern pattern = Pattern.compile("%[cd]");  // 同时匹配%d和%c
         Matcher matcher = pattern.matcher(printfStmt.getStringConst().getContent());

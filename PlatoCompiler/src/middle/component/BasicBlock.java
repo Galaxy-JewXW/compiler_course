@@ -28,7 +28,6 @@ public class BasicBlock extends User {
     // 标记是否在优化过程中被删除
     private boolean isDeleted = false;
 
-
     public BasicBlock(String name) {
         super(name, new LabelType());
         if (IRData.isInsect()) {

@@ -92,6 +92,10 @@ public class GlobalVarLocalize {
         if (calledMap.containsKey(func)) {
             return false;
         }
+        if (globalVar.isConstant()) {
+            // 全局常量的处理在ConstToValue中
+            return false;
+        }
         ValueType gvType = ((PointerType) globalVar.getValueType()).getTargetType();
         return gvType.equals(IntegerType.i8) || gvType.equals(IntegerType.i32);
     }

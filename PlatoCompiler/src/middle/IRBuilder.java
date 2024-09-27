@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 public class IRBuilder {
     private final SymbolTable rootTable = TableManager.getInstance()
             .getCurrentTable();
-    private SymbolTable currentTable = rootTable;
     private final CompUnit compUnit;
+    private SymbolTable currentTable = rootTable;
     private boolean isGlobal = false;
 
     public IRBuilder(CompUnit compUnit) {

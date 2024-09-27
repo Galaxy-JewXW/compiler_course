@@ -26,9 +26,9 @@ public class StoreInst extends Instruction {
     @Override
     public String toString() {
         return "store "
-                + getPointer().getValueType() + " "
-                + getPointer().getName() + ", " +
-                getStoredValue().getValueType() + " "
-                + getStoredValue().getName();
+                + getStoredValue().getValueType() + " "
+                + getStoredValue().getName() + ", " +
+                getPointer().getValueType() + " "
+                + getPointer().getName();
     }
 }
