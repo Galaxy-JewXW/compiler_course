@@ -17,14 +17,6 @@ import java.util.ArrayList;
 
 public class ConstToValue {
     public static void run(Module module) {
-        replaceGlobalConst(module);
-//        final SymbolTable root = TableManager.getInstance().getCurrentTable();
-//        for (SymbolTable symbolTable : root.getChildren()) {
-//            replaceLocalConst(symbolTable);
-//        }
-    }
-
-    private static void replaceGlobalConst(Module module) {
         ArrayList<GlobalVar> toRemove = new ArrayList<>();
         // 处理一维常量
         for (GlobalVar gv : module.getGlobalVars()) {
@@ -74,47 +66,4 @@ public class ConstToValue {
         }
         module.getGlobalVars().removeAll(toRemove);
     }
-
-//    private static void replaceLocalConst(SymbolTable symbolTable) {
-//        HashSet<Symbol> varSymbols = new HashSet<>(symbolTable.getAllSymbols());
-//        varSymbols.removeIf(symbol -> !(symbol instanceof VarSymbol));
-//        for (Symbol symbol : varSymbols) {
-//            VarSymbol varSymbol = (VarSymbol) symbol;
-//            if (!varSymbol.isConstant()) {
-//                continue;
-//            }
-//            // value 应该是一个alloc指令
-//            Value value = varSymbol.getLlvmValue();
-//            if (!(value instanceof AllocInst)) {
-//                throw new RuntimeException("Shouldn't reach here");
-//            }
-//            ValueType valueType = ((PointerType) value.getValueType()).getTargetType();
-//
-//            if (valueType instanceof IntegerType) {
-//                ConstInt constInt = new ConstInt(valueType, varSymbol.getConstValue());
-//                for (Use use : value.getUseList()) {
-//                    User user = use.getUser();
-//                    if (user instanceof LoadInst loadInst) {
-//                        loadInst.replaceByNewValue(constInt);
-//                    }
-//                }
-//            } else if (valueType instanceof ArrayType arrayType) {
-//                ValueType eleType = arrayType.getElementType();
-//                for (Use use : value.getUseList()) {
-//                    User user = use.getUser();
-//                    if (user instanceof GepInst gepInst) {
-//                        Value index = gepInst.getIndex();
-//                        if (index instanceof ConstInt constInt) {
-//                            int indexInt = constInt.getIntValue();
-//
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//        for (SymbolTable symbolTable1 : symbolTable.getChildren()) {
-//            replaceLocalConst(symbolTable1);
-//        }
-//    }
 }
