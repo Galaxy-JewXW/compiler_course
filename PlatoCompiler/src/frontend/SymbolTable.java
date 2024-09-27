@@ -4,6 +4,7 @@ import frontend.symbol.Symbol;
 import frontend.symbol.SymbolType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class SymbolTable {
@@ -21,6 +22,10 @@ public class SymbolTable {
 
     public SymbolTable getChild() {
         return children.get(childrenPointer++);
+    }
+
+    public ArrayList<SymbolTable> getChildren() {
+        return children;
     }
 
     public SymbolTable getParent() {
@@ -69,6 +74,10 @@ public class SymbolTable {
 
     public void addSymbol(Symbol symbol) {
         symbols.put(symbol.getName(), symbol);
+    }
+
+    public HashSet<Symbol> getAllSymbols() {
+        return new HashSet<>(symbols.values());
     }
 
     public void print() {

@@ -3,51 +3,13 @@ package frontend;
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
-import frontend.syntax.BType;
-import frontend.syntax.Block;
-import frontend.syntax.BlockItem;
 import frontend.syntax.Character;
-import frontend.syntax.CompUnit;
-import frontend.syntax.Decl;
-import frontend.syntax.LVal;
 import frontend.syntax.Number;
-import frontend.syntax.expression.AddExp;
-import frontend.syntax.expression.Cond;
-import frontend.syntax.expression.ConstExp;
-import frontend.syntax.expression.EqExp;
-import frontend.syntax.expression.Exp;
-import frontend.syntax.expression.LAndExp;
-import frontend.syntax.expression.LOrExp;
-import frontend.syntax.expression.MulExp;
-import frontend.syntax.expression.PrimaryExp;
-import frontend.syntax.expression.RelExp;
-import frontend.syntax.expression.UnaryExp;
-import frontend.syntax.expression.UnaryOp;
-import frontend.syntax.function.FuncDef;
-import frontend.syntax.function.FuncFParam;
-import frontend.syntax.function.FuncFParams;
-import frontend.syntax.function.FuncRParams;
-import frontend.syntax.function.FuncType;
-import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.BlockStmt;
-import frontend.syntax.statement.BreakStmt;
-import frontend.syntax.statement.ContinueStmt;
-import frontend.syntax.statement.ExpStmt;
-import frontend.syntax.statement.ForStmt;
-import frontend.syntax.statement.ForStruct;
-import frontend.syntax.statement.GetcharStmt;
-import frontend.syntax.statement.GetintStmt;
-import frontend.syntax.statement.IfStmt;
-import frontend.syntax.statement.LValExpStmt;
-import frontend.syntax.statement.PrintfStmt;
-import frontend.syntax.statement.ReturnStmt;
-import frontend.syntax.statement.Stmt;
-import frontend.syntax.variable.ConstDecl;
-import frontend.syntax.variable.ConstDef;
-import frontend.syntax.variable.ConstInitVal;
-import frontend.syntax.variable.InitVal;
-import frontend.syntax.variable.VarDecl;
-import frontend.syntax.variable.VarDef;
+import frontend.syntax.*;
+import frontend.syntax.expression.*;
+import frontend.syntax.function.*;
+import frontend.syntax.statement.*;
+import frontend.syntax.variable.*;
 import frontend.token.Token;
 import frontend.token.TokenType;
 
@@ -60,13 +22,12 @@ import java.util.Set;
  * 同时进行简单的异常处理：判断右花括号，右圆括号，分号是否缺失
  */
 public class Parser {
-    private final ArrayList<Token> tokens;
-    private int pos = 0;
-
     private static final Set<TokenType> EXP_START_TOKENS = EnumSet.of(
             TokenType.PLUS, TokenType.MINU, TokenType.NOT, TokenType.IDENFR,
             TokenType.LPARENT, TokenType.INTCON, TokenType.CHRCON
     );
+    private final ArrayList<Token> tokens;
+    private int pos = 0;
 
     public Parser(ArrayList<Token> tokens) {
         this.tokens = tokens;
@@ -111,7 +72,7 @@ public class Parser {
             case SEMICN -> errorHandler.addError(new Error(ErrorType.SEMICNMissing, line));
             case RPARENT -> errorHandler.addError(new Error(ErrorType.RPARENTMissing, line));
             case RBRACK -> errorHandler.addError(new Error(ErrorType.RBRACKMissing, line));
-            default -> throw new RuntimeException();
+            default -> throw new RuntimeException("What the f: " + type);
         }
     }
 
@@ -416,10 +377,10 @@ public class Parser {
         Token stringConst = curToken();
         match(TokenType.STRCON);
         ArrayList<Exp> exps = new ArrayList<>();
-        while (!match(TokenType.RPARENT)) {
-            panic(TokenType.COMMA);
+        while (match(TokenType.COMMA)) {
             exps.add(parseExp());
         }
+        panic(TokenType.RPARENT);
         panic(TokenType.SEMICN);
         return new PrintfStmt(token, stringConst, exps);
     }
