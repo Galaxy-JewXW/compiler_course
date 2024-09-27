@@ -95,20 +95,6 @@ public class BasicBlock extends User {
         this.dominateBlocks = dominateBlocks;
     }
 
-    public boolean dominant(BasicBlock block) {
-        if (dominateBlocks == null) {
-            throw new IllegalStateException("dominateBlocks not set");
-        }
-        return dominateBlocks.contains(block);
-    }
-
-    public boolean strictDominant(BasicBlock block) {
-        if (dominateBlocks == null) {
-            throw new IllegalStateException("dominateBlocks not set");
-        }
-        return dominateBlocks.contains(block) && !block.equals(this);
-    }
-
     public BasicBlock getImmediateDominator() {
         return immediateDominator;
     }
@@ -123,10 +109,6 @@ public class BasicBlock extends User {
 
     public void setImmediateDominateBlocks(ArrayList<BasicBlock> immediateDominateBlocks) {
         this.immediateDominateBlocks = immediateDominateBlocks;
-    }
-
-    public void addDominantFrontier(BasicBlock frontier) {
-        dominanceFrontier.add(frontier);
     }
 
     public ArrayList<BasicBlock> getDominanceFrontier() {

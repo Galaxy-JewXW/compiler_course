@@ -30,15 +30,15 @@ public class Mem2Reg {
 
     public static void run(Module module) {
         for (Function function : module.getFunctions()) {
-            optimizeFunction(function);
+            optimize(function);
         }
     }
 
-    private static void optimizeFunction(Function function) {
+    private static void optimize(Function function) {
         currentFunction = function;
-        buildControlFlowGraph();
-        buildDominatorTree();
-        buildDominanceFrontier();
+        calcControlFlowGraph();
+        calcDominatorTree();
+        calcDominanceFrontier();
 
         for (BasicBlock block : function.getBasicBlocks()) {
             ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
@@ -47,29 +47,15 @@ public class Mem2Reg {
                         && (allocInst.getTargetType().equals(IntegerType.i32)
                         || allocInst.getTargetType().equals(IntegerType.i8))) {
                     currentAlloc = allocInst;
-                    performMem2Reg();
+                    initMem2Reg();
+                    insertPhi();
+                    renameVariables(currentFunction.getEntryBlock());
                 }
             }
         }
     }
 
-    private static void buildControlFlowGraph() {
-        initializeCFG();
-        for (BasicBlock block : currentFunction.getBasicBlocks()) {
-            Instruction lastInstruction = block.getLastInstruction();
-            if (lastInstruction instanceof BrInst brInst) {
-                if (brInst.isConditional()) {
-                    addEdge(block, brInst.getTrueBlock());
-                    addEdge(block, brInst.getFalseBlock());
-                } else {
-                    addEdge(block, brInst.getTrueBlock());
-                }
-            }
-        }
-        updateFunctionAndBlockCFGInfo();
-    }
-
-    private static void initializeCFG() {
+    private static void calcControlFlowGraph() {
         childBlocks = new HashMap<>();
         parentBlocks = new HashMap<>();
         dominatedBy = new HashMap<>();
@@ -83,6 +69,21 @@ public class Mem2Reg {
             dominatedBy.put(block, new ArrayList<>());
             immediatelyDominates.put(block, new ArrayList<>());
         }
+        for (BasicBlock block : currentFunction.getBasicBlocks()) {
+            Instruction lastInstruction = block.getLastInstruction();
+            if (lastInstruction instanceof BrInst brInst) {
+                if (brInst.isConditional()) {
+                    addEdge(block, brInst.getTrueBlock());
+                    addEdge(block, brInst.getFalseBlock());
+                } else {
+                    addEdge(block, brInst.getTrueBlock());
+                }
+            }
+        }
+        for (BasicBlock block : currentFunction.getBasicBlocks()) {
+            block.setNextBlocks(childBlocks.get(block));
+            block.setPrevBlocks(parentBlocks.get(block));
+        }
     }
 
     private static void addEdge(BasicBlock from, BasicBlock to) {
@@ -90,14 +91,7 @@ public class Mem2Reg {
         parentBlocks.get(to).add(from);
     }
 
-    private static void updateFunctionAndBlockCFGInfo() {
-        for (BasicBlock block : currentFunction.getBasicBlocks()) {
-            block.setNextBlocks(childBlocks.get(block));
-            block.setPrevBlocks(parentBlocks.get(block));
-        }
-    }
-
-    private static void buildDominatorTree() {
+    private static void calcDominatorTree() {
         BasicBlock entry = currentFunction.getBasicBlocks().get(0);
         for (BasicBlock dominator : currentFunction.getBasicBlocks()) {
             Set<BasicBlock> reachableBlocks = new HashSet<>();
@@ -110,8 +104,20 @@ public class Mem2Reg {
             }
             dominator.setDominateBlocks(dominates.get(dominator));
         }
-        findImmediateDominators();
-        computeDominatorTreeDepth(entry, 0);
+        for (BasicBlock dominated : currentFunction.getBasicBlocks()) {
+            for (BasicBlock dominator : dominatedBy.get(dominated)) {
+                if (isImmediateDominator(dominator, dominated)) {
+                    dominated.setImmediateDominator(dominator);
+                    immediateDominator.put(dominated, dominator);
+                    immediatelyDominates.get(dominator).add(dominated);
+                    break;
+                }
+            }
+        }
+        for (BasicBlock block : currentFunction.getBasicBlocks()) {
+            block.setImmediateDominateBlocks(immediatelyDominates.get(block));
+        }
+        calcDominatorTreeDepth(entry, 0);
     }
 
     private static void dfs(BasicBlock current, BasicBlock dominator, Set<BasicBlock> reachableBlocks) {
@@ -126,39 +132,24 @@ public class Mem2Reg {
         }
     }
 
-    private static void findImmediateDominators() {
-        for (BasicBlock dominated : currentFunction.getBasicBlocks()) {
-            for (BasicBlock dominator : dominatedBy.get(dominated)) {
-                if (isImmediateDominator(dominator, dominated)) {
-                    dominated.setImmediateDominator(dominator);
-                    immediateDominator.put(dominated, dominator);
-                    immediatelyDominates.get(dominator).add(dominated);
-                    break;
-                }
-            }
-        }
-        for (BasicBlock block : currentFunction.getBasicBlocks()) {
-            block.setImmediateDominateBlocks(immediatelyDominates.get(block));
-        }
-    }
-
     private static boolean isImmediateDominator(BasicBlock dominator, BasicBlock dominated) {
         for (BasicBlock otherDominator : dominatedBy.get(dominated)) {
-            if (otherDominator != dominator && dominates.get(dominator).contains(otherDominator)) {
+            if (otherDominator != dominator
+                    && dominates.get(dominator).contains(otherDominator)) {
                 return false;
             }
         }
         return true;
     }
 
-    private static void computeDominatorTreeDepth(BasicBlock block, int depth) {
+    private static void calcDominatorTreeDepth(BasicBlock block, int depth) {
         block.setImdomDepth(depth);
         for (BasicBlock dominated : block.getImmediateDominateBlocks()) {
-            computeDominatorTreeDepth(dominated, depth + 1);
+            calcDominatorTreeDepth(dominated, depth + 1);
         }
     }
 
-    private static void buildDominanceFrontier() {
+    private static void calcDominanceFrontier() {
         for (BasicBlock dominator : currentFunction.getBasicBlocks()) {
             ArrayList<BasicBlock> frontier = new ArrayList<>();
             for (BasicBlock dominated : dominator.getDominateBlocks()) {
@@ -179,13 +170,7 @@ public class Mem2Reg {
         }
     }
 
-    private static void performMem2Reg() {
-        initializeMem2RegData();
-        insertPhiNodes();
-        renameVariables(currentFunction.getBasicBlocks().get(0));
-    }
-
-    private static void initializeMem2RegData() {
+    private static void initMem2Reg() {
         useBlocks = new ArrayList<>();
         useInstructions = new ArrayList<>();
         defBlocks = new ArrayList<>();
@@ -210,29 +195,25 @@ public class Mem2Reg {
         }
     }
 
-    private static void insertPhiNodes() {
-        Set<BasicBlock> processed = new HashSet<>();
-        ArrayList<BasicBlock> workArrayList = new ArrayList<>(defBlocks);
-        while (!workArrayList.isEmpty()) {
-            BasicBlock block = workArrayList.remove(0);
-            for (BasicBlock frontier : block.getDominanceFrontier()) {
-                if (!processed.contains(frontier)) {
-                    insertPhiAtBlockBegin(frontier);
-                    processed.add(frontier);
-                    if (!defBlocks.contains(frontier)) {
-                        workArrayList.add(frontier);
+    private static void insertPhi() {
+        HashSet<BasicBlock> F = new HashSet<>();
+        ArrayList<BasicBlock> W = new ArrayList<>(defBlocks);
+        while (!W.isEmpty()) {
+            BasicBlock X = W.remove(0);
+            for (BasicBlock Y : X.getDominanceFrontier()) {
+                if (!F.contains(Y)) {
+                    PhiInst phiInst = new PhiInst(currentAlloc.getTargetType(),
+                            Y, new ArrayList<>(Y.getPrevBlocks()));
+                    Y.getInstructions().add(0, phiInst);
+                    useInstructions.add(phiInst);
+                    defInstructions.add(phiInst);
+                    F.add(Y);
+                    if (!defBlocks.contains(Y)) {
+                        W.add(Y);
                     }
                 }
             }
         }
-    }
-
-    private static void insertPhiAtBlockBegin(BasicBlock block) {
-        PhiInst phiInst = new PhiInst(currentAlloc.getTargetType(),
-                block, new ArrayList<>(block.getPrevBlocks()));
-        block.getInstructions().add(0, phiInst);
-        useInstructions.add(phiInst);
-        defInstructions.add(phiInst);
     }
 
     private static void renameVariables(BasicBlock block) {
@@ -259,7 +240,13 @@ public class Mem2Reg {
                 defStack.push(instruction);
             }
         }
-        updatePhiNodesInChildren(block);
+        for (BasicBlock child : block.getNextBlocks()) {
+            Instruction firstInstruction = child.getFirstInstruction();
+            if (firstInstruction instanceof PhiInst phiInst && useInstructions.contains(firstInstruction)) {
+                Value value = defStack.empty() ? new Undefined() : defStack.peek();
+                phiInst.addValue(block, value);
+            }
+        }
         for (BasicBlock dominated : block.getImmediateDominateBlocks()) {
             renameVariables(dominated);
         }
@@ -268,13 +255,4 @@ public class Mem2Reg {
         }
     }
 
-    private static void updatePhiNodesInChildren(BasicBlock block) {
-        for (BasicBlock child : block.getNextBlocks()) {
-            Instruction firstInstruction = child.getFirstInstruction();
-            if (firstInstruction instanceof PhiInst phiInst && useInstructions.contains(firstInstruction)) {
-                Value value = defStack.empty() ? new Undefined() : defStack.peek();
-                phiInst.addValue(block, value);
-            }
-        }
-    }
 }
