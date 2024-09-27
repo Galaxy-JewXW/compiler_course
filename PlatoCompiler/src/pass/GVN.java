@@ -249,6 +249,14 @@ public class GVN {
                 if (isOne(value2)) {
                     yield value1;
                 }
+                if (isNegOne(value1)) {
+                    yield new BinaryInst(OperatorType.SUB,
+                            new ConstInt(IntegerType.i32, 0), value2);
+                }
+                if (isNegOne(value2)) {
+                    yield new BinaryInst(OperatorType.SUB,
+                            new ConstInt(IntegerType.i32, 0), value1);
+                }
                 yield null; // 如果两个值都不为零或一，则不进行优化
             }
             case SDIV -> {
@@ -369,6 +377,10 @@ public class GVN {
 
     private static boolean isOne(Value value) {
         return (value instanceof ConstInt constInt && constInt.getIntValue() == 1);
+    }
+
+    private static boolean isNegOne(Value value) {
+        return (value instanceof ConstInt constInt && constInt.getIntValue() == -1);
     }
 
     private static boolean sameValue(Value a, Value b) {
