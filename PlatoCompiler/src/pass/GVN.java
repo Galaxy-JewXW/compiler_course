@@ -18,10 +18,7 @@ public class GVN {
     private static HashSet<BasicBlock> deletableBlock;
 
     public static void run(Module module) {
-        for (int i = 0; i < 10; i++) {
-            optimize(module);
-            SurplusBlock.build(module);
-        }
+        optimize(module);
     }
 
     private static void optimize(Module module) {
