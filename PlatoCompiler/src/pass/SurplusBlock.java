@@ -1,4 +1,4 @@
-package pass.analyze;
+package pass;
 
 import middle.component.BasicBlock;
 import middle.component.Function;
@@ -12,7 +12,7 @@ import java.util.HashSet;
 
 // 删除多余的基本块
 public class SurplusBlock {
-    private static HashSet<BasicBlock> reachedBlocks;
+    private static HashSet<BasicBlock> visited;
 
     public static void build(Module module) {
         for (Function func : module.getFunctions()) {
@@ -22,10 +22,10 @@ public class SurplusBlock {
 
     private static void simplifyFunction(Function func) {
         func.getBasicBlocks().forEach(SurplusBlock::deleteDeadInstr);
-        reachedBlocks = new HashSet<>();
-        findReachable(func.getBasicBlocks().get(0));
+        visited = new HashSet<>();
+        dfs(func.getEntryBlock());
         func.getBasicBlocks().removeIf(block -> {
-            if (!reachedBlocks.contains(block)) {
+            if (!visited.contains(block)) {
                 block.getInstructions().forEach(Instruction::deleteUse);
                 block.deleteUse();
                 block.setDeleted(true);
@@ -52,17 +52,17 @@ public class SurplusBlock {
         return instructions.size() - 1;
     }
 
-    public static void findReachable(BasicBlock block) {
-        if (!reachedBlocks.add(block)) {
+    public static void dfs(BasicBlock block) {
+        if (!visited.add(block)) {
             return;
         }
         Instruction lastInstruction = block.getLastInstruction();
         if (lastInstruction instanceof BrInst brInst) {
             if (brInst.isConditional()) {
-                findReachable(brInst.getTrueBlock());
-                findReachable(brInst.getFalseBlock());
+                dfs(brInst.getTrueBlock());
+                dfs(brInst.getFalseBlock());
             } else {
-                findReachable(brInst.getTrueBlock());
+                dfs(brInst.getTrueBlock());
             }
         }
     }

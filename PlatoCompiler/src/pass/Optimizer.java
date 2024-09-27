@@ -2,7 +2,6 @@ package pass;
 
 import middle.IRData;
 import middle.component.Module;
-import pass.analyze.SurplusBlock;
 
 public class Optimizer {
     private final Module module;
@@ -14,5 +13,6 @@ public class Optimizer {
 
     public void optimize() {
         SurplusBlock.build(module);
+        GlobalVarLocalize.build(module);
     }
 }

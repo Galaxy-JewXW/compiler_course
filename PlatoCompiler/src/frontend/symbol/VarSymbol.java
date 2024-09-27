@@ -3,14 +3,12 @@ package frontend.symbol;
 import middle.component.InitialValue;
 import middle.component.model.Value;
 
-import java.util.ArrayList;
-
 public class VarSymbol extends Symbol {
     private final boolean isConstant;
     private final int dimension;
     // 为数组时所定义的长度：a[6] -> length = 6
-    private int length;
-    private InitialValue initialValue;
+    private final int length;
+    private final InitialValue initialValue;
     private Value llvmValue = null;
 
     public VarSymbol(String name, SymbolType symbolType, boolean isConstant,

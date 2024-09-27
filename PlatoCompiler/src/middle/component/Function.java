@@ -15,7 +15,6 @@ public class Function extends User {
     private final ValueType returnType;
     private final ArrayList<FuncParam> funcParams = new ArrayList<>();
     private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
-    private boolean hasSideEffect = false;
     private boolean isBuiltIn = false;
 
     // 寄存器分配
@@ -53,6 +52,10 @@ public class Function extends User {
 
     public ArrayList<BasicBlock> getBasicBlocks() {
         return basicBlocks;
+    }
+
+    public BasicBlock getEntryBlock() {
+        return basicBlocks.get(0);
     }
 
     public void updateId() {

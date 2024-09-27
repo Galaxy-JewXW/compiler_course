@@ -33,10 +33,15 @@ public enum Register {
     FP("$fp"),
     RA("$ra");
 
+    private static final int poolSize = 18;
     private final String name;
 
     Register(String name) {
         this.name = name;
+    }
+
+    public static int getPoolSize() {
+        return poolSize;
     }
 
     public static Register indexToReg(int index) {
