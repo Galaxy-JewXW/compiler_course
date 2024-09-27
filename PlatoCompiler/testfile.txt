@@ -1,8 +1,11 @@
-int main(){
-    printf("21373457\n");
-    int i=0,j=5,k;
-    for(i=0;i*i<j*j;i=i+1){
-        k=getint();
-    }
+// 源程序
+const int N = 10;
+int a[10] = {0,1,2,3,4,5,6,7,8,9};
+int main()
+{
+    int i = 2,j = 5;
+    const int a1 = 1, a2 = 2;
+    i = (-(i * j) + 0 + a[1] * 1 - 1/2) * 5;
+
     return 0;
 }

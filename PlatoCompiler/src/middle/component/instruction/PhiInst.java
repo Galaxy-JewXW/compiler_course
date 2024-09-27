@@ -25,6 +25,10 @@ public class PhiInst extends Instruction {
         value.addUse(this);
     }
 
+    public ArrayList<BasicBlock> getBlocks() {
+        return blocks;
+    }
+
     @Override
     public void modifyOperand(Value value, Value newValue) {
         if (value instanceof BasicBlock) {
@@ -55,7 +59,7 @@ public class PhiInst extends Instruction {
                 .append(" ");
 
         for (int i = 0; i < blocks.size(); i++) {
-            sb.append(i == 0 ? "[ " : ",[ ")
+            sb.append(i == 0 ? "[ " : ", [ ")
                     .append(getOperands().get(i).getName())
                     .append(", %")
                     .append(blocks.get(i).getName())

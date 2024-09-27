@@ -35,7 +35,7 @@ public class SurplusBlock {
         });
     }
 
-    public static void deleteDeadInstr(BasicBlock block) {
+    private static void deleteDeadInstr(BasicBlock block) {
         ArrayList<Instruction> instructions = block.getInstructions();
         int terminatorIndex = findTerminatorIndex(instructions);
         if (terminatorIndex < instructions.size() - 1) {
@@ -52,7 +52,7 @@ public class SurplusBlock {
         return instructions.size() - 1;
     }
 
-    public static void dfs(BasicBlock block) {
+    private static void dfs(BasicBlock block) {
         if (!visited.add(block)) {
             return;
         }

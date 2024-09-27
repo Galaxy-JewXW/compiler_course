@@ -13,8 +13,9 @@ public class Optimizer {
 
     public void optimize() {
         SurplusBlock.build(module);
-        GlobalVarLocalize.build(module);
-        ConstToValue.run(module);
+        //GlobalVarLocalize.build(module);
+        //ConstToValue.run(module);
         Mem2Reg.run(module);
+        GVN.run(module);
     }
 }

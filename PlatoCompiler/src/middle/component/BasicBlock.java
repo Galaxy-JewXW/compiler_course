@@ -2,6 +2,8 @@ package middle.component;
 
 import middle.IRData;
 import middle.component.instruction.Instruction;
+import middle.component.instruction.PhiInst;
+import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.type.LabelType;
 
@@ -133,6 +135,21 @@ public class BasicBlock extends User {
 
     public void setImdomDepth(int imdomDepth) {
         this.imdomDepth = imdomDepth;
+    }
+
+    public void deleteForPhi(BasicBlock block) {
+        for (Use use : getUseList()) {
+            User user = use.getUser();
+            if (user instanceof PhiInst phiInst && phiInst.getBasicBlock().equals(block)) {
+                for (int i = 0; i < phiInst.getBlocks().size(); i++) {
+                    if (phiInst.getBlocks().get(i).equals(this)) {
+                        phiInst.getBlocks().remove(i);
+                        phiInst.getOperands().remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
     }
 
     @Override
