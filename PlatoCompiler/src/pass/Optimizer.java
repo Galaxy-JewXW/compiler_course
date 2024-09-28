@@ -25,5 +25,7 @@ public class Optimizer {
         Mem2Reg.run(module, false);
         FunctionSideEffect.run(module);
         CodeRemoval.run(module);
+        FixMD.run(module);
+        OptimizePhi.run(module);
     }
 }
