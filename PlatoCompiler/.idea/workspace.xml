@@ -4,24 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="尝试函数内联">
-      <change afterPath="$PROJECT_DIR$/src/pass/FunctionCopy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pass/InlinedFunction.java" afterDir="false" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="函数内联">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ForLoop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/ForLoop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/PhiInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/PhiInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FunctionCopy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FunctionCopy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/InlinedFunction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/InlinedFunction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/ForLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/ForLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/PhiInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/PhiInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/ConstToValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/ConstToValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/FunctionCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/FunctionCopy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/InlinedFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/InlinedFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
@@ -67,26 +64,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Compiler.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Compiler" />
@@ -134,7 +131,7 @@
       <workItem from="1727420435180" duration="50000" />
       <workItem from="1727431491520" duration="2530000" />
       <workItem from="1727434852503" duration="14443000" />
-      <workItem from="1727496050805" duration="2430000" />
+      <workItem from="1727496050805" duration="9747000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -304,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727450042646</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="函数内联">
+      <option name="closed" value="true" />
+      <created>1727498718849</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1727498718849</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,6 +333,14 @@
     <MESSAGE value="win" />
     <MESSAGE value="try gvn" />
     <MESSAGE value="一定要先mem2reg！" />
-    <option name="LAST_COMMIT_MESSAGE" value="一定要先mem2reg！" />
+    <MESSAGE value="函数内联" />
+    <option name="LAST_COMMIT_MESSAGE" value="函数内联" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="clonedFunc" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

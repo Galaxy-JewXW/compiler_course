@@ -4,7 +4,12 @@ import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Function;
 import middle.component.Module;
-import middle.component.instruction.*;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.OperatorType;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
@@ -202,14 +207,19 @@ public class GVN {
         int lValue = ((ConstInt) binaryInst.getOperand1()).getIntValue();
         int rValue = ((ConstInt) binaryInst.getOperand2()).getIntValue();
         OperatorType op = binaryInst.getOpType();
-        int ans = switch (op) {
-            case ADD -> lValue + rValue;
-            case SUB -> lValue - rValue;
-            case MUL -> lValue * rValue;
-            case SDIV -> lValue / rValue;
-            case SREM -> lValue % rValue;
-            default -> throw new RuntimeException("Unknown operator " + op);
-        };
+        int ans;
+        try {
+            ans = switch (op) {
+                case ADD -> lValue + rValue;
+                case SUB -> lValue - rValue;
+                case MUL -> lValue * rValue;
+                case SDIV -> lValue / rValue;
+                case SREM -> lValue % rValue;
+                default -> throw new RuntimeException("Unknown operator " + op);
+            };
+        } catch (ArithmeticException e) {
+            ans = 0;
+        }
         ConstInt constInt = new ConstInt(IntegerType.i32, ans);
         binaryInst.replaceByNewValue(constInt);
         curBlock.getInstructions().remove(binaryInst);

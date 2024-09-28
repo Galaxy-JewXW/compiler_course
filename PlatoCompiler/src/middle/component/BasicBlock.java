@@ -118,7 +118,7 @@ public class BasicBlock extends User {
     }
 
     public void setImmediateDominateBlocks(ArrayList<BasicBlock> immediateDominateBlocks) {
-        this.immediateDominateBlocks = immediateDominateBlocks;
+        this.immediateDominateBlocks = new ArrayList<>(immediateDominateBlocks);
     }
 
     public ArrayList<BasicBlock> getDominanceFrontier() {

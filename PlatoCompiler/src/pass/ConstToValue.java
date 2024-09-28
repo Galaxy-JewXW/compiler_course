@@ -2,8 +2,12 @@ package pass;
 
 import frontend.TableManager;
 import frontend.symbol.VarSymbol;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
 import middle.component.instruction.GepInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.LoadInst;
@@ -65,5 +69,19 @@ public class ConstToValue {
             }
         }
         module.getGlobalVars().removeAll(toRemove);
+
+        for (Function func : module.getFunctions()) {
+            for (BasicBlock block : func.getBasicBlocks()) {
+                ArrayList<Instruction> list = new ArrayList<>(block.getInstructions());
+                for (Instruction inst : list) {
+                    if (inst instanceof LoadInst loadInst
+                            && loadInst.getPointer() instanceof ConstInt constInt) {
+                        loadInst.replaceByNewValue(constInt);
+                        loadInst.deleteUse();
+                        block.getInstructions().remove(inst);
+                    }
+                }
+            }
+        }
     }
 }

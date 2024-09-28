@@ -16,11 +16,14 @@ public class Optimizer {
         GlobalVarLocalize.build(module);
         ConstToValue.run(module);
         Mem2Reg.run(module, true);
+        InlinedFunction.run(module);
         GVN.run(module);
         SurplusBlock.build(module);
         Mem2Reg.run(module, false);
         GVN.run(module);
         SurplusBlock.build(module);
-        InlinedFunction.run(module);
+        module.updateId();
+        System.out.println(module);
+        Mem2Reg.run(module, false);
     }
 }

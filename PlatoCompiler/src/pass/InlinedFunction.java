@@ -72,20 +72,6 @@ public class InlinedFunction {
     }
 
     private static void inline(Function function) {
-        ArrayList<CallInst> callsToInline = findCallsToInline(function);
-        for (CallInst call : callsToInline) {
-            Function callerFunction = call.getBasicBlock().getFunction();
-            replaceCall(call, callerFunction, function);
-        }
-    }
-
-    /**
-     * 查找需要内联的调用指令
-     *
-     * @param function 被调用的函数
-     * @return 需要内联的调用指令列表
-     */
-    private static ArrayList<CallInst> findCallsToInline(Function function) {
         ArrayList<CallInst> calls = new ArrayList<>();
         for (Function caller : reverseCallGraph.get(function)) {
             for (BasicBlock block : caller.getBasicBlocks()) {
@@ -98,7 +84,11 @@ public class InlinedFunction {
                 }
             }
         }
-        return calls;
+        for (CallInst call : calls) {
+            Function calledFunction = call.getCalledFunction();
+            Function callFunction = call.getBasicBlock().getFunction();
+            replaceCall(call, callFunction, calledFunction);
+        }
     }
 
     /**
@@ -113,7 +103,7 @@ public class InlinedFunction {
         BasicBlock currentBlock = call.getBasicBlock();
         ValueType returnType = calledFunction.getReturnType();
         BasicBlock nextBlock = new BasicBlock(IRData.getBlockName());
-        nextBlock.setFunction(calledFunction);
+        nextBlock.setFunction(callerFunction);
         callerFunction.getBasicBlocks().add(
                 callerFunction.getBasicBlocks().indexOf(currentBlock) + 1, nextBlock);
         moveInstructionsAfterCall(currentBlock, nextBlock, call);
@@ -126,11 +116,64 @@ public class InlinedFunction {
         currentBlock.setNextBlocks(new ArrayList<>());
 
         Function copiedFunction = FunctionCopy.copyFunction(calledFunction);
-        replaceFParams(copiedFunction, call);
-        linkInlinedFunction(currentBlock, copiedFunction);
-        handleReturnInstructions(copiedFunction, nextBlock, returnType, call);
-        integrateInlinedBlocks(callerFunction, copiedFunction, nextBlock);
-        removeCallInstruction(call, currentBlock);
+
+        for (int i = 0; i < copiedFunction.getFuncParams().size(); i++) {
+            Value fParam = copiedFunction.getFuncParams().get(i);
+            Value rParam = call.getParameters().get(i);
+            fParam.replaceByNewValue(rParam);
+        }
+
+        BrInst brInst = new BrInst(copiedFunction.getEntryBlock());
+        brInst.setBasicBlock(currentBlock);
+        currentBlock.addInstruction(brInst);
+        currentBlock.addNextBlock(copiedFunction.getEntryBlock());
+        copiedFunction.getEntryBlock().addPrevBlock(currentBlock);
+
+        ArrayList<RetInst> rets = new ArrayList<>();
+        ArrayList<BasicBlock> blocks = new ArrayList<>();
+        for (BasicBlock block : copiedFunction.getBasicBlocks()) {
+            for (Instruction instr : block.getInstructions()) {
+                if (instr instanceof RetInst retInst) {
+                    rets.add(retInst);
+                    blocks.add(block);
+                }
+            }
+        }
+        if (returnType.equals(IntegerType.VOID)) {
+            for (RetInst retInst : rets) {
+                BrInst brInst1 = new BrInst(nextBlock);
+                ArrayList<BasicBlock> child = new ArrayList<>();
+                brInst1.setBasicBlock(retInst.getBasicBlock());
+                retInst.getBasicBlock().getInstructions().remove(retInst);
+                retInst.deleteUse();
+                retInst.getBasicBlock().getInstructions().add(brInst1);
+                child.add(nextBlock);
+                retInst.getBasicBlock().setNextBlocks(child);
+                nextBlock.addPrevBlock(retInst.getBasicBlock());
+            }
+        } else {
+            PhiInst phiInst = new PhiInst(returnType, nextBlock, blocks);
+            nextBlock.getInstructions().add(0, phiInst);
+            for (RetInst retInst : rets) {
+                phiInst.addValue(retInst.getBasicBlock(), retInst.getReturnValue());
+                ArrayList<BasicBlock> child = new ArrayList<>();
+                child.add(nextBlock);
+                retInst.getBasicBlock().setNextBlocks(child);
+                nextBlock.addPrevBlock(retInst.getBasicBlock());
+                BrInst brInst1 = new BrInst(nextBlock);
+                brInst1.setBasicBlock(retInst.getBasicBlock());
+                retInst.getBasicBlock().getInstructions().remove(retInst);
+                retInst.deleteUse();
+                retInst.getBasicBlock().getInstructions().add(brInst1);
+            }
+            call.replaceByNewValue(phiInst);
+        }
+        for (BasicBlock block : copiedFunction.getBasicBlocks()) {
+            callerFunction.getBasicBlocks().add(callerFunction.getBasicBlocks().indexOf(nextBlock), block);
+            block.setFunction(callerFunction);
+        }
+        call.deleteUse();
+        currentBlock.getInstructions().remove(call);
     }
 
     private static void moveInstructionsAfterCall(BasicBlock currentBlock,
@@ -167,79 +210,4 @@ public class InlinedFunction {
         }
     }
 
-    private static void replaceFParams(Function copiedFunction, CallInst call) {
-        for (int i = 0; i < copiedFunction.getFuncParams().size(); i++) {
-            Value fParam = copiedFunction.getFuncParams().get(i);
-            Value rParam = call.getOperands().get(i + 1);
-            fParam.replaceByNewValue(rParam);
-        }
-    }
-
-    private static void linkInlinedFunction(BasicBlock currentBlock, Function copiedFunction) {
-        BrInst brInst = new BrInst(copiedFunction.getBasicBlocks().get(0));
-        brInst.setBasicBlock(currentBlock);
-        currentBlock.addInstruction(brInst);
-        currentBlock.addNextBlock(copiedFunction.getBasicBlocks().get(0));
-        copiedFunction.getEntryBlock().addPrevBlock(currentBlock);
-    }
-
-    private static void handleReturnInstructions(Function copiedFunction, BasicBlock nextBlock,
-                                                 ValueType returnType, CallInst call) {
-        ArrayList<RetInst> returnInstructions = new ArrayList<>();
-        ArrayList<BasicBlock> blocks = new ArrayList<>();
-        for (BasicBlock block : copiedFunction.getBasicBlocks()) {
-            for (Instruction instr : block.getInstructions()) {
-                if (instr instanceof RetInst retInst) {
-                    returnInstructions.add(retInst);
-                    blocks.add(block);
-                }
-            }
-        }
-        if (!returnType.equals(IntegerType.VOID)) {
-            // phi指令不会自动添加到基本块中
-            PhiInst phi = new PhiInst(returnType, nextBlock, blocks);
-            nextBlock.getInstructions().add(0, phi);
-            phi.setBasicBlock(nextBlock);
-            for (RetInst ret : returnInstructions) {
-                phi.addValue(ret.getBasicBlock(), ret.getOperands().get(0));
-                updateBlockForReturn(ret.getBasicBlock(), nextBlock);
-                replaceRetToBr(ret, nextBlock);
-            }
-            call.replaceByNewValue(phi);
-        } else {
-            for (RetInst ret : returnInstructions) {
-                updateBlockForReturn(ret.getBasicBlock(), nextBlock);
-                replaceRetToBr(ret, nextBlock);
-            }
-        }
-    }
-
-    private static void updateBlockForReturn(BasicBlock returnBlock, BasicBlock nextBlock) {
-        ArrayList<BasicBlock> child = new ArrayList<>();
-        child.add(nextBlock);
-        returnBlock.setNextBlocks(child);
-        nextBlock.addPrevBlock(returnBlock);
-    }
-
-    private static void replaceRetToBr(RetInst ret, BasicBlock nextBlock) {
-        BrInst brInst = new BrInst(nextBlock);
-        brInst.setBasicBlock(ret.getBasicBlock());
-        ret.getBasicBlock().getInstructions().remove(ret);
-        ret.deleteUse();
-        ret.getBasicBlock().addInstruction(brInst);
-    }
-
-    private static void integrateInlinedBlocks(Function callerFunction,
-                                               Function copiedFunction, BasicBlock nextBlock) {
-        for (BasicBlock block : copiedFunction.getBasicBlocks()) {
-            callerFunction.getBasicBlocks().add(
-                    callerFunction.getBasicBlocks().indexOf(nextBlock), block);
-            block.setFunction(callerFunction);
-        }
-    }
-
-    private static void removeCallInstruction(CallInst call, BasicBlock currentBlock) {
-        call.deleteUse();
-        currentBlock.getInstructions().remove(call);
-    }
 }

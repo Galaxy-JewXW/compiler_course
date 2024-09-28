@@ -42,6 +42,10 @@ public class FunctionCopy {
      * @return 克隆后的新函数
      */
     public static Function copyFunction(Function originalFunc) {
+        visitedBlocks.clear();
+        phiInstructions.clear();
+        clonedInstructions.clear();
+        valueMap.clear();
         Function clonedFunc = createClonedFunctionSkeleton(originalFunc);
         for (BasicBlock block : originalFunc.getBasicBlocks()) {
             BasicBlock clonedBlock = new BasicBlock(IRData.getBlockName());
@@ -49,7 +53,7 @@ public class FunctionCopy {
             clonedFunc.addBasicBlock(clonedBlock);
             valueMap.put(block, clonedBlock);
         }
-        cloneBlockContents(originalFunc.getBasicBlocks().get(0));
+        cloneBlockContents(originalFunc.getEntryBlock());
         for (PhiInst phi : phiInstructions) {
             PhiInst clonedPhi = (PhiInst) getOrCreate(phi);
             for (int i = 0; i < phi.getOperands().size(); i++) {
