@@ -47,12 +47,10 @@ public class GVN {
                     if (instr instanceof BinaryInst binaryInst
                             && !binaryInst.getValueType().equals(IntegerType.i1)) {
                         calcOptimize(binaryInst);
-                    }
-                    if (instr instanceof BinaryInst binaryInst
+                    } else if (instr instanceof BinaryInst binaryInst
                             && binaryInst.getValueType().equals(IntegerType.i1)) {
                         icmpOptimize(binaryInst);
-                    }
-                    if (instr instanceof BrInst brInst && brInst.isConditional()) {
+                    } else if (instr instanceof BrInst brInst && brInst.isConditional()) {
                         brOptimize(brInst);
                     }
                 }

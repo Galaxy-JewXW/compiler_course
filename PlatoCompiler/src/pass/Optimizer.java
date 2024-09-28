@@ -22,8 +22,8 @@ public class Optimizer {
         Mem2Reg.run(module, false);
         GVN.run(module);
         SurplusBlock.build(module);
-        module.updateId();
-        System.out.println(module);
         Mem2Reg.run(module, false);
+        FunctionSideEffect.run(module);
+        CodeRemoval.run(module);
     }
 }

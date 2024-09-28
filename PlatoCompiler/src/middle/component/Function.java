@@ -16,6 +16,7 @@ public class Function extends User {
     private final ArrayList<FuncParam> funcParams = new ArrayList<>();
     private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
     private boolean isBuiltIn = false;
+    private boolean hasSideEffects = false;
 
     // 寄存器分配
     private HashMap<Value, Register> var2reg;
@@ -66,6 +67,14 @@ public class Function extends User {
         for (BasicBlock basicBlock : basicBlocks) {
             basicBlock.updateId();
         }
+    }
+
+    public boolean hasSideEffects() {
+        return hasSideEffects;
+    }
+
+    public void setHasSideEffects(boolean hasSideEffects) {
+        this.hasSideEffects = hasSideEffects;
     }
 
     public HashMap<Value, Register> getVar2reg() {
