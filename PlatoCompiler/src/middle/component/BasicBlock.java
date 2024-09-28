@@ -73,6 +73,14 @@ public class BasicBlock extends User {
         }
     }
 
+    public void addPrevBlock(BasicBlock prevBlock) {
+        prevBlocks.add(prevBlock);
+    }
+
+    public void addNextBlock(BasicBlock nextBlock) {
+        nextBlocks.add(nextBlock);
+    }
+
     public ArrayList<BasicBlock> getPrevBlocks() {
         return prevBlocks;
     }

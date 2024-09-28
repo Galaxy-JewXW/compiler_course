@@ -16,12 +16,14 @@ public class ForLoop {
      */
     private final BasicBlock conditionBlock;
     private final BasicBlock loopBodyBlock;
+    private final BasicBlock updateBlock;
     private final BasicBlock followBlock;
 
-    public ForLoop(BasicBlock conditionBlock, BasicBlock loopBodyBlock,
+    public ForLoop(BasicBlock conditionBlock, BasicBlock loopBodyBlock, BasicBlock updateBlock,
                    BasicBlock followBlock) {
         this.conditionBlock = conditionBlock;
         this.loopBodyBlock = loopBodyBlock;
+        this.updateBlock = updateBlock;
         this.followBlock = followBlock;
     }
 
@@ -31,6 +33,10 @@ public class ForLoop {
 
     public BasicBlock getLoopBodyBlock() {
         return loopBodyBlock;
+    }
+
+    public BasicBlock getUpdateBlock() {
+        return updateBlock;
     }
 
     public BasicBlock getFollowBlock() {

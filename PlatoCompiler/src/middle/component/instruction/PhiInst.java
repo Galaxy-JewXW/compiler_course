@@ -13,9 +13,9 @@ public class PhiInst extends Instruction {
         super(type, OperatorType.PHI);
         setBasicBlock(block);
         this.blocks = new ArrayList<>(blocks);
-        for (int i = 0; i < blocks.size(); i++) {
+        for (BasicBlock basicBlock : blocks) {
             getOperands().add(null);
-            blocks.get(i).addUse(this);
+            basicBlock.addUse(this);
         }
     }
 

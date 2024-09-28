@@ -5,16 +5,70 @@ import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
-import frontend.syntax.function.*;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
+import frontend.syntax.function.FuncRParams;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.ForLoop;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
-import middle.component.instruction.io.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
+import middle.component.instruction.io.GetcharInst;
+import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
+import middle.component.instruction.io.PutintInst;
+import middle.component.instruction.io.PutstrInst;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -726,8 +780,9 @@ public class IRBuilder {
         }
         BasicBlock conditionBlock = new BasicBlock(IRData.getBlockName());
         BasicBlock bodyBlock = new BasicBlock(IRData.getBlockName());
+        BasicBlock updateBlock = new BasicBlock(IRData.getBlockName());
         BasicBlock followBlock = new BasicBlock(IRData.getBlockName());
-        IRData.push(new ForLoop(conditionBlock, bodyBlock, followBlock));
+        IRData.push(new ForLoop(conditionBlock, bodyBlock, updateBlock, followBlock));
         new BrInst(conditionBlock);
         IRData.setCurrentBlock(conditionBlock);
         if (forStruct.getCond() != null) {
@@ -738,6 +793,8 @@ public class IRBuilder {
         IRData.setCurrentBlock(bodyBlock);
         buildStmt(forStruct.getStmt());
         // 循环量更新直接嵌入bodyBlock
+        new BrInst(updateBlock);
+        IRData.setCurrentBlock(updateBlock);
         if (forStruct.getForStmt2() != null) {
             buildAssign(forStruct.getForStmt2().getLVal(),
                     forStruct.getForStmt2().getExp());
@@ -752,6 +809,6 @@ public class IRBuilder {
     }
 
     private void buildContinueStmt() {
-        new BrInst(IRData.peek().getConditionBlock());
+        new BrInst(IRData.peek().getUpdateBlock());
     }
 }

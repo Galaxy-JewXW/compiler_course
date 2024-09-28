@@ -21,5 +21,6 @@ public class Optimizer {
         Mem2Reg.run(module, false);
         GVN.run(module);
         SurplusBlock.build(module);
+        InlinedFunction.run(module);
     }
 }
