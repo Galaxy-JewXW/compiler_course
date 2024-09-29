@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="add move">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix move">
+      <change afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/BlockMerge.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pass/BlockMerge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/MoveInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/MoveInst.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/RemovePhi.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/RemovePhi.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/MoveInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/MoveInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/RemovePhi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/RemovePhi.java" afterDir="false" />
@@ -338,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727579949810</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fix move">
+      <option name="closed" value="true" />
+      <created>1727582411894</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1727582411894</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +388,8 @@
     <MESSAGE value="add CodeRemoval" />
     <MESSAGE value="man" />
     <MESSAGE value="add move" />
-    <option name="LAST_COMMIT_MESSAGE" value="add move" />
+    <MESSAGE value="fix move" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix move" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

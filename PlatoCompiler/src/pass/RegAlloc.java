@@ -53,6 +53,9 @@ public class RegAlloc {
             init(function);
             calcInOut(function);
             alloc(function.getBasicBlocks().get(0));
+            for (Value value : var2reg.keySet()) {
+                System.out.println(value.getName() + "->" + var2reg.get(value));
+            }
             function.setVar2reg(var2reg);
         }
     }
