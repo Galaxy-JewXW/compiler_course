@@ -108,7 +108,7 @@ public class RemovePhi {
             }
 
             if (parent.getNextBlocks().size() > 1) {
-                BasicBlock newBlock = new BasicBlock(IRData.getVarName());
+                BasicBlock newBlock = new BasicBlock(IRData.getBlockName());
                 newBlock.setFunction(currentBlock.getFunction());
                 ArrayList<BasicBlock> blocks = currentBlock.getFunction().getBasicBlocks();
                 blocks.add(blocks.indexOf(currentBlock), newBlock);

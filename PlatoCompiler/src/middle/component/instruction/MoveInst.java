@@ -1,12 +1,13 @@
 package middle.component.instruction;
 
+import middle.IRData;
 import middle.component.BasicBlock;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 public class MoveInst extends Instruction {
     public MoveInst(Value toValue, Value fromValue, BasicBlock block) {
-        super("", IntegerType.VOID, OperatorType.MOVE);
+        super(IRData.getVarName(), IntegerType.VOID, OperatorType.MOVE);
         addOperand(toValue);
         addOperand(fromValue);
         setBasicBlock(block);

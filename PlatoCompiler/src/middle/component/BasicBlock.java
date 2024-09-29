@@ -2,6 +2,7 @@ package middle.component;
 
 import middle.IRData;
 import middle.component.instruction.Instruction;
+import middle.component.instruction.MoveInst;
 import middle.component.instruction.PhiInst;
 import middle.component.model.Use;
 import middle.component.model.User;
@@ -68,8 +69,16 @@ public class BasicBlock extends User {
 
     public void updateId() {
         setName(IRData.getBlockName());
-        for (Instruction instruction : instructions) {
-            instruction.updateId();
+        for (int i = 0; i < instructions.size(); i++) {
+            if (!(instructions.get(i) instanceof MoveInst)) {
+                instructions.get(i).updateId();
+            } else {
+                while (instructions.get(i) instanceof MoveInst) {
+                    instructions.get(i).updateId();
+                    i++;
+                }
+                IRData.getVarName();
+            }
         }
     }
 

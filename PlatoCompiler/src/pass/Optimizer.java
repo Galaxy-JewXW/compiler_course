@@ -27,8 +27,11 @@ public class Optimizer {
         CodeRemoval.run(module);
         FixMD.run(module);
         OptimizePhi.run(module);
+        BlockMerge.run(module);
+        Mem2Reg.run(module, false);
         RegAlloc.run(module);
         module.updateId();
+        System.out.println(module);
         RemovePhi.run(module);
     }
 }
