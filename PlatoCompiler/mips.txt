@@ -9,14 +9,33 @@ main_b0:
 li $v0, 5
 syscall
 addiu $t0, $v0, 0
-# %2 = sdiv i32 %1, 2098
-li $v0, 2096304343
-mult $t0, $v0
-mfhi $v1
-sra $v0, $v1, 10
-srl $a0, $t0, 31
-addu $t0, $v0, $a0
-# call void @putint(i32 %2)
+# %2 = call i32 @getint()
+li $v0, 5
+syscall
+addiu $t1, $v0, 0
+# %3 = icmp sgt i32 %1, %2
+# br i1 %3, label %4, label %8
+bgt $t0, $t1, main_b4
+j main_b8
+main_b4:
+# %5 = mul i32 %1, %1
+mul $t0, $t0, $t0
+# move %5 -> %11
+# br label %14
+j main_b14
+main_b8:
+# %9 = sub i32 0, %1
+li $k1, 0
+subu $t1, $k1, $t0
+# %10 = mul i32 %9, 2
+addu $t1, $t1, $t1
+# %11 = sub i32 %10, %1
+subu $t0, $t1, $t0
+# move %11 -> %11
+# br label %14
+j main_b14
+main_b14:
+# call void @putint(i32 %11)
 addiu $a0, $t0, 0
 li $v0, 1
 syscall

@@ -1,7 +1,13 @@
 int main() {
-int a;
-a = getint();
-int b = a / 2098;
-printf("%d", b);
-return 0;
+    int x, n;
+    n = getint();
+    int m;
+    m = getint();
+    if (n > m) {
+    x = n * n;
+    } else {
+    x = -n * 2 - n;
+    }
+    printf("%d",x);
+    return 0;
 }

@@ -33,6 +33,10 @@ public enum AsmOp {
     // 有条件跳转类指令
     BEQ,
     BNE,
+    BGE,
+    BLE,
+    BGT,
+    BLT,
     // 无条件跳转
     J,
     JAL,
