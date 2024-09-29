@@ -34,6 +34,21 @@ public class RegAlloc {
                 registerPool.add(reg);
             }
         }
+        // 不需要翻译zext指令，将char和int都当32位处理
+        for (Function function : module.getFunctions()) {
+            for (BasicBlock block : function.getBasicBlocks()) {
+                ArrayList<Instruction> instructions
+                        = new ArrayList<>(block.getInstructions());
+                for (Instruction instruction : instructions) {
+                    if (instruction instanceof ZextInst zextInst) {
+                        Value value = zextInst.getOriginValue();
+                        zextInst.replaceByNewValue(value);
+                        block.getInstructions().remove(zextInst);
+                        zextInst.deleteUse();
+                    }
+                }
+            }
+        }
         for (Function function : module.getFunctions()) {
             init(function);
             calcInOut(function);

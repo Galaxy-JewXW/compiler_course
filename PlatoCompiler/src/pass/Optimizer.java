@@ -27,5 +27,8 @@ public class Optimizer {
         CodeRemoval.run(module);
         FixMD.run(module);
         OptimizePhi.run(module);
+        RegAlloc.run(module);
+        module.updateId();
+        RemovePhi.run(module);
     }
 }
