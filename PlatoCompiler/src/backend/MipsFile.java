@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class MipsFile {
     private static final MipsFile INSTANCE = new MipsFile();
+    private final ArrayList<GlobalAssembly> dataSegment = new ArrayList<>();
+    private final ArrayList<TextAssembly> textSegment = new ArrayList<>();
+    private boolean insect = true;
 
     private MipsFile() {
     }
@@ -16,15 +19,24 @@ public class MipsFile {
         return INSTANCE;
     }
 
-    private final ArrayList<GlobalAssembly> dataSegment = new ArrayList<>();
-    private final ArrayList<TextAssembly> textSegment = new ArrayList<>();
-
     public void addToDataSegment(GlobalAssembly assembly) {
-        dataSegment.add(assembly);
+        if (insect) {
+            dataSegment.add(assembly);
+        }
     }
 
     public void addToTextSegment(TextAssembly assembly) {
-        textSegment.add(assembly);
+        if (insect) {
+            textSegment.add(assembly);
+        }
+    }
+
+    public boolean isInsect() {
+        return insect;
+    }
+
+    public void setInsect(boolean insect) {
+        this.insect = insect;
     }
 
     @Override

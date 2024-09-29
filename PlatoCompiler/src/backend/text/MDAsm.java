@@ -16,6 +16,6 @@ public class MDAsm extends TextAssembly {
 
     @Override
     public String toString() {
-        return op.name().toLowerCase() + " " + rs + " " + rt;
+        return op.name().toLowerCase() + " " + rs + ", " + rt;
     }
 }

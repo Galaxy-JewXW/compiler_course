@@ -13,6 +13,6 @@ public class MoveAsm extends TextAssembly {
 
     @Override
     public String toString() {
-        return "move " + dst + " " + src;
+        return "move " + dst + ", " + src;
     }
 }

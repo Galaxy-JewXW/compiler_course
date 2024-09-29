@@ -13,6 +13,6 @@ public class LiAsm extends TextAssembly {
 
     @Override
     public String toString() {
-        return "li " + target + " " + immediate;
+        return "li " + target + ", " + immediate;
     }
 }

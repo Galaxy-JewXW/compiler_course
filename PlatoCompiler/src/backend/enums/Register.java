@@ -40,8 +40,8 @@ public enum Register {
         this.name = name;
     }
 
-    public static int getPoolSize() {
-        return poolSize;
+    public static Register getByOffset(Register register, int offset) {
+        return Register.values()[register.ordinal() + offset];
     }
 
     public static Register indexToReg(int index) {

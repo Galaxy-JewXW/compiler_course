@@ -19,6 +19,6 @@ public class BrAsm extends TextAssembly {
     @Override
     public String toString() {
         return op.name().toLowerCase() + " " + rs
-                + " " + rt + " " + label;
+                + ", " + rt + ", " + label;
     }
 }

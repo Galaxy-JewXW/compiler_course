@@ -10,6 +10,7 @@ public enum AsmOp {
     OR,
     NOR,
     XOR,
+    MUL,
     SLTU,
     SLLV,
     SRAV,

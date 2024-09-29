@@ -18,6 +18,6 @@ public class MemAsm extends TextAssembly {
 
     @Override
     public String toString() {
-        return op.name().toLowerCase() + " " + rd + " " + offset + "(" + base + ")";
+        return op.name().toLowerCase() + " " + rd + ", " + offset + "(" + base + ")";
     }
 }

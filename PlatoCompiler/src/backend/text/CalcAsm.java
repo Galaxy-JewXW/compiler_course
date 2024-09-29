@@ -35,9 +35,9 @@ public class CalcAsm extends TextAssembly {
     public String toString() {
         if (op.ordinal() <= AsmOp.SRLV.ordinal()) {
             return op.name().toLowerCase() + " " + rd
-                    + " " + rs + " " + rt;
+                    + ", " + rs + ", " + rt;
         }
         return op.name().toLowerCase() + " "
-                + rd + " " + rs + " " + immediate;
+                + rd + ", " + rs + ", " + immediate;
     }
 }

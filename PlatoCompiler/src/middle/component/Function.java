@@ -19,7 +19,7 @@ public class Function extends User {
     private boolean hasSideEffects = false;
 
     // 寄存器分配
-    private HashMap<Value, Register> var2reg;
+    private HashMap<Value, Register> var2reg = new HashMap<>();
 
     public Function(String name, ValueType returnType) {
         super(name, new LabelType());

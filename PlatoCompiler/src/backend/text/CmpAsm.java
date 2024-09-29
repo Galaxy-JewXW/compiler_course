@@ -18,6 +18,6 @@ public class CmpAsm extends TextAssembly {
 
     @Override
     public String toString() {
-        return op.name().toLowerCase() + " " + rd + " " + rs + " " + rt;
+        return op.name().toLowerCase() + " " + rd + ", " + rs + ", " + rt;
     }
 }

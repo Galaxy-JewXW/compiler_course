@@ -4,51 +4,14 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [7 x i8] c"round \00", align 1
-@.s.1 = private unnamed_addr constant [3 x i8] c": \00", align 1
-@.s.2 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+
 
 
 
 define dso_local i32 @main() {
 0:
 	%1 = call i32 @getint()
-	move 1 -> %3
-	move 1 -> %4
-	move 1 -> %5
-	br label %6
-6:
-	%7 = add i32 %1, 1
-	%8 = icmp slt i32 %3, %7
-	br i1 %8, label %9, label %22
-9:
-	%10 = add i32 %5, %4
-	%11 = sdiv i32 %3, 2
-	%12 = mul i32 %11, 2
-	%13 = sub i32 %3, %12
-	%14 = icmp eq i32 %13, 1
-	br i1 %14, label %23, label %24
-15:
-	%16 = add i32 %3, 1
-	move %4 -> %28
-	move %16 -> %3
-	move %10 -> %4
-	move %28 -> %5
-	br label %6
-22:
+	%2 = mul i32 -3, %1
+	call void @putint(i32 %2)
 	ret i32 0
-23:
-	br label %15
-24:
-	call void @putstr(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 %3)
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 %4)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-	%25 = icmp sgt i32 %3, 19
-	br i1 %25, label %26, label %27
-26:
-	br label %22
-27:
-	br label %15
 }

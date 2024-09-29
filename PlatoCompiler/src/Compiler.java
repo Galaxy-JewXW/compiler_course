@@ -1,4 +1,5 @@
 import backend.MipsBuilder;
+import backend.MipsFile;
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
@@ -21,6 +22,8 @@ public class Compiler {
     private static final String errorOutput = "error.txt";
     private static final String llvmOutput = "llvm_ir.txt";
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
+
+    private static final boolean optimize = true;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
@@ -49,12 +52,15 @@ public class Compiler {
         IRBuilder irBuilder = new IRBuilder(compUnit);
         irBuilder.build();
         Printer.printIr(Module.getInstance(), llvmOutput);
-        // 中间代码优化
-        Optimizer optimizer = new Optimizer(Module.getInstance());
-        optimizer.optimize();
-        Printer.printIr(Module.getInstance(), irOutput);
-        // TODO: 目标代码生成
+        if (optimize) {
+            // 中间代码优化
+            Optimizer optimizer = new Optimizer(Module.getInstance());
+            optimizer.optimize();
+            Printer.printIr(Module.getInstance(), irOutput);
+        }
+        // 目标代码生成
         MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance());
         mipsBuilder.build();
+        System.out.println(MipsFile.getInstance());
     }
 }
