@@ -1,0 +1,25 @@
+.data
+
+
+
+.text
+main:
+main_b0:
+# %1 = call i32 @getint()
+li $v0, 5
+syscall
+addiu $t0, $v0, 0
+# %2 = sdiv i32 %1, 2098
+li $v0, 2096304343
+mult $t0, $v0
+mfhi $v1
+sra $v0, $v1, 10
+srl $a0, $t0, 31
+addu $t0, $v0, $a0
+# call void @putint(i32 %2)
+addiu $a0, $t0, 0
+li $v0, 1
+syscall
+# ret i32 0
+li $v0, 10
+syscall

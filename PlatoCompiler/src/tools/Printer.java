@@ -1,5 +1,6 @@
 package tools;
 
+import backend.MipsFile;
 import error.Error;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
@@ -47,6 +48,13 @@ public class Printer {
         module.updateId();
         System.setOut(new PrintStream(path));
         System.out.println(module);
+        System.setOut(origin);
+    }
+
+    public static void printMips(MipsFile mipsFile, String path) throws FileNotFoundException {
+        PrintStream origin = System.out;
+        System.setOut(new PrintStream(path));
+        System.out.println(mipsFile);
         System.setOut(origin);
     }
 }

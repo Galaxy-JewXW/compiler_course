@@ -22,6 +22,7 @@ public class Compiler {
     private static final String errorOutput = "error.txt";
     private static final String llvmOutput = "llvm_ir.txt";
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
+    private static final String mipsOutput = "mips.txt";
 
     private static final boolean optimize = true;
 
@@ -61,6 +62,6 @@ public class Compiler {
         // 目标代码生成
         MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance());
         mipsBuilder.build();
-        System.out.println(MipsFile.getInstance());
+        Printer.printMips(MipsFile.getInstance(), mipsOutput);
     }
 }

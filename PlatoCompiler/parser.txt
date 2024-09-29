@@ -19,14 +19,14 @@ SEMICN ;
 INTTK int
 IDENFR b
 ASSIGN =
-INTCON 1026
-<Number>
+IDENFR a
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
-MULT *
-IDENFR a
-<LVal>
+DIV /
+INTCON 2098
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

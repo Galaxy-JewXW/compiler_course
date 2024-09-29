@@ -171,6 +171,12 @@ public class MipsBuilder {
             makeTwoConst(binaryInst, targetReg);
         } else if (cnt == 1) {
             makeOneConst(binaryInst, targetReg);
+        } else {
+            makeNonConst(binaryInst, targetReg);
+        }
+        if (targetReg.equals(Register.K0)) {
+            // variable in stack
+            new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(binaryInst));
         }
     }
 
@@ -188,7 +194,7 @@ public class MipsBuilder {
             if (op == OperatorType.MUL) {
                 new CalcAsm(targetReg, AsmOp.MUL, Register.K0, Register.K1);
             } else {
-                new MDAsm(Register.K0, AsmOp.DIV, Register.K1);
+                new MulDivAsm(Register.K0, AsmOp.DIV, Register.K1);
                 if (op == OperatorType.SDIV) {
                     new MDRegAsm(AsmOp.MFLO, targetReg);
                 } else if (op == OperatorType.SREM) {
@@ -204,6 +210,7 @@ public class MipsBuilder {
         Value operand1 = binaryInst.getOperand1();
         Value operand2 = binaryInst.getOperand2();
         if (operand1 instanceof ConstInt constInt) {
+            // 100 op a
             Register temp = Register.K0;
             if (var2reg.containsKey(operand2)) {
                 temp = var2reg.get(operand2);
@@ -215,43 +222,153 @@ public class MipsBuilder {
             } else if (binaryInst.getOpType() == OperatorType.MUL) {
                 int constant = constInt.getIntValue();
                 makeVarMulConst(temp, constant, targetReg);
+            } else {
+                new LiAsm(Register.K1, constInt.getIntValue());
+                if (binaryInst.getOpType() == OperatorType.SUB) {
+                    new CalcAsm(targetReg, AsmOp.SUBU, Register.K1, temp);
+                    return;
+                }
+                new MulDivAsm(Register.K1, AsmOp.DIV, temp);
+                if (binaryInst.getOpType() == OperatorType.SDIV) {
+                    new MDRegAsm(AsmOp.MFLO, targetReg);
+                } else if (binaryInst.getOpType() == OperatorType.SREM) {
+                    new MDRegAsm(AsmOp.MFHI, targetReg);
+                } else {
+                    throw new RuntimeException("Unknown operator "
+                            + binaryInst.getOpType());
+                }
+            }
+        } else if (operand2 instanceof ConstInt constInt) {
+            // a op 100
+            Register temp = Register.K0;
+            if (var2reg.containsKey(operand1)) {
+                temp = var2reg.get(operand1);
+            } else {
+                new MemAsm(AsmOp.LW, temp, Register.SP, var2Offset.get(operand1));
+            }
+            int constant = constInt.getIntValue();
+            if (binaryInst.getOpType() == OperatorType.ADD) {
+                new CalcAsm(targetReg, AsmOp.ADDIU, temp, constant);
+            } else if (binaryInst.getOpType() == OperatorType.SUB) {
+                new CalcAsm(targetReg, AsmOp.ADDIU, temp, -constant);
+            } else if (binaryInst.getOpType() == OperatorType.MUL) {
+                makeVarMulConst(temp, constant, targetReg);
+            } else if (binaryInst.getOpType() == OperatorType.SREM) {
+                new LiAsm(Register.K1, constInt.getIntValue());
+                new MulDivAsm(temp, AsmOp.DIV, Register.K1);
+                new MDRegAsm(AsmOp.MFHI, targetReg);
+            } else if (binaryInst.getOpType() == OperatorType.SDIV) {
+                OptimizedDivision.makeVarDivConst(temp, constant, targetReg);
+            } else {
+                throw new RuntimeException("Unknown operator " + binaryInst.getOpType());
+            }
+        }
+    }
+
+    private void makeNonConst(BinaryInst binaryInst, Register targetReg) {
+        Value operand1 = binaryInst.getOperand1();
+        Value operand2 = binaryInst.getOperand2();
+        Register reg1 = Register.K0;
+        Register reg2 = Register.K1;
+        if (var2reg.containsKey(operand1)) {
+            reg1 = var2reg.get(operand1);
+        } else {
+            new MemAsm(AsmOp.LW, reg1, Register.SP, var2Offset.get(operand1));
+        }
+        if (var2reg.containsKey(operand2)) {
+            reg2 = var2reg.get(operand2);
+        } else {
+            new MemAsm(AsmOp.LW, reg2, Register.SP, var2Offset.get(operand2));
+        }
+        switch (binaryInst.getOpType()) {
+            case ADD -> new CalcAsm(targetReg, AsmOp.ADDU, reg1, reg2);
+            case SUB -> new CalcAsm(targetReg, AsmOp.SUBU, reg1, reg2);
+            case MUL -> new CalcAsm(targetReg, AsmOp.MUL, reg1, reg2);
+            case SDIV -> {
+                new MulDivAsm(reg1, AsmOp.DIV, reg2);
+                new MDRegAsm(AsmOp.MFLO, targetReg);
+            }
+            case SREM -> {
+                new MulDivAsm(reg1, AsmOp.DIV, reg2);
+                new MDRegAsm(AsmOp.MFHI, targetReg);
             }
         }
     }
 
     private void makeVarMulConst(Register varReg, int constInt, Register targetReg) {
-        int bitCnt = Integer.bitCount(constInt);
-        if (constInt < 0 || bitCnt > 3) {
-            new LiAsm(Register.V0, constInt);
-            new CalcAsm(targetReg, AsmOp.MUL, varReg, Register.V0);
+        if (constInt == 0) {
+            new LiAsm(targetReg, 0);
             return;
         }
-        // 对于其他情况，使用优化的位操作
-        int[] shifts = new int[3];
-        int index = 0;
-        for (int i = 0; i < 32; i++) {
-            if ((constInt & (1 << i)) != 0) {
-                shifts[index++] = i;
-                if (index == 3) break;
-            }
+        if (constInt == 1) {
+            new MoveAsm(targetReg, varReg);
+            return;
         }
-
-        switch (bitCnt) {
-            case 1:
-                new CalcAsm(targetReg, AsmOp.SLL, varReg, shifts[0]);
-                break;
+        if (constInt == -1) {
+            new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, varReg);
+            return;
+        }
+        boolean isNegative = constInt < 0;
+        int absConstInt = Math.abs(constInt);
+        switch (absConstInt) {
             case 2:
-                new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
-                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
-                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
+                new CalcAsm(targetReg, AsmOp.ADDU, varReg, varReg);
                 break;
             case 3:
-                new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
-                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
-                new CalcAsm(Register.V0, AsmOp.ADDU, Register.V0, Register.V1);
-                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[2]);
+                new CalcAsm(Register.V0, AsmOp.ADDU, varReg, varReg);
+                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
+                break;
+            case 4:
+                new CalcAsm(targetReg, AsmOp.SLL, varReg, 2);
+                break;
+            case 5:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, 2);
+                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
+                break;
+            case 6:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, 2);
+                new CalcAsm(Register.V1, AsmOp.ADDU, varReg, varReg);
                 new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
                 break;
+            case 7:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, 3);
+                new CalcAsm(targetReg, AsmOp.SUBU, Register.V0, varReg);
+                break;
+            case 8:
+                new CalcAsm(targetReg, AsmOp.SLL, varReg, 3);
+                break;
+            case 9:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, 3);
+                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
+                break;
+            default:
+                int bitCnt = Integer.bitCount(absConstInt);
+                if (bitCnt <= 2) {
+                    // 使用原有的移位和加法逻辑
+                    int[] shifts = new int[2];
+                    int index = 0;
+                    for (int i = 0; i < 32; i++) {
+                        if ((absConstInt & (1 << i)) != 0) {
+                            shifts[index++] = i;
+                            if (index == 2) break;
+                        }
+                    }
+
+                    if (bitCnt == 1) {
+                        new CalcAsm(targetReg, AsmOp.SLL, varReg, shifts[0]);
+                    } else {
+                        new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
+                        new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
+                        new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
+                    }
+                } else {
+                    // 对于其他情况，使用乘法
+                    new LiAsm(Register.V0, absConstInt);
+                    new CalcAsm(targetReg, AsmOp.MUL, varReg, Register.V0);
+                }
+        }
+        if (isNegative) {
+            new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, targetReg);
         }
     }
 

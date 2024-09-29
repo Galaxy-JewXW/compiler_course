@@ -4,16 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="man">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="dismiss">
+      <change afterPath="$PROJECT_DIR$/src/backend/OptimizedDivision.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/enums/AsmOp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/enums/AsmOp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/Printer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/Printer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/enums/AsmOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/enums/AsmOp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/Printer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,7 +131,8 @@
       <workItem from="1727431491520" duration="2530000" />
       <workItem from="1727434852503" duration="14443000" />
       <workItem from="1727496050805" duration="19744000" />
-      <workItem from="1727584804830" duration="10773000" />
+      <workItem from="1727584804830" duration="10932000" />
+      <workItem from="1727605942525" duration="4778000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -360,7 +366,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727601774633</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="dismiss">
+      <option name="closed" value="true" />
+      <created>1727602991762</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1727602991762</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,7 +414,8 @@
     <MESSAGE value="add move" />
     <MESSAGE value="fix move" />
     <MESSAGE value="man" />
-    <option name="LAST_COMMIT_MESSAGE" value="man" />
+    <MESSAGE value="dismiss" />
+    <option name="LAST_COMMIT_MESSAGE" value="dismiss" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

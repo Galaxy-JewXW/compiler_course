@@ -11,7 +11,7 @@ declare void @putstr(i8*)
 define dso_local i32 @main() {
 0:
 	%1 = call i32 @getint()
-	%2 = mul i32 1026, %1
+	%2 = sdiv i32 %1, 2098
 	call void @putint(i32 %2)
 	ret i32 0
 }

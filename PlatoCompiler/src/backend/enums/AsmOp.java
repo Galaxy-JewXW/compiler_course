@@ -28,6 +28,7 @@ public enum AsmOp {
     SRL,
     // 乘除法指令
     MULT,
+    MADD,
     DIV,
     // 有条件跳转类指令
     BEQ,
