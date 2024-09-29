@@ -5,6 +5,7 @@ import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Function;
 import middle.component.Module;
+import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
 import middle.component.instruction.ZextInst;
@@ -53,6 +54,27 @@ public class RegAlloc {
             init(function);
             calcInOut(function);
             alloc(function.getBasicBlocks().get(0));
+            for (BasicBlock block : function.getBasicBlocks()) {
+                for (Instruction instruction : block.getInstructions()) {
+                    if (instruction instanceof CallInst callInst) {
+                        HashSet<Register> regs = new HashSet<>();
+                        for (Value value : outMap.get(block)) {
+                            if (var2reg.containsKey(value)) {
+                                regs.add(var2reg.get(value));
+                            }
+                        }
+                        for (int i = block.getInstructions().indexOf(callInst) + 1;
+                             i < block.getInstructions().size(); i++) {
+                            for (Value value : block.getInstructions().get(i).getOperands()) {
+                                if (var2reg.containsKey(value)) {
+                                    regs.add(var2reg.get(value));
+                                }
+                            }
+                        }
+                        callInst.setActiveReg(regs);
+                    }
+                }
+            }
             for (Value value : var2reg.keySet()) {
                 System.out.println(value.getName() + "->" + var2reg.get(value));
             }

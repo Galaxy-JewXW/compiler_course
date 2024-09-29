@@ -19,6 +19,7 @@ import backend.text.SyscallAsm;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.ConstString;
+import middle.component.FuncParam;
 import middle.component.Function;
 import middle.component.GlobalVar;
 import middle.component.Module;
@@ -42,6 +43,7 @@ import middle.component.type.ValueType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class MipsBuilder {
     private final Module module;
@@ -541,7 +543,55 @@ public class MipsBuilder {
     }
 
     private void buildCallInst(CallInst callInst) {
-
+        ArrayList<Register> allocatedRegs = new ArrayList<>(new HashSet<>(callInst.getActiveReg()));
+        ArrayList<MemAsm> lwAsms = new ArrayList<>();
+        ArrayList<MemAsm> swAsms = new ArrayList<>();
+        for (Register reg : var2reg.values()) {
+            if (reg == Register.A3 || reg == Register.A1 || reg == Register.A2) {
+                allocatedRegs.add(reg);
+            }
+        }
+        for (int i = 1; i <= allocatedRegs.size(); i++) {
+            swAsms.add(new MemAsm(AsmOp.SW, allocatedRegs.get(i - 1),
+                    Register.SP, curStackOffset - 4 * i));
+        }
+        new MemAsm(AsmOp.SW, Register.RA,
+                Register.SP, curStackOffset - 4 * allocatedRegs.size() - 4);
+        Function calledFunction = callInst.getCalledFunction();
+        for (int i = 1; i <= callInst.getOperands().size() - 1; i++) {
+            Value param = callInst.getOperands().get(i);
+            if (i <= 3) {
+                Register paramReg = Register.getByOffset(Register.A0, i);
+                if (param instanceof ConstInt constInt) {
+                    new LiAsm(paramReg, constInt.getIntValue());
+                } else if (var2reg.containsKey(param)) {
+                    if (param instanceof FuncParam) {
+                        new MemAsm(AsmOp.LW, paramReg, Register.SP,
+                                curStackOffset - (allocatedRegs.indexOf(var2reg.get(param)) + 1) * 4);
+                    } else {
+                        new MoveAsm(paramReg, var2reg.get(param));
+                    }
+                } else {
+                    new MemAsm(AsmOp.LW, paramReg, Register.SP, var2Offset.get(param));
+                }
+            } else {
+                Register paramReg = Register.K0;
+                if (param instanceof ConstInt constInt) {
+                    new LiAsm(paramReg, constInt.getIntValue());
+                } else if (var2reg.containsKey(param)) {
+                    if (param instanceof FuncParam) {
+                        new MemAsm(AsmOp.LW, paramReg, Register.SP,
+                                curStackOffset - (allocatedRegs.indexOf(var2reg.get(param)) + 1) * 4);
+                    } else {
+                        new MoveAsm(paramReg, var2reg.get(param));
+                    }
+                } else {
+                    new MemAsm(AsmOp.LW, paramReg, Register.SP, var2Offset.get(param));
+                }
+            }
+        }
+        new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, curStackOffset - 4 * allocatedRegs.size() - 4);
+        // TODO
     }
 
     private void buildGetintInst(GetintInst getintInst) {
