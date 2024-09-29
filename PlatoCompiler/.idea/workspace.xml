@@ -9,27 +9,10 @@
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsFile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/enums/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/enums/Register.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Function.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/Function.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/MipsFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/enums/AsmOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/enums/AsmOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/enums/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/enums/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/BrAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/BrAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/CalcAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/CalcAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/CmpAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/CmpAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/Label.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/Label.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/LiAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/LiAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/MDAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/MDAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/MemAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/MemAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/text/MoveAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/MoveAsm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Function.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
@@ -143,7 +126,7 @@
       <workItem from="1727431491520" duration="2530000" />
       <workItem from="1727434852503" duration="14443000" />
       <workItem from="1727496050805" duration="19744000" />
-      <workItem from="1727584804830" duration="9456000" />
+      <workItem from="1727584804830" duration="10773000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -369,7 +352,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727582564806</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="man">
+      <option name="closed" value="true" />
+      <created>1727601774633</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1727601774633</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,5 +401,26 @@
     <MESSAGE value="fix move" />
     <MESSAGE value="man" />
     <option name="LAST_COMMIT_MESSAGE" value="man" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/RegAlloc.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="581" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/RegAlloc.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="582" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/RegAlloc.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="583" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

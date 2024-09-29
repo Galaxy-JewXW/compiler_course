@@ -1,7 +1,7 @@
 int main() {
 int a;
 a = getint();
-int b = -3 * a;
+int b = 1026 * a;
 printf("%d", b);
 return 0;
 }

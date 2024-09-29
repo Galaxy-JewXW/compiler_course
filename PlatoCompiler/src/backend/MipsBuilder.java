@@ -224,6 +224,34 @@ public class MipsBuilder {
         if (constInt < 0 || bitCnt > 3) {
             new LiAsm(Register.V0, constInt);
             new CalcAsm(targetReg, AsmOp.MUL, varReg, Register.V0);
+            return;
+        }
+        // 对于其他情况，使用优化的位操作
+        int[] shifts = new int[3];
+        int index = 0;
+        for (int i = 0; i < 32; i++) {
+            if ((constInt & (1 << i)) != 0) {
+                shifts[index++] = i;
+                if (index == 3) break;
+            }
+        }
+
+        switch (bitCnt) {
+            case 1:
+                new CalcAsm(targetReg, AsmOp.SLL, varReg, shifts[0]);
+                break;
+            case 2:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
+                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
+                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
+                break;
+            case 3:
+                new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
+                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
+                new CalcAsm(Register.V0, AsmOp.ADDU, Register.V0, Register.V1);
+                new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[2]);
+                new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
+                break;
         }
     }
 

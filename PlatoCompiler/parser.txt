@@ -19,12 +19,9 @@ SEMICN ;
 INTTK int
 IDENFR b
 ASSIGN =
-MINU -
-<UnaryOp>
-INTCON 3
+INTCON 1026
 <Number>
 <PrimaryExp>
-<UnaryExp>
 <UnaryExp>
 <MulExp>
 MULT *

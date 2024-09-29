@@ -30,7 +30,9 @@ public class Optimizer {
         BlockMerge.run(module);
         Mem2Reg.run(module, false);
         CodeRemoval.run(module);
+        module.updateId();
         RegAlloc.run(module);
         RemovePhi.run(module);
+        module.updateId();
     }
 }
