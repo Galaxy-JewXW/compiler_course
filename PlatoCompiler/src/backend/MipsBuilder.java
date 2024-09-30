@@ -4,11 +4,44 @@ import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.global.Asciiz;
 import backend.global.Word;
-import backend.text.*;
+import backend.text.BrAsm;
+import backend.text.CalcAsm;
+import backend.text.CmpAsm;
+import backend.text.Comment;
+import backend.text.JumpAsm;
+import backend.text.LaAsm;
+import backend.text.Label;
+import backend.text.LiAsm;
+import backend.text.MDRegAsm;
+import backend.text.MemAsm;
+import backend.text.MoveAsm;
+import backend.text.MulDivAsm;
+import backend.text.SyscallAsm;
+import backend.utils.OptimizedDivision;
+import backend.utils.RegAlloc;
+import backend.utils.RemovePhi;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.MoveInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
 import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
 import middle.component.instruction.io.PutintInst;
 import middle.component.model.Use;
 import middle.component.model.User;
@@ -25,7 +58,6 @@ import java.util.HashSet;
 public class MipsBuilder {
     private final Module module;
     private int curStackOffset;
-    private HashMap<Value, Integer> stackOffsetMap;
     private HashMap<Value, Register> var2reg;
     private boolean isInMain = false;
     private Function currentFunction;
@@ -33,6 +65,9 @@ public class MipsBuilder {
 
     public MipsBuilder(Module module) {
         this.module = module;
+        RegAlloc.run(module);
+        RemovePhi.run(module);
+        module.updateId();
     }
 
     public void build() {
@@ -153,10 +188,16 @@ public class MipsBuilder {
             buildGetintInst(getintInst);
         } else if (instruction instanceof PutintInst putintInst) {
             buildPutintInst(putintInst);
+        } else if (instruction instanceof PutchInst putchInst) {
+            buildPutchInst(putchInst);
         } else if (instruction instanceof RetInst retInst) {
             buildRetInst(retInst);
         } else if (instruction instanceof StoreInst storeInst) {
             buildStoreInst(storeInst);
+        } else if (instruction instanceof TruncInst truncInst) {
+            buildTruncInst(truncInst);
+        } else if (instruction instanceof ZextInst zextInst) {
+            buildZextInst(zextInst);
         }
     }
 
@@ -587,7 +628,7 @@ public class MipsBuilder {
         jalAsm.setStoreWords(swAsms);
         if (!calledFunction.getReturnType().equals(IntegerType.VOID)) {
             if (var2reg.containsKey(callInst)) {
-                new CalcAsm(var2reg.get(callInst), AsmOp.ADDIU, Register.V0, 0);
+                new MoveAsm(var2reg.get(callInst), Register.V0);
             } else {
                 new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(callInst));
             }
@@ -652,14 +693,29 @@ public class MipsBuilder {
     }
 
     private void buildMoveInst(MoveInst moveInst) {
-
+        Value fromValue = moveInst.getFromValue();
+        Value toValue = moveInst.getToValue();
+        Register reg = Register.K0;
+        if (var2reg.containsKey(toValue)) {
+            reg = var2reg.get(toValue);
+        }
+        if (fromValue instanceof ConstInt constInt) {
+            new LiAsm(reg, constInt.getIntValue());
+        } else if (var2reg.containsKey(fromValue)) {
+            new MoveAsm(reg, var2reg.get(fromValue));
+        } else {
+            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(fromValue));
+        }
+        if (reg == Register.K0) {
+            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(fromValue));
+        }
     }
 
     private void buildGetintInst(GetintInst getintInst) {
         new LiAsm(Register.V0, 5);
         new SyscallAsm();
         if (var2reg.containsKey(getintInst)) {
-            new CalcAsm(var2reg.get(getintInst), AsmOp.ADDIU, Register.V0, 0);
+            new MoveAsm(var2reg.get(getintInst), Register.V0);
         } else {
             new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(getintInst));
         }
@@ -670,12 +726,25 @@ public class MipsBuilder {
         if (value instanceof ConstInt constInt) {
             new LiAsm(Register.A0, constInt.getIntValue());
         } else if (var2reg.containsKey(value)) {
-            new CalcAsm(Register.A0, AsmOp.ADDIU, var2reg.get(value), 0);
+            new MoveAsm(Register.A0, var2reg.get(value));
+        } else {
+            new MemAsm(AsmOp.LW, Register.A0, Register.SP, var2Offset.get(value));
+        }
+        new LiAsm(Register.V0, 1);
+        new SyscallAsm();
+    }
+
+    private void buildPutchInst(PutchInst putchInst) {
+        Value value = putchInst.getTarget();
+        if (value instanceof ConstInt constInt) {
+            new LiAsm(Register.A0, constInt.getIntValue());
+        } else if (var2reg.containsKey(value)) {
+            new MoveAsm(Register.A0, var2reg.get(value));
         } else {
             int offset = var2Offset.get(value);
             new MemAsm(AsmOp.LW, Register.A0, Register.SP, offset);
         }
-        new LiAsm(Register.V0, 1);
+        new LiAsm(Register.V0, 11);
         new SyscallAsm();
     }
 
@@ -689,7 +758,7 @@ public class MipsBuilder {
                 if (returnValue instanceof ConstInt constInt) {
                     new LiAsm(Register.V0, constInt.getIntValue());
                 } else if (var2reg.containsKey(returnValue)) {
-                    new CalcAsm(Register.V0, AsmOp.ADDIU, var2reg.get(returnValue), 0);
+                    new MoveAsm(Register.V0, var2reg.get(returnValue));
                 } else {
                     new MemAsm(AsmOp.LW, Register.V0, Register.SP, var2Offset.get(retInst));
                 }
@@ -717,6 +786,67 @@ public class MipsBuilder {
         } else {
             new MemAsm(AsmOp.LW, Register.K1, Register.SP, var2Offset.get(pointer));
             new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+        }
+    }
+
+    private void buildTruncInst(TruncInst truncInst) {
+        Value value = truncInst.getOriginValue();
+        ValueType originType = value.getValueType();
+        ValueType targetType = truncInst.getValueType();
+        Register reg = Register.K0;
+        if (value instanceof ConstInt constInt) {
+            int after = constInt.getIntValue() & 0xFF;
+            if (var2reg.containsKey(truncInst)) {
+                if (originType != targetType) {
+                    new LiAsm(var2reg.get(truncInst), after);
+                } else {
+                    new LiAsm(var2reg.get(truncInst), constInt.getIntValue());
+                }
+            } else {
+                if (originType != targetType) {
+                    new LiAsm(Register.K0, after);
+                } else {
+                    new LiAsm(Register.K0, constInt.getIntValue());
+                }
+                new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(truncInst));
+            }
+            return;
+        }
+        if (var2reg.containsKey(value)) {
+            reg = var2reg.get(value);
+        } else {
+            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(value));
+        }
+        if (var2reg.containsKey(truncInst)) {
+            if (originType != targetType) {
+                new CalcAsm(var2reg.get(truncInst), AsmOp.ANDI, reg, 0xFF);
+            } else {
+                new MoveAsm(var2reg.get(truncInst), reg);
+            }
+        } else {
+            if (originType != targetType) {
+                new CalcAsm(Register.K1, AsmOp.ANDI, reg, 0xFF);
+                new MemAsm(AsmOp.SW, Register.K1, Register.SP, var2Offset.get(truncInst));
+            } else {
+                new MemAsm(AsmOp.SW, reg, Register.SP, var2Offset.get(truncInst));
+            }
+        }
+    }
+
+    private void buildZextInst(ZextInst zextInst) {
+        Value value = zextInst.getOriginValue();
+        Register reg = Register.K0;
+        if (value instanceof ConstInt constInt) {
+            new LiAsm(reg, constInt.getIntValue());
+        } else if (var2reg.containsKey(value)) {
+            reg = var2reg.get(value);
+        } else {
+            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(value));
+        }
+        if (var2reg.containsKey(zextInst)) {
+            new MoveAsm(var2reg.get(zextInst), reg);
+        } else {
+            new MemAsm(AsmOp.SW, reg, Register.SP, var2Offset.get(zextInst));
         }
     }
 

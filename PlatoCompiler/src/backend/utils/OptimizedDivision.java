@@ -1,8 +1,12 @@
-package backend;
+package backend.utils;
 
 import backend.enums.AsmOp;
 import backend.enums.Register;
-import backend.text.*;
+import backend.text.CalcAsm;
+import backend.text.LiAsm;
+import backend.text.MDRegAsm;
+import backend.text.MoveAsm;
+import backend.text.MulDivAsm;
 
 public class OptimizedDivision {
     private static long calculateMagicNumber(int divisor) {

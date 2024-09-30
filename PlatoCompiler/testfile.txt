@@ -1,11 +1,15 @@
-int a = 5;
-int change() {
-    a = 6;
-    return a;
-}
+// 源语言
 int main() {
-    if (1 || change()) {
-        printf("%d", a);
+    char x;int cond;
+    cond = getint();
+    if (cond > 0){
+    int kk;
+    kk = getint();
+        x = -kk;
     }
+    else{
+        x = 101;
+    }
+    printf("%c", x);
     return 0;
 }

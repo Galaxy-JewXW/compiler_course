@@ -1,4 +1,4 @@
-package pass;
+package backend.utils;
 
 import backend.enums.Register;
 import middle.IRData;
@@ -70,7 +70,8 @@ public class RemovePhi {
                 for (int j = i + 1; j < moveList.size(); j++) {
                     if (moveList.get(i).getToValue()
                             .equals(moveList.get(j).getFromValue())) {
-                        Value value = new Value(IRData.getVarName(), IntegerType.i32);
+                        String name = IRData.getVarName().substring(1);
+                        Value value = new Value("%t" + name, IntegerType.i32);
                         MoveInst tempMove = new MoveInst(
                                 value, moveList.get(i).getToValue(), currentBlock);
                         parallels.add(0, tempMove);
@@ -91,7 +92,8 @@ public class RemovePhi {
                             && var2reg.containsKey(parallels.get(j).getFromValue())
                             && var2reg.get(parallels.get(i).getToValue())
                             .equals(var2reg.get(parallels.get(j).getFromValue()))) {
-                        Value value = new Value(IRData.getVarName(), IntegerType.i32);
+                        String name = IRData.getVarName().substring(1);
+                        Value value = new Value("%t" + name, IntegerType.i32);
                         MoveInst tempMove = new MoveInst(
                                 value, moveList.get(i).getToValue(), currentBlock);
                         finalMoves.add(0, tempMove);

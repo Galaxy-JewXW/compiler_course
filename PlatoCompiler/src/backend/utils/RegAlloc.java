@@ -1,4 +1,4 @@
-package pass;
+package backend.utils;
 
 import backend.enums.Register;
 import middle.component.BasicBlock;
