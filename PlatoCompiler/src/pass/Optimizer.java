@@ -24,7 +24,6 @@ public class Optimizer {
         SurplusBlock.build(module);
         Mem2Reg.run(module, false);
         FunctionSideEffect.run(module);
-        System.out.println(module);
         CodeRemoval.run(module);
         FixMD.run(module);
         OptimizePhi.run(module);
