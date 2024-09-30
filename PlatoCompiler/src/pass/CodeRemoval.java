@@ -6,6 +6,7 @@ import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.io.GetcharInst;
 import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.IOInst;
 
 import java.util.HashSet;
 import java.util.Stack;
@@ -21,8 +22,7 @@ public class CodeRemoval {
         module.getFunctions().forEach(function ->
                 function.getBasicBlocks().forEach(block -> {
                     // 使用 stream() 和 removeIf() 过滤无用指令
-                    block.getInstructions().removeIf(CodeRemoval::isDeadCode
-                    );
+                    block.getInstructions().removeIf(CodeRemoval::isDeadCode);
                 })
         );
     }
@@ -84,7 +84,7 @@ public class CodeRemoval {
 
     // 判断指令是否有用
     private static boolean isUseful(Instruction instruction) {
-        return instruction.getName().isEmpty() ||
+        return instruction.getName().isEmpty() || instruction instanceof IOInst ||
                 (instruction instanceof CallInst callInst && callInst.getCalledFunction().hasSideEffects());
     }
 
