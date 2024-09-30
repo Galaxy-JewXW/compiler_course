@@ -1,50 +1,69 @@
 INTTK int
-MAINTK main
+IDENFR a
+ASSIGN =
+INTCON 5
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+<InitVal>
+<VarDef>
+SEMICN ;
+<VarDecl>
+INTTK int
+<FuncType>
+IDENFR change
 LPARENT (
 RPARENT )
 LBRACE {
-INTTK int
-IDENFR x
-<VarDef>
-COMMA ,
-IDENFR n
-<VarDef>
-SEMICN ;
-<VarDecl>
-IDENFR n
+IDENFR a
 <LVal>
 ASSIGN =
-GETINTTK getint
-LPARENT (
-RPARENT )
+INTCON 6
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
 SEMICN ;
 <Stmt>
-INTTK int
-IDENFR m
-<VarDef>
-SEMICN ;
-<VarDecl>
-IDENFR m
-<LVal>
-ASSIGN =
-GETINTTK getint
-LPARENT (
-RPARENT )
-SEMICN ;
-<Stmt>
-IFTK if
-LPARENT (
-IDENFR n
+RETURNTK return
+IDENFR a
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<RelExp>
-GRE >
-IDENFR m
-<LVal>
+<Exp>
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<FuncDef>
+INTTK int
+MAINTK main
+LPARENT (
+RPARENT )
+LBRACE {
+IFTK if
+LPARENT (
+INTCON 1
+<Number>
 <PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<RelExp>
+<EqExp>
+<LAndExp>
+<LOrExp>
+OR ||
+IDENFR change
+LPARENT (
+RPARENT )
 <UnaryExp>
 <MulExp>
 <AddExp>
@@ -55,66 +74,11 @@ IDENFR m
 <Cond>
 RPARENT )
 LBRACE {
-IDENFR x
-<LVal>
-ASSIGN =
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
-ELSETK else
-LBRACE {
-IDENFR x
-<LVal>
-ASSIGN =
-MINU -
-<UnaryOp>
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-MINU -
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
-<Stmt>
 PRINTFTK printf
 LPARENT (
 STRCON "%d"
 COMMA ,
-IDENFR x
+IDENFR a
 <LVal>
 <PrimaryExp>
 <UnaryExp>
@@ -123,6 +87,10 @@ IDENFR x
 <Exp>
 RPARENT )
 SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<Stmt>
 <Stmt>
 RETURNTK return
 INTCON 0

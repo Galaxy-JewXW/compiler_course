@@ -4,33 +4,10 @@ import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.global.Asciiz;
 import backend.global.Word;
-import backend.text.BrAsm;
-import backend.text.CalcAsm;
-import backend.text.CmpAsm;
-import backend.text.Comment;
-import backend.text.JumpAsm;
-import backend.text.Label;
-import backend.text.LiAsm;
-import backend.text.MDRegAsm;
-import backend.text.MemAsm;
-import backend.text.MoveAsm;
-import backend.text.MulDivAsm;
-import backend.text.SyscallAsm;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
+import backend.text.*;
 import middle.component.Module;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.MoveInst;
-import middle.component.instruction.OperatorType;
-import middle.component.instruction.RetInst;
+import middle.component.*;
+import middle.component.instruction.*;
 import middle.component.instruction.io.GetintInst;
 import middle.component.instruction.io.PutintInst;
 import middle.component.model.Use;
@@ -164,12 +141,22 @@ public class MipsBuilder {
             } else {
                 buildNoCondBrInst(brInst);
             }
+        } else if (instruction instanceof CallInst callInst) {
+            buildCallInst(callInst);
+        } else if (instruction instanceof GepInst gepInst) {
+            buildGepInst(gepInst);
+        } else if (instruction instanceof LoadInst loadInst) {
+            buildLoadInst(loadInst);
+        } else if (instruction instanceof MoveInst moveInst) {
+            buildMoveInst(moveInst);
         } else if (instruction instanceof GetintInst getintInst) {
             buildGetintInst(getintInst);
         } else if (instruction instanceof PutintInst putintInst) {
             buildPutintInst(putintInst);
         } else if (instruction instanceof RetInst retInst) {
             buildRetInst(retInst);
+        } else if (instruction instanceof StoreInst storeInst) {
+            buildStoreInst(storeInst);
         }
     }
 
@@ -473,8 +460,6 @@ public class MipsBuilder {
                         + "_b" + brInst.getTrueBlock().getName(),
                         Register.K0, AsmOp.BEQ, 1);
             }
-            new JumpAsm(AsmOp.J, currentFunction.getName().substring(1)
-                    + "_b" + brInst.getFalseBlock().getName());
         } else {
             AsmOp asmOp = switch (condition.getOpType()) {
                 case ICMP_EQ -> AsmOp.BEQ;
@@ -532,9 +517,9 @@ public class MipsBuilder {
                 new BrAsm(currentFunction.getName().substring(1)
                         + "_b" + brInst.getTrueBlock().getName(), reg1, asmOp, reg2);
             }
-            new JumpAsm(AsmOp.J, currentFunction.getName().substring(1)
-                    + "_b" + brInst.getFalseBlock().getName());
         }
+        new JumpAsm(AsmOp.J, currentFunction.getName().substring(1)
+                + "_b" + brInst.getFalseBlock().getName());
     }
 
     private void buildNoCondBrInst(BrInst brInst) {
@@ -591,7 +576,83 @@ public class MipsBuilder {
             }
         }
         new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, curStackOffset - 4 * allocatedRegs.size() - 4);
-        // TODO
+        JumpAsm jalAsm = new JumpAsm(AsmOp.JAL, calledFunction.getName().substring(1));
+        new MemAsm(AsmOp.LW, Register.RA, Register.SP, 0);
+        new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, -(curStackOffset - 4 * allocatedRegs.size() - 4));
+        for (int i = 1; i <= allocatedRegs.size(); i++) {
+            lwAsms.add(new MemAsm(AsmOp.LW, allocatedRegs.get(i - 1),
+                    Register.SP, curStackOffset - 4 * i));
+        }
+        jalAsm.setLoadWords(lwAsms);
+        jalAsm.setStoreWords(swAsms);
+        if (!calledFunction.getReturnType().equals(IntegerType.VOID)) {
+            if (var2reg.containsKey(callInst)) {
+                new CalcAsm(var2reg.get(callInst), AsmOp.ADDIU, Register.V0, 0);
+            } else {
+                new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(callInst));
+            }
+        }
+    }
+
+    private void buildGepInst(GepInst gepInst) {
+        Value pointer = gepInst.getPointer();
+        Value index = gepInst.getIndex();
+        Register pointerReg = Register.K0;
+        Register indexReg = Register.K1;
+        if (pointer instanceof GlobalVar globalVar) {
+            new LaAsm(pointerReg, globalVar.getName().substring(1));
+        } else if (var2reg.containsKey(pointer)) {
+            pointerReg = var2reg.get(pointer);
+        } else {
+            new MemAsm(AsmOp.LW, pointerReg, Register.SP, var2Offset.get(pointer));
+        }
+        if (!(index instanceof ConstInt constInt)) {
+            if (var2reg.containsKey(index)) {
+                indexReg = var2reg.get(index);
+            } else {
+                new MemAsm(AsmOp.LW, indexReg, Register.SP, var2Offset.get(index));
+            }
+            new CalcAsm(Register.K1, AsmOp.SLL, indexReg, 2);
+            if (var2reg.containsKey(gepInst)) {
+                new CalcAsm(var2reg.get(gepInst), AsmOp.ADDU,
+                        pointerReg, Register.K1);
+            } else {
+                new CalcAsm(Register.K0, AsmOp.ADDU,
+                        pointerReg, Register.K1);
+                new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(gepInst));
+            }
+            return;
+        }
+        if (var2reg.containsKey(gepInst)) {
+            new CalcAsm(var2reg.get(gepInst), AsmOp.ADDIU,
+                    pointerReg, 4 * constInt.getIntValue());
+        } else {
+            new CalcAsm(Register.K0, AsmOp.ADDIU,
+                    pointerReg, 4 * constInt.getIntValue());
+            new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(gepInst));
+        }
+    }
+
+    private void buildLoadInst(LoadInst loadInst) {
+        Value pointer = loadInst.getPointer();
+        Register pointerReg = Register.K0;
+        if (pointer instanceof GlobalVar globalVar) {
+            new LaAsm(pointerReg, globalVar.getName().substring(1));
+        } else if (var2reg.containsKey(pointer)) {
+            pointerReg = var2reg.get(pointer);
+        } else {
+            new MemAsm(AsmOp.LW, pointerReg, Register.SP, var2Offset.get(loadInst));
+        }
+        if (var2reg.containsKey(loadInst)) {
+            new MemAsm(AsmOp.LW, var2reg.get(loadInst), pointerReg, 0);
+        } else {
+            new MemAsm(AsmOp.LW, Register.K0, pointerReg, 0);
+            new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(loadInst));
+        }
+    }
+
+    private void buildMoveInst(MoveInst moveInst) {
+
     }
 
     private void buildGetintInst(GetintInst getintInst) {
@@ -637,5 +698,26 @@ public class MipsBuilder {
         }
     }
 
+    private void buildStoreInst(StoreInst storeInst) {
+        Value pointer = storeInst.getPointer();
+        Value storedValue = storeInst.getStoredValue();
+        Register reg = Register.K0;
+        if (pointer instanceof GlobalVar globalVar) {
+            new LaAsm(reg, globalVar.getName().substring(1));
+        } else if (var2reg.containsKey(pointer)) {
+            reg = var2reg.get(pointer);
+        } else {
+            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(pointer));
+        }
+        if (storedValue instanceof ConstInt constInt) {
+            new LiAsm(Register.K1, constInt.getIntValue());
+            new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+        } else if (var2reg.containsKey(storedValue)) {
+            new MemAsm(AsmOp.SW, var2reg.get(storedValue), reg, 0);
+        } else {
+            new MemAsm(AsmOp.LW, Register.K1, Register.SP, var2Offset.get(pointer));
+            new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+        }
+    }
 
 }

@@ -6,25 +6,20 @@ declare void @putstr(i8*)
 
 
 
+@a = dso_local global i32 5
 
+define dso_local i32 @change() {
+0:
+	store i32 6, i32* @a
+	%1 = load i32, i32* @a
+	ret i32 %1
+}
 
 define dso_local i32 @main() {
 0:
-	%1 = call i32 @getint()
-	%2 = call i32 @getint()
-	%3 = icmp sgt i32 %1, %2
-	br i1 %3, label %4, label %8
-4:
-	%5 = mul i32 %1, %1
-	move %5 -> %11
-	br label %14
-8:
-	%9 = sub i32 0, %1
-	%10 = mul i32 %9, 2
-	%11 = sub i32 %10, %1
-	move %11 -> %11
-	br label %14
-14:
-	call void @putint(i32 %11)
+	%1 = load i32, i32* @a
+	call void @putint(i32 %1)
+	br label %2
+2:
 	ret i32 0
 }

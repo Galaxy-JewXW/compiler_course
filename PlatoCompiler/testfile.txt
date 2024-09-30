@@ -1,13 +1,11 @@
+int a = 5;
+int change() {
+    a = 6;
+    return a;
+}
 int main() {
-    int x, n;
-    n = getint();
-    int m;
-    m = getint();
-    if (n > m) {
-    x = n * n;
-    } else {
-    x = -n * 2 - n;
+    if (1 || change()) {
+        printf("%d", a);
     }
-    printf("%d",x);
     return 0;
 }
