@@ -221,12 +221,13 @@ li $v0, 5
 syscall
 move $t0, $v0
 # %48 = call i32 @getint()
+li $v0, 5
 syscall
 move $t1, $v0
 # %49 = call i32 @gcd(i32 %47, i32 %48)
-sw $t1, -8($sp)
-sw $t0, -12($sp)
-sw $t2, -16($sp)
+sw $t2, -8($sp)
+sw $t1, -12($sp)
+sw $t0, -16($sp)
 sw $ra, -20($sp)
 move $a1, $t0
 move $a2, $t1
@@ -234,9 +235,9 @@ addiu $sp, $sp, -20
 jal gcd
 lw $ra, 0($sp)
 addiu $sp, $sp, 20
-lw $t1, -8($sp)
-lw $t0, -12($sp)
-lw $t2, -16($sp)
+lw $t2, -8($sp)
+lw $t1, -12($sp)
+lw $t0, -16($sp)
 move $t2, $v0
 # call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.7, i64 0, i64 0))
 la $a0, s7

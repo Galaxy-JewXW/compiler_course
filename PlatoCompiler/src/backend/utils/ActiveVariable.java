@@ -1,10 +1,7 @@
 package backend.utils;
 
-import middle.component.BasicBlock;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
 import middle.component.Module;
+import middle.component.*;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
 import middle.component.model.Value;
@@ -43,7 +40,10 @@ public class ActiveVariable {
                 }
             }
         } while (change);
-        updateBlockSets(func, inMap, outMap);
+        for (BasicBlock block : func.getBasicBlocks()) {
+            block.setInSet(inMap.get(block));
+            block.setOutSet(outMap.get(block));
+        }
     }
 
     private static void analyzeSingleBlock(BasicBlock block) {
@@ -84,19 +84,5 @@ public class ActiveVariable {
         inSet.removeAll(block.getDefSet());
         inSet.addAll(block.getUseSet());
         return inSet;
-    }
-
-    private static void updateBlockSets(Function func, HashMap<BasicBlock, HashSet<Value>> inMap,
-                                        HashMap<BasicBlock, HashSet<Value>> outMap) {
-        int maxActiveCnt = 0;
-        for (BasicBlock block : func.getBasicBlocks()) {
-            block.setInSet(inMap.get(block));
-            block.setOutSet(outMap.get(block));
-            int activeCnt = (int) inMap.get(block).stream()
-                    .filter(value -> outMap.get(block).contains(value))
-                    .count();
-            maxActiveCnt = Math.max(maxActiveCnt, activeCnt);
-        }
-
     }
 }

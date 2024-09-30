@@ -703,29 +703,25 @@ public class MipsBuilder {
     }
 
     private void buildGetintInst(GetintInst getintInst) {
-        if (v0Value != 5) {
-            new LiAsm(Register.V0, 5);
-        }
-        v0Value = 5;
+        new LiAsm(Register.V0, 5);
         new SyscallAsm();
         if (var2reg.containsKey(getintInst)) {
             new MoveAsm(var2reg.get(getintInst), Register.V0);
         } else {
             new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(getintInst));
         }
+        v0Value = 0;
     }
 
     private void buildGetcharInst(GetcharInst getcharInst) {
-        if (v0Value != 12) {
-            new LiAsm(Register.V0, 12);
-        }
-        v0Value = 12;
+        new LiAsm(Register.V0, 12);
         new SyscallAsm();
         if (var2reg.containsKey(getcharInst)) {
             new MoveAsm(var2reg.get(getcharInst), Register.V0);
         } else {
             new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(getcharInst));
         }
+        v0Value = 0;
     }
 
     private void buildPutintInst(PutintInst putintInst) {
