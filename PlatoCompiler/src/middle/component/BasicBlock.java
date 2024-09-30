@@ -6,9 +6,11 @@ import middle.component.instruction.MoveInst;
 import middle.component.instruction.PhiInst;
 import middle.component.model.Use;
 import middle.component.model.User;
+import middle.component.model.Value;
 import middle.component.type.LabelType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class BasicBlock extends User {
@@ -30,6 +32,12 @@ public class BasicBlock extends User {
     // 标记是否在优化过程中被删除
     private boolean isDeleted = false;
     private int imdomDepth;
+
+    //活跃变量分析
+    private HashSet<Value> defSet = new HashSet<>();
+    private HashSet<Value> useSet = new HashSet<>();
+    private HashSet<Value> inSet;
+    private HashSet<Value> outSet;
 
     public BasicBlock(String name) {
         super(name, new LabelType());
@@ -152,6 +160,38 @@ public class BasicBlock extends User {
 
     public void setImdomDepth(int imdomDepth) {
         this.imdomDepth = imdomDepth;
+    }
+
+    public HashSet<Value> getDefSet() {
+        return defSet;
+    }
+
+    public void setDefSet(HashSet<Value> defSet) {
+        this.defSet = new HashSet<>(defSet);
+    }
+
+    public HashSet<Value> getInSet() {
+        return inSet;
+    }
+
+    public void setInSet(HashSet<Value> inSet) {
+        this.inSet = new HashSet<>(inSet);
+    }
+
+    public HashSet<Value> getOutSet() {
+        return outSet;
+    }
+
+    public void setOutSet(HashSet<Value> outSet) {
+        this.outSet = new HashSet<>(outSet);
+    }
+
+    public HashSet<Value> getUseSet() {
+        return useSet;
+    }
+
+    public void setUseSet(HashSet<Value> useSet) {
+        this.useSet = new HashSet<>(useSet);
     }
 
     public void deleteForPhi(BasicBlock block) {
