@@ -21,7 +21,7 @@ public class RemovePhi {
 
     public static void run(Module module) {
         for (Function function : module.getFunctions()) {
-            var2reg = new HashMap<>(function.getVar2reg());
+            var2reg = function.getVar2reg();
             ArrayList<BasicBlock> blocks = new ArrayList<>(function.getBasicBlocks());
             for (BasicBlock b : blocks) {
                 removePhi(b);

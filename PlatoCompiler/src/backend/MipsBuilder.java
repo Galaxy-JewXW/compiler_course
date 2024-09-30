@@ -148,7 +148,7 @@ public class MipsBuilder {
                     if (!var2reg.containsKey(moveInst.getToValue())
                             && !var2Offset.containsKey(moveInst.getToValue())) {
                         curStackOffset -= 4;
-                        var2Offset.put(instruction, curStackOffset);
+                        var2Offset.put(moveInst.getToValue(), curStackOffset);
                     }
                 }
             }
