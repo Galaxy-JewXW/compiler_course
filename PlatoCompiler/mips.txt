@@ -224,9 +224,9 @@ move $t0, $v0
 syscall
 move $t1, $v0
 # %49 = call i32 @gcd(i32 %47, i32 %48)
-sw $t0, -8($sp)
-sw $t2, -12($sp)
-sw $t1, -16($sp)
+sw $t1, -8($sp)
+sw $t0, -12($sp)
+sw $t2, -16($sp)
 sw $ra, -20($sp)
 move $a1, $t0
 move $a2, $t1
@@ -234,9 +234,9 @@ addiu $sp, $sp, -20
 jal gcd
 lw $ra, 0($sp)
 addiu $sp, $sp, 20
-lw $t0, -8($sp)
-lw $t2, -12($sp)
-lw $t1, -16($sp)
+lw $t1, -8($sp)
+lw $t0, -12($sp)
+lw $t2, -16($sp)
 move $t2, $v0
 # call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.7, i64 0, i64 0))
 la $a0, s7
@@ -251,8 +251,8 @@ la $a0, s3
 li $v0, 4
 syscall
 # %50 = call i32 @lcm(i32 %47, i32 %48)
-sw $t0, -8($sp)
-sw $t1, -12($sp)
+sw $t1, -8($sp)
+sw $t0, -12($sp)
 sw $ra, -16($sp)
 move $a1, $t0
 move $a2, $t1
@@ -260,8 +260,8 @@ addiu $sp, $sp, -16
 jal lcm
 lw $ra, 0($sp)
 addiu $sp, $sp, 16
-lw $t0, -8($sp)
-lw $t1, -12($sp)
+lw $t1, -8($sp)
+lw $t0, -12($sp)
 move $t0, $v0
 # call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.8, i64 0, i64 0))
 la $a0, s8
@@ -530,18 +530,18 @@ div $a1, $a2
 mfhi $t0
 # %8 = call i32 @gcd(i32 %1, i32 %7)
 sw $t0, -12($sp)
-sw $a2, -16($sp)
-sw $a1, -20($sp)
+sw $a1, -16($sp)
+sw $a2, -20($sp)
 sw $ra, -24($sp)
-lw $a1, -16($sp)
+lw $a1, -20($sp)
 move $a2, $t0
 addiu $sp, $sp, -24
 jal gcd
 lw $ra, 0($sp)
 addiu $sp, $sp, 24
 lw $t0, -12($sp)
-lw $a2, -16($sp)
-lw $a1, -20($sp)
+lw $a1, -16($sp)
+lw $a2, -20($sp)
 move $t0, $v0
 # ret i32 %8
 move $v0, $t0
@@ -549,8 +549,8 @@ jr $ra
 lcm:
 lcm_b2:
 # %3 = call i32 @gcd(i32 %0, i32 %1)
-sw $t0, -12($sp)
-sw $t1, -16($sp)
+sw $t1, -12($sp)
+sw $t0, -16($sp)
 sw $a1, -20($sp)
 sw $a2, -24($sp)
 sw $ra, -28($sp)
@@ -560,8 +560,8 @@ addiu $sp, $sp, -28
 jal gcd
 lw $ra, 0($sp)
 addiu $sp, $sp, 28
-lw $t0, -12($sp)
-lw $t1, -16($sp)
+lw $t1, -12($sp)
+lw $t0, -16($sp)
 lw $a1, -20($sp)
 lw $a2, -24($sp)
 move $t0, $v0
@@ -614,8 +614,8 @@ fun5_b7:
 # %8 = sub i32 %0, 1
 addiu $t0, $a1, -1
 # %9 = call i32 @fun5(i32 %8)
-sw $t0, -8($sp)
-sw $t1, -12($sp)
+sw $t1, -8($sp)
+sw $t0, -12($sp)
 sw $a1, -16($sp)
 sw $ra, -20($sp)
 move $a1, $t0
@@ -623,15 +623,15 @@ addiu $sp, $sp, -20
 jal fun5
 lw $ra, 0($sp)
 addiu $sp, $sp, 20
-lw $t0, -8($sp)
-lw $t1, -12($sp)
+lw $t1, -8($sp)
+lw $t0, -12($sp)
 lw $a1, -16($sp)
 move $t0, $v0
 # %10 = sub i32 %0, 2
 addiu $t1, $a1, -2
 # %11 = call i32 @fun5(i32 %10)
-sw $t0, -8($sp)
-sw $t1, -12($sp)
+sw $t1, -8($sp)
+sw $t0, -12($sp)
 sw $a1, -16($sp)
 sw $ra, -20($sp)
 move $a1, $t1
@@ -639,8 +639,8 @@ addiu $sp, $sp, -20
 jal fun5
 lw $ra, 0($sp)
 addiu $sp, $sp, 20
-lw $t0, -8($sp)
-lw $t1, -12($sp)
+lw $t1, -8($sp)
+lw $t0, -12($sp)
 lw $a1, -16($sp)
 move $t1, $v0
 # %12 = add i32 %9, %11

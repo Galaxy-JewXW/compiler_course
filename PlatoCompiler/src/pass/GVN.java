@@ -2,14 +2,8 @@ package pass;
 
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
-import middle.component.Function;
 import middle.component.Module;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.OperatorType;
+import middle.component.instruction.*;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
@@ -27,67 +21,71 @@ public class GVN {
     }
 
     private static void optimize(Module module) {
-        for (Function func : module.getFunctions()) {
+        module.getFunctions().forEach(func -> {
             gvnMap = new HashMap<>();
             visitBlock(func.getEntryBlock());
-        }
-        for (Function func : module.getFunctions()) {
+        });
+
+        module.getFunctions().forEach(func -> {
             deletableBlock = new HashSet<>();
-            for (BasicBlock block : func.getBasicBlocks()) {
+            func.getBasicBlocks().forEach(block -> {
                 curBlock = block;
-                ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
-                for (Instruction instruction : instructions) {
-                    if (instruction instanceof BinaryInst binaryInst
-                            && binaryInst.getOpType() == OperatorType.SREM) {
-                        srem2div(binaryInst);
-                    }
+                optimizeBlock(block);
+            });
+
+            func.getBasicBlocks().removeIf(block -> {
+                if (deletableBlock.contains(block)) {
+                    block.setDeleted(true);
+                    block.getInstructions().forEach(Instruction::deleteUse);
+                    return true;
                 }
-                instructions = new ArrayList<>(block.getInstructions());
-                for (Instruction instr : instructions) {
-                    if (instr instanceof BinaryInst binaryInst
-                            && !binaryInst.getValueType().equals(IntegerType.i1)) {
-                        calcOptimize(binaryInst);
-                    } else if (instr instanceof BinaryInst binaryInst
-                            && binaryInst.getValueType().equals(IntegerType.i1)) {
-                        icmpOptimize(binaryInst);
-                    } else if (instr instanceof BrInst brInst && brInst.isConditional()) {
-                        brOptimize(brInst);
-                    }
+                return false;
+            });
+        });
+    }
+
+    private static void optimizeBlock(BasicBlock block) {
+        ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
+        instructions.stream()
+                .filter(instruction -> instruction instanceof BinaryInst)
+                .map(instruction -> (BinaryInst) instruction)
+                .filter(binaryInst -> binaryInst.getOpType() == OperatorType.SREM)
+                .forEach(GVN::srem2div);
+
+        instructions = new ArrayList<>(block.getInstructions());
+        instructions.forEach(instr -> {
+            if (instr instanceof BinaryInst binaryInst) {
+                if (!binaryInst.getValueType().equals(IntegerType.i1)) {
+                    calcOptimize(binaryInst);
+                } else {
+                    icmpOptimize(binaryInst);
                 }
+            } else if (instr instanceof BrInst brInst && brInst.isConditional()) {
+                brOptimize(brInst);
             }
-            for (BasicBlock block : deletableBlock) {
-                block.setDeleted(true);
-                for (Instruction instr : block.getInstructions()) {
-                    instr.deleteUse();
-                }
-            }
-            func.getBasicBlocks().removeIf(block -> deletableBlock.contains(block));
-        }
+        });
     }
 
     private static void visitBlock(BasicBlock block) {
         ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
         HashSet<String> inserted = new HashSet<>();
-        for (Instruction instr : instructions) {
+
+        instructions.forEach(instr -> {
             String gvnHash = getHash(instr);
-            if (gvnHash == null) {
-                continue;
+            if (gvnHash != null) {
+                if (gvnMap.containsKey(gvnHash)) {
+                    instr.replaceByNewValue(gvnMap.get(gvnHash));
+                    block.getInstructions().remove(instr);
+                    instr.deleteUse();
+                } else {
+                    gvnMap.put(gvnHash, instr);
+                    inserted.add(gvnHash);
+                }
             }
-            if (gvnMap.containsKey(gvnHash)) {
-                instr.replaceByNewValue(gvnMap.get(gvnHash));
-                block.getInstructions().remove(instr);
-                instr.deleteUse();
-            } else {
-                gvnMap.put(gvnHash, instr);
-                inserted.add(gvnHash);
-            }
-        }
-        for (BasicBlock block1 : block.getImmediateDominateBlocks()) {
-            visitBlock(block1);
-        }
-        for (String gvnHash : inserted) {
-            gvnMap.remove(gvnHash);
-        }
+        });
+
+        block.getImmediateDominateBlocks().forEach(GVN::visitBlock);
+        inserted.forEach(gvnMap::remove);
     }
 
     private static String getHash(Instruction instruction) {

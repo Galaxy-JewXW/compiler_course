@@ -25,7 +25,6 @@ public class Mem2Reg {
     private static ArrayList<Instruction> defInstructions;
     private static ArrayList<Instruction> useInstructions;
     private static ArrayList<BasicBlock> defBlocks;
-    private static ArrayList<BasicBlock> useBlocks;
     private static Stack<Value> defStack;
 
     public static void run(Module module, boolean simplify) {
@@ -173,7 +172,7 @@ public class Mem2Reg {
     }
 
     private static void initMem2Reg() {
-        useBlocks = new ArrayList<>();
+        ArrayList<BasicBlock> useBlocks = new ArrayList<>();
         useInstructions = new ArrayList<>();
         defBlocks = new ArrayList<>();
         defInstructions = new ArrayList<>();

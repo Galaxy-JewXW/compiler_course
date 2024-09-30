@@ -4,48 +4,15 @@ import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.global.Asciiz;
 import backend.global.Word;
-import backend.text.BrAsm;
-import backend.text.CalcAsm;
-import backend.text.CmpAsm;
-import backend.text.Comment;
-import backend.text.JumpAsm;
-import backend.text.LaAsm;
-import backend.text.Label;
-import backend.text.LiAsm;
-import backend.text.MDRegAsm;
-import backend.text.MemAsm;
-import backend.text.MoveAsm;
-import backend.text.MulDivAsm;
-import backend.text.SyscallAsm;
+import backend.text.*;
 import backend.utils.ActiveVariable;
 import backend.utils.OptimizedDivision;
 import backend.utils.RegAlloc;
 import backend.utils.RemovePhi;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
 import middle.component.Module;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.MoveInst;
-import middle.component.instruction.OperatorType;
-import middle.component.instruction.RetInst;
-import middle.component.instruction.StoreInst;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutchInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.*;
+import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.model.Value;
@@ -57,9 +24,13 @@ import middle.component.type.ValueType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class MipsBuilder {
     private final Module module;
+    private final Map<Class<? extends Instruction>,
+            Consumer<Instruction>> instructionHandlers = new HashMap<>();
     private int curStackOffset;
     private HashMap<Value, Register> var2reg;
     private boolean isInMain = false;
@@ -74,6 +45,40 @@ public class MipsBuilder {
         module.updateId();
         RemovePhi.run(module);
         System.out.println(module);
+        initInstructionHandlers();
+    }
+
+    private void initInstructionHandlers() {
+        instructionHandlers.put(AllocInst.class, inst -> buildAllocInst((AllocInst) inst));
+        instructionHandlers.put(BinaryInst.class, inst -> {
+            BinaryInst binaryInst = (BinaryInst) inst;
+            if (OperatorType.isLogicalOperator(binaryInst.getOpType())) {
+                buildIcmp(binaryInst);
+            } else {
+                buildBinaryInst(binaryInst);
+            }
+        });
+        instructionHandlers.put(BrInst.class, inst -> {
+            BrInst brInst = (BrInst) inst;
+            if (brInst.isConditional()) {
+                buildCondBrInst(brInst);
+            } else {
+                buildNoCondBrInst(brInst);
+            }
+        });
+        instructionHandlers.put(CallInst.class, inst -> buildCallInst((CallInst) inst));
+        instructionHandlers.put(GepInst.class, inst -> buildGepInst((GepInst) inst));
+        instructionHandlers.put(LoadInst.class, inst -> buildLoadInst((LoadInst) inst));
+        instructionHandlers.put(MoveInst.class, inst -> buildMoveInst((MoveInst) inst));
+        instructionHandlers.put(GetintInst.class, inst -> buildGetintInst((GetintInst) inst));
+        instructionHandlers.put(GetcharInst.class, inst -> buildGetcharInst((GetcharInst) inst));
+        instructionHandlers.put(PutintInst.class, inst -> buildPutintInst((PutintInst) inst));
+        instructionHandlers.put(PutchInst.class, inst -> buildPutchInst((PutchInst) inst));
+        instructionHandlers.put(PutstrInst.class, inst -> buildPutstrInst((PutstrInst) inst));
+        instructionHandlers.put(RetInst.class, inst -> buildRetInst((RetInst) inst));
+        instructionHandlers.put(StoreInst.class, inst -> buildStoreInst((StoreInst) inst));
+        instructionHandlers.put(TruncInst.class, inst -> buildTruncInst((TruncInst) inst));
+        instructionHandlers.put(ZextInst.class, inst -> buildZextInst((ZextInst) inst));
     }
 
     public void build() {
@@ -168,46 +173,12 @@ public class MipsBuilder {
     }
 
     private void buildInstruction(Instruction instruction) {
-        if (instruction instanceof AllocInst allocInst) {
-            buildAllocInst(allocInst);
-        } else if (instruction instanceof BinaryInst binaryInst) {
-            if (OperatorType.isLogicalOperator(binaryInst.getOpType())) {
-                buildIcmp(binaryInst);
-            } else {
-                buildBinaryInst(binaryInst);
-            }
-        } else if (instruction instanceof BrInst brInst) {
-            if (brInst.isConditional()) {
-                buildCondBrInst(brInst);
-            } else {
-                buildNoCondBrInst(brInst);
-            }
-        } else if (instruction instanceof CallInst callInst) {
-            buildCallInst(callInst);
-        } else if (instruction instanceof GepInst gepInst) {
-            buildGepInst(gepInst);
-        } else if (instruction instanceof LoadInst loadInst) {
-            buildLoadInst(loadInst);
-        } else if (instruction instanceof MoveInst moveInst) {
-            buildMoveInst(moveInst);
-        } else if (instruction instanceof GetintInst getintInst) {
-            buildGetintInst(getintInst);
-        } else if (instruction instanceof GetcharInst getcharInst) {
-            buildGetcharInst(getcharInst);
-        } else if (instruction instanceof PutintInst putintInst) {
-            buildPutintInst(putintInst);
-        } else if (instruction instanceof PutchInst putchInst) {
-            buildPutchInst(putchInst);
-        } else if (instruction instanceof PutstrInst putstrInst) {
-            buildPutstrInst(putstrInst);
-        } else if (instruction instanceof RetInst retInst) {
-            buildRetInst(retInst);
-        } else if (instruction instanceof StoreInst storeInst) {
-            buildStoreInst(storeInst);
-        } else if (instruction instanceof TruncInst truncInst) {
-            buildTruncInst(truncInst);
-        } else if (instruction instanceof ZextInst zextInst) {
-            buildZextInst(zextInst);
+        Consumer<Instruction> handler = instructionHandlers.get(instruction.getClass());
+        if (handler != null) {
+            handler.accept(instruction);
+        } else {
+            throw new UnsupportedOperationException(
+                    "Unsupported instruction: " + instruction.getClass());
         }
     }
 

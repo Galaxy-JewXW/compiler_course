@@ -1,33 +1,16 @@
 package pass;
 
 import middle.IRData;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.PhiInst;
-import middle.component.instruction.RetInst;
-import middle.component.instruction.StoreInst;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutchInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.*;
+import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class FunctionCopy {
     private static final HashMap<Value, Value> valueMap = new HashMap<>();
@@ -35,12 +18,40 @@ public class FunctionCopy {
     private static final HashSet<PhiInst> phiInstructions = new HashSet<>();
     private static final HashSet<Instruction> clonedInstructions = new HashSet<>();
 
-    /**
-     * 克隆一个函数，创建其副本以用于内联优化
-     *
-     * @param originalFunc 要克隆的原始函数
-     * @return 克隆后的新函数
-     */
+    // 定义指令类型与克隆逻辑的映射
+    private static final Map<Class<? extends Instruction>,
+            BiFunction<Instruction, BasicBlock, Instruction>> cloneMap = new HashMap<>();
+
+    static {
+        // 填充映射表，将每种指令类型与其克隆逻辑绑定
+        cloneMap.put(GetintInst.class, (inst, parentBlock) -> new GetintInst());
+        cloneMap.put(GetcharInst.class, (inst, parentBlock) -> new GetcharInst());
+        cloneMap.put(PutintInst.class, (inst, parentBlock) -> new PutintInst(getOrCreate(((PutintInst) inst).getTarget())));
+        cloneMap.put(PutchInst.class, (inst, parentBlock) -> new PutchInst(getOrCreate(((PutchInst) inst).getTarget())));
+        cloneMap.put(PutstrInst.class, (inst, parentBlock) -> new PutstrInst(((PutstrInst) inst).getConstString()));
+        cloneMap.put(AllocInst.class, (inst, parentBlock) -> new AllocInst(((AllocInst) inst).getTargetType()));
+        cloneMap.put(BinaryInst.class, (inst, parentBlock) -> new BinaryInst(
+                inst.getOpType(),
+                getOrCreate(((BinaryInst) inst).getOperand1()),
+                getOrCreate(((BinaryInst) inst).getOperand2())));
+        cloneMap.put(BrInst.class, (inst, parentBlock) -> cloneBranchInst((BrInst) inst, parentBlock));
+        cloneMap.put(GepInst.class, (inst, parentBlock) -> new GepInst(
+                getOrCreate(((GepInst) inst).getPointer()),
+                getOrCreate(((GepInst) inst).getIndex())));
+        cloneMap.put(LoadInst.class, (inst, parentBlock) -> new LoadInst(getOrCreate(((LoadInst) inst).getPointer())));
+        cloneMap.put(PhiInst.class, (inst, parentBlock) -> clonePhiInst((PhiInst) inst, parentBlock));
+        cloneMap.put(RetInst.class, (inst, parentBlock) -> new RetInst(getOrCreate(((RetInst) inst).getReturnValue())));
+        cloneMap.put(StoreInst.class, (inst, parentBlock) -> new StoreInst(
+                getOrCreate(((StoreInst) inst).getPointer()),
+                getOrCreate(((StoreInst) inst).getStoredValue())));
+        cloneMap.put(ZextInst.class, (inst, parentBlock) -> new ZextInst(
+                getOrCreate(((ZextInst) inst).getOriginValue()),
+                inst.getValueType()));
+        cloneMap.put(TruncInst.class, (inst, parentBlock) -> new TruncInst(
+                getOrCreate(((TruncInst) inst).getOriginValue()),
+                inst.getValueType()));
+    }
+
     public static Function copyFunction(Function originalFunc) {
         visitedBlocks.clear();
         phiInstructions.clear();
@@ -147,66 +158,41 @@ public class FunctionCopy {
         valueMap.put(originalInstr, clonedInstr);
     }
 
+    // 修改后的 createClonedInstruction 方法
     private static Instruction createClonedInstruction(Instruction originalInstr, BasicBlock parentBlock) {
-        BasicBlock clonedBlock = (BasicBlock) getOrCreate(parentBlock);
-        if (originalInstr instanceof GetintInst) {
-            return new GetintInst();
-        } else if (originalInstr instanceof GetcharInst) {
-            return new GetcharInst();
-        } else if (originalInstr instanceof PutintInst putintInst) {
-            return new PutintInst(getOrCreate(putintInst.getTarget()));
-        } else if (originalInstr instanceof PutchInst putchInst) {
-            return new PutchInst(getOrCreate(putchInst.getTarget()));
-        } else if (originalInstr instanceof PutstrInst putstrInst) {
-            return new PutstrInst(putstrInst.getConstString());
-        } else if (originalInstr instanceof AllocInst allocInst) {
-            return new AllocInst(allocInst.getTargetType());
-        } else if (originalInstr instanceof BinaryInst binaryInst) {
-            return new BinaryInst(binaryInst.getOpType(),
-                    getOrCreate(binaryInst.getOperand1()),
-                    getOrCreate(binaryInst.getOperand2()));
-        } else if (originalInstr instanceof BrInst brInst) {
-            BrInst clonedBrInst;
-            if (brInst.isConditional()) {
-                clonedBrInst = new BrInst(getOrCreate(brInst.getCondition()),
-                        (BasicBlock) getOrCreate(brInst.getTrueBlock()),
-                        (BasicBlock) getOrCreate(brInst.getFalseBlock()));
-                updateConditionBranch(clonedBrInst, clonedBlock);
-            } else {
-                clonedBrInst = new BrInst((BasicBlock) getOrCreate(brInst.getTrueBlock()));
-                updateNoConditionBranch(clonedBrInst, clonedBlock);
-            }
-            return clonedBrInst;
-        } else if (originalInstr instanceof CallInst) {
-            throw new RuntimeException("Call instructions are not supported in function cloning");
-        } else if (originalInstr instanceof GepInst gepInst) {
-            return new GepInst(getOrCreate(gepInst.getPointer()),
-                    getOrCreate(gepInst.getIndex()));
-        } else if (originalInstr instanceof LoadInst loadInst) {
-            return new LoadInst(getOrCreate(loadInst.getPointer()));
-        } else if (originalInstr instanceof PhiInst phiInst) {
-            ArrayList<BasicBlock> copiedBlocks = new ArrayList<>();
-            for (BasicBlock block : phiInst.getBlocks()) {
-                copiedBlocks.add((BasicBlock) getOrCreate(block));
-            }
-            PhiInst clonedPhi = new PhiInst(phiInst.getValueType(), clonedBlock, copiedBlocks);
-            phiInstructions.add(phiInst);
-            return clonedPhi;
-        } else if (originalInstr instanceof RetInst retInst) {
-            return new RetInst(getOrCreate(retInst.getReturnValue()));
-        } else if (originalInstr instanceof StoreInst storeInst) {
-            return new StoreInst(getOrCreate(storeInst.getPointer()),
-                    getOrCreate(storeInst.getStoredValue()));
-        } else if (originalInstr instanceof ZextInst zextInst) {
-            return new ZextInst(
-                    getOrCreate(zextInst.getOriginValue()),
-                    zextInst.getValueType());
-        } else if (originalInstr instanceof TruncInst truncInst) {
-            return new TruncInst(getOrCreate(truncInst.getOriginValue()),
-                    truncInst.getValueType());
-        } else {
-            throw new RuntimeException("Shouldn't reach here");
+        BiFunction<Instruction, BasicBlock, Instruction> cloneFunc = cloneMap.get(originalInstr.getClass());
+        if (cloneFunc != null) {
+            return cloneFunc.apply(originalInstr, parentBlock);
         }
+        throw new RuntimeException("Unsupported instruction type: " + originalInstr.getClass().getName());
+    }
+
+    // 克隆分支指令的辅助方法
+    private static Instruction cloneBranchInst(BrInst brInst, BasicBlock parentBlock) {
+        BasicBlock clonedBlock = (BasicBlock) getOrCreate(parentBlock);
+        if (brInst.isConditional()) {
+            BrInst clonedBrInst = new BrInst(
+                    getOrCreate(brInst.getCondition()),
+                    (BasicBlock) getOrCreate(brInst.getTrueBlock()),
+                    (BasicBlock) getOrCreate(brInst.getFalseBlock()));
+            updateConditionBranch(clonedBrInst, clonedBlock);
+            return clonedBrInst;
+        } else {
+            BrInst clonedBrInst = new BrInst((BasicBlock) getOrCreate(brInst.getTrueBlock()));
+            updateNoConditionBranch(clonedBrInst, clonedBlock);
+            return clonedBrInst;
+        }
+    }
+
+    // 克隆Phi指令的辅助方法
+    private static Instruction clonePhiInst(PhiInst phiInst, BasicBlock parentBlock) {
+        ArrayList<BasicBlock> copiedBlocks = new ArrayList<>();
+        for (BasicBlock block : phiInst.getBlocks()) {
+            copiedBlocks.add((BasicBlock) getOrCreate(block));
+        }
+        PhiInst clonedPhi = new PhiInst(phiInst.getValueType(), (BasicBlock) getOrCreate(parentBlock), copiedBlocks);
+        phiInstructions.add(phiInst);
+        return clonedPhi;
     }
 
     private static void updateConditionBranch(BrInst clonedBrInst, BasicBlock clonedParent) {

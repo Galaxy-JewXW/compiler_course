@@ -198,16 +198,23 @@ public class BasicBlock extends User {
         for (Use use : getUseList()) {
             User user = use.getUser();
             if (user instanceof PhiInst phiInst && phiInst.getBasicBlock().equals(block)) {
+                // 先收集需要删除的索引
+                ArrayList<Integer> indicesToRemove = new ArrayList<>();
                 for (int i = 0; i < phiInst.getBlocks().size(); i++) {
                     if (phiInst.getBlocks().get(i).equals(this)) {
-                        phiInst.getBlocks().remove(i);
-                        phiInst.getOperands().remove(i);
-                        i--;
+                        indicesToRemove.add(i);
                     }
+                }
+                // 倒序删除这些索引，确保删除不会影响后续的索引
+                for (int i = indicesToRemove.size() - 1; i >= 0; i--) {
+                    int index = indicesToRemove.get(i);
+                    phiInst.getBlocks().remove(index);
+                    phiInst.getOperands().remove(index);
                 }
             }
         }
     }
+
 
     @Override
     public String toString() {

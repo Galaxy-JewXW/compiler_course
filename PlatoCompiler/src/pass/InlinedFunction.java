@@ -4,11 +4,7 @@ import middle.IRData;
 import middle.component.BasicBlock;
 import middle.component.Function;
 import middle.component.Module;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.PhiInst;
-import middle.component.instruction.RetInst;
+import middle.component.instruction.*;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -16,54 +12,51 @@ import middle.component.type.ValueType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 public class InlinedFunction {
     private static Module module;
     private static HashMap<Function, HashSet<Function>> callGraph;
     private static HashMap<Function, HashSet<Function>> reverseCallGraph;
 
-    /**
-     * 对模块中的函数进行内联优化
-     *
-     * @param currentModule 当前的LLVM IR模块
-     */
     public static void run(Module currentModule) {
         module = currentModule;
-        boolean hasChanged = true;
-        while (hasChanged) {
+        boolean hasChanged;
+        do {
             hasChanged = false;
             initializeCallGraphs();
-            for (Function calledFunction : module.getFunctions()) {
-                if (shouldInlineFunction(calledFunction)) {
-                    inline(calledFunction);
-                    hasChanged = true;
-                }
-            }
-        }
+            hasChanged = module.getFunctions().stream()
+                    .filter(InlinedFunction::shouldInlineFunction)
+                    .map(function -> {
+                        inline(function);
+                        return true;
+                    })
+                    .reduce(false, (a, b) -> a || b);
+        } while (hasChanged);
     }
 
-    // 初始化调用图与反向调用图
     private static void initializeCallGraphs() {
         callGraph = new HashMap<>();
         reverseCallGraph = new HashMap<>();
-        for (Function func : module.getFunctions()) {
+
+        module.getFunctions().forEach(func -> {
             callGraph.put(func, new HashSet<>());
             reverseCallGraph.put(func, new HashSet<>());
-        }
-        for (Function func : module.getFunctions()) {
-            for (BasicBlock block : func.getBasicBlocks()) {
-                for (Instruction instr : block.getInstructions()) {
-                    if (instr instanceof CallInst callInst) {
-                        Function target = callInst.getCalledFunction();
-                        callGraph.get(func).add(target);
-                        reverseCallGraph.get(target).add(func);
-                    }
-                }
-            }
-        }
+        });
+
+        module.getFunctions().forEach(func ->
+                func.getBasicBlocks().stream()
+                        .flatMap(block -> block.getInstructions().stream())
+                        .filter(instr -> instr instanceof CallInst)
+                        .map(instr -> (CallInst) instr)
+                        .forEach(callInst -> {
+                            Function target = callInst.getCalledFunction();
+                            callGraph.get(func).add(target);
+                            reverseCallGraph.get(target).add(func);
+                        })
+        );
     }
 
-    // 是否可以进行内联
     private static boolean shouldInlineFunction(Function function) {
         return !reverseCallGraph.get(function).isEmpty() &&
                 !function.getName().equals("@main") &&
@@ -72,23 +65,15 @@ public class InlinedFunction {
     }
 
     private static void inline(Function function) {
-        ArrayList<CallInst> calls = new ArrayList<>();
-        for (Function caller : reverseCallGraph.get(function)) {
-            for (BasicBlock block : caller.getBasicBlocks()) {
-                for (Instruction instr : block.getInstructions()) {
-                    if (instr instanceof CallInst callInst
-                            && callInst.getOperands().get(0).getName()
-                            .equals(function.getName())) {
-                        calls.add(callInst);
-                    }
-                }
-            }
-        }
-        for (CallInst call : calls) {
-            Function calledFunction = call.getCalledFunction();
-            Function callFunction = call.getBasicBlock().getFunction();
-            replaceCall(call, callFunction, calledFunction);
-        }
+        ArrayList<CallInst> calls = reverseCallGraph.get(function).stream()
+                .flatMap(caller -> caller.getBasicBlocks().stream())
+                .flatMap(block -> block.getInstructions().stream())
+                .filter(instr -> instr instanceof CallInst)
+                .map(instr -> (CallInst) instr)
+                .filter(callInst -> callInst.getOperands().get(0).getName().equals(function.getName()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        calls.forEach(call -> replaceCall(call, call.getBasicBlock().getFunction(), function));
     }
 
     /**
