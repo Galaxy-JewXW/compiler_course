@@ -19,6 +19,7 @@ import backend.text.MulDivAsm;
 import backend.text.SyscallAsm;
 import backend.utils.ActiveVariable;
 import backend.utils.OptimizedDivision;
+import backend.utils.PeepHole;
 import backend.utils.RegAlloc;
 import backend.utils.RemovePhi;
 import middle.component.BasicBlock;
@@ -70,14 +71,16 @@ public class MipsBuilder {
     private Function currentFunction;
     private HashMap<Value, Integer> var2Offset;
 
-    public MipsBuilder(Module module) {
+    public MipsBuilder(Module module, boolean optimizeOn) {
         this.module = module;
-        ActiveVariable.build(module);
-        RegAlloc.run(module);
-        module.updateId();
-        RemovePhi.run(module);
-        module.updateId();
-        System.out.println(module);
+        if (optimizeOn) {
+            ActiveVariable.build(module);
+            RegAlloc.run(module);
+            module.updateId();
+            RemovePhi.run(module);
+            module.updateId();
+            System.out.println(module);
+        }
         initInstructionHandlers();
     }
 
@@ -134,6 +137,7 @@ public class MipsBuilder {
                 buildFunction(function);
             }
         }
+        PeepHole.run();
     }
 
     private void buildConstString(ConstString constString) {
@@ -696,7 +700,7 @@ public class MipsBuilder {
         } else if (var2reg.containsKey(pointer)) {
             pointerReg = var2reg.get(pointer);
         } else {
-            new MemAsm(AsmOp.LW, pointerReg, Register.SP, var2Offset.get(loadInst));
+            new MemAsm(AsmOp.LW, pointerReg, Register.SP, var2Offset.get(pointer));
         }
         if (var2reg.containsKey(loadInst)) {
             new MemAsm(AsmOp.LW, var2reg.get(loadInst), pointerReg, 0);
@@ -815,7 +819,7 @@ public class MipsBuilder {
         } else if (var2reg.containsKey(storedValue)) {
             new MemAsm(AsmOp.SW, var2reg.get(storedValue), reg, 0);
         } else {
-            new MemAsm(AsmOp.LW, Register.K1, Register.SP, var2Offset.get(pointer));
+            new MemAsm(AsmOp.LW, Register.K1, Register.SP, var2Offset.get(storedValue));
             new MemAsm(AsmOp.SW, Register.K1, reg, 0);
         }
     }

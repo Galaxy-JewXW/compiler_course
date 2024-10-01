@@ -26,6 +26,10 @@ public class JumpAsm extends TextAssembly {
         this.target = null;
     }
 
+    public String getTarget() {
+        return target;
+    }
+
     public ArrayList<MemAsm> getLoadWords() {
         return loadWords;
     }

@@ -20,15 +20,19 @@ public class MipsFile {
     }
 
     public void addToDataSegment(GlobalAssembly assembly) {
-        if (insect) {
+        if (isInsect()) {
             dataSegment.add(assembly);
         }
     }
 
     public void addToTextSegment(TextAssembly assembly) {
-        if (insect) {
+        if (isInsect()) {
             textSegment.add(assembly);
         }
+    }
+
+    public ArrayList<TextAssembly> getTextSegment() {
+        return textSegment;
     }
 
     public boolean isInsect() {

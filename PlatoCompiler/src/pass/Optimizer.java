@@ -14,6 +14,7 @@ public class Optimizer {
     public void optimize() {
         SurplusBlock.build(module);
         ConstToValue.run(module);
+        GlobalVarLocalize.build(module);
         Mem2Reg.run(module, true);
         InlinedFunction.run(module);
         GVN.run(module);
@@ -36,6 +37,7 @@ public class Optimizer {
         CodeRemoval.run(module);
         BlockMerge.run(module);
         Mem2Reg.run(module, false);
+        SingleJumpRemoval.build(module);
         module.updateId();
         System.out.println(module);
     }

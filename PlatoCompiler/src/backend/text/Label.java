@@ -9,12 +9,12 @@ public class Label extends TextAssembly {
         this.isFuncLabel = isFuncLabel;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     @Override
     public String toString() {
-        if (isFuncLabel) {
-            return label + ":";
-        } else {
-            return label + ":";
-        }
+        return label + ":";
     }
 }
