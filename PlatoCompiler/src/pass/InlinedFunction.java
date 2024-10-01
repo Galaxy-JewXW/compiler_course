@@ -4,7 +4,11 @@ import middle.IRData;
 import middle.component.BasicBlock;
 import middle.component.Function;
 import middle.component.Module;
-import middle.component.instruction.*;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.PhiInst;
+import middle.component.instruction.RetInst;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -23,7 +27,6 @@ public class InlinedFunction {
         module = currentModule;
         boolean hasChanged;
         do {
-            hasChanged = false;
             initializeCallGraphs();
             hasChanged = module.getFunctions().stream()
                     .filter(InlinedFunction::shouldInlineFunction)
@@ -31,7 +34,7 @@ public class InlinedFunction {
                         inline(function);
                         return true;
                     })
-                    .reduce(false, (a, b) -> a || b);
+                    .reduce(false, (a, b) -> true);
         } while (hasChanged);
     }
 

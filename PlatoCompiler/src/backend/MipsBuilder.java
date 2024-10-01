@@ -69,7 +69,6 @@ public class MipsBuilder {
     private boolean isInMain = false;
     private Function currentFunction;
     private HashMap<Value, Integer> var2Offset;
-    private int v0Value = 0;
 
     public MipsBuilder(Module module) {
         this.module = module;
@@ -77,6 +76,8 @@ public class MipsBuilder {
         RegAlloc.run(module);
         module.updateId();
         RemovePhi.run(module);
+        module.updateId();
+        System.out.println(module);
         initInstructionHandlers();
     }
 
@@ -379,7 +380,6 @@ public class MipsBuilder {
                 new MulDivAsm(temp, AsmOp.DIV, Register.K1);
                 new MDRegAsm(AsmOp.MFHI, targetReg);
             } else if (binaryInst.getOpType() == OperatorType.SDIV) {
-                v0Value = 0;
                 OptimizedDivision.makeVarDivConst(temp, constant, targetReg);
             } else {
                 throw new RuntimeException("Unknown operator " + binaryInst.getOpType());
@@ -437,7 +437,6 @@ public class MipsBuilder {
                 new CalcAsm(targetReg, AsmOp.ADDU, varReg, varReg);
                 break;
             case 3:
-                v0Value = 0;
                 new CalcAsm(Register.V0, AsmOp.ADDU, varReg, varReg);
                 new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
                 break;
@@ -445,18 +444,15 @@ public class MipsBuilder {
                 new CalcAsm(targetReg, AsmOp.SLL, varReg, 2);
                 break;
             case 5:
-                v0Value = 0;
                 new CalcAsm(Register.V0, AsmOp.SLL, varReg, 2);
                 new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
                 break;
             case 6:
-                v0Value = 0;
                 new CalcAsm(Register.V0, AsmOp.SLL, varReg, 2);
                 new CalcAsm(Register.V1, AsmOp.ADDU, varReg, varReg);
                 new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
                 break;
             case 7:
-                v0Value = 0;
                 new CalcAsm(Register.V0, AsmOp.SLL, varReg, 3);
                 new CalcAsm(targetReg, AsmOp.SUBU, Register.V0, varReg);
                 break;
@@ -464,7 +460,6 @@ public class MipsBuilder {
                 new CalcAsm(targetReg, AsmOp.SLL, varReg, 3);
                 break;
             case 9:
-                v0Value = 0;
                 new CalcAsm(Register.V0, AsmOp.SLL, varReg, 3);
                 new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, varReg);
                 break;
@@ -484,14 +479,12 @@ public class MipsBuilder {
                     if (bitCnt == 1) {
                         new CalcAsm(targetReg, AsmOp.SLL, varReg, shifts[0]);
                     } else {
-                        v0Value = 0;
                         new CalcAsm(Register.V0, AsmOp.SLL, varReg, shifts[0]);
                         new CalcAsm(Register.V1, AsmOp.SLL, varReg, shifts[1]);
                         new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.V1);
                     }
                 } else {
                     // 对于其他情况，使用乘法
-                    v0Value = 0;
                     new LiAsm(Register.V0, absConstInt);
                     new CalcAsm(targetReg, AsmOp.MUL, varReg, Register.V0);
                 }
@@ -649,10 +642,8 @@ public class MipsBuilder {
         jalAsm.setStoreWords(swAsms);
         if (!calledFunction.getReturnType().equals(IntegerType.VOID)) {
             if (var2reg.containsKey(callInst)) {
-                v0Value = 0;
                 new MoveAsm(var2reg.get(callInst), Register.V0);
             } else {
-                v0Value = 0;
                 new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(callInst));
             }
         }
@@ -742,7 +733,6 @@ public class MipsBuilder {
         } else {
             new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(getintInst));
         }
-        v0Value = 0;
     }
 
     private void buildGetcharInst(GetcharInst getcharInst) {
@@ -753,7 +743,6 @@ public class MipsBuilder {
         } else {
             new MemAsm(AsmOp.SW, Register.V0, Register.SP, var2Offset.get(getcharInst));
         }
-        v0Value = 0;
     }
 
     private void buildPutintInst(PutintInst putintInst) {
@@ -765,10 +754,7 @@ public class MipsBuilder {
         } else {
             new MemAsm(AsmOp.LW, Register.A0, Register.SP, var2Offset.get(value));
         }
-        if (v0Value != 1) {
-            new LiAsm(Register.V0, 1);
-        }
-        v0Value = 1;
+        new LiAsm(Register.V0, 1);
         new SyscallAsm();
     }
 
@@ -782,34 +768,24 @@ public class MipsBuilder {
             int offset = var2Offset.get(value);
             new MemAsm(AsmOp.LW, Register.A0, Register.SP, offset);
         }
-        if (v0Value != 11) {
-            new LiAsm(Register.V0, 11);
-        }
-        v0Value = 11;
+        new LiAsm(Register.V0, 11);
         new SyscallAsm();
     }
 
     private void buildPutstrInst(PutstrInst putstrInst) {
         ConstString constString = putstrInst.getConstString();
         new LaAsm(Register.A0, "s" + constString.getName().substring(4));
-        if (v0Value != 4) {
-            new LiAsm(Register.V0, 4);
-        }
-        v0Value = 4;
+        new LiAsm(Register.V0, 4);
         new SyscallAsm();
     }
 
     private void buildRetInst(RetInst retInst) {
         if (isInMain) {
-            if (v0Value != 10) {
-                new LiAsm(Register.V0, 10);
-            }
-            v0Value = 10;
+            new LiAsm(Register.V0, 10);
             new SyscallAsm();
         } else {
             Value returnValue = retInst.getReturnValue();
             if (returnValue != null) {
-                v0Value = 0;
                 if (returnValue instanceof ConstInt constInt) {
                     new LiAsm(Register.V0, constInt.getIntValue());
                 } else if (var2reg.containsKey(returnValue)) {

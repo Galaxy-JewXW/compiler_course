@@ -35,6 +35,7 @@ public class PhiInst extends Instruction {
             for (int i = 0; i < blocks.size(); i++) {
                 if (blocks.get(i).equals(value)) {
                     blocks.set(i, (BasicBlock) newValue);
+                    newValue.addUse(this);
                 }
             }
         } else {
