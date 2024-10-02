@@ -16,6 +16,22 @@ public class MemAsm extends TextAssembly {
         this.offset = offset;
     }
 
+    public AsmOp getOp() {
+        return op;
+    }
+
+    public Register getRd() {
+        return rd;
+    }
+
+    public Register getBase() {
+        return base;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
     @Override
     public String toString() {
         return op.name().toLowerCase() + " " + rd + ", " + offset + "(" + base + ")";

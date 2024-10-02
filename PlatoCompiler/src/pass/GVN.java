@@ -3,14 +3,7 @@ package pass;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Module;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.OperatorType;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
+import middle.component.instruction.*;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -158,7 +151,9 @@ public class GVN {
             curBlock.getInstructions().remove(binaryInst);
             binaryInst.replaceByNewValue(constInt);
             binaryInst.deleteUse();
-        } else if (value1.equals(value2)) {
+            return;
+        }
+        if (value1.equals(value2)) {
             OperatorType op = binaryInst.getOpType();
             int value = switch (op) {
                 case ICMP_EQ, ICMP_SGE, ICMP_SLE -> 1;

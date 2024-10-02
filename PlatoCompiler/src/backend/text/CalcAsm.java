@@ -31,6 +31,26 @@ public class CalcAsm extends TextAssembly {
         isTypeR = false;
     }
 
+    public AsmOp getOp() {
+        return op;
+    }
+
+    public Register getRd() {
+        return rd;
+    }
+
+    public Register getRt() {
+        return rt;
+    }
+
+    public int getImmediate() {
+        return immediate;
+    }
+
+    public Register getRs() {
+        return rs;
+    }
+
     @Override
     public String toString() {
         if (op.ordinal() <= AsmOp.SRLV.ordinal()) {

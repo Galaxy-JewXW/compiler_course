@@ -11,6 +11,14 @@ public class MoveAsm extends TextAssembly {
         this.src = src;
     }
 
+    public Register getDst() {
+        return dst;
+    }
+
+    public Register getSrc() {
+        return src;
+    }
+
     @Override
     public String toString() {
         return "move " + dst + ", " + src;
