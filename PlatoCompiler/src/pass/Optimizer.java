@@ -37,7 +37,6 @@ public class Optimizer {
         CodeRemoval.run(module);
         BlockMerge.run(module);
         Mem2Reg.run(module, false);
-        GVN.run(module);
         SingleJumpRemoval.build(module);
         module.updateId();
         System.out.println(module);

@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GVN.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +66,7 @@
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Compiler.executor": "Debug"
+    "应用程序.Compiler.executor": "Run"
   }
 }]]></component>
   <component name="RunManager">
@@ -137,7 +126,7 @@
       <workItem from="1727693987333" duration="69000" />
       <workItem from="1727694071804" duration="1502000" />
       <workItem from="1727792778806" duration="9344000" />
-      <workItem from="1727833190980" duration="5959000" />
+      <workItem from="1727833190980" duration="6281000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -467,7 +456,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727836537790</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="fix">
+      <option name="closed" value="true" />
+      <created>1727841272902</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1727841272902</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -524,6 +521,136 @@
           <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
           <line>142</line>
           <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>143</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>161</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>176</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>178</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>179</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>177</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>181</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>182</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
