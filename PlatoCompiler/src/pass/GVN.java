@@ -189,17 +189,15 @@ public class GVN {
                     opposite = true;
                 }
                 if (opposite) {
+                    ConstInt constInt;
                     if (op == OperatorType.ICMP_EQ) {
-                        ConstInt constInt = new ConstInt(IntegerType.i1, 0);
-                        curBlock.getInstructions().remove(binaryInst);
-                        binaryInst.replaceByNewValue(constInt);
-                        binaryInst.deleteUse();
+                        constInt = new ConstInt(IntegerType.i1, 0);
                     } else {
-                        ConstInt constInt = new ConstInt(IntegerType.i1, 1);
-                        curBlock.getInstructions().remove(binaryInst);
-                        binaryInst.replaceByNewValue(constInt);
-                        binaryInst.deleteUse();
+                        constInt = new ConstInt(IntegerType.i1, 1);
                     }
+                    curBlock.getInstructions().remove(binaryInst);
+                    binaryInst.replaceByNewValue(constInt);
+                    binaryInst.deleteUse();
                 }
             }
         }
