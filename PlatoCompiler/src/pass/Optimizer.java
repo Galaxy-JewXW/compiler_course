@@ -38,6 +38,14 @@ public class Optimizer {
         BlockMerge.run(module);
         Mem2Reg.run(module, false);
         SingleJumpRemoval.build(module);
+        Mem2Reg.run(module, false);
+        BlockMerge.run(module);
+        Mem2Reg.run(module, false);
+        BlockMerge.run(module);
+        Mem2Reg.run(module, false);
+        module.updateId();
+        SingleJumpRemoval.build(module);
+        Mem2Reg.run(module, false);
         module.updateId();
         System.out.println(module);
     }

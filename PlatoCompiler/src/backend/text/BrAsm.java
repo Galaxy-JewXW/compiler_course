@@ -28,6 +28,26 @@ public class BrAsm extends TextAssembly {
         this.number = number;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public AsmOp getOp() {
+        return op;
+    }
+
+    public Register getRs() {
+        return rs;
+    }
+
+    public Register getRt() {
+        return rt;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return op.name().toLowerCase() + " " + rs

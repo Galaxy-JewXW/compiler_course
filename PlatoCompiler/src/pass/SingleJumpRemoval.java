@@ -58,8 +58,7 @@ public class SingleJumpRemoval {
                 return !brInst.isConditional()
                         && block.getPrevBlocks().size() == 1
                         && block.getPrevBlocks().get(0).getLastInstruction()
-                        instanceof BrInst brInst1
-                        && !brInst1.isConditional();
+                        instanceof BrInst;
             }
         }
         return false;

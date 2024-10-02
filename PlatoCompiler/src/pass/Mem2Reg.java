@@ -48,7 +48,7 @@ public class Mem2Reg {
                         && (allocInst.getTargetType().equals(IntegerType.i32)
                         || allocInst.getTargetType().equals(IntegerType.i8))) {
                     currentAlloc = allocInst;
-                    initMem2Reg();
+                    init();
                     insertPhi();
                     renameVariables(currentFunction.getEntryBlock());
                 }
@@ -118,7 +118,6 @@ public class Mem2Reg {
         for (BasicBlock block : currentFunction.getBasicBlocks()) {
             block.setImmediateDominateBlocks(immediatelyDominates.get(block));
         }
-        calcDominatorTreeDepth(entry, 0);
     }
 
     private static void dfs(BasicBlock current, BasicBlock dominator, Set<BasicBlock> reachableBlocks) {
@@ -143,13 +142,6 @@ public class Mem2Reg {
         return true;
     }
 
-    private static void calcDominatorTreeDepth(BasicBlock block, int depth) {
-        block.setImdomDepth(depth);
-        for (BasicBlock dominated : block.getImmediateDominateBlocks()) {
-            calcDominatorTreeDepth(dominated, depth + 1);
-        }
-    }
-
     private static void calcDominanceFrontier() {
         for (BasicBlock dominator : currentFunction.getBasicBlocks()) {
             ArrayList<BasicBlock> frontier = new ArrayList<>();
@@ -171,7 +163,7 @@ public class Mem2Reg {
         }
     }
 
-    private static void initMem2Reg() {
+    private static void init() {
         ArrayList<BasicBlock> useBlocks = new ArrayList<>();
         useInstructions = new ArrayList<>();
         defBlocks = new ArrayList<>();

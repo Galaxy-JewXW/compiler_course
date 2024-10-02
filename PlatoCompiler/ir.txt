@@ -58,19 +58,17 @@ define dso_local i32 @main() {
 	%34 = icmp sle i32 %33, 100
 	br i1 %34, label %2, label %35
 35:
-	br label %36
-36:
-	%37 = phi i32 [ 0, %35 ], [ %40, %36 ]
-	%38 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 %37
-	%39 = load i32, i32* %38
-	call void @putint(i32 %39)
+	%36 = phi i32 [ 0, %2 ], [ %39, %35 ]
+	%37 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 %36
+	%38 = load i32, i32* %37
+	call void @putint(i32 %38)
 	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-	%40 = add i32 %37, 1
-	%41 = icmp slt i32 %40, 10
-	br i1 %41, label %36, label %42
-42:
+	%39 = add i32 %36, 1
+	%40 = icmp slt i32 %39, 10
+	br i1 %40, label %35, label %41
+41:
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 %40)
+	call void @putint(i32 %39)
 	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
 	call void @putint(i32 -8894)
 	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))

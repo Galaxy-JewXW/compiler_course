@@ -16,6 +16,7 @@ public class PeepHole {
         transfer2Move();
         moveRemoval();
         memPairRemoval();
+        reverseCondBr();
     }
 
     private static void removeJump() {
@@ -103,5 +104,45 @@ public class PeepHole {
                         }
                     }
                 });
+    }
+
+    // beq $t4, 1, main_b18  brAsm
+    // j main_b23   jumpAsm
+    // main_b18:   label
+    private static void reverseCondBr() {
+        ArrayList<TextAssembly> textAssemblies = new ArrayList<>(MipsFile.getInstance().getTextSegment());
+        for (int i = 0; i < textAssemblies.size(); i++) {
+            TextAssembly textAssembly = textAssemblies.get(i);
+            if (!(textAssembly instanceof BrAsm brAsm)) {
+                continue;
+            }
+            if (i + 1 < textAssemblies.size()
+                    && textAssemblies.get(i + 1) instanceof JumpAsm jumpAsm) {
+                if (i + 2 < textAssemblies.size()
+                        && textAssemblies.get(i + 2) instanceof Label label) {
+                    if (label.getLabel().equals(brAsm.getLabel())
+                            && !brAsm.getLabel().equals(jumpAsm.getTarget())) {
+                        AsmOp temp = switch (brAsm.getOp()) {
+                            case BEQ -> AsmOp.BNE;
+                            case BNE -> AsmOp.BEQ;
+                            case BLE -> AsmOp.BGE;
+                            case BGE -> AsmOp.BLE;
+                            case BLT -> AsmOp.BGT;
+                            case BGT -> AsmOp.BLT;
+                            default -> throw new IllegalStateException(
+                                    "Unexpected value: " + brAsm.getOp());
+                        };
+                        BrAsm brAsm1;
+                        if (brAsm.getRt() == null) {
+                            brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getNumber());
+                        } else {
+                            brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getRt());
+                        }
+                        MipsFile.getInstance().getTextSegment().set(i, brAsm1);
+                        MipsFile.getInstance().getTextSegment().remove(jumpAsm);
+                    }
+                }
+            }
+        }
     }
 }

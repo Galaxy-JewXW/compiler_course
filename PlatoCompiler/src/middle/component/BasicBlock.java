@@ -154,14 +154,6 @@ public class BasicBlock extends User {
         isDeleted = deleted;
     }
 
-    public int getImdomDepth() {
-        return imdomDepth;
-    }
-
-    public void setImdomDepth(int imdomDepth) {
-        this.imdomDepth = imdomDepth;
-    }
-
     public HashSet<Value> getDefSet() {
         return defSet;
     }

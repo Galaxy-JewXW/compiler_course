@@ -24,11 +24,13 @@ public class BlockMerge {
     }
 
     private static void tryMergeBlock(BasicBlock block) {
-        if (block.isDeleted() || block.getNextBlocks().size() != 1) return;
-
+        if (block.isDeleted() || block.getNextBlocks().size() != 1) {
+            return;
+        }
         BasicBlock child = block.getNextBlocks().get(0);
-        if (child.getPrevBlocks().size() != 1) return;
-
+        if (child.getPrevBlocks().size() != 1) {
+            return;
+        }
         mergeBlockWithChild(block, child);
     }
 

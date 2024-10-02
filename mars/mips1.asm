@@ -111,15 +111,15 @@ addiu $t1, $t1, 1
 # br i1 %38, label %4, label %39
 ble $t1, 100, main_b4
 main_b39:
-# move 0 -> %37
+# move 0 -> %36
 li $t0, 0
 # br label %45
 j main_b45
 main_b42:
-# move %48 -> %37
+# move %48 -> %36
 # br label %45
 main_b45:
-# %46 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 %37
+# %46 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 %36
 la $k0, a
 sll $k1, $t0, 2
 addu $t1, $k0, $k1
@@ -133,7 +133,7 @@ syscall
 la $a0, s0
 li $v0, 4
 syscall
-# %48 = add i32 %37, 1
+# %48 = add i32 %36, 1
 addiu $t0, $t0, 1
 # %49 = icmp slt i32 %48, 10
 # br i1 %49, label %42, label %50
