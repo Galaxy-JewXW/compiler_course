@@ -5,57 +5,26 @@ RPARENT )
 LBRACE {
 INTTK int
 IDENFR a
-ASSIGN =
-INTCON 255
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<InitVal>
 <VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
-IDENFR b
-ASSIGN =
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-PRINTFTK printf
-LPARENT (
-STRCON "a = %d, b = %d\n"
 COMMA ,
+IDENFR b
+<VarDef>
+SEMICN ;
+<VarDecl>
 IDENFR a
 <LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-COMMA ,
-IDENFR b
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
+ASSIGN =
+GETINTTK getint
+LPARENT (
 RPARENT )
 SEMICN ;
 <Stmt>
-IDENFR b
-<LVal>
-ASSIGN =
+PRINTFTK printf
+LPARENT (
+STRCON "I am %d\n"
+COMMA ,
+LPARENT (
+LPARENT (
 IDENFR a
 <LVal>
 <PrimaryExp>
@@ -70,14 +39,34 @@ IDENFR b
 <MulExp>
 <AddExp>
 <Exp>
-SEMICN ;
-<Stmt>
-PRINTFTK printf
+RPARENT )
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+MINU -
 LPARENT (
-STRCON "b = %d\n"
-COMMA ,
+IDENFR a
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+PLUS +
 IDENFR b
 <LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

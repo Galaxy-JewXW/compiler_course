@@ -22,6 +22,7 @@ import backend.utils.OptimizedDivision;
 import backend.utils.PeepHole;
 import backend.utils.RegAlloc;
 import backend.utils.RemovePhi;
+import backend.utils.ZextRemoval;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.ConstString;
@@ -74,9 +75,10 @@ public class MipsBuilder {
     public MipsBuilder(Module module, boolean optimizeOn) {
         this.module = module;
         if (optimizeOn) {
+            ZextRemoval.run(module);
             ActiveVariable.build(module);
-            RegAlloc.run(module);
             module.updateId();
+            RegAlloc.run(module);
             RemovePhi.run(module);
             module.updateId();
             System.out.println(module);
@@ -117,7 +119,7 @@ public class MipsBuilder {
         instructionHandlers.put(ZextInst.class, inst -> buildZextInst((ZextInst) inst));
     }
 
-    public void build() {
+    public void build(boolean optimize) {
         for (ConstString constString : module.getConstStrings()) {
             buildConstString(constString);
         }
@@ -137,7 +139,9 @@ public class MipsBuilder {
                 buildFunction(function);
             }
         }
-        PeepHole.run();
+        if (optimize) {
+            PeepHole.run();
+        }
     }
 
     private void buildConstString(ConstString constString) {
@@ -725,7 +729,7 @@ public class MipsBuilder {
             new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(fromValue));
         }
         if (reg == Register.K0) {
-            new MemAsm(AsmOp.LW, reg, Register.SP, var2Offset.get(toValue));
+            new MemAsm(AsmOp.SW, reg, Register.SP, var2Offset.get(toValue));
         }
     }
 

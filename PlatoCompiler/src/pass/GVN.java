@@ -3,9 +3,17 @@ package pass;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Module;
-import middle.component.instruction.*;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
+import middle.component.type.ValueType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +70,10 @@ public class GVN {
                 }
             } else if (instr instanceof BrInst brInst && brInst.isConditional()) {
                 brOptimize(brInst);
+            } else if (instr instanceof ZextInst zextInst) {
+                zextOptimize(zextInst);
+            } else if (instr instanceof TruncInst truncInst) {
+                truncOptimize(truncInst);
             }
         });
     }
@@ -130,8 +142,18 @@ public class GVN {
             curBlock.getInstructions().remove(binaryInst);
             binaryInst.replaceByNewValue(constInt);
             binaryInst.deleteUse();
+        } else if (value1.equals(value2)) {
+            OperatorType op = binaryInst.getOpType();
+            int value = switch (op) {
+                case ICMP_EQ, ICMP_SGE, ICMP_SLE -> 1;
+                case ICMP_NE, ICMP_SGT, ICMP_SLT -> 0;
+                default -> throw new IllegalStateException("Unexpected value: " + op);
+            };
+            ConstInt constInt = new ConstInt(IntegerType.i1, value);
+            curBlock.getInstructions().remove(binaryInst);
+            binaryInst.replaceByNewValue(constInt);
+            binaryInst.deleteUse();
         }
-
     }
 
     private static void brOptimize(BrInst brInst) {
@@ -159,6 +181,34 @@ public class GVN {
             brInst.deleteUse();
         }
 
+    }
+
+    private static void zextOptimize(ZextInst zextInst) {
+        Value origin = zextInst.getOriginValue();
+        if (origin instanceof ConstInt constInt) {
+            int value = constInt.getIntValue();
+            ValueType targetType = zextInst.getValueType();
+            if (targetType.equals(IntegerType.i8) || targetType.equals(IntegerType.i32)) {
+                ConstInt constInt1 = new ConstInt(targetType, value);
+                zextInst.replaceByNewValue(constInt1);
+                zextInst.deleteUse();
+                curBlock.getInstructions().remove(zextInst);
+            }
+        }
+    }
+
+    private static void truncOptimize(TruncInst truncInst) {
+        Value origin = truncInst.getOriginValue();
+        if (origin instanceof ConstInt constInt) {
+            int value = constInt.getIntValue();
+            ValueType targetType = truncInst.getValueType();
+            if (targetType.equals(IntegerType.i8) && constInt.getValueType().equals(IntegerType.i32)) {
+                ConstInt constInt1 = new ConstInt(targetType, value);
+                truncInst.replaceByNewValue(constInt1);
+                truncInst.deleteUse();
+                curBlock.getInstructions().remove(truncInst);
+            }
+        }
     }
 
     // a % b = a - a / b * b;

@@ -4,27 +4,16 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [5 x i8] c"a = \00", align 1
-@.s.1 = private unnamed_addr constant [7 x i8] c", b = \00", align 1
-@.s.2 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.3 = private unnamed_addr constant [5 x i8] c"b = \00", align 1
+@.s.0 = private unnamed_addr constant [6 x i8] c"I am \00", align 1
+@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 
 
 define dso_local i32 @main() {
 0:
-	%1 = zext i8 2 to i32
-	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 255)
-	call void @putstr(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 %1)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-	%2 = zext i8 2 to i32
-	%3 = add i32 255, %2
-	%4 = trunc i32 %3 to i8
-	%5 = zext i8 %4 to i32
-	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.3, i64 0, i64 0))
-	call void @putint(i32 %5)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
+	%1 = call i32 @getint()
+	call void @putstr(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.s.0, i64 0, i64 0))
+	call void @putint(i32 0)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
 	ret i32 0
 }

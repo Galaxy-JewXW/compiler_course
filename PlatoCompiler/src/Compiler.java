@@ -61,7 +61,7 @@ public class Compiler {
         }
         // 目标代码生成
         MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance(), optimize);
-        mipsBuilder.build();
+        mipsBuilder.build(optimize);
         Printer.printMips(MipsFile.getInstance(), mipsOutput);
     }
 }

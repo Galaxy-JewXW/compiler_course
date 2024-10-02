@@ -36,8 +36,8 @@ public class BasicBlock extends User {
     //活跃变量分析
     private HashSet<Value> defSet = new HashSet<>();
     private HashSet<Value> useSet = new HashSet<>();
-    private HashSet<Value> inSet = new HashSet<>();
-    private HashSet<Value> outSet = new HashSet<>();
+    private HashSet<Value> inSet;
+    private HashSet<Value> outSet;
 
     public BasicBlock(String name) {
         super(name, new LabelType());
