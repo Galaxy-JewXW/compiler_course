@@ -105,13 +105,29 @@ public class GVN {
             String lName = binaryInst.getOperand1().getName();
             String rName = binaryInst.getOperand2().getName();
             String op = binaryInst.getOpType().toString();
-            if (binaryInst.getOpType() == OperatorType.ADD
-                    || binaryInst.getOpType() == OperatorType.MUL) {
-                if (lName.compareTo(rName) > 0) {
-                    return rName + " " + op + " " + lName;
-                } else {
-                    return lName + " " + op + " " + rName;
+            if (!OperatorType.isLogicalOperator(binaryInst.getOpType())) {
+                if (binaryInst.getOpType() == OperatorType.ADD
+                        || binaryInst.getOpType() == OperatorType.MUL) {
+                    if (lName.compareTo(rName) > 0) {
+                        return rName + " " + op + " " + lName;
+                    } else {
+                        return lName + " " + op + " " + rName;
+                    }
                 }
+            } else {
+                OperatorType temp = binaryInst.getOpType();
+                if (lName.compareTo(rName) < 0) {
+                    lName = binaryInst.getOperand2().getName();
+                    rName = binaryInst.getOperand1().getName();
+                    temp = switch (temp) {
+                        case ICMP_SGE -> OperatorType.ICMP_SLE;
+                        case ICMP_SGT -> OperatorType.ICMP_SLT;
+                        case ICMP_SLT -> OperatorType.ICMP_SGT;
+                        case ICMP_SLE -> OperatorType.ICMP_SGE;
+                        default -> temp;
+                    };
+                }
+                return lName + " " + temp.toString() + " " + rName;
             }
         } else if (instruction instanceof CallInst callInst) {
             return callInst.getCallee();
@@ -153,6 +169,39 @@ public class GVN {
             curBlock.getInstructions().remove(binaryInst);
             binaryInst.replaceByNewValue(constInt);
             binaryInst.deleteUse();
+        } else if (value1 instanceof ZextInst zextInst1 && value2 instanceof ZextInst zextInst2) {
+            if (!(zextInst1.getOriginValue() instanceof BinaryInst binaryInst1)) {
+                return;
+            }
+            if (!(zextInst2.getOriginValue() instanceof BinaryInst binaryInst2)) {
+                return;
+            }
+            OperatorType op = binaryInst.getOpType();
+            if (!(op == OperatorType.ICMP_EQ || op == OperatorType.ICMP_NE)) {
+                return;
+            }
+            if (binaryInst1.getOperand1().equals(binaryInst2.getOperand1())
+                    && binaryInst1.getOperand2().equals(binaryInst2.getOperand2())) {
+                boolean opposite = binaryInst1.getOpType() == OperatorType.ICMP_SLT
+                        && binaryInst2.getOpType() == OperatorType.ICMP_SGT;
+                if (binaryInst1.getOpType() == OperatorType.ICMP_SGT
+                        && binaryInst2.getOpType() == OperatorType.ICMP_SLT) {
+                    opposite = true;
+                }
+                if (opposite) {
+                    if (op == OperatorType.ICMP_EQ) {
+                        ConstInt constInt = new ConstInt(IntegerType.i1, 0);
+                        curBlock.getInstructions().remove(binaryInst);
+                        binaryInst.replaceByNewValue(constInt);
+                        binaryInst.deleteUse();
+                    } else {
+                        ConstInt constInt = new ConstInt(IntegerType.i1, 1);
+                        curBlock.getInstructions().remove(binaryInst);
+                        binaryInst.replaceByNewValue(constInt);
+                        binaryInst.deleteUse();
+                    }
+                }
+            }
         }
     }
 

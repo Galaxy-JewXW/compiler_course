@@ -4,16 +4,21 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [6 x i8] c"I am \00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.s.0 = private unnamed_addr constant [3 x i8] c"BB\00", align 1
 
 
 
 define dso_local i32 @main() {
 0:
 	%1 = call i32 @getint()
-	call void @putstr(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 0)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
+	%2 = call i32 @getint()
+	%3 = icmp sgt i32 %1, %2
+	%4 = zext i1 %3 to i32
+	%5 = icmp ne i32 0, %4
+	br i1 %5, label %6, label %7
+6:
+	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
+	br label %7
+7:
 	ret i32 0
 }

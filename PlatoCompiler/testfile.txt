@@ -2,6 +2,9 @@ int main()
 {
     int a, b;
     a = getint();
-    printf("I am %d\n", ((a + b) - (a + b)));
+    b = getint();
+    if (a > b == a < b != a > b) {
+    printf("BB");
+    }
     return 0;
 }
