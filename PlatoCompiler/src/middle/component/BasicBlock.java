@@ -31,7 +31,7 @@ public class BasicBlock extends User {
     private BasicBlock immediateDominator = null;
     // 标记是否在优化过程中被删除
     private boolean isDeleted = false;
-    private int imdomDepth;
+    private int imdomDepth = 0;
 
     //活跃变量分析
     private HashSet<Value> defSet = new HashSet<>();
@@ -207,6 +207,13 @@ public class BasicBlock extends User {
         }
     }
 
+    public int getImdomDepth() {
+        return imdomDepth;
+    }
+
+    public void setImdomDepth(int imdomDepth) {
+        this.imdomDepth = imdomDepth;
+    }
 
     @Override
     public String toString() {
