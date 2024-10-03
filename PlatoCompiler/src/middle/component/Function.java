@@ -17,7 +17,6 @@ public class Function extends User {
     private ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
     private boolean isBuiltIn = false;
     private boolean hasSideEffects = false;
-    private ArrayList<BasicBlock> postOrderTree;
 
     // 寄存器分配
     private HashMap<Value, Register> var2reg = new HashMap<>();
@@ -88,19 +87,6 @@ public class Function extends User {
 
     public void setVar2reg(HashMap<Value, Register> var2reg) {
         this.var2reg = var2reg;
-    }
-
-    public ArrayList<BasicBlock> getPostOrderTree() {
-        postOrderTree = new ArrayList<>();
-        visitTree(basicBlocks.get(0));
-        return postOrderTree;
-    }
-
-    public void visitTree(BasicBlock curBlock) {
-        for (BasicBlock basicBlock : curBlock.getImmediateDominateBlocks()) {
-            visitTree(basicBlock);
-        }
-        postOrderTree.add(curBlock);
     }
 
     @Override
