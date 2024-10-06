@@ -26,6 +26,10 @@ public class JumpAsm extends TextAssembly {
         this.target = null;
     }
 
+    public AsmOp getOp() {
+        return op;
+    }
+
     public String getTarget() {
         return target;
     }

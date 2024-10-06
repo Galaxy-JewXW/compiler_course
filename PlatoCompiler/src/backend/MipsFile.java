@@ -1,10 +1,10 @@
 package backend;
 
 import backend.global.GlobalAssembly;
+import backend.text.Label;
 import backend.text.TextAssembly;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class MipsFile {
     private static final MipsFile INSTANCE = new MipsFile();
@@ -45,11 +45,23 @@ public class MipsFile {
 
     @Override
     public String toString() {
-        return ".data\n" +
-                dataSegment.stream().map(Object::toString)
-                        .collect(Collectors.joining("\n")) +
-                "\n\n\n.text\n" +
-                textSegment.stream().map(Object::toString)
-                        .collect(Collectors.joining("\n"));
+        StringBuilder sb = new StringBuilder(".data:\n");
+        for (GlobalAssembly assembly : dataSegment) {
+            sb.append(assembly).append("\n");
+        }
+        sb.append(".text:\n");
+        for (int i = 0; i < textSegment.size(); i++) {
+            TextAssembly assembly = textSegment.get(i);
+            if (assembly instanceof Label) {
+                sb.append(assembly).append("\n");
+                continue;
+            }
+            sb.append("\t").append(assembly).append("\n");
+            if (i + 1 < textSegment.size()
+                    && textSegment.get(i + 1) instanceof Label) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

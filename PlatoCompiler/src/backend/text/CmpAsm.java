@@ -16,6 +16,10 @@ public class CmpAsm extends TextAssembly {
         this.rt = rt;
     }
 
+    public Register getRd() {
+        return rd;
+    }
+
     @Override
     public String toString() {
         return op.name().toLowerCase() + " " + rd + ", " + rs + ", " + rt;

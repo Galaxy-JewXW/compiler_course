@@ -11,6 +11,14 @@ public class LaAsm extends TextAssembly {
         this.pointer = pointer;
     }
 
+    public Register getTarget() {
+        return target;
+    }
+
+    public String getPointer() {
+        return pointer;
+    }
+
     @Override
     public String toString() {
         return "la " + target + ", " + pointer;

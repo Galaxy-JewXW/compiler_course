@@ -13,6 +13,14 @@ public class MDRegAsm extends TextAssembly {
         this.rd = rd;
     }
 
+    public AsmOp getOp() {
+        return op;
+    }
+
+    public Register getRd() {
+        return rd;
+    }
+
     @Override
     public String toString() {
         return op.name().toLowerCase() + " " + rd;

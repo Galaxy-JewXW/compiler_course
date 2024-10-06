@@ -2,9 +2,11 @@ package backend.utils;
 
 import backend.MipsFile;
 import backend.enums.AsmOp;
+import backend.enums.Register;
 import backend.text.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,9 +16,11 @@ public class PeepHole {
         MipsFile.getInstance().setInsect(false);
         removeJump();
         transfer2Move();
-        moveRemoval();
+        removeMove();
         memPairRemoval();
         reverseCondBr();
+        removeJump1();
+        removeLiLa();
     }
 
     private static void removeJump() {
@@ -49,7 +53,7 @@ public class PeepHole {
                 });
     }
 
-    private static void moveRemoval() {
+    private static void removeMove() {
         List<TextAssembly> textSegment = MipsFile.getInstance().getTextSegment();
 
         // move $t1 <- $t1
@@ -144,5 +148,108 @@ public class PeepHole {
                 }
             }
         }
+    }
+
+    // j main_b7
+    //
+    // main_b4:
+    //	# move %37 -> %3
+    //	# br label %7
+    //
+    // main_b7:
+    private static void removeJump1() {
+        ArrayList<TextAssembly> textAssemblies = new ArrayList<>(
+                MipsFile.getInstance().getTextSegment());
+        for (int i = 0; i < textAssemblies.size(); i++) {
+            TextAssembly textAssembly = textAssemblies.get(i);
+            if (textAssembly instanceof JumpAsm jumpAsm) {
+                boolean flag = false;
+                String target = jumpAsm.getTarget();
+                for (int j = i + 1; j < textAssemblies.size(); j++) {
+                    TextAssembly textAssembly1 = textAssemblies.get(j);
+                    if (textAssembly1 instanceof Label label
+                            && label.getLabel().equals(target)) {
+                        break;
+                    }
+                    if (!(textAssembly1 instanceof Label
+                            || textAssembly1 instanceof Comment)) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    MipsFile.getInstance().getTextSegment().remove(jumpAsm);
+                }
+            }
+        }
+    }
+
+    private static void removeLiLa() {
+        ArrayList<TextAssembly> toRemove = new ArrayList<>();
+        HashMap<Register, Integer> liUses = new HashMap<>();
+        HashMap<Register, String> laUses = new HashMap<>();
+        for (TextAssembly asm : MipsFile.getInstance().getTextSegment()) {
+            if (asm instanceof Label) {
+                liUses.clear();
+                laUses.clear();
+                continue;
+            }
+            Register targetReg = null;
+
+            if (asm instanceof LaAsm laAsm) {
+                targetReg = laAsm.getTarget();
+                String name = laAsm.getPointer();
+                if (laUses.getOrDefault(targetReg, "").equals(name)) {
+                    toRemove.add(asm);
+                }
+                laUses.put(targetReg, name);
+                liUses.remove(targetReg);
+                continue;
+            }
+            if (asm instanceof LiAsm liAsm) {
+                targetReg = liAsm.getTarget();
+                int value = liAsm.getImmediate();
+                if (liUses.containsKey(targetReg) && liUses.get(targetReg).equals(value)) {
+                    toRemove.add(asm);
+                }
+                liUses.put(targetReg, value);
+                laUses.remove(targetReg);
+                continue;
+            }
+            if (asm instanceof CalcAsm calcAsm) {
+                targetReg = calcAsm.getRd();
+            } else if (asm instanceof CmpAsm cmpAsm) {
+                targetReg = cmpAsm.getRd();
+            } else if (asm instanceof MemAsm memAsm) {
+                if (memAsm.getOp() == AsmOp.LW) {
+                    targetReg = memAsm.getRd();
+                }
+            } else if (asm instanceof SyscallAsm) {
+                if (!liUses.containsKey(Register.V0)) {
+                    throw new RuntimeException();
+                } else {
+                    if (liUses.get(Register.V0) == 5
+                            || liUses.get(Register.V0) == 12) {
+                        targetReg = Register.V0;
+                    }
+                }
+            } else if (asm instanceof MoveAsm moveAsm) {
+                targetReg = moveAsm.getDst();
+            } else if (asm instanceof JumpAsm jumpAsm
+                    && jumpAsm.getOp().equals(AsmOp.JAL)) {
+                liUses.clear();
+                laUses.clear();
+            } else if (asm instanceof MDRegAsm mdRegAsm) {
+                if (mdRegAsm.getOp().equals(AsmOp.MFHI)
+                        || mdRegAsm.getOp().equals(AsmOp.MFLO)) {
+                    targetReg = mdRegAsm.getRd();
+                }
+            }
+            if (targetReg != null) {
+                liUses.remove(targetReg);
+                laUses.remove(targetReg);
+            }
+        }
+        MipsFile.getInstance().getTextSegment().removeAll(toRemove);
     }
 }

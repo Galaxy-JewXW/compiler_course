@@ -11,6 +11,14 @@ public class LiAsm extends TextAssembly {
         this.immediate = immediate;
     }
 
+    public Register getTarget() {
+        return target;
+    }
+
+    public int getImmediate() {
+        return immediate;
+    }
+
     @Override
     public String toString() {
         return "li " + target + ", " + immediate;

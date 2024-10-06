@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="man" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="man">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/CmpAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/CmpAsm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/JumpAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/JumpAsm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/LaAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/LaAsm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/Label.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/Label.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/LiAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/LiAsm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/text/MDRegAsm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/text/MDRegAsm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/utils/PeepHole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/PeepHole.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -533,11 +545,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/pass/Optimizer.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/pass/SingleJumpRemoval.java</url>
           <line>19</line>

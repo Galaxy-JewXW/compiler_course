@@ -4,50 +4,12 @@ import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.global.Asciiz;
 import backend.global.Word;
-import backend.text.BrAsm;
-import backend.text.CalcAsm;
-import backend.text.CmpAsm;
-import backend.text.Comment;
-import backend.text.JumpAsm;
-import backend.text.LaAsm;
-import backend.text.Label;
-import backend.text.LiAsm;
-import backend.text.MDRegAsm;
-import backend.text.MemAsm;
-import backend.text.MoveAsm;
-import backend.text.MulDivAsm;
-import backend.text.SyscallAsm;
-import backend.utils.ActiveVariable;
-import backend.utils.OptimizedDivision;
-import backend.utils.PeepHole;
-import backend.utils.RegAlloc;
-import backend.utils.RemovePhi;
-import backend.utils.ZextRemoval;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
+import backend.text.*;
+import backend.utils.*;
 import middle.component.Module;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.MoveInst;
-import middle.component.instruction.OperatorType;
-import middle.component.instruction.RetInst;
-import middle.component.instruction.StoreInst;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutchInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.*;
+import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.model.Value;
@@ -172,7 +134,7 @@ public class MipsBuilder {
         var2Offset = new HashMap<>();
         curStackOffset = 0;
         var2reg = new HashMap<>(function.getVar2reg());
-        new Label(function.getName().substring(1), true);
+        new Label(function.getName().substring(1));
         for (int i = 0; i < function.getFuncParams().size(); i++) {
             curStackOffset -= 4;
             if (i < 3) {
@@ -206,7 +168,7 @@ public class MipsBuilder {
 
     private void buildBasicBlock(BasicBlock block) {
         new Label(currentFunction.getName().substring(1)
-                + "_b" + block.getName(), false);
+                + "_b" + block.getName());
         for (Instruction instruction : block.getInstructions()) {
             new Comment("# " + instruction.toString());
             buildInstruction(instruction);
