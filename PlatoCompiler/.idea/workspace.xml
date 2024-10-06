@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="111" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,7 +133,7 @@
       <workItem from="1727972714731" duration="39000" />
       <workItem from="1727972795427" duration="1333000" />
       <workItem from="1728213509413" duration="230000" />
-      <workItem from="1728213767604" duration="963000" />
+      <workItem from="1728213767604" duration="1385000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -489,7 +487,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727974074352</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="111">
+      <option name="closed" value="true" />
+      <created>1728215688451</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1728215688451</updated>
+    </task>
+    <task id="LOCAL-00046" summary="111">
+      <option name="closed" value="true" />
+      <created>1728215825124</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1728215825124</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,7 +521,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="大概实现了函数内联" />
     <MESSAGE value="redo optimize" />
     <MESSAGE value="a" />
     <MESSAGE value="实现全局变量局部化" />
@@ -532,7 +545,8 @@
     <MESSAGE value="loop error" />
     <MESSAGE value="fix" />
     <MESSAGE value="man" />
-    <option name="LAST_COMMIT_MESSAGE" value="man" />
+    <MESSAGE value="111" />
+    <option name="LAST_COMMIT_MESSAGE" value="111" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
