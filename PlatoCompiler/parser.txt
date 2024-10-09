@@ -43,40 +43,36 @@ RBRACK ]
 RPARENT )
 SEMICN ;
 <Stmt>
-IDENFR s
-LBRACK [
-INTCON 1
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACK ]
+CHARTK char
+IDENFR c
+<VarDef>
+SEMICN ;
+<VarDecl>
+IDENFR c
 <LVal>
 ASSIGN =
-IDENFR s
-LBRACK [
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACK ]
+GETCHARTK getchar
+LPARENT (
+RPARENT )
+SEMICN ;
+<Stmt>
+INTTK int
+IDENFR n
+<VarDef>
+SEMICN ;
+<VarDecl>
+IDENFR n
 <LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
+ASSIGN =
+GETINTTK getint
+LPARENT (
+RPARENT )
 SEMICN ;
 <Stmt>
 IDENFR s
 LBRACK [
-INTCON 1
-<Number>
+IDENFR n
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -85,8 +81,8 @@ INTCON 1
 RBRACK ]
 <LVal>
 ASSIGN =
-INTCON 1919810
-<Number>
+IDENFR c
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -100,8 +96,8 @@ STRCON "%c"
 COMMA ,
 IDENFR s
 LBRACK [
-INTCON 1
-<Number>
+IDENFR n
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

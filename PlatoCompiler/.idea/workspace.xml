@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="char使用lb和sb" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="label重名问题">
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,7 +138,7 @@
       <workItem from="1728213767604" duration="1385000" />
       <workItem from="1728439042572" duration="61000" />
       <workItem from="1728440379764" duration="626000" />
-      <workItem from="1728448561452" duration="2393000" />
+      <workItem from="1728448561452" duration="3224000" />
     </task>
     <task id="LOCAL-00001" summary="添加常数条件表达式计算">
       <option name="closed" value="true" />
@@ -514,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728450680394</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="label重名问题">
+      <option name="closed" value="true" />
+      <created>1728451182482</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1728451182482</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -532,7 +542,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="a" />
     <MESSAGE value="实现全局变量局部化" />
     <MESSAGE value="实现全局变量局部化1" />
     <MESSAGE value="爆笑了" />
@@ -557,6 +566,7 @@
     <MESSAGE value="man" />
     <MESSAGE value="111" />
     <MESSAGE value="char使用lb和sb" />
-    <option name="LAST_COMMIT_MESSAGE" value="char使用lb和sb" />
+    <MESSAGE value="label重名问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="label重名问题" />
   </component>
 </project>

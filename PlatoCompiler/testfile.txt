@@ -1,8 +1,11 @@
 char s[9] = "Hello";
 int main() {
     printf("%c", s[1]);
-    s[1] = s[2];
-    s[1] = 1919810;
-    printf("%c", s[1]);
+    char c;
+    c = getchar();
+    int n;
+    n = getint();
+    s[n] = c;
+    printf("%c", s[n]);
     return 0;
 }

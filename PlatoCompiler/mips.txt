@@ -9,24 +9,31 @@ main_b0:
     la $k0, s
     addiu $t0, $k0, 1
     # %2 = load i8, i8* %1
-    lb $t1, 0($t0)
+    lb $t0, 0($t0)
     # call void @putch(i8 %2)
-    move $a0, $t1
+    move $a0, $t0
     li $v0, 11
     syscall
-    # %3 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 2
-    addiu $t1, $k0, 2
-    # %4 = load i8, i8* %3
-    lb $t1, 0($t1)
-    # store i8 %4, i8* %1
-    sb $t1, 0($t0)
-    # store i8 66, i8* %1
-    li $k1, 66
-    sb $k1, 0($t0)
-    # %5 = load i8, i8* %1
-    lb $t0, 0($t0)
-    # call void @putch(i8 %5)
+    # %3 = call i32 @getchar()
+    li $v0, 12
+    syscall
+    move $t0, $v0
+    # %4 = trunc i32 %3 to i8
+    andi $t0, $t0, 255
+    # %5 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $t1, $v0
+    # %6 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 %5
+    move $k1, $t1
+    addu $t1, $k0, $k1
+    # store i8 %4, i8* %6
+    sb $t0, 0($t1)
+    # %7 = load i8, i8* %6
+    lb $t0, 0($t1)
+    # call void @putch(i8 %7)
     move $a0, $t0
+    li $v0, 11
     syscall
     # ret i32 0
     li $v0, 10

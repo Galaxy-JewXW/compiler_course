@@ -15,18 +15,24 @@ define dso_local i32 @main() {
 	%3 = zext i8 %2 to i32
 	%4 = trunc i32 %3 to i8
 	call void @putch(i8 %4)
-	%5 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 1
-	%6 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 2
-	%7 = load i8, i8* %6
-	%8 = zext i8 %7 to i32
-	%9 = trunc i32 %8 to i8
-	store i8 %9, i8* %5
-	%10 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 1
-	store i8 66, i8* %10
-	%11 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 1
-	%12 = load i8, i8* %11
+	%5 = alloca i8
+	%6 = call i32 @getchar()
+	%7 = trunc i32 %6 to i8
+	store i8 %7, i8* %5
+	%8 = alloca i32
+	%9 = call i32 @getint()
+	store i32 %9, i32* %8
+	%10 = load i32, i32* %8
+	%11 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 %10
+	%12 = load i8, i8* %5
 	%13 = zext i8 %12 to i32
 	%14 = trunc i32 %13 to i8
-	call void @putch(i8 %14)
+	store i8 %14, i8* %11
+	%15 = load i32, i32* %8
+	%16 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 %15
+	%17 = load i8, i8* %16
+	%18 = zext i8 %17 to i32
+	%19 = trunc i32 %18 to i8
+	call void @putch(i8 %19)
 	ret i32 0
 }

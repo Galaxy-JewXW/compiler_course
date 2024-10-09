@@ -639,6 +639,7 @@ public class MipsBuilder {
         Value index = gepInst.getIndex();
         Register pointerReg = Register.K0;
         Register indexReg = Register.K1;
+        ValueType type = ((PointerType) pointer.getValueType()).getTargetType();
         if (pointer instanceof GlobalVar globalVar) {
             new LaAsm(pointerReg, globalVar.getName().substring(1));
         } else if (var2reg.containsKey(pointer)) {
@@ -652,7 +653,11 @@ public class MipsBuilder {
             } else {
                 new MemAsm(AsmOp.LW, indexReg, Register.SP, var2Offset.get(index));
             }
-            new CalcAsm(Register.K1, AsmOp.SLL, indexReg, 2);
+            if (type.equals(IntegerType.i32)) {
+                new CalcAsm(Register.K1, AsmOp.SLL, indexReg, 2);
+            } else {
+                new MoveAsm(Register.K1, indexReg);
+            }
             if (var2reg.containsKey(gepInst)) {
                 new CalcAsm(var2reg.get(gepInst), AsmOp.ADDU,
                         pointerReg, Register.K1);
@@ -663,7 +668,6 @@ public class MipsBuilder {
             }
             return;
         }
-        ValueType type = ((PointerType) pointer.getValueType()).getTargetType();
         int bytes = type.equals(IntegerType.i32) ? 4 : 1;
         if (var2reg.containsKey(gepInst)) {
             new CalcAsm(var2reg.get(gepInst), AsmOp.ADDIU,
