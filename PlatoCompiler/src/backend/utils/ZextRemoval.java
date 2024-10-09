@@ -4,6 +4,7 @@ import middle.component.BasicBlock;
 import middle.component.Function;
 import middle.component.Module;
 import middle.component.instruction.Instruction;
+import middle.component.instruction.TruncInst;
 import middle.component.instruction.ZextInst;
 
 import java.util.ArrayList;
@@ -18,6 +19,20 @@ public class ZextRemoval {
                         instruction.replaceByNewValue(zextInst.getOriginValue());
                         instruction.deleteUse();
                         block.getInstructions().remove(instruction);
+                    }
+                }
+            }
+        }
+        for (Function function : module.getFunctions()) {
+            for (BasicBlock block : function.getBasicBlocks()) {
+                ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
+                for (Instruction instruction : instructions) {
+                    if (instruction instanceof TruncInst truncInst) {
+                        if (truncInst.getOriginValue().getValueType().equals(truncInst.getValueType())) {
+                            instruction.replaceByNewValue(truncInst.getOriginValue());
+                            instruction.deleteUse();
+                            block.getInstructions().remove(instruction);
+                        }
                     }
                 }
             }

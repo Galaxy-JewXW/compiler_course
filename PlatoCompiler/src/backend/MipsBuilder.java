@@ -3,6 +3,7 @@ package backend;
 import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.global.Asciiz;
+import backend.global.Byte;
 import backend.global.Word;
 import backend.text.*;
 import backend.utils.*;
@@ -114,18 +115,32 @@ public class MipsBuilder {
     private void buildGlobalVar(GlobalVar globalVar) {
         ValueType targetType = ((PointerType) globalVar.getValueType())
                 .getTargetType();
-        if (targetType.equals(IntegerType.i32) || targetType.equals(IntegerType.i8)) {
+        if (targetType.equals(IntegerType.i32)) {
             if (globalVar.getInitialValue().getElements() == null) {
                 new Word(globalVar.getName().substring(1), 0);
             } else {
                 new Word(globalVar.getName().substring(1),
                         globalVar.getInitialValue().getElements().get(0));
             }
-        } else {
+        } else if (targetType.equals(IntegerType.i8)) {
+            if (globalVar.getInitialValue().getElements() == null) {
+                new Byte(globalVar.getName().substring(1), 0);
+            } else {
+                new Byte(globalVar.getName().substring(1),
+                        globalVar.getInitialValue().getElements().get(0));
+            }
+        } else if (targetType instanceof ArrayType arrayType) {
             // 初始化全局数组
+            ValueType eleType = arrayType.getElementType();
             ArrayList<Integer> list = globalVar.getInitialValue().getElements();
             int length = globalVar.getInitialValue().getLength();
-            new Word(globalVar.getName().substring(1), list, length);
+            if (eleType.equals(IntegerType.i32)) {
+                new Word(globalVar.getName().substring(1), list, length);
+            } else {
+                new Byte(globalVar.getName().substring(1), list, length);
+            }
+        } else {
+            throw new RuntimeException("Unknown global variable type: " + targetType);
         }
     }
 
@@ -648,12 +663,14 @@ public class MipsBuilder {
             }
             return;
         }
+        ValueType type = ((PointerType) pointer.getValueType()).getTargetType();
+        int bytes = type.equals(IntegerType.i32) ? 4 : 1;
         if (var2reg.containsKey(gepInst)) {
             new CalcAsm(var2reg.get(gepInst), AsmOp.ADDIU,
-                    pointerReg, 4 * constInt.getIntValue());
+                    pointerReg, bytes * constInt.getIntValue());
         } else {
             new CalcAsm(Register.K0, AsmOp.ADDIU,
-                    pointerReg, 4 * constInt.getIntValue());
+                    pointerReg, bytes * constInt.getIntValue());
             new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(gepInst));
         }
     }
@@ -669,10 +686,19 @@ public class MipsBuilder {
             new MemAsm(AsmOp.LW, pointerReg, Register.SP, var2Offset.get(pointer));
         }
         if (var2reg.containsKey(loadInst)) {
-            new MemAsm(AsmOp.LW, var2reg.get(loadInst), pointerReg, 0);
+            if (loadInst.getValueType().equals(IntegerType.i32)) {
+                new MemAsm(AsmOp.LW, var2reg.get(loadInst), pointerReg, 0);
+            } else {
+                new MemAsm(AsmOp.LB, var2reg.get(loadInst), pointerReg, 0);
+            }
         } else {
-            new MemAsm(AsmOp.LW, Register.K0, pointerReg, 0);
-            new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(loadInst));
+            if (loadInst.getValueType().equals(IntegerType.i32)) {
+                new MemAsm(AsmOp.LW, Register.K0, pointerReg, 0);
+                new MemAsm(AsmOp.SW, Register.K0, Register.SP, var2Offset.get(loadInst));
+            } else {
+                new MemAsm(AsmOp.LB, Register.K0, pointerReg, 0);
+                new MemAsm(AsmOp.SB, Register.K0, Register.SP, var2Offset.get(loadInst));
+            }
         }
     }
 
@@ -771,6 +797,7 @@ public class MipsBuilder {
     private void buildStoreInst(StoreInst storeInst) {
         Value pointer = storeInst.getPointer();
         Value storedValue = storeInst.getStoredValue();
+        ValueType valueType = ((PointerType) pointer.getValueType()).getTargetType();
         Register reg = Register.K0;
         if (pointer instanceof GlobalVar globalVar) {
             new LaAsm(reg, globalVar.getName().substring(1));
@@ -781,12 +808,24 @@ public class MipsBuilder {
         }
         if (storedValue instanceof ConstInt constInt) {
             new LiAsm(Register.K1, constInt.getIntValue());
-            new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+            if (valueType.equals(IntegerType.i32)) {
+                new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+            } else {
+                new MemAsm(AsmOp.SB, Register.K1, reg, 0);
+            }
         } else if (var2reg.containsKey(storedValue)) {
-            new MemAsm(AsmOp.SW, var2reg.get(storedValue), reg, 0);
+            if (valueType.equals(IntegerType.i32)) {
+                new MemAsm(AsmOp.SW, var2reg.get(storedValue), reg, 0);
+            } else {
+                new MemAsm(AsmOp.SB, var2reg.get(storedValue), reg, 0);
+            }
         } else {
             new MemAsm(AsmOp.LW, Register.K1, Register.SP, var2Offset.get(storedValue));
-            new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+            if (valueType.equals(IntegerType.i32)) {
+                new MemAsm(AsmOp.SW, Register.K1, reg, 0);
+            } else {
+                new MemAsm(AsmOp.SB, Register.K1, reg, 0);
+            }
         }
     }
 
