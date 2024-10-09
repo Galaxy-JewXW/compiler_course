@@ -149,7 +149,7 @@ public class MipsBuilder {
         var2Offset = new HashMap<>();
         curStackOffset = 0;
         var2reg = new HashMap<>(function.getVar2reg());
-        new Label(function.getName().substring(1));
+        new Label("func_" + function.getName().substring(1));
         for (int i = 0; i < function.getFuncParams().size(); i++) {
             curStackOffset -= 4;
             if (i < 3) {
@@ -616,7 +616,7 @@ public class MipsBuilder {
             }
         }
         new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, curStackOffset - 4 * allocatedRegs.size() - 4);
-        JumpAsm jalAsm = new JumpAsm(AsmOp.JAL, calledFunction.getName().substring(1));
+        JumpAsm jalAsm = new JumpAsm(AsmOp.JAL, "func_" + calledFunction.getName().substring(1));
         new MemAsm(AsmOp.LW, Register.RA, Register.SP, 0);
         new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, -(curStackOffset - 4 * allocatedRegs.size() - 4));
         for (int i = 1; i <= allocatedRegs.size(); i++) {

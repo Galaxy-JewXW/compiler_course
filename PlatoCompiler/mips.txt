@@ -3,7 +3,7 @@ s: .byte 72, 101, 108, 108, 111, 0 # existed definition
    .space 3 # zeroinitializer
 
 .text:
-main:
+func_main:
 main_b0:
     # %1 = getelementptr inbounds [9 x i8], [9 x i8]* @s, i32 0, i32 1
     la $k0, s
