@@ -5,16 +5,70 @@ import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
-import frontend.syntax.function.*;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
+import frontend.syntax.function.FuncRParams;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.ForLoop;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
-import middle.component.instruction.io.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
+import middle.component.instruction.io.GetcharInst;
+import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
+import middle.component.instruction.io.PutintInst;
+import middle.component.instruction.io.PutstrInst;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -30,6 +84,7 @@ import java.util.stream.Collectors;
 public class IRBuilder {
     private final SymbolTable rootTable = TableManager.getInstance()
             .getCurrentTable();
+    private final TableManager clonedManager = new TableManager();
     private final CompUnit compUnit;
     private SymbolTable currentTable = rootTable;
     private boolean isGlobal = false;
@@ -48,26 +103,27 @@ public class IRBuilder {
         Function function = new Function("getint", IntegerType.i32, true);
         symbol.setLlvmValue(function);
         currentTable.addSymbol(symbol);
-
+        clonedManager.addSymbol(symbol);
         symbol = new FuncSymbol("getchar", SymbolType.INT, new ArrayList<>());
         function = new Function("getchar", IntegerType.i32, true);
         symbol.setLlvmValue(function);
         currentTable.addSymbol(symbol);
-
+        clonedManager.addSymbol(symbol);
         symbol = new FuncSymbol("putint", SymbolType.VOID, new ArrayList<>());
         function = new Function("getchar", IntegerType.VOID, true);
         symbol.setLlvmValue(function);
         currentTable.addSymbol(symbol);
-
+        clonedManager.addSymbol(symbol);
         symbol = new FuncSymbol("putch", SymbolType.VOID, new ArrayList<>());
         function = new Function("putch", IntegerType.VOID, true);
         symbol.setLlvmValue(function);
         currentTable.addSymbol(symbol);
-
+        clonedManager.addSymbol(symbol);
         symbol = new FuncSymbol("putstr", SymbolType.VOID, new ArrayList<>());
         function = new Function("putstr", IntegerType.VOID, true);
         symbol.setLlvmValue(function);
         currentTable.addSymbol(symbol);
+        clonedManager.addSymbol(symbol);
     }
 
     private void buildCompUnit() {
@@ -102,6 +158,7 @@ public class IRBuilder {
     private void buildConstDef(ConstDef constDef) {
         VarSymbol varSymbol = (VarSymbol) currentTable.getSymbol(
                 constDef.getIdent().getContent());
+        clonedManager.addSymbol(varSymbol);
         // constDef必然有constInitVal，所以也必然有initialValue
         InitialValue initialValue = varSymbol.getInitialValue();
         if (isGlobal) {
@@ -140,6 +197,7 @@ public class IRBuilder {
     private void buildVarDef(VarDef varDef) throws NullPointerException {
         VarSymbol varSymbol = (VarSymbol) currentTable.getSymbol(
                 varDef.getIdent().getContent());
+        clonedManager.addSymbol(varSymbol);
         InitialValue initialValue = varSymbol.getInitialValue();
         if (isGlobal) {
             // 全局下initialValue不为null
@@ -334,7 +392,7 @@ public class IRBuilder {
         }
         String name = lVal.getIdent().getContent();
         // 从符号表树的叶子节点向上查找
-        VarSymbol varSymbol = (VarSymbol) currentTable.findSymbol(name);
+        VarSymbol varSymbol = (VarSymbol) clonedManager.getSymbol(name);
         int dimension = varSymbol.getDimension();
         if (dimension == 0) {
             return new LoadInst(varSymbol.getLlvmValue());
@@ -358,7 +416,7 @@ public class IRBuilder {
         }
         String name = lVal.getIdent().getContent();
         // 从符号表树的叶子节点向上查找
-        VarSymbol varSymbol = (VarSymbol) currentTable.findSymbol(name);
+        VarSymbol varSymbol = (VarSymbol) clonedManager.getSymbol(name);
         int dimension = varSymbol.getDimension();
         if (dimension == 0) {
             return varSymbol.getLlvmValue();
@@ -372,6 +430,7 @@ public class IRBuilder {
     private void buildFuncDef(FuncDef funcDef) {
         FuncSymbol funcSymbol = (FuncSymbol) currentTable.getSymbol(
                 funcDef.getIdent().getContent());
+        clonedManager.addSymbol(funcSymbol);
         String name = "@" + funcDef.getIdent().getContent();
         ValueType funcReturnType = switch (funcSymbol.getType()) {
             case INT -> IntegerType.i32;
@@ -381,6 +440,7 @@ public class IRBuilder {
         Function function = new Function(name, funcReturnType);
         funcSymbol.setLlvmValue(function);
         IRData.setCurrentFunction(function);
+        clonedManager.createTable(funcSymbol.getType());
         currentTable = currentTable.getChild();
         IRData.setCurrentBlock(new BasicBlock(IRData.getBlockName()));
         if (funcDef.getFuncFParams() != null) {
@@ -397,6 +457,7 @@ public class IRBuilder {
             }
         }
         currentTable = currentTable.getParent();
+        clonedManager.recoverTable();
         IRData.setCurrentFunction(null);
     }
 
@@ -409,6 +470,7 @@ public class IRBuilder {
     private void buildFuncFParam(FuncFParam funcFParam) {
         VarSymbol fParamSymbol = (VarSymbol) currentTable.getSymbol(
                 funcFParam.getIdent().getContent());
+        clonedManager.addSymbol(fParamSymbol);
         ValueType fParamType = switch (fParamSymbol.getType()) {
             case INT -> IntegerType.i32;
             case CHAR -> IntegerType.i8;
@@ -430,6 +492,7 @@ public class IRBuilder {
 
     private void buildMainFuncDef(MainFuncDef mainFuncDef) {
         FuncSymbol mainFuncSymbol = (FuncSymbol) currentTable.getSymbol("main");
+        clonedManager.addSymbol(mainFuncSymbol);
         String name = "@main";
         ValueType funcReturnType = switch (mainFuncSymbol.getType()) {
             case INT -> IntegerType.i32;
@@ -440,9 +503,11 @@ public class IRBuilder {
         mainFuncSymbol.setLlvmValue(mainFunction);
         IRData.setCurrentFunction(mainFunction);
         IRData.setCurrentBlock(new BasicBlock(IRData.getBlockName()));
+        clonedManager.createTable(mainFuncSymbol.getType());
         currentTable = currentTable.getChild();
         buildBlock(mainFuncDef.getBlock());
         currentTable = currentTable.getParent();
+        clonedManager.recoverTable();
         IRData.setCurrentFunction(null);
     }
 
@@ -462,9 +527,11 @@ public class IRBuilder {
 
     private void buildStmt(Stmt stmt) {
         if (stmt instanceof BlockStmt blockStmt) {
+            clonedManager.createTable(null);
             currentTable = currentTable.getChild();
             buildBlock(blockStmt.getBlock());
             currentTable = currentTable.getParent();
+            clonedManager.recoverTable();
         } else if (stmt instanceof ReturnStmt returnStmt) {
             buildReturnStmt(returnStmt);
         } else if (stmt instanceof LValExpStmt lValExpStmt) {

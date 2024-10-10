@@ -12,7 +12,7 @@ public class TableManager {
     // 当前处于的循环层数
     private int loopLevel = 0;
 
-    private TableManager() {
+    public TableManager() {
     }
 
     public static TableManager getInstance() {

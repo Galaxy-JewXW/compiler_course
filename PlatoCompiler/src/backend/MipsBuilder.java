@@ -653,6 +653,7 @@ public class MipsBuilder {
                 } else {
                     new MemAsm(AsmOp.LW, paramReg, Register.SP, var2Offset.get(param));
                 }
+                new MemAsm(AsmOp.SW, paramReg, Register.SP, curStackOffset - 4 * (allocatedRegs.size() + i + 1));
             }
         }
         new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, curStackOffset - 4 * allocatedRegs.size() - 4);

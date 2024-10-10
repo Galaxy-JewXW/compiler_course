@@ -44,5 +44,10 @@ public class Optimizer {
         Mem2Reg.run(module, false);
         Mem2Reg.run(module, false);
         CodeRemoval.run(module);
+        Mem2Reg.run(module, false);
+        CodeRemoval.run(module);
+        GVN.run(module);
+        Mem2Reg.run(module, false);
+        CodeRemoval.run(module);
     }
 }

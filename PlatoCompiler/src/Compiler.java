@@ -3,7 +3,6 @@ import backend.MipsFile;
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.TableManager;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
@@ -29,7 +28,7 @@ public class Compiler {
     private static final boolean toLLVM = true;
     private static final boolean toMips = true;
 
-    private static final boolean optimize = false;
+    private static final boolean optimize = true;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
@@ -56,7 +55,6 @@ public class Compiler {
         }
         // 打印符号表
         Printer.printSymbols(symbolOutput);
-        TableManager.getInstance().getCurrentTable().print();
         if (toLLVM) {        // 生成未优化中间代码
             IRBuilder irBuilder = new IRBuilder(compUnit);
             irBuilder.build();

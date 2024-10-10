@@ -47,18 +47,6 @@ public class SymbolTable {
         return symbols.get(symbolName);
     }
 
-    // 从这个表开始逐级向上查找元素
-    public Symbol findSymbol(String symbolName) {
-        SymbolTable table = this;
-        while (table != null) {
-            if (table.containsSymbol(symbolName)) {
-                return table.getSymbol(symbolName);
-            }
-            table = table.getParent();
-        }
-        return null;
-    }
-
     public void addSymbol(Symbol symbol) {
         symbols.put(symbol.getName(), symbol);
     }
