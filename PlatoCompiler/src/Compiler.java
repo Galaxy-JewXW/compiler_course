@@ -25,7 +25,8 @@ public class Compiler {
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
     private static final String mipsOutput = "mips.txt";
 
-    private static final boolean optimize = true;
+    private static final boolean toLLVM = false;
+    private static final boolean optimize = false;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
@@ -52,19 +53,20 @@ public class Compiler {
         }
         // 打印符号表
         Printer.printSymbols(symbolOutput);
-        // 生成未优化中间代码
-        IRBuilder irBuilder = new IRBuilder(compUnit);
-        irBuilder.build();
-        Printer.printIr(Module.getInstance(), llvmOutput);
-        if (optimize) {
-            // 中间代码优化
-            Optimizer optimizer = new Optimizer(Module.getInstance());
-            optimizer.optimize();
-            Printer.printIr(Module.getInstance(), irOutput);
+        if (toLLVM) {        // 生成未优化中间代码
+            IRBuilder irBuilder = new IRBuilder(compUnit);
+            irBuilder.build();
+            Printer.printIr(Module.getInstance(), llvmOutput);
+            if (optimize) {
+                // 中间代码优化
+                Optimizer optimizer = new Optimizer(Module.getInstance());
+                optimizer.optimize();
+                Printer.printIr(Module.getInstance(), irOutput);
+            }
+            // 目标代码生成
+            MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance(), optimize);
+            mipsBuilder.build(optimize);
+            Printer.printMips(MipsFile.getInstance(), mipsOutput);
         }
-        // 目标代码生成
-        MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance(), optimize);
-        mipsBuilder.build(optimize);
-        Printer.printMips(MipsFile.getInstance(), mipsOutput);
     }
 }

@@ -325,7 +325,9 @@ public class Parser {
         Exp exp = null;
         Token token = curToken(-1);
         if (!match(TokenType.SEMICN)) {
-            exp = parseExp();
+            if (isExp()) {
+                exp = parseExp();
+            }
             panic(TokenType.SEMICN);
         }
         return new ReturnStmt(token, exp);
