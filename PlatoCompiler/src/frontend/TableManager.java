@@ -94,4 +94,8 @@ public class TableManager {
     public void print() {
         currentTable.print();
     }
+
+    public void show() {
+        currentTable.show();
+    }
 }

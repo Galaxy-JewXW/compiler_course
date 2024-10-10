@@ -20,6 +20,7 @@ public class Compiler {
     private static final String lexerOutput = "lexer.txt";
     private static final String parserOutput = "parser.txt";
     private static final String errorOutput = "error.txt";
+    private static final String symbolOutput = "symbol.txt";
     private static final String llvmOutput = "llvm_ir.txt";
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
     private static final String mipsOutput = "mips.txt";
@@ -49,6 +50,8 @@ public class Compiler {
         if (!ErrorHandler.getInstance().getErrors().isEmpty()) {
             return;
         }
+        // 打印符号表
+        Printer.printSymbols(symbolOutput);
         // 生成未优化中间代码
         IRBuilder irBuilder = new IRBuilder(compUnit);
         irBuilder.build();

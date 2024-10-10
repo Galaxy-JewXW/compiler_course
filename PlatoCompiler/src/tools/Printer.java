@@ -2,6 +2,7 @@ package tools;
 
 import backend.MipsFile;
 import error.Error;
+import frontend.TableManager;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.component.Module;
@@ -41,6 +42,13 @@ public class Printer {
             writer.newLine();
         }
         writer.close();
+    }
+
+    public static void printSymbols(String path) throws FileNotFoundException {
+        PrintStream origin = System.out;
+        System.setOut(new PrintStream(path));
+        TableManager.getInstance().show();
+        System.setOut(origin);
     }
 
     public static void printIr(Module module, String path) throws FileNotFoundException {

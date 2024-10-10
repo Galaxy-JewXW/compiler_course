@@ -1,88 +1,113 @@
-CHARTK char
-IDENFR s
-LBRACK [
-INTCON 9
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-RBRACK ]
-ASSIGN =
-STRCON "Hello"
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
+CONSTTK const
 INTTK int
-MAINTK main
-LPARENT (
-RPARENT )
-LBRACE {
-PRINTFTK printf
-LPARENT (
-STRCON "%c"
-COMMA ,
-IDENFR s
-LBRACK [
+IDENFR const1
+ASSIGN =
 INTCON 1
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-RBRACK ]
-<LVal>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+COMMA ,
+IDENFR const2
+ASSIGN =
+MINU -
+<UnaryOp>
+INTCON 100
+<Number>
 <PrimaryExp>
+<UnaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-RPARENT )
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
 SEMICN ;
-<Stmt>
-CHARTK char
-IDENFR c
-<VarDef>
-SEMICN ;
-<VarDecl>
-IDENFR c
-<LVal>
-ASSIGN =
-GETCHARTK getchar
-LPARENT (
-RPARENT )
-SEMICN ;
-<Stmt>
+<ConstDecl>
 INTTK int
-IDENFR n
+IDENFR change1
 <VarDef>
 SEMICN ;
 <VarDecl>
-IDENFR n
+INTTK int
+<FuncType>
+IDENFR gets1
+LPARENT (
+INTTK int
+IDENFR var1
+<FuncFParam>
+COMMA ,
+INTTK int
+IDENFR var2
+<FuncFParam>
+<FuncFParams>
+RPARENT )
+LBRACE {
+IDENFR const1
 <LVal>
 ASSIGN =
-GETINTTK getint
-LPARENT (
-RPARENT )
+INTCON 999
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
 SEMICN ;
 <Stmt>
-IDENFR s
-LBRACK [
-IDENFR n
+IDENFR change1
+<LVal>
+ASSIGN =
+IDENFR var1
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+PLUS +
+IDENFR var2
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <Exp>
-RBRACK ]
+SEMICN ;
+<Stmt>
+RETURNTK return
+LPARENT (
+IDENFR change1
+<LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+SEMICN ;
+<Stmt>
+RBRACE }
+<Block>
+<FuncDef>
+INTTK int
+MAINTK main
+LPARENT (
+RPARENT )
+LBRACE {
+IDENFR change1
 <LVal>
 ASSIGN =
-IDENFR c
-<LVal>
+INTCON 10
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -92,24 +117,7 @@ SEMICN ;
 <Stmt>
 PRINTFTK printf
 LPARENT (
-STRCON "%c"
-COMMA ,
-IDENFR s
-LBRACK [
-IDENFR n
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACK ]
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
+STRCON "Hello World$"
 RPARENT )
 SEMICN ;
 <Stmt>

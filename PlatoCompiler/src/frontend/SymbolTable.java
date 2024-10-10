@@ -1,12 +1,16 @@
 package frontend;
 
+import frontend.symbol.FuncSymbol;
 import frontend.symbol.Symbol;
 import frontend.symbol.SymbolType;
+import frontend.symbol.VarSymbol;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SymbolTable {
+    private static int counter = 0;
     private final LinkedHashMap<String, Symbol> symbols = new LinkedHashMap<>();
     private final SymbolType blockType;
     private final SymbolTable parent;
@@ -79,6 +83,51 @@ public class SymbolTable {
         System.out.println("----------------");
         for (SymbolTable child : children) {
             child.print();
+        }
+    }
+
+    public void show() {
+        counter++;
+        for (Map.Entry<String, Symbol> entry : symbols.entrySet()) {
+            StringBuilder sb = new StringBuilder(Integer.toString(counter));
+            sb.append(" ").append(entry.getKey()).append(" ");
+            Symbol symbol = entry.getValue();
+            String typeString;
+            if (symbol instanceof FuncSymbol funcSymbol) {
+                if (funcSymbol.getName().equals("main")) {
+                    continue;
+                }
+                typeString = switch (funcSymbol.getType()) {
+                    case VOID -> "VoidFunc";
+                    case INT -> "IntFunc";
+                    case CHAR -> "CharFunc";
+                };
+            } else if (symbol instanceof VarSymbol varSymbol) {
+                if (varSymbol.isConstant()) {
+                    if (varSymbol.getDimension() == 1) {
+                        typeString = varSymbol.getType().equals(SymbolType.INT)
+                                ? "ConstIntArray" : "ConstCharArray";
+                    } else {
+                        typeString = varSymbol.getType().equals(SymbolType.INT)
+                                ? "ConstInt" : "ConstChar";
+                    }
+                } else {
+                    if (varSymbol.getDimension() == 1) {
+                        typeString = varSymbol.getType().equals(SymbolType.INT)
+                                ? "IntArray" : "CharArray";
+                    } else {
+                        typeString = varSymbol.getType().equals(SymbolType.INT)
+                                ? "Int" : "Char";
+                    }
+                }
+            } else {
+                throw new RuntimeException("Unsupported symbol type: " + symbol);
+            }
+            sb.append(typeString);
+            System.out.println(sb);
+        }
+        for (SymbolTable child : children) {
+            child.show();
         }
     }
 }
