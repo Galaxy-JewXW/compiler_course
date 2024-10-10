@@ -3,6 +3,7 @@ import backend.MipsFile;
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
+import frontend.TableManager;
 import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
@@ -25,8 +26,10 @@ public class Compiler {
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
     private static final String mipsOutput = "mips.txt";
 
+    private static final boolean toLLVM = true;
+    private static final boolean toMips = true;
+
     private static final boolean optimize = false;
-    private static final boolean toLLVM = false;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
@@ -53,6 +56,7 @@ public class Compiler {
         }
         // 打印符号表
         Printer.printSymbols(symbolOutput);
+        TableManager.getInstance().getCurrentTable().print();
         if (toLLVM) {        // 生成未优化中间代码
             IRBuilder irBuilder = new IRBuilder(compUnit);
             irBuilder.build();
@@ -63,10 +67,11 @@ public class Compiler {
                 optimizer.optimize();
                 Printer.printIr(Module.getInstance(), irOutput);
             }
-            // 目标代码生成
-            MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance(), optimize);
-            mipsBuilder.build(optimize);
-            Printer.printMips(MipsFile.getInstance(), mipsOutput);
+            if (toMips) {// 目标代码生成
+                MipsBuilder mipsBuilder = new MipsBuilder(Module.getInstance(), optimize);
+                mipsBuilder.build(optimize);
+                Printer.printMips(MipsFile.getInstance(), mipsOutput);
+            }
         }
     }
 }
