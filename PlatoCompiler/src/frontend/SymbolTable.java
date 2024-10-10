@@ -92,7 +92,7 @@ public class SymbolTable {
             StringBuilder sb = new StringBuilder(Integer.toString(counter));
             sb.append(" ").append(entry.getKey()).append(" ");
             Symbol symbol = entry.getValue();
-            String typeString;
+            String typeString = "";
             if (symbol instanceof FuncSymbol funcSymbol) {
                 if (funcSymbol.getName().equals("main")) {
                     continue;
@@ -120,8 +120,6 @@ public class SymbolTable {
                                 ? "Int" : "Char";
                     }
                 }
-            } else {
-                throw new RuntimeException("Unsupported symbol type: " + symbol);
             }
             sb.append(typeString);
             System.out.println(sb);

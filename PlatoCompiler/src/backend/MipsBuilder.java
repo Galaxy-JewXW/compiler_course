@@ -255,7 +255,7 @@ public class MipsBuilder {
         } else {
             new MemAsm(AsmOp.LW, reg2, Register.SP, var2Offset.get(operand2));
         }
-        if (var2reg.containsKey(operand2)) {
+        if (var2reg.containsKey(binaryInst)) {
             new CmpAsm(var2reg.get(binaryInst), asmOp, reg1, reg2);
         } else {
             new CmpAsm(Register.K0, asmOp, reg1, reg2);
