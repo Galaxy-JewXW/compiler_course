@@ -35,20 +35,8 @@ public class SymbolTable {
         children.add(child);
     }
 
-    public boolean isFunc() {
+    public boolean isFuncFirst() {
         return blockType != null;
-    }
-
-    public boolean isInt32Func() {
-        return blockType == SymbolType.INT;
-    }
-
-    public boolean isInt8Func() {
-        return blockType == SymbolType.CHAR;
-    }
-
-    public boolean isVoidFunc() {
-        return blockType == SymbolType.VOID;
     }
 
     public boolean containsSymbol(String symbolName) {

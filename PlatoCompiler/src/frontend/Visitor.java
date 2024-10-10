@@ -26,6 +26,7 @@ public class Visitor {
     private final TableManager tableManager = TableManager.getInstance();
     private final CompUnit compUnit;
     private boolean isGlobal = true;
+    private SymbolType curFuncType = null;
 
     public Visitor(CompUnit compUnit) {
         this.compUnit = compUnit;
@@ -72,6 +73,7 @@ public class Visitor {
         if (constDef.getConstExp() != null) {
             visitConstExp(constDef.getConstExp());
         }
+        visitConstInitVal(constDef.getConstInitVal());
         int dimension = 0;
         int length = 0;
         if (constDef.getConstExp() != null) {
@@ -103,7 +105,6 @@ public class Visitor {
                 length,
                 initialValue
         ));
-        visitConstInitVal(constDef.getConstInitVal());
     }
 
     private ArrayList<Integer> calculateConstInitVal(ConstInitVal constInitVal) {
@@ -146,6 +147,9 @@ public class Visitor {
         }
         if (varDef.getConstExp() != null) {
             visitConstExp(varDef.getConstExp());
+        }
+        if (varDef.getInitVal() != null) {
+            visitInitVal(varDef.getInitVal());
         }
         int dimension = 0;
         int length = 0;
@@ -194,9 +198,6 @@ public class Visitor {
             );
         }
         tableManager.addSymbol(varSymbol);
-        if (varDef.getInitVal() != null) {
-            visitInitVal(varDef.getInitVal());
-        }
     }
 
     // 全局定义变量，理论上可以算出其初值
@@ -261,8 +262,10 @@ public class Visitor {
         if (funcDef.getFuncFParams() != null) {
             visitFuncFParams(funcDef.getFuncFParams());
         }
+        curFuncType = funcReturnType;
         visitBlock(funcDef.getBlock());
         tableManager.recoverTable();
+        curFuncType = null;
     }
 
     private void visitMainFuncDef(MainFuncDef mainFuncDef) {
@@ -271,9 +274,11 @@ public class Visitor {
                 SymbolType.INT,
                 new ArrayList<>() // main函数形参表为空
         ));
+        curFuncType = SymbolType.INT;
         tableManager.createTable(SymbolType.INT);
         visitBlock(mainFuncDef.getBlock());
         tableManager.recoverTable();
+        curFuncType = null;
     }
 
     private void visitFuncFParams(FuncFParams funcFParams) {
@@ -307,16 +312,18 @@ public class Visitor {
             visitBlockItem(blockItem);
         }
         // 当前符号表是属于一张具有返回值的函数的
-        if (tableManager.inReturnValueFunc()) {
-            ArrayList<BlockItem> items = block.getBlockItems();
-            if (items.isEmpty()
-                    || items.get(items.size() - 1).getStmt() == null
-                    || !(items.get(items.size() - 1).getStmt() instanceof ReturnStmt)) {
-                // int或char函数缺少显性的return with value语句
-                // 这里并不关心返回的值是int型还是char型
-                ErrorHandler.getInstance().addError(new Error(
-                        ErrorType.ReturnMissing, block.getEndLine()
-                ));
+        if (TableManager.getInstance().isFuncFirst()) {
+            if (curFuncType == SymbolType.INT || curFuncType == SymbolType.CHAR) {
+                ArrayList<BlockItem> items = block.getBlockItems();
+                if (items.isEmpty()
+                        || items.get(items.size() - 1).getStmt() == null
+                        || !(items.get(items.size() - 1).getStmt() instanceof ReturnStmt)) {
+                    // int或char函数缺少显性的return with value语句
+                    // 这里并不关心返回的值是int型还是char型
+                    ErrorHandler.getInstance().addError(new Error(
+                            ErrorType.ReturnMissing, block.getEndLine()
+                    ));
+                }
             }
         }
     }
@@ -439,7 +446,7 @@ public class Visitor {
 
     // 无返回值的函数存在不匹配的return语句
     private void visitReturnStmt(ReturnStmt returnStmt) {
-        if (tableManager.inVoidFunc() && returnStmt.getExp() != null) {
+        if (curFuncType == SymbolType.VOID && returnStmt.getExp() != null) {
             ErrorHandler.getInstance().addError(new Error(
                     ErrorType.ReturnTypeMismatch,
                     returnStmt.getToken().getLine()

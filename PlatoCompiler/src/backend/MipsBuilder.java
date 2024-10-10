@@ -791,7 +791,7 @@ public class MipsBuilder {
                 } else if (var2reg.containsKey(returnValue)) {
                     new MoveAsm(Register.V0, var2reg.get(returnValue));
                 } else {
-                    new MemAsm(AsmOp.LW, Register.V0, Register.SP, var2Offset.get(retInst));
+                    new MemAsm(AsmOp.LW, Register.V0, Register.SP, var2Offset.get(returnValue));
                 }
             }
             new JumpAsm(AsmOp.JR, Register.RA);

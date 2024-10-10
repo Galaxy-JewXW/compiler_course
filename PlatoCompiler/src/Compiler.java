@@ -25,8 +25,8 @@ public class Compiler {
     private static final String irOutput = "ir.txt"; // 优化后的中间代码
     private static final String mipsOutput = "mips.txt";
 
-    private static final boolean toLLVM = false;
     private static final boolean optimize = false;
+    private static final boolean toLLVM = false;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));

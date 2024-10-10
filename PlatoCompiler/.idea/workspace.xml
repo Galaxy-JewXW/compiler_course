@@ -4,10 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix bug">
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/SymbolType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/SymbolType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/error.txt" beforeDir="false" afterPath="$PROJECT_DIR$/error.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/Visitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/man.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/TableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/TableManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/man.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,14 +156,7 @@
       <workItem from="1728448561452" duration="3410000" />
       <workItem from="1728473025112" duration="11000" />
       <workItem from="1728547809087" duration="1967000" />
-    </task>
-    <task id="LOCAL-00002" summary="aaa">
-      <option name="closed" value="true" />
-      <created>1727228140303</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1727228140303</updated>
+      <workItem from="1728563168071" duration="692000" />
     </task>
     <task id="LOCAL-00003" summary="aaa">
       <option name="closed" value="true" />
@@ -536,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728548828590</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="1">
+      <option name="closed" value="true" />
+      <created>1728561706854</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1728561706854</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,7 +585,6 @@
     <MESSAGE value="add br inst" />
     <MESSAGE value="finish mips, peephole to be added" />
     <MESSAGE value="fix style" />
-    <MESSAGE value="1" />
     <MESSAGE value="loop error" />
     <MESSAGE value="fix" />
     <MESSAGE value="man" />
@@ -579,7 +592,8 @@
     <MESSAGE value="char使用lb和sb" />
     <MESSAGE value="label重名问题" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -625,10 +639,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="var2reg" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

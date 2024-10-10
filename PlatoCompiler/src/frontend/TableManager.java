@@ -42,12 +42,8 @@ public class TableManager {
         currentTable.addSymbol(symbol);
     }
 
-    public boolean inReturnValueFunc() {
-        return currentTable.isInt8Func() || currentTable.isInt32Func();
-    }
-
-    public boolean inVoidFunc() {
-        return currentTable.isVoidFunc();
+    public boolean isFuncFirst() {
+        return currentTable.isFuncFirst();
     }
 
     /*
