@@ -7,6 +7,7 @@ declare void @putstr(i8*)
 @.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 @a = dso_local constant i32 0
+@b = dso_local constant [100 x i32] [i32 1, i32 2, zeroinitializer]
 
 define dso_local i32 @f(i32 %0) {
 1:
@@ -34,11 +35,23 @@ define dso_local i32 @f(i32 %0) {
 
 define dso_local i32 @main() {
 0:
-	%1 = load i32, i32* @a
-	call void @putint(i32 %1)
+	%1 = alloca [100000 x i32]
+	%2 = getelementptr inbounds [100000 x i32], [100000 x i32]* %1, i32 0, i32 0
+	store i32 2, i32* %2
+	%3 = load i32, i32* @a
+	%4 = getelementptr inbounds [100000 x i32], [100000 x i32]* %1, i32 0, i32 190
+	%5 = load i32, i32* %4
+	%6 = getelementptr inbounds [100 x i32], [100 x i32]* @b, i32 0, i32 98
+	%7 = load i32, i32* %6
+	call void @putint(i32 %3)
+	call void @putint(i32 %5)
+	call void @putint(i32 %7)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
-	%2 = call i32 @f(i32 10)
-	call void @putint(i32 %2)
+	%8 = call i32 @f(i32 10)
+	%9 = getelementptr inbounds [100000 x i32], [100000 x i32]* %1, i32 0, i32 0
+	%10 = load i32, i32* %9
+	call void @putint(i32 %8)
+	call void @putint(i32 %10)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }

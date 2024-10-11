@@ -17,16 +17,14 @@ import java.util.HashSet;
 public class IcmpOptimize {
     public static void run(Module module) {
         Mem2Reg.run(module, false);
-        for (int i = 0; i < 10; i++) {
-            for (Function function : module.getFunctions()) {
-                for (BasicBlock block : function.getBasicBlocks()) {
-                    ArrayList<Instruction> instructions
-                            = new ArrayList<>(block.getInstructions());
-                    for (Instruction instruction : instructions) {
-                        if (instruction instanceof BinaryInst binaryInst
-                                && OperatorType.isLogicalOperator(binaryInst.getOpType())) {
-                            icmpOptimize(binaryInst);
-                        }
+        for (Function function : module.getFunctions()) {
+            for (BasicBlock block : function.getBasicBlocks()) {
+                ArrayList<Instruction> instructions
+                        = new ArrayList<>(block.getInstructions());
+                for (Instruction instruction : instructions) {
+                    if (instruction instanceof BinaryInst binaryInst
+                            && OperatorType.isLogicalOperator(binaryInst.getOpType())) {
+                        icmpOptimize(binaryInst);
                     }
                 }
             }
@@ -54,7 +52,6 @@ public class IcmpOptimize {
         }
         SurplusBlock.build(module);
         CodeRemoval.run(module);
-        Mem2Reg.run(module, false);
     }
 
     private static void icmpOptimize(BinaryInst binaryInst) {

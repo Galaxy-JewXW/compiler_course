@@ -2,10 +2,20 @@ package pass;
 
 import frontend.TableManager;
 import frontend.symbol.VarSymbol;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.StoreInst;
 import middle.component.model.User;
+import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
 import middle.component.type.ValueType;
@@ -25,8 +35,10 @@ public class GlobalVarLocalize {
         checkUse(module);
         createCallMap(module);
         localize(module);
-        constVarToValue(module);
+        constGlobalVarToValue(module);
+        constGlobalArrayToValue(module);
         Mem2Reg.run(module, true);
+        CodeRemoval.run(module);
     }
 
     private static void checkUse(Module module) {
@@ -97,7 +109,7 @@ public class GlobalVarLocalize {
         return gvType.equals(IntegerType.i8) || gvType.equals(IntegerType.i32);
     }
 
-    private static void constVarToValue(Module module) {
+    private static void constGlobalVarToValue(Module module) {
         ArrayList<GlobalVar> toRemove = new ArrayList<>();
         for (GlobalVar gv : module.getGlobalVars()) {
             HashSet<Function> users = usedMap.getOrDefault(gv, null);
@@ -122,6 +134,48 @@ public class GlobalVarLocalize {
                         loadInst.replaceByNewValue(constInt);
                         toRemove.add(gv);
                         loadInst.getBasicBlock().getInstructions().remove(loadInst);
+                    }
+                }
+            }
+        }
+        module.getGlobalVars().removeAll(toRemove);
+    }
+
+    private static void constGlobalArrayToValue(Module module) {
+        ArrayList<GlobalVar> toRemove = new ArrayList<>();
+        for (GlobalVar gv : module.getGlobalVars()) {
+            HashSet<Function> users = usedMap.getOrDefault(gv, null);
+            if (users == null) {
+                toRemove.add(gv);
+                continue;
+            }
+            ValueType gvType = ((PointerType) gv.getValueType()).getTargetType();
+            if (!(gvType instanceof ArrayType arrayType)) {
+                continue;
+            }
+            gvType = arrayType.getElementType();
+            if (gvType.equals(IntegerType.i8) || gvType.equals(IntegerType.i32)) {
+                VarSymbol varSymbol = (VarSymbol) TableManager.getInstance()
+                        .getSymbol(gv.getName().substring(1));
+                for (User user : gv.getUserList()) {
+                    if (user instanceof GepInst gepInst) {
+                        if (gepInst.getIndex() instanceof ConstInt constInt) {
+                            int index = constInt.getIntValue();
+                            for (User user1 : gepInst.getUserList()) {
+                                if (user1 instanceof LoadInst loadInst) {
+                                    int intValue;
+                                    if (index < varSymbol.getInitialValue().getElements().size()) {
+                                        intValue = varSymbol.getConstValue(index);
+                                    } else {
+                                        intValue = 0;
+                                    }
+                                    ConstInt constInt1 = new ConstInt(gvType, intValue);
+                                    loadInst.replaceByNewValue(constInt1);
+                                    toRemove.add(gv);
+                                    loadInst.getBasicBlock().getInstructions().remove(loadInst);
+                                }
+                            }
+                        }
                     }
                 }
             }

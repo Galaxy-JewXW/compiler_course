@@ -59,7 +59,11 @@ public class LVal extends SyntaxNode implements Calculable {
         if (varSymbol.getDimension() == 0) {
             return varSymbol.getConstValue();
         } else {
-            return varSymbol.getConstValue(length);
+            if (length < varSymbol.getInitialValue().getElements().size()) {
+                return varSymbol.getConstValue(length);
+            } else {
+                return 0;
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ import frontend.symbol.Symbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
 
+import java.util.HashSet;
+
 public class TableManager {
     // 单例模式
     private static final TableManager INSTANCE = new TableManager();
@@ -11,6 +13,7 @@ public class TableManager {
     private SymbolTable currentTable = new SymbolTable(null, null);
     // 当前处于的循环层数
     private int loopLevel = 0;
+    private HashSet<VarSymbol> localConstArray = new HashSet<>();
 
     public TableManager() {
     }
@@ -40,6 +43,14 @@ public class TableManager {
 
     public void addSymbol(Symbol symbol) {
         currentTable.addSymbol(symbol);
+    }
+
+    public void addLocalConstArray(VarSymbol var) {
+        localConstArray.add(var);
+    }
+
+    public HashSet<VarSymbol> getLocalConstArray() {
+        return localConstArray;
     }
 
     public boolean isFuncFirst() {

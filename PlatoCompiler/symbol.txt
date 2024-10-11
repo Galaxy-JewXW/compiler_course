@@ -1,3 +1,5 @@
 1 a ConstInt
+1 b ConstIntArray
 1 f IntFunc
 2 n Int
+3 c ConstIntArray

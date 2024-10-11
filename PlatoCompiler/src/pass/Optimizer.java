@@ -17,7 +17,8 @@ public class Optimizer {
         InlinedFunction.run(module);
         UnusedFunction.run(module);
         GlobalVarLocalize.build(module);
-        // GVN.run(module);
-        // IcmpOptimize.run(module);
+        LocalConstArrayToValue.run(module);
+        GVN.run(module);
+        IcmpOptimize.run(module);
     }
 }

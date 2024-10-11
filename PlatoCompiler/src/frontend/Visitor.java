@@ -3,12 +3,51 @@ package frontend;
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
-import frontend.symbol.*;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
-import frontend.syntax.function.*;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.symbol.FuncSymbol;
+import frontend.symbol.ParamSymbol;
+import frontend.symbol.Symbol;
+import frontend.symbol.SymbolType;
+import frontend.symbol.VarSymbol;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.ConstExp;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
+import frontend.syntax.function.FuncRParams;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.ConstInitVal;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
 import middle.component.InitialValue;
 import middle.component.type.ArrayType;
@@ -97,14 +136,18 @@ public class Visitor {
                     .collect(Collectors.toCollection(ArrayList::new));
         }
         InitialValue initialValue = new InitialValue(valueType, length, integers);
-        tableManager.addSymbol(new VarSymbol(
+        VarSymbol varSymbol = new VarSymbol(
                 constDef.getIdent().getContent(),
                 type == TokenType.INTTK ? SymbolType.INT : SymbolType.CHAR,
                 true,
-                constDef.getConstExp() == null ? 0 : 1,
+                dimension,
                 length,
                 initialValue
-        ));
+        );
+        tableManager.addSymbol(varSymbol);
+        if (!isGlobal && dimension == 1) {
+            tableManager.addLocalConstArray(varSymbol);
+        }
     }
 
     private ArrayList<Integer> calculateConstInitVal(ConstInitVal constInitVal) {
