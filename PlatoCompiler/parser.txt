@@ -48,14 +48,42 @@ LBRACE {
 IDENFR a
 <LVal>
 ASSIGN =
+LPARENT (
 IDENFR n
 <LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
+<AddExp>
+PLUS +
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
 MULT *
+LPARENT (
 IDENFR n
 <LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+PLUS +
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -91,8 +119,22 @@ INTCON 3
 <MulExp>
 <AddExp>
 PLUS +
+LPARENT (
 IDENFR n
 <LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+PLUS +
+INTCON 1
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<Exp>
+RPARENT )
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

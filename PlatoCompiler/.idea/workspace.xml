@@ -4,31 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bugs in optimize">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bugs in gvn">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/ConstToValue.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GlobalVarLocalize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GlobalVarLocalize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/SingleJumpRemoval.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/ConstToValue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/GlobalVarLocalize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GlobalVarLocalize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GVN.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/SingleJumpRemoval.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,14 +156,7 @@
       <workItem from="1728610337248" duration="117000" />
       <workItem from="1728611276078" duration="618000" />
       <workItem from="1728611922370" duration="165000" />
-    </task>
-    <task id="LOCAL-00006" summary="初步完成函数内联，还没有调试">
-      <option name="closed" value="true" />
-      <created>1727329327086</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1727329327086</updated>
+      <workItem from="1728612753060" duration="2691000" />
     </task>
     <task id="LOCAL-00007" summary="大概实现了函数内联">
       <option name="closed" value="true" />
@@ -563,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728606411783</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="bugs in gvn">
+      <option name="closed" value="true" />
+      <created>1728612964368</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1728612964369</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -581,7 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="caosini" />
     <MESSAGE value="gosh" />
     <MESSAGE value="win" />
     <MESSAGE value="try gvn" />
@@ -606,7 +592,8 @@
     <MESSAGE value="a" />
     <MESSAGE value="haiyou bug" />
     <MESSAGE value="bugs in optimize" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugs in optimize" />
+    <MESSAGE value="bugs in gvn" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugs in gvn" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

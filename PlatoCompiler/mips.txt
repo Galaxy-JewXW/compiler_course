@@ -11,38 +11,42 @@ main_b1:
     syscall
     move $t0, $v0
     # %3 = icmp sgt i32 %2, 0
-    # br i1 %3, label %4, label %6
-    blt $t0, 0, main_b6
+    # br i1 %3, label %4, label %7
+    blt $t0, 0, main_b7
 
 main_b4:
-    # %5 = mul i32 %2, %2
+    # %5 = add i32 %2, 1
+    addiu $t0, $t0, 1
+    # %6 = mul i32 %5, %5
     mul $t0, $t0, $t0
-    # move %9 -> %t15
+    # move %11 -> %t17
     move $k0, $t0
     sw $k0, -4($sp)
-    # move %5 -> %9
-    # move %t15 -> %10
+    # move %6 -> %11
+    # move %t17 -> %12
     lw $t1, -4($sp)
-    # br label %8
-    j main_b8
+    # br label %10
+    j main_b10
 
-main_b6:
-    # %7 = add i32 -3, %2
+main_b7:
+    # %8 = add i32 %2, 1
+    addiu $t0, $t0, 1
+    # %9 = add i32 -3, %8
     addiu $t0, $t0, -3
-    # move %9 -> %t17
+    # move %11 -> %t19
     move $k0, $t0
     sw $k0, -8($sp)
-    # move %7 -> %9
-    # move %t17 -> %10
+    # move %9 -> %11
+    # move %t19 -> %12
     lw $t1, -8($sp)
-    # br label %8
+    # br label %10
 
-main_b8:
-    # call void @putint(i32 %10)
+main_b10:
+    # call void @putint(i32 %12)
     move $a0, $t1
     li $v0, 1
     syscall
-    # call void @putint(i32 %9)
+    # call void @putint(i32 %11)
     move $a0, $t0
     syscall
     # ret i32 0

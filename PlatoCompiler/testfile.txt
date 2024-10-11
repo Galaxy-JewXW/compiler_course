@@ -3,7 +3,7 @@ int a;
 int f() {
 int n;
 n = getint();
-if (n > 0) {a = n * n; return a;} else {a = -3 + n; return a;}
+if (n > 0) {a = (n + 1) * (n + 1); return a;} else {a = -3 + (n + 1); return a;}
 return 0;
 }
 

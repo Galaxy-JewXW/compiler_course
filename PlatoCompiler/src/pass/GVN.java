@@ -18,7 +18,10 @@ public class GVN {
     private static HashSet<BasicBlock> deletableBlock;
 
     public static void run(Module module) {
+        Mem2Reg.run(module, false);
         optimize(module);
+        SurplusBlock.build(module);
+        OptimizePhi.run(module);
     }
 
     private static void optimize(Module module) {
@@ -56,7 +59,7 @@ public class GVN {
         instructions = new ArrayList<>(block.getInstructions());
         instructions.forEach(instr -> {
             if (instr instanceof BinaryInst binaryInst) {
-                if (!binaryInst.getValueType().equals(IntegerType.i1)) {
+                if (!OperatorType.isLogicalOperator(binaryInst.getOpType())) {
                     calcOptimize(binaryInst);
                 } else {
                     icmpOptimize(binaryInst);
@@ -145,56 +148,12 @@ public class GVN {
                 case ICMP_SGT -> cons1 > cons2 ? 1 : 0;
                 case ICMP_SLE -> cons1 <= cons2 ? 1 : 0;
                 case ICMP_SLT -> cons1 < cons2 ? 1 : 0;
-                default -> throw new IllegalStateException("Unexpected value: " + op);
+                default -> 0;
             };
             ConstInt constInt = new ConstInt(IntegerType.i1, value);
             curBlock.getInstructions().remove(binaryInst);
             binaryInst.replaceByNewValue(constInt);
             binaryInst.deleteUse();
-            return;
-        }
-        if (value1.equals(value2)) {
-            OperatorType op = binaryInst.getOpType();
-            int value = switch (op) {
-                case ICMP_EQ, ICMP_SGE, ICMP_SLE -> 1;
-                case ICMP_NE, ICMP_SGT, ICMP_SLT -> 0;
-                default -> throw new IllegalStateException("Unexpected value: " + op);
-            };
-            ConstInt constInt = new ConstInt(IntegerType.i1, value);
-            curBlock.getInstructions().remove(binaryInst);
-            binaryInst.replaceByNewValue(constInt);
-            binaryInst.deleteUse();
-        } else if (value1 instanceof ZextInst zextInst1 && value2 instanceof ZextInst zextInst2) {
-            if (!(zextInst1.getOriginValue() instanceof BinaryInst binaryInst1)) {
-                return;
-            }
-            if (!(zextInst2.getOriginValue() instanceof BinaryInst binaryInst2)) {
-                return;
-            }
-            OperatorType op = binaryInst.getOpType();
-            if (!(op == OperatorType.ICMP_EQ || op == OperatorType.ICMP_NE)) {
-                return;
-            }
-            if (binaryInst1.getOperand1().equals(binaryInst2.getOperand1())
-                    && binaryInst1.getOperand2().equals(binaryInst2.getOperand2())) {
-                boolean opposite = binaryInst1.getOpType() == OperatorType.ICMP_SLT
-                        && binaryInst2.getOpType() == OperatorType.ICMP_SGT;
-                if (binaryInst1.getOpType() == OperatorType.ICMP_SGT
-                        && binaryInst2.getOpType() == OperatorType.ICMP_SLT) {
-                    opposite = true;
-                }
-                if (opposite) {
-                    ConstInt constInt;
-                    if (op == OperatorType.ICMP_EQ) {
-                        constInt = new ConstInt(IntegerType.i1, 0);
-                    } else {
-                        constInt = new ConstInt(IntegerType.i1, 1);
-                    }
-                    curBlock.getInstructions().remove(binaryInst);
-                    binaryInst.replaceByNewValue(constInt);
-                    binaryInst.deleteUse();
-                }
-            }
         }
     }
 
