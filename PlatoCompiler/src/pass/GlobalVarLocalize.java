@@ -27,6 +27,7 @@ public class GlobalVarLocalize {
         checkUse(module);
         createCallMap(module);
         localize(module);
+        Mem2Reg.run(module, true);
     }
 
     private static void checkUse(Module module) {

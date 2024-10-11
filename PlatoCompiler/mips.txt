@@ -1,182 +1,49 @@
 .data:
-s0: .asciiz ": "
-s1: .asciiz " "
-s2: .asciiz "\n"
-s3: .asciiz "global init: "
 
 .text:
 func_main:
 main_b0:
-    # call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.3, i64 0, i64 0))
-    la $a0, s3
-    li $v0, 4
-    syscall
-    # call void @putint(i32 0)
-    li $a0, 0
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 0)
-    li $a0, 0
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 0)
-    li $a0, 0
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-    la $a0, s2
-    li $v0, 4
-    syscall
-    # call void @putint(i32 1)
-    li $a0, 1
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-    la $a0, s0
-    li $v0, 4
-    syscall
-    # call void @putint(i32 20)
-    li $a0, 20
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 20)
-    li $a0, 20
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 0)
-    li $a0, 0
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-    la $a0, s2
-    li $v0, 4
-    syscall
     # br label %1
 
 main_b1:
-    # call void @putint(i32 2)
-    li $a0, 2
-    li $v0, 1
+    # %2 = call i32 @getint()
+    li $v0, 5
     syscall
-    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-    la $a0, s0
-    li $v0, 4
-    syscall
-    # call void @putint(i32 50)
-    li $a0, 50
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 50)
-    li $a0, 50
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 30)
-    li $a0, 30
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-    la $a0, s2
-    li $v0, 4
-    syscall
-    # br label %2
-
-main_b2:
-    # br label %3
-
-main_b3:
-    # call void @putint(i32 3)
-    li $a0, 3
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-    la $a0, s0
-    li $v0, 4
-    syscall
-    # call void @putint(i32 250)
-    li $a0, 250
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 250)
-    li $a0, 250
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 230)
-    li $a0, 230
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-    la $a0, s2
-    li $v0, 4
-    syscall
-    # br label %4
+    move $t0, $v0
+    # %3 = icmp sgt i32 %2, 0
+    # br i1 %3, label %4, label %6
+    blt $t0, 0, main_b6
 
 main_b4:
-    # br label %5
+    # %5 = mul i32 %2, %2
+    mul $t0, $t0, $t0
+    # move %9 -> %t15
+    move $k0, $t0
+    sw $k0, -4($sp)
+    # move %5 -> %9
+    # move %t15 -> %10
+    lw $t1, -4($sp)
+    # br label %8
+    j main_b8
 
-main_b5:
-    # call void @putint(i32 4)
-    li $a0, 4
+main_b6:
+    # %7 = add i32 -3, %2
+    addiu $t0, $t0, -3
+    # move %9 -> %t17
+    move $k0, $t0
+    sw $k0, -8($sp)
+    # move %7 -> %9
+    # move %t17 -> %10
+    lw $t1, -8($sp)
+    # br label %8
+
+main_b8:
+    # call void @putint(i32 %10)
+    move $a0, $t1
     li $v0, 1
     syscall
-    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-    la $a0, s0
-    li $v0, 4
-    syscall
-    # call void @putint(i32 216)
-    li $a0, 216
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 216)
-    li $a0, 216
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-    la $a0, s1
-    li $v0, 4
-    syscall
-    # call void @putint(i32 196)
-    li $a0, 196
-    li $v0, 1
-    syscall
-    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-    la $a0, s2
-    li $v0, 4
+    # call void @putint(i32 %9)
+    move $a0, $t0
     syscall
     # ret i32 0
     li $v0, 10

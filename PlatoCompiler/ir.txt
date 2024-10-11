@@ -4,63 +4,27 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [3 x i8] c": \00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c" \00", align 1
-@.s.2 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.3 = private unnamed_addr constant [14 x i8] c"global init: \00", align 1
+
 
 
 
 define dso_local i32 @main() {
 0:
-	call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.3, i64 0, i64 0))
-	call void @putint(i32 0)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 0)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 0)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-	call void @putint(i32 1)
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 20)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 20)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 0)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
 	br label %1
 1:
-	call void @putint(i32 2)
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 50)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 50)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 30)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-	br label %2
-2:
-	br label %3
-3:
-	call void @putint(i32 3)
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 250)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 250)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 230)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
-	br label %4
+	%2 = call i32 @getint()
+	%3 = icmp sgt i32 %2, 0
+	br i1 %3, label %4, label %6
 4:
-	br label %5
-5:
-	call void @putint(i32 4)
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 216)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 216)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	call void @putint(i32 196)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.2, i64 0, i64 0))
+	%5 = mul i32 %2, %2
+	br label %8
+6:
+	%7 = add i32 -3, %2
+	br label %8
+8:
+	%9 = phi i32 [ %5, %4 ], [ %7, %6 ]
+	%10 = phi i32 [ %5, %4 ], [ %7, %6 ]
+	call void @putint(i32 %10)
+	call void @putint(i32 %9)
 	ret i32 0
 }
