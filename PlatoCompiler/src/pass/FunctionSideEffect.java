@@ -25,10 +25,6 @@ public class FunctionSideEffect {
                         FunctionSideEffect::getCalledFunctions
                 ));
 
-        // 更新每个函数的 sideEffect 标志
-        module.getFunctions().forEach(function ->
-                function.setHasSideEffects(hasSideEffects(function)));
-
         // 迭代更新每个函数的副作用，传播 sideEffects
         boolean changed;
         do {

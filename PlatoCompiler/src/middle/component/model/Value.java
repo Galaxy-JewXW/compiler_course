@@ -2,14 +2,12 @@ package middle.component.model;
 
 import middle.component.type.ValueType;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 public class Value {
-    private String name;
     private final ValueType valueType;
-    private final LinkedHashSet<Use> useList = new LinkedHashSet<>();
+    private final ArrayList<User> userList = new ArrayList<>();
+    private String name;
 
     public Value(String name, ValueType valueType) {
         this.name = name;
@@ -28,28 +26,25 @@ public class Value {
         return valueType;
     }
 
-    public LinkedHashSet<Use> getUseList() {
-        return useList;
+    public ArrayList<User> getUserList() {
+        return userList;
     }
 
     public void addUse(User user) {
-        Use use = new Use(user, this);
-        useList.add(use);
+        userList.add(user);
     }
 
     // 删除这个值的使用者
     // 该User不再使用此value
     public void deleteUser(User user) {
-        useList.removeIf(use -> use.getUser().equals(user));
+        userList.remove(user);
     }
 
     // 将原本使用该值的地方全部替换为新的值
     public void replaceByNewValue(Value newValue) {
-        Set<User> users = useList.stream()
-                .map(Use::getUser)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
-        for (User user : users) {
+        for (User user : userList) {
             user.modifyOperand(this, newValue);
         }
+        userList.clear();
     }
 }

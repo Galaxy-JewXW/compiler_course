@@ -4,13 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bugs in gvn">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/error.txt" beforeDir="false" afterPath="$PROJECT_DIR$/error.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/BlockMerge.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/CodeRemoval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/CodeRemoval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FixMD.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FixMD.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FunctionSideEffect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FunctionSideEffect.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GlobalVarLocalize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GlobalVarLocalize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Mem2Reg.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Mem2Reg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/SingleJumpRemoval.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/SurplusBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/SurplusBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fk.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/md.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/utils/ZextRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/ZextRemoval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/model/Use.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/model/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/model/Value.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/BlockMerge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/CodeRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/CodeRemoval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/FixMD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/FixMD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/FunctionSideEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/FunctionSideEffect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pass/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GVN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/GlobalVarLocalize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/GlobalVarLocalize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/IcmpOptimize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/IcmpOptimize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/InlinedFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/InlinedFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/Mem2Reg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/OptimizePhi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/OptimizePhi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/SingleJumpRemoval.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/SurplusBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/SurplusBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pass/UnusedFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pass/UnusedFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mars/mips1.asm" beforeDir="false" afterPath="$PROJECT_DIR$/../mars/mips1.asm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,26 +95,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Compiler.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Compiler" />
@@ -152,14 +193,7 @@
       <workItem from="1728611276078" duration="618000" />
       <workItem from="1728611922370" duration="165000" />
       <workItem from="1728612753060" duration="2691000" />
-    </task>
-    <task id="LOCAL-00007" summary="大概实现了函数内联">
-      <option name="closed" value="true" />
-      <created>1727333667259</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1727333667259</updated>
+      <workItem from="1728624351032" duration="3227000" />
     </task>
     <task id="LOCAL-00008" summary="man">
       <option name="closed" value="true" />
@@ -545,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728612964369</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="fixed">
+      <option name="closed" value="true" />
+      <created>1728620448372</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1728620448373</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gosh" />
     <MESSAGE value="win" />
     <MESSAGE value="try gvn" />
     <MESSAGE value="一定要先mem2reg！" />
@@ -588,6 +629,217 @@
     <MESSAGE value="haiyou bug" />
     <MESSAGE value="bugs in optimize" />
     <MESSAGE value="bugs in gvn" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugs in gvn" />
+    <MESSAGE value="fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/IcmpOptimize.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/IcmpOptimize.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/IcmpOptimize.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/IcmpOptimize.java</url>
+          <line>92</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>192</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>194</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>196</line>
+          <option name="timeStamp" value="145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>195</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>198</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/BasicBlock.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/OptimizePhi.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/GVN.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pass/Mem2Reg.java</url>
+          <line>224</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/Value.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/Value.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/Value.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/Value.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/middle/component/model/User.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="189" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

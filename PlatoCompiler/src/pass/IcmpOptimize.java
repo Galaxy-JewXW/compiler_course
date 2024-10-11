@@ -31,32 +31,29 @@ public class IcmpOptimize {
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
-            for (Function function : module.getFunctions()) {
-                HashSet<BasicBlock> buffer = new HashSet<>();
-                for (BasicBlock block : function.getBasicBlocks()) {
-                    ArrayList<Instruction> instructions
-                            = new ArrayList<>(block.getInstructions());
-                    for (Instruction instruction : instructions) {
-                        if (instruction instanceof BrInst brInst
-                                && brInst.isConditional()) {
-                            brOptimize(brInst, buffer);
-                        }
+        for (Function function : module.getFunctions()) {
+            HashSet<BasicBlock> buffer = new HashSet<>();
+            for (BasicBlock block : function.getBasicBlocks()) {
+                ArrayList<Instruction> instructions
+                        = new ArrayList<>(block.getInstructions());
+                for (Instruction instruction : instructions) {
+                    if (instruction instanceof BrInst brInst
+                            && brInst.isConditional()) {
+                        brOptimize(brInst, buffer);
                     }
                 }
-                function.getBasicBlocks().removeIf(block -> {
-                    if (buffer.contains(block)) {
-                        block.setDeleted(true);
-                        block.getInstructions().forEach(Instruction::deleteUse);
-                        return true;
-                    }
-                    return false;
-                });
             }
+            function.getBasicBlocks().removeIf(block -> {
+                if (buffer.contains(block)) {
+                    block.setDeleted(true);
+                    block.getInstructions().forEach(Instruction::removeOperands);
+                    return true;
+                }
+                return false;
+            });
         }
         SurplusBlock.build(module);
         CodeRemoval.run(module);
-        SingleJumpRemoval.build(module);
         Mem2Reg.run(module, false);
     }
 
@@ -80,7 +77,7 @@ public class IcmpOptimize {
             BasicBlock curBlock = binaryInst.getBasicBlock();
             curBlock.getInstructions().remove(binaryInst);
             binaryInst.replaceByNewValue(constInt);
-            binaryInst.deleteUse();
+            binaryInst.removeOperands();
         }
     }
 
@@ -107,7 +104,7 @@ public class IcmpOptimize {
                 buffer.add(brInst.getFalseBlock());
             }
             curBlock.getInstructions().set(curBlock.getInstructions().indexOf(brInst), noCondBr);
-            brInst.deleteUse();
+            brInst.removeOperands();
         }
     }
 }

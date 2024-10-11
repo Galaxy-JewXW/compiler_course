@@ -4,11 +4,7 @@ import middle.IRData;
 import middle.component.BasicBlock;
 import middle.component.Function;
 import middle.component.Module;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.PhiInst;
-import middle.component.instruction.RetInst;
+import middle.component.instruction.*;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -133,7 +129,7 @@ public class InlinedFunction {
                 ArrayList<BasicBlock> child = new ArrayList<>();
                 brInst1.setBasicBlock(retInst.getBasicBlock());
                 retInst.getBasicBlock().getInstructions().remove(retInst);
-                retInst.deleteUse();
+                retInst.removeOperands();
                 retInst.getBasicBlock().getInstructions().add(brInst1);
                 child.add(nextBlock);
                 retInst.getBasicBlock().setNextBlocks(child);
@@ -151,7 +147,7 @@ public class InlinedFunction {
                 BrInst brInst1 = new BrInst(nextBlock);
                 brInst1.setBasicBlock(retInst.getBasicBlock());
                 retInst.getBasicBlock().getInstructions().remove(retInst);
-                retInst.deleteUse();
+                retInst.removeOperands();
                 retInst.getBasicBlock().getInstructions().add(brInst1);
             }
             call.replaceByNewValue(phiInst);
@@ -160,7 +156,7 @@ public class InlinedFunction {
             callerFunction.getBasicBlocks().add(callerFunction.getBasicBlocks().indexOf(nextBlock), block);
             block.setFunction(callerFunction);
         }
-        call.deleteUse();
+        call.removeOperands();
         currentBlock.getInstructions().remove(call);
     }
 

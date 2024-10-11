@@ -26,8 +26,8 @@ public class SurplusBlock {
         dfs(func.getEntryBlock());
         func.getBasicBlocks().removeIf(block -> {
             if (!visited.contains(block)) {
-                block.getInstructions().forEach(Instruction::deleteUse);
-                block.deleteUse();
+                block.getInstructions().forEach(Instruction::removeOperands);
+                block.removeOperands();
                 block.setDeleted(true);
                 return true;
             }

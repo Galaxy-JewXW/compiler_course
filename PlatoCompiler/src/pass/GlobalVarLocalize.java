@@ -8,7 +8,7 @@ import middle.component.instruction.AllocInst;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.StoreInst;
-import middle.component.model.Use;
+import middle.component.model.User;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
 import middle.component.type.ValueType;
@@ -22,6 +22,7 @@ public class GlobalVarLocalize {
     private static HashMap<Function, HashSet<Function>> calledMap;
 
     public static void build(Module module) {
+        Mem2Reg.run(module, false);
         usedMap = new HashMap<>();
         calledMap = new HashMap<>();
         checkUse(module);
@@ -32,8 +33,8 @@ public class GlobalVarLocalize {
 
     private static void checkUse(Module module) {
         for (GlobalVar gv : module.getGlobalVars()) {
-            for (Use use : gv.getUseList()) {
-                Function func = ((Instruction) use.getUser())
+            for (User user : gv.getUserList()) {
+                Function func = ((Instruction) user)
                         .getBasicBlock().getFunction();
                 usedMap.computeIfAbsent(gv, k -> new HashSet<>()).add(func);
             }

@@ -1,4 +1,7 @@
 .data:
+s0: .asciiz "funv\n"
+s1: .asciiz "funi\n"
+s2: .asciiz "try\n"
 
 .text:
 func_main:
@@ -6,48 +9,39 @@ main_b0:
     # br label %1
 
 main_b1:
-    # %2 = call i32 @getint()
-    li $v0, 5
-    syscall
-    move $t0, $v0
-    # %3 = icmp sgt i32 %2, 0
-    # br i1 %3, label %4, label %7
-    blt $t0, 0, main_b7
+    # br label %2
 
-main_b4:
-    # %5 = add i32 %2, 1
-    addiu $t0, $t0, 1
-    # %6 = mul i32 %5, %5
-    mul $t0, $t0, $t0
-    # move %11 -> %t17
-    move $k0, $t0
-    sw $k0, -4($sp)
-    # move %6 -> %11
-    # move %t17 -> %12
-    lw $t1, -4($sp)
-    # br label %10
-    j main_b10
+main_b2:
+    # br label %3
+
+main_b3:
+    # %4 = icmp eq i32 1, 2
+    # br i1 %4, label %1, label %5
+    li $k0, 1
+    beq $k0, 2, main_b1
+
+main_b5:
+    # br label %6
+
+main_b6:
+    # br label %7
 
 main_b7:
-    # %8 = add i32 %2, 1
-    addiu $t0, $t0, 1
-    # %9 = add i32 -3, %8
-    addiu $t0, $t0, -3
-    # move %11 -> %t19
-    move $k0, $t0
-    sw $k0, -8($sp)
-    # move %9 -> %11
-    # move %t19 -> %12
-    lw $t1, -8($sp)
-    # br label %10
-
-main_b10:
-    # call void @putint(i32 %12)
-    move $a0, $t1
-    li $v0, 1
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    la $a0, s2
+    li $v0, 4
     syscall
-    # call void @putint(i32 %11)
-    move $a0, $t0
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
     syscall
     # ret i32 0
     li $v0, 10

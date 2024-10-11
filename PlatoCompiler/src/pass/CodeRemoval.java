@@ -29,17 +29,17 @@ public class CodeRemoval {
 
     // 判断指令是否是死代码
     private static boolean isDeadCode(Instruction instruction) {
-        if (instruction.getUseList().isEmpty() && !instruction.getName().isEmpty()) {
+        if (instruction.getUserList().isEmpty() && !instruction.getName().isEmpty()) {
             // 非副作用的指令应被移除
             if (!(instruction instanceof CallInst
                     || instruction instanceof GetintInst || instruction instanceof GetcharInst)) {
-                instruction.deleteUse();
+                instruction.removeOperands();
                 return true;
             } else if (instruction instanceof CallInst callInst) {
                 // 没有副作用的函数调用也应被移除
-                if (instruction.getUseList().isEmpty()
+                if (instruction.getUserList().isEmpty()
                         && !callInst.getCalledFunction().hasSideEffects()) {
-                    instruction.deleteUse();
+                    instruction.removeOperands();
                     return true;
                 }
             }
@@ -93,7 +93,7 @@ public class CodeRemoval {
         function.getBasicBlocks().forEach(block ->
                 block.getInstructions().removeIf(instruction -> {
                     if (!useful.contains(instruction)) {
-                        instruction.deleteUse();
+                        instruction.removeOperands();
                         return true;
                     }
                     return false;

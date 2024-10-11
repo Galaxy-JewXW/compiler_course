@@ -5,12 +5,7 @@ import middle.component.Module;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UnusedFunction {
@@ -61,9 +56,9 @@ public class UnusedFunction {
 
     private static void cleanupFunction(Function function) {
         function.getBasicBlocks().forEach(block -> {
-            block.getInstructions().forEach(Instruction::deleteUse);
-            block.deleteUse();
+            block.getInstructions().forEach(Instruction::removeOperands);
+            block.removeOperands();
         });
-        function.deleteUse();
+        function.removeOperands();
     }
 }

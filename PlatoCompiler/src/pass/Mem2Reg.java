@@ -5,7 +5,6 @@ import middle.component.Function;
 import middle.component.Module;
 import middle.component.Undefined;
 import middle.component.instruction.*;
-import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
@@ -18,7 +17,6 @@ public class Mem2Reg {
     private static HashMap<BasicBlock, ArrayList<BasicBlock>> parentBlocks;
     private static HashMap<BasicBlock, ArrayList<BasicBlock>> dominatedBy;
     private static HashMap<BasicBlock, ArrayList<BasicBlock>> dominates;
-    private static HashMap<BasicBlock, BasicBlock> immediateDominator;
     private static HashMap<BasicBlock, ArrayList<BasicBlock>> immediatelyDominates;
 
     private static AllocInst currentAlloc;
@@ -61,7 +59,6 @@ public class Mem2Reg {
         parentBlocks = new HashMap<>();
         dominatedBy = new HashMap<>();
         dominates = new HashMap<>();
-        immediateDominator = new HashMap<>();
         immediatelyDominates = new HashMap<>();
         for (BasicBlock block : currentFunction.getBasicBlocks()) {
             childBlocks.put(block, new ArrayList<>());
@@ -109,7 +106,6 @@ public class Mem2Reg {
             for (BasicBlock dominator : dominatedBy.get(dominated)) {
                 if (isImmediateDominator(dominator, dominated)) {
                     dominated.setImmediateDominator(dominator);
-                    immediateDominator.put(dominated, dominator);
                     immediatelyDominates.get(dominator).add(dominated);
                     break;
                 }
@@ -178,8 +174,7 @@ public class Mem2Reg {
         defInstructions = new ArrayList<>();
         defStack = new Stack<>();
 
-        for (Use use : currentAlloc.getUseList()) {
-            User user = use.getUser();
+        for (User user : currentAlloc.getUserList()) {
             Instruction instruction = (Instruction) user;
             if (instruction instanceof LoadInst && !instruction.getBasicBlock().isDeleted()) {
                 useInstructions.add(instruction);
@@ -232,7 +227,7 @@ public class Mem2Reg {
             } else if (instruction instanceof StoreInst storeInst
                     && defInstructions.contains(instruction)) {
                 defStack.push(storeInst.getStoredValue());
-                instruction.deleteUse();
+                instruction.removeOperands();
                 pushCount++;
                 it.remove();
             } else if (instruction instanceof PhiInst

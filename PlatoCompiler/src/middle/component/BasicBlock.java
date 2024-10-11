@@ -4,7 +4,6 @@ import middle.IRData;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.MoveInst;
 import middle.component.instruction.PhiInst;
-import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.LabelType;
@@ -187,8 +186,7 @@ public class BasicBlock extends User {
     }
 
     public void deleteForPhi(BasicBlock block) {
-        for (Use use : getUseList()) {
-            User user = use.getUser();
+        for (User user : getUserList()) {
             if (user instanceof PhiInst phiInst && phiInst.getBasicBlock().equals(block)) {
                 // 先收集需要删除的索引
                 ArrayList<Integer> indicesToRemove = new ArrayList<>();

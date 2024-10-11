@@ -43,24 +43,30 @@ public class FixMD {
         }
         int intValue;
         Value value;
+        int pos;
         if (binaryInst.getOperand1() instanceof ConstInt constInt) {
             intValue = constInt.getIntValue();
             value = binaryInst.getOperand2();
+            pos = 0;
         } else if (binaryInst.getOperand2() instanceof ConstInt constInt) {
             intValue = constInt.getIntValue();
             value = binaryInst.getOperand1();
+            pos = 1;
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
         if (intValue == -1) {
-            BinaryInst inst = new BinaryInst(OperatorType.SUB,
-                    new ConstInt(IntegerType.i32, 0), value);
-            inst.setBasicBlock(binaryInst.getBasicBlock());
-            binaryInst.replaceByNewValue(inst);
-            binaryInst.getBasicBlock().getInstructions().set(
-                    binaryInst.getBasicBlock().getInstructions().indexOf(binaryInst), inst);
-            binaryInst.getBasicBlock().getInstructions().remove(binaryInst);
-            binaryInst.deleteUse();
+            if (binaryInst.getOpType() == OperatorType.MUL
+                    || (binaryInst.getOpType() == OperatorType.SDIV && pos == 1)) {
+                BinaryInst inst = new BinaryInst(OperatorType.SUB,
+                        new ConstInt(IntegerType.i32, 0), value);
+                inst.setBasicBlock(binaryInst.getBasicBlock());
+                binaryInst.replaceByNewValue(inst);
+                binaryInst.getBasicBlock().getInstructions().set(
+                        binaryInst.getBasicBlock().getInstructions().indexOf(binaryInst), inst);
+                binaryInst.getBasicBlock().getInstructions().remove(binaryInst);
+                binaryInst.removeOperands();
+            }
         }
     }
 }

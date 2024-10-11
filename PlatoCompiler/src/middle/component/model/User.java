@@ -20,11 +20,12 @@ public class User extends Value {
         value.addUse(this);
     }
 
-    public void deleteUse() {
+    public void removeOperands() {
         for (Value value : operands) {
-            value.deleteUser(this);
+            if (value != null) {
+                value.deleteUser(this);
+            }
         }
-        this.operands = new ArrayList<>();
     }
 
     public void modifyOperand(Value value, Value newValue) {
@@ -33,7 +34,6 @@ public class User extends Value {
         }
         int index = operands.indexOf(value);
         while (index != -1) {
-            value.deleteUser(this);
             operands.set(index, newValue);
             newValue.addUse(this);
             index = operands.indexOf(value);

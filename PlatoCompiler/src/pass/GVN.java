@@ -19,6 +19,7 @@ public class GVN {
 
     public static void run(Module module) {
         Mem2Reg.run(module, false);
+        FixMD.run(module);
         optimize(module);
         SurplusBlock.build(module);
         CodeRemoval.run(module);
@@ -41,7 +42,7 @@ public class GVN {
             func.getBasicBlocks().removeIf(block -> {
                 if (deletableBlock.contains(block)) {
                     block.setDeleted(true);
-                    block.getInstructions().forEach(Instruction::deleteUse);
+                    block.getInstructions().forEach(Instruction::removeOperands);
                     return true;
                 }
                 return false;
@@ -81,7 +82,7 @@ public class GVN {
                 if (gvnMap.containsKey(gvnHash)) {
                     instr.replaceByNewValue(gvnMap.get(gvnHash));
                     block.getInstructions().remove(instr);
-                    instr.deleteUse();
+                    instr.removeOperands();
                 } else {
                     gvnMap.put(gvnHash, instr);
                     inserted.add(gvnHash);
@@ -139,7 +140,7 @@ public class GVN {
             if (targetType.equals(IntegerType.i8) || targetType.equals(IntegerType.i32)) {
                 ConstInt constInt1 = new ConstInt(targetType, value);
                 zextInst.replaceByNewValue(constInt1);
-                zextInst.deleteUse();
+                zextInst.removeOperands();
                 curBlock.getInstructions().remove(zextInst);
             }
         }
@@ -153,7 +154,7 @@ public class GVN {
             if (targetType.equals(IntegerType.i8) && constInt.getValueType().equals(IntegerType.i32)) {
                 ConstInt constInt1 = new ConstInt(targetType, value);
                 truncInst.replaceByNewValue(constInt1);
-                truncInst.deleteUse();
+                truncInst.removeOperands();
                 curBlock.getInstructions().remove(truncInst);
             }
         }
@@ -177,7 +178,7 @@ public class GVN {
             curBlock.getInstructions().add(curBlock.getInstructions().indexOf(mul) + 1, sub);
             inst.replaceByNewValue(sub);
             curBlock.getInstructions().remove(inst);
-            inst.deleteUse();
+            inst.removeOperands();
         }
     }
 
@@ -217,7 +218,7 @@ public class GVN {
         ConstInt constInt = new ConstInt(IntegerType.i32, ans);
         binaryInst.replaceByNewValue(constInt);
         curBlock.getInstructions().remove(binaryInst);
-        binaryInst.deleteUse();
+        binaryInst.removeOperands();
     }
 
     private static void calcOneConst(BinaryInst binaryInst) {
@@ -274,7 +275,7 @@ public class GVN {
         if (value != null) {
             binaryInst.replaceByNewValue(value);
             curBlock.getInstructions().remove(binaryInst);
-            binaryInst.deleteUse();
+            binaryInst.removeOperands();
         }
     }
 
@@ -307,7 +308,7 @@ public class GVN {
                             || (inst1.getOpType() == OperatorType.SUB
                             && inst2.getOpType() == OperatorType.ADD)) {
                         if (sameValue(inst1.getOperand2(), inst2.getOperand2())) {
-                            instruction.deleteUse();
+                            instruction.removeOperands();
                             instruction.addOperand(inst1.getOperand1());
                             instruction.addOperand(inst2.getOperand1());
                             yield instruction;
@@ -360,7 +361,7 @@ public class GVN {
         if (value != null) {
             binaryInst.replaceByNewValue(value);
             curBlock.getInstructions().remove(binaryInst);
-            binaryInst.deleteUse();
+            binaryInst.removeOperands();
         }
     }
 

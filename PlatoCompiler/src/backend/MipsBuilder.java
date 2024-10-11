@@ -11,7 +11,6 @@ import middle.component.Module;
 import middle.component.*;
 import middle.component.instruction.*;
 import middle.component.instruction.io.*;
-import middle.component.model.Use;
 import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
@@ -216,8 +215,7 @@ public class MipsBuilder {
 
     private void buildIcmp(BinaryInst binaryInst) {
         boolean flag = true;
-        for (Use use : binaryInst.getUseList()) {
-            User user = use.getUser();
+        for (User user : binaryInst.getUserList()) {
             if (!(user instanceof BrInst)) {
                 flag = false;
                 break;
@@ -481,8 +479,7 @@ public class MipsBuilder {
     private void buildCondBrInst(BrInst brInst) {
         BinaryInst condition = (BinaryInst) brInst.getCondition();
         boolean flag = true;
-        for (Use use : condition.getUseList()) {
-            User user = use.getUser();
+        for (User user : condition.getUserList()) {
             if (!(user instanceof BrInst)) {
                 flag = false;
                 break;

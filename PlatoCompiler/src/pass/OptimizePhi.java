@@ -37,11 +37,11 @@ public class OptimizePhi {
         // Remove operands and blocks for deleted blocks
         removeDeletedBlocks(operands, phiBlocks);
 
-        if (allOperandsEqual(operands) || phiInst.getUseList().isEmpty()) {
+        if (allOperandsEqual(operands) || phiInst.getUserList().isEmpty()) {
             Value value = operands.get(0);
             block.getInstructions().remove(phiInst);
             phiInst.replaceByNewValue(value);
-            phiInst.deleteUse();
+            phiInst.removeOperands();
         }
     }
 

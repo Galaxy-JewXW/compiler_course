@@ -17,7 +17,7 @@ public class ZextRemoval {
                 for (Instruction instruction : instructions) {
                     if (instruction instanceof ZextInst zextInst) {
                         instruction.replaceByNewValue(zextInst.getOriginValue());
-                        instruction.deleteUse();
+                        instruction.removeOperands();
                         block.getInstructions().remove(instruction);
                     }
                 }
@@ -30,7 +30,7 @@ public class ZextRemoval {
                     if (instruction instanceof TruncInst truncInst) {
                         if (truncInst.getOriginValue().getValueType().equals(truncInst.getValueType())) {
                             instruction.replaceByNewValue(truncInst.getOriginValue());
-                            instruction.deleteUse();
+                            instruction.removeOperands();
                             block.getInstructions().remove(instruction);
                         }
                     }
