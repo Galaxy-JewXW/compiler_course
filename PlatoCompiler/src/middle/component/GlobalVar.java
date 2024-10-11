@@ -27,6 +27,8 @@ public class GlobalVar extends User {
 
     @Override
     public String toString() {
-        return getName() + " = dso_local global " + initialValue;
+        return getName() + " = dso_local"
+                + (isConstant ? " constant " : " global ") +
+                initialValue;
     }
 }

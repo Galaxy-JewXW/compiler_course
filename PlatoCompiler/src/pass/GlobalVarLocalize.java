@@ -4,10 +4,7 @@ import frontend.TableManager;
 import frontend.symbol.VarSymbol;
 import middle.component.Module;
 import middle.component.*;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.StoreInst;
+import middle.component.instruction.*;
 import middle.component.model.User;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
@@ -28,6 +25,7 @@ public class GlobalVarLocalize {
         checkUse(module);
         createCallMap(module);
         localize(module);
+        constVarToValue(module);
         Mem2Reg.run(module, true);
     }
 
@@ -95,12 +93,40 @@ public class GlobalVarLocalize {
         if (calledMap.containsKey(func)) {
             return false;
         }
-        if (globalVar.isConstant()) {
-            // 全局常量的处理在ConstToValue中
-            return false;
-        }
         ValueType gvType = ((PointerType) globalVar.getValueType()).getTargetType();
         return gvType.equals(IntegerType.i8) || gvType.equals(IntegerType.i32);
+    }
+
+    private static void constVarToValue(Module module) {
+        ArrayList<GlobalVar> toRemove = new ArrayList<>();
+        for (GlobalVar gv : module.getGlobalVars()) {
+            HashSet<Function> users = usedMap.getOrDefault(gv, null);
+            if (users == null) {
+                toRemove.add(gv);
+                continue;
+            }
+            ValueType gvType = ((PointerType) gv.getValueType()).getTargetType();
+            if (gvType.equals(IntegerType.i8) || gvType.equals(IntegerType.i32)) {
+                int initValue;
+                VarSymbol varSymbol = (VarSymbol) TableManager.getInstance()
+                        .getSymbol(gv.getName().substring(1));
+                InitialValue initialValue = varSymbol.getInitialValue();
+                if (initialValue.getElements() == null) {
+                    initValue = 0;
+                } else {
+                    initValue = varSymbol.getConstValue();
+                }
+                ConstInt constInt = new ConstInt(gvType, initValue);
+                for (User user : gv.getUserList()) {
+                    if (user instanceof LoadInst loadInst) {
+                        loadInst.replaceByNewValue(constInt);
+                        toRemove.add(gv);
+                        loadInst.getBasicBlock().getInstructions().remove(loadInst);
+                    }
+                }
+            }
+        }
+        module.getGlobalVars().removeAll(toRemove);
     }
 
 }
