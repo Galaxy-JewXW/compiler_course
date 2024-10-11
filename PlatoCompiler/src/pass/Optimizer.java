@@ -18,5 +18,6 @@ public class Optimizer {
         UnusedFunction.run(module);
         GlobalVarLocalize.build(module);
         GVN.run(module);
+        IcmpOptimize.run(module);
     }
 }

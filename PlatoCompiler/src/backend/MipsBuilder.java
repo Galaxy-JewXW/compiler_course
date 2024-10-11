@@ -640,6 +640,9 @@ public class MipsBuilder {
         Register pointerReg = Register.K0;
         Register indexReg = Register.K1;
         ValueType type = ((PointerType) pointer.getValueType()).getTargetType();
+        if (type instanceof ArrayType arrayType) {
+            type = arrayType.getElementType();
+        }
         if (pointer instanceof GlobalVar globalVar) {
             new LaAsm(pointerReg, globalVar.getName().substring(1));
         } else if (var2reg.containsKey(pointer)) {

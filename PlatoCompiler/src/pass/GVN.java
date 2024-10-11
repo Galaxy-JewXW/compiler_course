@@ -21,6 +21,7 @@ public class GVN {
         Mem2Reg.run(module, false);
         optimize(module);
         SurplusBlock.build(module);
+        CodeRemoval.run(module);
         OptimizePhi.run(module);
     }
 
@@ -61,11 +62,7 @@ public class GVN {
             if (instr instanceof BinaryInst binaryInst) {
                 if (!OperatorType.isLogicalOperator(binaryInst.getOpType())) {
                     calcOptimize(binaryInst);
-                } else {
-                    icmpOptimize(binaryInst);
                 }
-            } else if (instr instanceof BrInst brInst && brInst.isConditional()) {
-                brOptimize(brInst);
             } else if (instr instanceof ZextInst zextInst) {
                 zextOptimize(zextInst);
             } else if (instr instanceof TruncInst truncInst) {
@@ -132,56 +129,6 @@ public class GVN {
                     + gepInst.getIndex().getName();
         }
         return null;
-    }
-
-    private static void icmpOptimize(BinaryInst binaryInst) {
-        Value value1 = binaryInst.getOperand1();
-        Value value2 = binaryInst.getOperand2();
-        if (value1 instanceof ConstInt constInt1 && value2 instanceof ConstInt constInt2) {
-            OperatorType op = binaryInst.getOpType();
-            int cons1 = constInt1.getIntValue();
-            int cons2 = constInt2.getIntValue();
-            int value = switch (op) {
-                case ICMP_EQ -> cons1 == cons2 ? 1 : 0;
-                case ICMP_NE -> cons1 != cons2 ? 1 : 0;
-                case ICMP_SGE -> cons1 >= cons2 ? 1 : 0;
-                case ICMP_SGT -> cons1 > cons2 ? 1 : 0;
-                case ICMP_SLE -> cons1 <= cons2 ? 1 : 0;
-                case ICMP_SLT -> cons1 < cons2 ? 1 : 0;
-                default -> 0;
-            };
-            ConstInt constInt = new ConstInt(IntegerType.i1, value);
-            curBlock.getInstructions().remove(binaryInst);
-            binaryInst.replaceByNewValue(constInt);
-            binaryInst.deleteUse();
-        }
-    }
-
-    private static void brOptimize(BrInst brInst) {
-        Value value = brInst.getCondition();
-        if (value instanceof ConstInt constInt) {
-            BrInst noCondBr;
-            if (constInt.getIntValue() == 0) {
-                noCondBr = new BrInst(brInst.getFalseBlock());
-                curBlock.deleteForPhi(brInst.getTrueBlock());
-                curBlock.getNextBlocks().remove(brInst.getTrueBlock());
-                brInst.getTrueBlock().getPrevBlocks().remove(curBlock);
-            } else {
-                noCondBr = new BrInst(brInst.getTrueBlock());
-                curBlock.deleteForPhi(brInst.getTrueBlock());
-                curBlock.getNextBlocks().remove(brInst.getFalseBlock());
-                brInst.getFalseBlock().getPrevBlocks().remove(curBlock);
-            }
-            if (brInst.getTrueBlock().getPrevBlocks().isEmpty()) {
-                deletableBlock.add(brInst.getTrueBlock());
-            }
-            if (brInst.getFalseBlock().getPrevBlocks().isEmpty()) {
-                deletableBlock.add(brInst.getFalseBlock());
-            }
-            curBlock.getInstructions().set(curBlock.getInstructions().indexOf(brInst), noCondBr);
-            brInst.deleteUse();
-        }
-
     }
 
     private static void zextOptimize(ZextInst zextInst) {
