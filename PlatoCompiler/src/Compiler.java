@@ -26,7 +26,7 @@ public class Compiler {
     private static final String mipsOutput = "mips.txt";
 
     private static final boolean toLLVM = true;
-    private static final boolean toMips = false;
+    private static final boolean toMips = true;
 
     private static final boolean optimize = true;
 
