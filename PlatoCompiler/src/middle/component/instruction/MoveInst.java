@@ -14,6 +14,11 @@ public class MoveInst extends Instruction {
     }
 
     @Override
+    public String getName() {
+        return "";
+    }
+
+    @Override
     public boolean hasSideEffect() {
         return false;
     }
