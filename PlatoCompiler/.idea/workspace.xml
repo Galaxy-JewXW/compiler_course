@@ -4,47 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="stable">
-      <change afterPath="$PROJECT_DIR$/src/optimize/MemoryOptimize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/CodeRemoval.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FixMD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/FunctionSideEffect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GVN.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/GlobalVarLocalize.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/IcmpOptimize.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/InlinedFunction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Mem2Reg.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/OptimizePhi.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/Optimizer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/SurplusBlock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/pass/UnusedFunction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/CodeRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/FixMD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FixMD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/FunctionCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FunctionCopy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/FunctionSideEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FunctionSideEffect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GVN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/GlobalVarLocalize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/IcmpOptimize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/IcmpOptimize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/InlinedFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/InlinedFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/LocalConstArrayToValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/LocalConstArrayToValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Mem2Reg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/OptimizePhi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/PhiOptimize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/SurplusBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/SurplusBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pass/UnusedFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/UnusedFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
-    </list>
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="123" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,14 +147,6 @@
       <workItem from="1728612753060" duration="2691000" />
       <workItem from="1728624351032" duration="3541000" />
       <workItem from="1728649132348" duration="1377000" />
-    </task>
-    <task id="LOCAL-00009" summary="man">
-      <option name="closed" value="true" />
-      <created>1727342054125</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1727342054125</updated>
     </task>
     <task id="LOCAL-00010" summary="redo optimize">
       <option name="closed" value="true" />
@@ -580,7 +532,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728627921672</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="123">
+      <option name="closed" value="true" />
+      <created>1728790806187</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1728790806187</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -598,7 +558,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="try gvn" />
     <MESSAGE value="一定要先mem2reg！" />
     <MESSAGE value="函数内联" />
     <MESSAGE value="fix 函数内联" />
@@ -623,249 +582,16 @@
     <MESSAGE value="bugs in gvn" />
     <MESSAGE value="fixed" />
     <MESSAGE value="stable" />
-    <option name="LAST_COMMIT_MESSAGE" value="stable" />
+    <MESSAGE value="123" />
+    <option name="LAST_COMMIT_MESSAGE" value="123" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="163" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="164" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="165" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/PhiOptimize.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GVN.java</url>
-          <line>218</line>
-          <option name="timeStamp" value="168" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/frontend/syntax/LVal.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="191" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="192" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="193" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="194" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="196" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="197" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>73</line>
-          <option name="timeStamp" value="198" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="199" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="201" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>79</line>
-          <option name="timeStamp" value="202" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="203" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>81</line>
-          <option name="timeStamp" value="204" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="205" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="206" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="207" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="208" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="209" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="210" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="211" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="214" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="215" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>92</line>
-          <option name="timeStamp" value="216" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>93</line>
-          <option name="timeStamp" value="217" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="218" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="219" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="220" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="221" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="222" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>98</line>
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>100</line>
-          <option name="timeStamp" value="224" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="225" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="226" />
-        </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.util.ConcurrentModificationException" package="java.util" />
           <option name="timeStamp" value="189" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java</url>
-          <line>67</line>
-          <properties class="optimize.GlobalVarLocalize" method="localize">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="227" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
