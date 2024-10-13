@@ -8,7 +8,7 @@ import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.IRBuilder;
 import middle.component.Module;
-import pass.Optimizer;
+import optimize.Optimizer;
 import tools.Printer;
 
 import java.nio.file.Files;

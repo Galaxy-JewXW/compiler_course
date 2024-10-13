@@ -1,5 +1,4 @@
-1 a ConstInt
-1 b ConstIntArray
-1 f IntFunc
-2 n Int
-3 c ConstIntArray
+1 a Int
+1 foo VoidFunc
+2 x Int
+2 y Int
