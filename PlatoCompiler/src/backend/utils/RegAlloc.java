@@ -1,43 +1,38 @@
 package backend.utils;
 
 import backend.enums.Register;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.Function;
 import middle.component.Module;
+import middle.component.*;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
 import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
+import middle.component.type.ArrayType;
+import middle.component.type.PointerType;
 import optimize.Mem2Reg;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
- * 寄存器分配器，用于将变量映射到物理寄存器。
+ * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
  */
 public class RegAlloc {
     // 活跃变量分析映射
     private static HashMap<BasicBlock, HashSet<Value>> inMap;    // 每个基本块的入口活跃变量集合
     private static HashMap<BasicBlock, HashSet<Value>> outMap;   // 每个基本块的出口活跃变量集合
-    private static HashMap<BasicBlock, HashSet<Value>> defMap;   // 定义集合：先赋值后使用的变量
-    private static HashMap<BasicBlock, HashSet<Value>> useMap;   // 使用集合：先使用后赋值的变量
+    private static HashMap<BasicBlock, HashSet<Value>> defMap;   // 定义集合：在块中被定义的变量
+    private static HashMap<BasicBlock, HashSet<Value>> useMap;   // 使用集合：在块中先使用后定义的变量
 
-    // 寄存器分配
-    private static ArrayList<Register> registerPool;             // 可用寄存器池
-    private static int registerCount;                            // 寄存器数量
-    private static HashMap<Register, Value> regToVarMap;         // 寄存器到变量的映射
-    private static HashMap<Value, Register> varToRegMap;         // 变量到寄存器的映射
-    private static int registerIndex = 0;                        // 轮询寄存器索引
-    private static HashSet<BasicBlock> visitedBlocks;            // 已访问的基本块集合，防止重复访问
+    private static int registerCount;                            // 可用寄存器数量
+    private static HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射
+
+    // 干涉图节点集合
+    private static HashSet<InterferenceGraphNode> graphNodes;
 
     public static void run(Module module) {
         Mem2Reg.run(module, false);
 
-        registerPool = new ArrayList<>();
+        ArrayList<Register> registerPool = new ArrayList<>();
         for (Register register : Register.values()) {
             if (register.ordinal() >= Register.T0.ordinal() && register.ordinal() <= Register.T9.ordinal()) {
                 registerPool.add(register);
@@ -48,17 +43,20 @@ public class RegAlloc {
         for (Function function : module.getFunctions()) {
             initLiveVariableAnalysis(function);
             computeInOutSets(function);
-            regToVarMap = new HashMap<>();
-            varToRegMap = new HashMap<>();
-            visitedBlocks = new HashSet<>();
-            allocateRegisters(function.getEntryBlock());
+            buildInterferenceGraph(function);
+            colorGraph();
+
+            HashMap<Value, Register> varToRegMap = new HashMap<>();
+            for (InterferenceGraphNode node : valueNodeMap.values()) {
+                if (!node.isSpilled) {
+                    varToRegMap.put(node.value, registerPool.get(node.color));
+                    System.out.println(node.value.getName() + " -> " + registerPool.get(node.color));
+                }
+            }
             function.setVar2reg(varToRegMap);
         }
     }
 
-    /**
-     * 初始化给定函数的活跃变量分析数据结构。
-     */
     private static void initLiveVariableAnalysis(Function function) {
         inMap = new HashMap<>();
         outMap = new HashMap<>();
@@ -74,61 +72,67 @@ public class RegAlloc {
         }
     }
 
-    /**
-     * 计算给定基本块的定义和使用集合。
-     * 定义集合包含在块中被赋值的变量（先赋值后使用）。
-     * 使用集合包含在块中被使用的变量（先使用后赋值）。
-     */
     private static void computeDefUseSets(BasicBlock block) {
         HashSet<Value> defSet = defMap.get(block);
         HashSet<Value> useSet = useMap.get(block);
 
-        // 特别处理 Phi 指令
         for (Instruction instruction : block.getInstructions()) {
             if (instruction instanceof PhiInst) {
                 for (Value value : instruction.getOperands()) {
-                    if (!(value instanceof ConstInt || value instanceof ConstString)) {
+                    if (isAllocatableValue(value) && !defSet.contains(value)) {
                         useSet.add(value);
                     }
                 }
             }
         }
 
-        // 处理其他指令
         for (Instruction instruction : block.getInstructions()) {
             for (Value operand : instruction.getOperands()) {
-                if (!(operand instanceof ConstInt || operand instanceof ConstString) && !defSet.contains(operand)) {
+                if (isAllocatableValue(operand) && !defSet.contains(operand)) {
                     useSet.add(operand);
                 }
             }
-            if (!useSet.contains(instruction) && !instruction.getName().isEmpty()) {
+            if (!instruction.getName().isEmpty() && !(instruction instanceof ZextInst)) {
                 defSet.add(instruction);
             }
         }
     }
 
-    /**
-     * 计算函数中每个基本块的活跃入口和出口集合。
-     */
     private static void computeInOutSets(Function function) {
         ArrayList<BasicBlock> blocks = function.getBasicBlocks();
         boolean changed = true;
 
-        // 迭代进行数据流分析，直到集合不再发生变化
+        // 迭代进行数据流分析，直到IN和OUT集合不再发生变化
         while (changed) {
             changed = false;
-            // 逆序遍历基本块，提高效率
             for (int i = blocks.size() - 1; i >= 0; i--) {
                 BasicBlock block = blocks.get(i);
                 HashSet<Value> outSet = new HashSet<>();
-                // 出口集合是所有后继块的入口集合的并集
+                // OUT[B] = 所有后继块的IN集合的并集
                 for (BasicBlock successor : block.getNextBlocks()) {
                     outSet.addAll(inMap.get(successor));
                 }
+
+                for (BasicBlock successor : block.getNextBlocks()) {
+                    for (Instruction instruction : successor.getInstructions()) {
+                        if (instruction instanceof PhiInst phi) {
+                            int index = phi.getBlocks().indexOf(block);
+                            if (index >= 0) {
+                                Value value = phi.getOperands().get(index);
+                                if (isAllocatableValue(value)) {
+                                    outSet.add(value);
+                                }
+                            }
+                        } else {
+                            break; // 非Phi指令，跳出循环
+                        }
+                    }
+                }
+
                 outMap.put(block, outSet);
 
                 HashSet<Value> inSet = new HashSet<>(outSet);
-                // 入口集合 = （出口集合 - 定义集合）∪ 使用集合
+                // IN[B] = USE[B] ∪ (OUT[B] - DEF[B])
                 inSet.removeAll(defMap.get(block));
                 inSet.addAll(useMap.get(block));
 
@@ -140,102 +144,144 @@ public class RegAlloc {
         }
     }
 
-    /**
-     * 为给定的基本块分配寄存器。
-     */
-    private static void allocateRegisters(BasicBlock block) {
-        // 防止无限递归，检查是否已访问过
-        if (visitedBlocks.contains(block)) {
-            return;
-        }
-        visitedBlocks.add(block); // 标记基本块已访问
+    private static void buildInterferenceGraph(Function function) {
+        graphNodes = new HashSet<>();
+        valueNodeMap = new HashMap<>();
 
-        HashMap<Value, Instruction> lastUseMap = new HashMap<>();
-        HashSet<Value> unusedAfterBlock = new HashSet<>();
-        HashSet<Value> definedInBlock = new HashSet<>();
+        for (BasicBlock block : function.getBasicBlocks()) {
+            HashSet<Value> live = new HashSet<>(outMap.get(block));
+            List<Instruction> instructions = block.getInstructions();
+            ListIterator<Instruction> iterator = instructions.listIterator(instructions.size());
 
-        // 找到基本块中每个变量的最后一次使用
-        for (Instruction instruction : block.getInstructions()) {
-            for (Value operand : instruction.getOperands()) {
-                lastUseMap.put(operand, instruction);
-            }
-        }
-
-        for (Instruction instruction : block.getInstructions()) {
-            if (!(instruction instanceof PhiInst)) {
-                for (Value operand : instruction.getOperands()) {
-                    if (lastUseMap.get(operand) == instruction && !outMap.get(block).contains(operand)) {
-                        // 如果这是操作数的最后一次使用，且在块外不再活跃，释放其寄存器
-                        if (varToRegMap.containsKey(operand)) {
-                            regToVarMap.remove(varToRegMap.get(operand));
-                            unusedAfterBlock.add(operand);
-                        }
+            while (iterator.hasPrevious()) {
+                Instruction instruction = iterator.previous();
+                if (!instruction.getName().isEmpty() && !(instruction instanceof ZextInst)) {
+                    live.remove(instruction);
+                    InterferenceGraphNode nodeU = getOrCreateNode(instruction);
+                    for (Value v : live) {
+                        InterferenceGraphNode nodeV = getOrCreateNode(v);
+                        addEdge(nodeU, nodeV);
                     }
                 }
-            }
-            if (!instruction.getName().isEmpty() && !(instruction instanceof ZextInst)) {
-                // 为指令结果分配寄存器
-                definedInBlock.add(instruction);
-                Register register = getRegister();
-                // 如果寄存器已被占用，移除旧的映射
-                if (regToVarMap.containsKey(register)) {
-                    varToRegMap.remove(regToVarMap.get(register));
+                for (Value operand : instruction.getOperands()) {
+                    if (isAllocatableValue(operand)) {
+                        live.add(operand);
+                    }
                 }
-                regToVarMap.put(register, instruction);
-                varToRegMap.put(instruction, register);
-            }
-        }
-
-        // 处理子基本块（直接支配的基本块）
-        for (BasicBlock childBlock : block.getImmediateDominateBlocks()) {
-            // 保存当前寄存器映射中不在子块入口活跃集合中的变量
-            HashMap<Register, Value> savedMappings = new HashMap<>();
-            for (Register register : regToVarMap.keySet()) {
-                if (!inMap.get(childBlock).contains(regToVarMap.get(register))) {
-                    savedMappings.put(register, regToVarMap.get(register));
-                }
-            }
-            // 从当前映射中移除保存的映射
-            for (Register register : savedMappings.keySet()) {
-                regToVarMap.remove(register);
-            }
-            // 递归地为子块分配寄存器
-            allocateRegisters(childBlock);
-            // 恢复保存的映射
-            for (Register register : savedMappings.keySet()) {
-                regToVarMap.put(register, savedMappings.get(register));
-            }
-        }
-
-        // 处理完后，从寄存器映射中移除在此块中定义的变量
-        for (Value value : definedInBlock) {
-            if (varToRegMap.containsKey(value)) {
-                regToVarMap.remove(varToRegMap.get(value));
-            }
-        }
-        // 恢复在此块后不再使用的变量的映射
-        for (Value value : unusedAfterBlock) {
-            if (varToRegMap.containsKey(value) && !definedInBlock.contains(value)) {
-                regToVarMap.put(varToRegMap.get(value), value);
             }
         }
     }
 
-    /**
-     * 从寄存器池中获取一个可用的寄存器。
-     * 如果没有可用的寄存器，以轮询方式使用寄存器。
-     */
-    private static Register getRegister() {
-        // 尝试找到一个空闲的寄存器
-        for (Register register : registerPool) {
-            if (!regToVarMap.containsKey(register)) {
-                return register;
+    private static InterferenceGraphNode getOrCreateNode(Value value) {
+        if (valueNodeMap.containsKey(value)) {
+            return valueNodeMap.get(value);
+        } else {
+            InterferenceGraphNode node = new InterferenceGraphNode(value);
+            valueNodeMap.put(value, node);
+            graphNodes.add(node);
+            return node;
+        }
+    }
+
+    private static void addEdge(InterferenceGraphNode u, InterferenceGraphNode v) {
+        if (u == v) return;
+        if (!u.neighbors.contains(v)) {
+            u.neighbors.add(v);
+            u.degree++;
+        }
+        if (!v.neighbors.contains(u)) {
+            v.neighbors.add(u);
+            v.degree++;
+        }
+    }
+
+    private static void colorGraph() {
+        Stack<InterferenceGraphNode> selectStack = new Stack<>();
+        HashSet<InterferenceGraphNode> workList = new HashSet<>(graphNodes);
+
+        while (!workList.isEmpty()) {
+            boolean found = false;
+            Iterator<InterferenceGraphNode> iterator = workList.iterator();
+            while (iterator.hasNext()) {
+                InterferenceGraphNode node = iterator.next();
+                if (node.degree < registerCount) {
+                    iterator.remove();
+                    for (InterferenceGraphNode neighbor : node.neighbors) {
+                        neighbor.degree--;
+                    }
+                    selectStack.push(node);
+                    found = true;
+                }
+            }
+            if (!found) {
+                // Spill阶段，选择度数最大的节点进行溢出
+                InterferenceGraphNode spillNode = selectSpillNode(workList);
+                workList.remove(spillNode);
+                for (InterferenceGraphNode neighbor : spillNode.neighbors) {
+                    neighbor.degree--;
+                }
+                selectStack.push(spillNode);
             }
         }
-        // 如果所有寄存器都已被占用，轮询使用寄存器
-        if (registerIndex >= registerCount) {
-            registerIndex = 0;
+
+        // Select阶段
+        while (!selectStack.isEmpty()) {
+            InterferenceGraphNode node = selectStack.pop();
+            HashSet<Integer> neighborColors = new HashSet<>();
+            for (InterferenceGraphNode neighbor : node.neighbors) {
+                if (neighbor.color != -1) {
+                    neighborColors.add(neighbor.color);
+                }
+            }
+            // 寻找可用的颜色（寄存器）
+            int color = -1;
+            for (int i = 0; i < registerCount; i++) {
+                if (!neighborColors.contains(i)) {
+                    color = i;
+                    break;
+                }
+            }
+            if (color != -1) {
+                node.color = color;
+            } else {
+                node.isSpilled = true;
+            }
         }
-        return registerPool.get(registerIndex++);
+    }
+
+    private static InterferenceGraphNode selectSpillNode(HashSet<InterferenceGraphNode> nodes) {
+        InterferenceGraphNode spillNode = null;
+        int maxDegree = -1;
+        for (InterferenceGraphNode node : nodes) {
+            if (node.degree > maxDegree) {
+                maxDegree = node.degree;
+                spillNode = node;
+            }
+        }
+        return spillNode;
+    }
+
+    private static boolean isAllocatableValue(Value value) {
+        return !(value instanceof ConstInt || value instanceof ConstString
+                || (value instanceof GlobalVar globalVar
+                && globalVar.getValueType() instanceof PointerType pointerType
+                && pointerType.getTargetType() instanceof ArrayType)
+                || value instanceof BasicBlock);
+    }
+
+    private static class InterferenceGraphNode {
+        Value value;                                   // 对应的变量
+        HashSet<InterferenceGraphNode> neighbors;      // 相邻节点集合
+        boolean isSpilled;                             // 是否需要溢出
+        int degree;                                    // 度数（相邻节点数量）
+        int color;                                     // 分配的颜色（寄存器编号）
+
+        public InterferenceGraphNode(Value value) {
+            this.value = value;
+            this.neighbors = new HashSet<>();
+            this.isSpilled = false;
+            this.degree = 0;
+            this.color = -1; // -1表示未着色
+        }
     }
 }

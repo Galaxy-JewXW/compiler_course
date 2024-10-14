@@ -6,22 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bug in regalloc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/456.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/789.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/ActiveVariable.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/BasicBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/MoveInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/MoveInst.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/utils/ActiveVariable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/BasicBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/MoveInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/MoveInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
