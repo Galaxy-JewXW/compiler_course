@@ -1,17 +1,25 @@
 package backend.utils;
 
 import backend.enums.Register;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.Function;
+import middle.component.GlobalVar;
 import middle.component.Module;
-import middle.component.*;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
 import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
-import middle.component.type.ArrayType;
-import middle.component.type.PointerType;
 import optimize.Mem2Reg;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Stack;
 
 /**
  * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
@@ -263,10 +271,8 @@ public class RegAlloc {
 
     private static boolean isAllocatableValue(Value value) {
         return !(value instanceof ConstInt || value instanceof ConstString
-                || (value instanceof GlobalVar globalVar
-                && globalVar.getValueType() instanceof PointerType pointerType
-                && pointerType.getTargetType() instanceof ArrayType)
-                || value instanceof BasicBlock);
+                || (value instanceof GlobalVar)
+                || value instanceof BasicBlock || value instanceof Function);
     }
 
     private static class InterferenceGraphNode {

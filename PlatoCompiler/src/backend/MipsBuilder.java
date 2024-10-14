@@ -19,7 +19,6 @@ import backend.text.MoveAsm;
 import backend.text.MulDivAsm;
 import backend.text.SyscallAsm;
 import backend.utils.OptimizedDivision;
-import backend.utils.PeepHole;
 import backend.utils.RegAlloc;
 import backend.utils.RemovePhi;
 import backend.utils.ZextRemoval;
@@ -79,6 +78,7 @@ public class MipsBuilder {
             ZextRemoval.run(module);
             RegAlloc.run(module);
             RemovePhi.run(module);
+            module.updateId();
         }
         initInstructionHandlers();
     }
@@ -136,9 +136,9 @@ public class MipsBuilder {
                 buildFunction(function);
             }
         }
-        if (optimize) {
-            PeepHole.run();
-        }
+//        if (optimize) {
+//            PeepHole.run();
+//        }
     }
 
     private void buildConstString(ConstString constString) {

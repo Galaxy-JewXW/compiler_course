@@ -1,7 +1,7 @@
-1 N ConstInt
-1 a IntArray
+1 symbol IntArray
+1 array IntArray
+1 n Int
+1 FullArray VoidFunc
+2 index Int
 2 i Int
-2 j Int
-2 a1 ConstInt
-2 a2 ConstInt
-2 k Int
+7 i Int
