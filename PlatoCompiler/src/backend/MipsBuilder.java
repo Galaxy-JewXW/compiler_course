@@ -564,16 +564,17 @@ public class MipsBuilder {
     }
 
     private void buildCallInst(CallInst callInst) {
-        ArrayList<Register> allocatedRegs = new ArrayList<>(new HashSet<>(var2reg.values()));
-        ArrayList<MemAsm> lwAsms = new ArrayList<>();
-        ArrayList<MemAsm> swAsms = new ArrayList<>();
+        ArrayList<Register> allocatedRegs = new ArrayList<>(
+                new HashSet<>(callInst.getActiveReg()));
+        ArrayList<MemAsm> lwAssemblies = new ArrayList<>();
+        ArrayList<MemAsm> swAssemblies = new ArrayList<>();
         for (Register reg : var2reg.values()) {
             if (reg == Register.A3 || reg == Register.A1 || reg == Register.A2) {
                 allocatedRegs.add(reg);
             }
         }
         for (int i = 1; i <= allocatedRegs.size(); i++) {
-            swAsms.add(new MemAsm(AsmOp.SW, allocatedRegs.get(i - 1),
+            swAssemblies.add(new MemAsm(AsmOp.SW, allocatedRegs.get(i - 1),
                     Register.SP, curStackOffset - 4 * i));
         }
         new MemAsm(AsmOp.SW, Register.RA,
@@ -617,11 +618,11 @@ public class MipsBuilder {
         new MemAsm(AsmOp.LW, Register.RA, Register.SP, 0);
         new CalcAsm(Register.SP, AsmOp.ADDIU, Register.SP, -(curStackOffset - 4 * allocatedRegs.size() - 4));
         for (int i = 1; i <= allocatedRegs.size(); i++) {
-            lwAsms.add(new MemAsm(AsmOp.LW, allocatedRegs.get(i - 1),
+            lwAssemblies.add(new MemAsm(AsmOp.LW, allocatedRegs.get(i - 1),
                     Register.SP, curStackOffset - 4 * i));
         }
-        jalAsm.setLoadWords(lwAsms);
-        jalAsm.setStoreWords(swAsms);
+        jalAsm.setLoadWords(lwAssemblies);
+        jalAsm.setStoreWords(swAssemblies);
         if (!calledFunction.getReturnType().equals(IntegerType.VOID)) {
             if (var2reg.containsKey(callInst)) {
                 new MoveAsm(var2reg.get(callInst), Register.V0);

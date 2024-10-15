@@ -16,14 +16,12 @@ main_b0:
     la $k0, n
     sw $t0, 0($k0)
     # call void @FullArray(i32 0)
-    sw $t0, -4($sp)
-    sw $ra, -8($sp)
+    sw $ra, -4($sp)
     li $a1, 0
-    addiu $sp, $sp, -8
+    addiu $sp, $sp, -4
     jal func_FullArray
     lw $ra, 0($sp)
-    addiu $sp, $sp, 8
-    lw $t0, -4($sp)
+    addiu $sp, $sp, 4
     # ret i32 0
     li $v0, 10
     syscall
@@ -137,23 +135,19 @@ FullArray_b29:
     addiu $t0, $a1, 1
     # call void @FullArray(i32 %32)
     sw $t1, -8($sp)
-    sw $t0, -12($sp)
-    sw $a1, -16($sp)
-    sw $t3, -20($sp)
-    sw $t4, -24($sp)
-    sw $a1, -28($sp)
-    sw $ra, -32($sp)
+    sw $t3, -12($sp)
+    sw $t2, -16($sp)
+    sw $a1, -20($sp)
+    sw $ra, -24($sp)
     move $a1, $t0
-    addiu $sp, $sp, -32
+    addiu $sp, $sp, -24
     jal func_FullArray
     lw $ra, 0($sp)
-    addiu $sp, $sp, 32
+    addiu $sp, $sp, 24
     lw $t1, -8($sp)
-    lw $t0, -12($sp)
-    lw $a1, -16($sp)
-    lw $t3, -20($sp)
-    lw $t4, -24($sp)
-    lw $a1, -28($sp)
+    lw $t3, -12($sp)
+    lw $t2, -16($sp)
+    lw $a1, -20($sp)
     # store i32 0, i32* %22
     li $k1, 0
     sw $k1, 0($t1)

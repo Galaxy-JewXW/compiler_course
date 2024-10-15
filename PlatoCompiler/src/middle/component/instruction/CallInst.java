@@ -1,14 +1,18 @@
 package middle.component.instruction;
 
+import backend.enums.Register;
 import middle.IRData;
 import middle.component.Function;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class CallInst extends Instruction implements Call {
+    private HashSet<Register> activeReg = new HashSet<>();
+
     public CallInst(Function calledFunction,
                     ArrayList<Value> parameters) {
         super("", calledFunction.getReturnType(), OperatorType.CALL);
@@ -28,6 +32,14 @@ public class CallInst extends Instruction implements Call {
 
     public ArrayList<Value> getParameters() {
         return new ArrayList<>(getOperands().subList(1, getOperands().size()));
+    }
+
+    public HashSet<Register> getActiveReg() {
+        return new HashSet<>(activeReg);
+    }
+
+    public void setActiveReg(HashSet<Register> activeReg) {
+        this.activeReg = activeReg;
     }
 
     @Override

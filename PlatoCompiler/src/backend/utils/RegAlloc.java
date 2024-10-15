@@ -1,25 +1,16 @@
 package backend.utils;
 
 import backend.enums.Register;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.Function;
-import middle.component.GlobalVar;
 import middle.component.Module;
+import middle.component.*;
+import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
 import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import optimize.Mem2Reg;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
@@ -56,9 +47,32 @@ public class RegAlloc {
 
             HashMap<Value, Register> varToRegMap = new HashMap<>();
             for (InterferenceGraphNode node : valueNodeMap.values()) {
-                if (!node.isSpilled) {
-                    varToRegMap.put(node.value, registerPool.get(node.color));
-                    System.out.println(node.value.getName() + " -> " + registerPool.get(node.color));
+                if (node.isSpilled) {
+                    continue;
+                }
+                varToRegMap.put(node.value, registerPool.get(node.color));
+                System.out.println(node.value.getName() + " -> " + registerPool.get(node.color));
+            }
+            for (BasicBlock block : function.getBasicBlocks()) {
+                for (Instruction instruction : block.getInstructions()) {
+                    if (!(instruction instanceof CallInst callInst)) {
+                        continue;
+                    }
+                    HashSet<Register> regSet = new HashSet<>();
+                    for (Value value : outMap.get(block)) {
+                        if (varToRegMap.containsKey(value)) {
+                            regSet.add(varToRegMap.get(value));
+                        }
+                    }
+                    for (int i = block.getInstructions().indexOf(callInst) + 1;
+                         i < block.getInstructions().size(); i++) {
+                        for (Value value : block.getInstructions().get(i).getOperands()) {
+                            if (varToRegMap.containsKey(value)) {
+                                regSet.add(varToRegMap.get(value));
+                            }
+                        }
+                    }
+                    callInst.setActiveReg(regSet);
                 }
             }
             function.setVar2reg(varToRegMap);
