@@ -14,11 +14,11 @@ public class Optimizer {
     public void optimize() {
         SurplusBlock.build(module);
         Mem2Reg.run(module, true);
-//        InlinedFunction.run(module);
-//        UnusedFunction.run(module);
-//        GlobalVarLocalize.build(module);
-//        LocalConstArrayToValue.run(module);
-//        GVN.run(module);
-//        IcmpOptimize.run(module);
+        InlinedFunction.run(module);
+        UnusedFunction.run(module);
+        GlobalVarLocalize.build(module);
+        LocalConstArrayToValue.run(module);
+        GVN.run(module);
+        IcmpOptimize.run(module);
     }
 }

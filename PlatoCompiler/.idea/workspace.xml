@@ -5,21 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bug in regalloc">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc$InterferenceGraphNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc$InterferenceGraphNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/PeepHole$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/PeepHole$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/PeepHole.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/PeepHole.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/utils/PeepHole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/PeepHole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/CallInst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mars/mips1.asm" beforeDir="false" afterPath="$PROJECT_DIR$/../mars/mips1.asm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,8 +100,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
@@ -609,8 +608,43 @@
           <properties class="java.util.ConcurrentModificationException" package="java.util" />
           <option name="timeStamp" value="189" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>154</line>
+          <option name="timeStamp" value="221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>152</line>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
+          <line>153</line>
+          <option name="timeStamp" value="231" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="PeepHole.assemblies" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PlatoCompiler$Compiler.ic" NAME="Compiler 覆盖结果" MODIFIED="1728789418586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />

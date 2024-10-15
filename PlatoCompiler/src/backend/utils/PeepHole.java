@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class PeepHole {
+    private static ArrayList<TextAssembly> assemblies =
+            MipsFile.getInstance().getTextSegment();
+
     public static void run() {
         MipsFile.getInstance().setInsect(false);
         removeJump();
@@ -114,36 +117,43 @@ public class PeepHole {
     // j main_b23   jumpAsm
     // main_b18:   label
     private static void reverseCondBr() {
-        ArrayList<TextAssembly> textAssemblies = new ArrayList<>(MipsFile.getInstance().getTextSegment());
-        for (int i = 0; i < textAssemblies.size(); i++) {
-            TextAssembly textAssembly = textAssemblies.get(i);
-            if (!(textAssembly instanceof BrAsm brAsm)) {
-                continue;
-            }
-            if (i + 1 < textAssemblies.size()
-                    && textAssemblies.get(i + 1) instanceof JumpAsm jumpAsm) {
-                if (i + 2 < textAssemblies.size()
-                        && textAssemblies.get(i + 2) instanceof Label label) {
-                    if (label.getLabel().equals(brAsm.getLabel())
-                            && !brAsm.getLabel().equals(jumpAsm.getTarget())) {
-                        AsmOp temp = switch (brAsm.getOp()) {
-                            case BEQ -> AsmOp.BNE;
-                            case BNE -> AsmOp.BEQ;
-                            case BLE -> AsmOp.BGE;
-                            case BGE -> AsmOp.BLE;
-                            case BLT -> AsmOp.BGT;
-                            case BGT -> AsmOp.BLT;
-                            default -> throw new IllegalStateException(
-                                    "Unexpected value: " + brAsm.getOp());
-                        };
-                        BrAsm brAsm1;
-                        if (brAsm.getRt() == null) {
-                            brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getNumber());
-                        } else {
-                            brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getRt());
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            ArrayList<TextAssembly> textAssemblies
+                    = new ArrayList<>(MipsFile.getInstance().getTextSegment());
+            for (int i = 0; i < textAssemblies.size(); i++) {
+                TextAssembly textAssembly = textAssemblies.get(i);
+                if (!(textAssembly instanceof BrAsm brAsm)) {
+                    continue;
+                }
+                if (i + 1 < textAssemblies.size()
+                        && textAssemblies.get(i + 1) instanceof JumpAsm jumpAsm) {
+                    if (i + 2 < textAssemblies.size()
+                            && textAssemblies.get(i + 2) instanceof Label label) {
+                        if (label.getLabel().equals(brAsm.getLabel())
+                                && !brAsm.getLabel().equals(jumpAsm.getTarget())) {
+                            AsmOp temp = switch (brAsm.getOp()) {
+                                case BEQ -> AsmOp.BNE;
+                                case BNE -> AsmOp.BEQ;
+                                case BLE -> AsmOp.BGT;
+                                case BGE -> AsmOp.BLT;
+                                case BLT -> AsmOp.BGE;
+                                case BGT -> AsmOp.BLE;
+                                default -> throw new IllegalStateException(
+                                        "Unexpected value: " + brAsm.getOp());
+                            };
+                            BrAsm brAsm1;
+                            if (brAsm.getRt() == null) {
+                                brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getNumber());
+                            } else {
+                                brAsm1 = new BrAsm(jumpAsm.getTarget(), brAsm.getRs(), temp, brAsm.getRt());
+                            }
+                            MipsFile.getInstance().getTextSegment().set(i, brAsm1);
+                            MipsFile.getInstance().getTextSegment().remove(jumpAsm);
+                            changed = true;
+                            break;
                         }
-                        MipsFile.getInstance().getTextSegment().set(i, brAsm1);
-                        MipsFile.getInstance().getTextSegment().remove(jumpAsm);
                     }
                 }
             }
@@ -158,27 +168,33 @@ public class PeepHole {
     //
     // main_b7:
     private static void removeJump1() {
-        ArrayList<TextAssembly> textAssemblies = new ArrayList<>(
-                MipsFile.getInstance().getTextSegment());
-        for (int i = 0; i < textAssemblies.size(); i++) {
-            TextAssembly textAssembly = textAssemblies.get(i);
-            if (textAssembly instanceof JumpAsm jumpAsm) {
-                boolean flag = false;
-                String target = jumpAsm.getTarget();
-                for (int j = i + 1; j < textAssemblies.size(); j++) {
-                    TextAssembly textAssembly1 = textAssemblies.get(j);
-                    if (textAssembly1 instanceof Label label
-                            && label.getLabel().equals(target)) {
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            ArrayList<TextAssembly> textAssemblies = new ArrayList<>(
+                    MipsFile.getInstance().getTextSegment());
+            for (int i = 0; i < textAssemblies.size(); i++) {
+                if (textAssemblies.get(i) instanceof JumpAsm jumpAsm) {
+                    boolean flag = false;
+                    String target = jumpAsm.getTarget();
+                    int j;
+                    for (j = i + 1; j < textAssemblies.size(); j++) {
+                        TextAssembly textAssembly1 = textAssemblies.get(j);
+                        if (textAssembly1 instanceof Label label
+                                && label.getLabel().equals(target)) {
+                            break;
+                        }
+                        if (!(textAssembly1 instanceof Label
+                                || textAssembly1 instanceof Comment)) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag && j != textAssemblies.size()) {
+                        MipsFile.getInstance().getTextSegment().remove(jumpAsm);
+                        changed = true;
                         break;
                     }
-                    if (!(textAssembly1 instanceof Label
-                            || textAssembly1 instanceof Comment)) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    MipsFile.getInstance().getTextSegment().remove(jumpAsm);
                 }
             }
         }

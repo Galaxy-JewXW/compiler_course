@@ -500,7 +500,7 @@ public class IRBuilder {
         } else if (stmt instanceof PrintfStmt printfStmt) {
             buildPrintfStmt(printfStmt);
         } else if (stmt instanceof ForStruct forStruct) {
-            buildDoWhileStruct(forStruct);
+            buildForStruct(forStruct);
         } else if (stmt instanceof BreakStmt) {
             buildBreakStmt();
         } else if (stmt instanceof ContinueStmt) {
