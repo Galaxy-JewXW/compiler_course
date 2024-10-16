@@ -1,26 +1,8 @@
-int symbol[7],array[7];
-int n;
-void FullArray(int index){
-	int i;
-	if(index>=n){
-		for(i=0;i<n;i=i+1){
-			printf("%d ",array[i]);
-		}
-		printf("\n");
-		return;
-	}
-	for(i=0;i<n;i=i+1){
-		if(symbol[i]==0){
-			array[index]=i+1;
-			symbol[i]=1;
-			FullArray(index+1);
-			symbol[i]=0;
-		}
-	}
+int sum(int a, int b, int c, int d, int e, int f, int g) {
+    return a + b + c + d + e + f + g;
 }
-int main(){
-	int i;
-	n=getint();
-	FullArray(0);
-	return 0;
+
+int main() {
+    printf("%d\n", sum(1,9,7,-3,2,3,4));
+    return 0;
 }

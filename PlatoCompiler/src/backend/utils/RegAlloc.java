@@ -286,7 +286,8 @@ public class RegAlloc {
     private static boolean isAllocatableValue(Value value) {
         return !(value instanceof ConstInt || value instanceof ConstString
                 || (value instanceof GlobalVar)
-                || value instanceof BasicBlock || value instanceof Function);
+                || value instanceof BasicBlock || value instanceof Function
+                || value instanceof FuncParam);
     }
 
     private static class InterferenceGraphNode {
