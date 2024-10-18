@@ -45,7 +45,7 @@ public class LVal extends SyntaxNode implements Calculable {
     @Override
     public int calculate() {
         String name = ident.getContent();
-        Symbol symbol = TableManager.getInstance2().getSymbol(name);
+        Symbol symbol = TableManager.getInstance1().getSymbol(name);
         if (symbol == null) {
             return 0;
         } else if (symbol instanceof FuncSymbol) {
@@ -56,6 +56,9 @@ public class LVal extends SyntaxNode implements Calculable {
             length = exp.calculate();
         }
         VarSymbol varSymbol = (VarSymbol) symbol;
+        if (!varSymbol.isConstant()) {
+            return 0;
+        }
         if (varSymbol.getDimension() == 0) {
             return varSymbol.getConstValue();
         } else {
