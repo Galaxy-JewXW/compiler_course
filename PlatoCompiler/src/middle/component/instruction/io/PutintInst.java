@@ -24,7 +24,7 @@ public class PutintInst extends IOInst {
 
     @Override
     public Function getCalledFunction() {
-        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance().
+        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance1().
                 getSymbol("putint");
         return funcSymbol.getLlvmValue();
     }

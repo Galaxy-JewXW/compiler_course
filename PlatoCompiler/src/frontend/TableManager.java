@@ -8,18 +8,23 @@ import java.util.HashSet;
 
 public class TableManager {
     // 单例模式
-    private static final TableManager INSTANCE = new TableManager();
+    private static final TableManager INSTANCE1 = new TableManager();
+    private static final TableManager INSTANCE2 = new TableManager();
+    private final HashSet<VarSymbol> localConstArray = new HashSet<>();
     // 初始化为CompUnit对应的最高级的符号表
     private SymbolTable currentTable = new SymbolTable(null, null);
     // 当前处于的循环层数
     private int loopLevel = 0;
-    private HashSet<VarSymbol> localConstArray = new HashSet<>();
 
-    public TableManager() {
+    private TableManager() {
     }
 
-    public static TableManager getInstance() {
-        return INSTANCE;
+    public static TableManager getInstance1() {
+        return INSTANCE1;
+    }
+
+    public static TableManager getInstance2() {
+        return INSTANCE2;
     }
 
     public void createTable(SymbolType blockType) {

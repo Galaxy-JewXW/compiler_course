@@ -34,7 +34,7 @@ public class PutstrInst extends IOInst {
 
     @Override
     public Function getCalledFunction() {
-        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance().
+        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance1().
                 getSymbol("putstr");
         return funcSymbol.getLlvmValue();
     }

@@ -47,7 +47,7 @@ public class Printer {
     public static void printSymbols(String path) throws FileNotFoundException {
         PrintStream origin = System.out;
         System.setOut(new PrintStream(path));
-        TableManager.getInstance().show();
+        TableManager.getInstance1().show();
         System.setOut(origin);
     }
 

@@ -4,25 +4,11 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 
 
-define dso_local i32 @sum(i32 %0, i32 %1, i32 %2, i32 %3, i32 %4, i32 %5, i32 %6) {
-7:
-	%8 = add i32 %0, %1
-	%9 = add i32 %8, %2
-	%10 = add i32 %9, %3
-	%11 = add i32 %10, %4
-	%12 = add i32 %11, %5
-	%13 = add i32 %12, %6
-	ret i32 %13
-}
 
 define dso_local i32 @main() {
 0:
-	%1 = call i32 @sum(i32 1, i32 9, i32 7, i32 -3, i32 2, i32 3, i32 4)
-	call void @putint(i32 %1)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }

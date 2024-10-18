@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class LocalConstArrayToValue {
     public static void run(Module module) {
-        HashSet<VarSymbol> localConstArray = TableManager.getInstance().getLocalConstArray();
+        HashSet<VarSymbol> localConstArray = TableManager.getInstance1().getLocalConstArray();
         for (VarSymbol var : localConstArray) {
             if (!(var.getLlvmValue() instanceof AllocInst allocInst)) {
                 continue;

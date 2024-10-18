@@ -18,7 +18,7 @@ public class GetintInst extends IOInst {
 
     @Override
     public Function getCalledFunction() {
-        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance().
+        FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance1().
                 getSymbol("getint");
         return funcSymbol.getLlvmValue();
     }

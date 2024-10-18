@@ -1,8 +1,8 @@
-int sum(int a, int b, int c, int d, int e, int f, int g) {
-    return a + b + c + d + e + f + g;
-}
-
 int main() {
-    printf("%d\n", sum(1,9,7,-3,2,3,4));
+    int c = 3;
+    {
+        int s[c];
+        int c = 4;
+    }
     return 0;
 }

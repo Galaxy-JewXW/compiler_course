@@ -2,18 +2,9 @@ package optimize;
 
 import frontend.TableManager;
 import frontend.symbol.VarSymbol;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.Function;
-import middle.component.GlobalVar;
-import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.StoreInst;
+import middle.component.*;
+import middle.component.instruction.*;
 import middle.component.model.User;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -84,7 +75,7 @@ public class GlobalVarLocalize {
                 allocInst.setBasicBlock(entryBlock);
                 entryBlock.getInstructions().add(0, allocInst);
                 int initValue;
-                VarSymbol varSymbol = (VarSymbol) TableManager.getInstance()
+                VarSymbol varSymbol = (VarSymbol) TableManager.getInstance1()
                         .getSymbol(gv.getName().substring(1));
                 InitialValue initialValue = varSymbol.getInitialValue();
                 if (initialValue.getElements() == null) {
@@ -114,7 +105,7 @@ public class GlobalVarLocalize {
         ArrayList<GlobalVar> toRemove = new ArrayList<>();
         for (GlobalVar gv : module.getGlobalVars()) {
             HashSet<Function> users = usedMap.getOrDefault(gv, null);
-            VarSymbol varSymbol = (VarSymbol) TableManager.getInstance()
+            VarSymbol varSymbol = (VarSymbol) TableManager.getInstance1()
                     .getSymbol(gv.getName().substring(1));
             if (!varSymbol.isConstant()) {
                 continue;
@@ -153,7 +144,7 @@ public class GlobalVarLocalize {
                 toRemove.add(gv);
                 continue;
             }
-            VarSymbol varSymbol = (VarSymbol) TableManager.getInstance()
+            VarSymbol varSymbol = (VarSymbol) TableManager.getInstance1()
                     .getSymbol(gv.getName().substring(1));
             if (!varSymbol.isConstant()) {
                 continue;

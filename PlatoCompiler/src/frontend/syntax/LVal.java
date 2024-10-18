@@ -45,7 +45,7 @@ public class LVal extends SyntaxNode implements Calculable {
     @Override
     public int calculate() {
         String name = ident.getContent();
-        Symbol symbol = TableManager.getInstance().getSymbol(name);
+        Symbol symbol = TableManager.getInstance2().getSymbol(name);
         if (symbol == null) {
             return 0;
         } else if (symbol instanceof FuncSymbol) {

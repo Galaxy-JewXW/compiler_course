@@ -28,9 +28,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class IRBuilder {
-    private final SymbolTable rootTable = TableManager.getInstance()
+    private final SymbolTable rootTable = TableManager.getInstance1()
             .getCurrentTable();
-    private final TableManager clonedManager = new TableManager();
+    private final TableManager clonedManager = TableManager.getInstance2();
     private final CompUnit compUnit;
     private SymbolTable currentTable = rootTable;
     private boolean isGlobal = false;
@@ -297,7 +297,7 @@ public class IRBuilder {
         } else if (unaryExp.getIdent() != null) {
             String funcName = unaryExp.getIdent().getContent();
             // 从根节点开始查找
-            FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance()
+            FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance1()
                     .getSymbol(funcName);
             Function function = funcSymbol.getLlvmValue();
             // 获取函数调用的实参

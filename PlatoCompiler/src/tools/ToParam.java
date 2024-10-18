@@ -2,7 +2,6 @@ package tools;
 
 import frontend.TableManager;
 import frontend.symbol.*;
-import frontend.symbol.ParamSymbol;
 import frontend.syntax.LVal;
 import frontend.syntax.expression.AddExp;
 import frontend.syntax.expression.Exp;
@@ -28,7 +27,7 @@ public class ToParam {
         if (unaryExp.getPrimaryExp() != null) {
             return primaryExpToParam(unaryExp.getPrimaryExp());
         } else if (unaryExp.getIdent() != null) {
-            TableManager tableManager = TableManager.getInstance();
+            TableManager tableManager = TableManager.getInstance1();
             Symbol symbol = tableManager.getSymbol(unaryExp.getIdent().getContent());
             if (symbol instanceof FuncSymbol funcSymbol) {
                 return new ParamSymbol(unaryExp.getIdent().getContent(),
@@ -55,7 +54,7 @@ public class ToParam {
     }
 
     private static ParamSymbol lValToParam(LVal lval) {
-        TableManager tableManager = TableManager.getInstance();
+        TableManager tableManager = TableManager.getInstance1();
         VarSymbol symbol = (VarSymbol) tableManager.getSymbol(lval.getIdent().getContent());
         if (symbol == null) {
             return null;
