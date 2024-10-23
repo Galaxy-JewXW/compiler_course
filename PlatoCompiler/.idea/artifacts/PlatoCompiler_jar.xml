@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PlatoCompiler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PlatoCompiler_jar</output-path>
+    <root id="archive" name="PlatoCompiler.jar">
+      <element id="module-output" name="PlatoCompiler" />
+    </root>
+  </artifact>
+</component>

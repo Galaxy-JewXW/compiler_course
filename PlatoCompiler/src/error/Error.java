@@ -13,6 +13,10 @@ public class Error implements Comparable<Error> {
         this.line = line;
     }
 
+    public int getLine() {
+        return line;
+    }
+
     @Override
     public String toString() {
         return line + " " + errorType.toString();

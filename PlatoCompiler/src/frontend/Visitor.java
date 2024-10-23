@@ -3,12 +3,51 @@ package frontend;
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
-import frontend.symbol.*;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
-import frontend.syntax.function.*;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.symbol.FuncSymbol;
+import frontend.symbol.ParamSymbol;
+import frontend.symbol.Symbol;
+import frontend.symbol.SymbolType;
+import frontend.symbol.VarSymbol;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.ConstExp;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
+import frontend.syntax.function.FuncRParams;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.ConstInitVal;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
 import middle.component.InitialValue;
 import middle.component.type.ArrayType;
@@ -241,11 +280,13 @@ public class Visitor {
             case CHARTK -> funcReturnType = SymbolType.CHAR;
             default -> funcReturnType = SymbolType.VOID;
         }
+        boolean flag = true;
         // 检查名字重定义
         if (tableManager.inCurrentTable(funcDef.getIdent().getContent())) {
             ErrorHandler.getInstance().addError(new Error(
                     ErrorType.IdentRedefined, funcDef.getIdent().getLine()
             ));
+            flag = false;
         }
         // 对于一个名字重定义的函数，也应该完整分析函数内部是否具有其它错误
         ArrayList<ParamSymbol> paramSymbols = new ArrayList<>();
@@ -258,9 +299,11 @@ public class Visitor {
                         funcFParam.isArray() ? 1 : 0));
             }
         }
-        tableManager.addSymbol(new FuncSymbol(
-                funcDef.getIdent().getContent(), funcReturnType, paramSymbols
-        ));
+        if (flag) {
+            tableManager.addSymbol(new FuncSymbol(
+                    funcDef.getIdent().getContent(), funcReturnType, paramSymbols
+            ));
+        }
         // 函数形参不在Block块中，但实际上应该属于Block块中定义的变量
         tableManager.createTable(funcReturnType);
         if (funcDef.getFuncFParams() != null) {

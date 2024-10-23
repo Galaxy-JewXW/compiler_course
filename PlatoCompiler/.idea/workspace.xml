@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="PlatoCompiler:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fixed">
-      <change beforePath="$PROJECT_DIR$/src/frontend/syntax/LVal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/syntax/LVal.java" afterDir="false" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="bugs">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/_2024_10_13_22_43____.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_2024_10_13_22_43_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/error.txt" beforeDir="false" afterPath="$PROJECT_DIR$/error.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/123.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/error/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/error/Error.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/error/ErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/error/ErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/《编译技术》实验-2024.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +77,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
@@ -86,8 +103,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -149,14 +166,11 @@
       <workItem from="1728612753060" duration="2691000" />
       <workItem from="1728624351032" duration="3541000" />
       <workItem from="1728649132348" duration="1377000" />
-    </task>
-    <task id="LOCAL-00012" summary="实现全局变量局部化">
-      <option name="closed" value="true" />
-      <created>1727407300321</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1727407300321</updated>
+      <workItem from="1729258985141" duration="862000" />
+      <workItem from="1729264467984" duration="75000" />
+      <workItem from="1729357706810" duration="33000" />
+      <workItem from="1729389573751" duration="214000" />
+      <workItem from="1729699077223" duration="1022000" />
     </task>
     <task id="LOCAL-00013" summary="实现全局变量局部化1">
       <option name="closed" value="true" />
@@ -542,7 +556,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728952857450</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="bugs">
+      <option name="closed" value="true" />
+      <created>1729254422474</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1729254422474</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="函数内联" />
     <MESSAGE value="fix 函数内联" />
     <MESSAGE value="add CodeRemoval" />
     <MESSAGE value="add move" />
@@ -585,7 +606,8 @@
     <MESSAGE value="123" />
     <MESSAGE value="bug in regalloc" />
     <MESSAGE value="fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed" />
+    <MESSAGE value="bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

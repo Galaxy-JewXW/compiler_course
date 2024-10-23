@@ -2,6 +2,7 @@ package error;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * 异常处理类，运用单例模式
@@ -24,6 +25,14 @@ public class ErrorHandler {
 
     public ArrayList<Error> getErrors() {
         Collections.sort(errors);
-        return errors;
+        ArrayList<Error> answer = new ArrayList<>();
+        HashSet<Integer> visited = new HashSet<>();
+        for (Error error : errors) {
+            if (!visited.contains(error.getLine())) {
+                visited.add(error.getLine());
+                answer.add(error);
+            }
+        }
+        return answer;
     }
 }
