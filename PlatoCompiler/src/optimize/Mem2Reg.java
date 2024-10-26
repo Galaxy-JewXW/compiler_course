@@ -35,9 +35,9 @@ public class Mem2Reg {
     private static ArrayList<BasicBlock> defBlocks;
     private static Stack<Value> defStack;
 
-    public static void run(Module module, boolean simplify) {
+    public static void run(Module module, boolean toSSA) {
         for (Function function : module.getFunctions()) {
-            optimize(function, simplify);
+            optimize(function, toSSA);
         }
     }
 

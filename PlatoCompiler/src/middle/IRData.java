@@ -27,11 +27,11 @@ public class IRData {
     }
 
     public static String getVarName() {
-        return "%" + cnt++;
+        return "%v" + cnt++;
     }
 
     public static String getBlockName() {
-        return Integer.toString(cnt++);
+        return "b" + cnt++;
     }
 
     public static void reset() {

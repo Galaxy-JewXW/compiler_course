@@ -14,6 +14,7 @@ import java.util.Stack;
 // Code Removal
 public class CodeRemoval {
     public static void run(Module module) {
+        FunctionSideEffect.run(module);
         rmDeadCode(module);
         rmUnusedCode(module);
     }

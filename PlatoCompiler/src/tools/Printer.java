@@ -7,7 +7,11 @@ import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.component.Module;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 // 工具类，负责中间结构的输出
@@ -53,7 +57,6 @@ public class Printer {
 
     public static void printIr(Module module, String path) throws FileNotFoundException {
         PrintStream origin = System.out;
-        module.updateId();
         System.setOut(new PrintStream(path));
         System.out.println(module);
         System.setOut(origin);

@@ -50,11 +50,11 @@ public class InitialValue {
                     sb.append(((ArrayType) valueType).getElementType())
                             .append(" ").append(element.toString()).append(", ");
                 }
-                if (filled == length) {
-                    sb.delete(sb.length() - 2, sb.length());
-                } else {
-                    sb.append("zeroinitializer");
+                for (int i = 0; i < length - filled; i++) {
+                    sb.append(((ArrayType) valueType).getElementType())
+                            .append(" ").append(0).append(", ");
                 }
+                sb.delete(sb.length() - 2, sb.length());
                 sb.append("]");
                 return sb.toString();
             }

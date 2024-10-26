@@ -30,28 +30,31 @@ public class IcmpOptimize {
             }
         }
         for (Function function : module.getFunctions()) {
-            HashSet<BasicBlock> buffer = new HashSet<>();
             for (BasicBlock block : function.getBasicBlocks()) {
                 ArrayList<Instruction> instructions
                         = new ArrayList<>(block.getInstructions());
                 for (Instruction instruction : instructions) {
                     if (instruction instanceof BrInst brInst
                             && brInst.isConditional()) {
-                        brOptimize(brInst, buffer);
+                        brOptimize(brInst);
                     }
                 }
             }
-            function.getBasicBlocks().removeIf(block -> {
-                if (buffer.contains(block)) {
-                    block.setDeleted(true);
-                    block.getInstructions().forEach(Instruction::removeOperands);
-                    return true;
-                }
-                return false;
-            });
         }
         SurplusBlock.build(module);
         CodeRemoval.run(module);
+        Mem2Reg.run(module, false);
+        for (Function function : module.getFunctions()) {
+            HashSet<BasicBlock> reached = findReachableBlocks(function);
+            function.getBasicBlocks().removeIf(bb -> {
+                if (reached.contains(bb)) {
+                    return false;
+                }
+                bb.setDeleted(true);
+                return true;
+            });
+        }
+        PhiOptimize.run(module);
     }
 
     private static void icmpOptimize(BinaryInst binaryInst) {
@@ -78,30 +81,41 @@ public class IcmpOptimize {
         }
     }
 
-    private static void brOptimize(BrInst brInst, HashSet<BasicBlock> buffer) {
+    private static void brOptimize(BrInst brInst) {
         Value value = brInst.getCondition();
         BasicBlock curBlock = brInst.getBasicBlock();
         if (value instanceof ConstInt constInt) {
             BrInst noCondBr;
+            BasicBlock targetBlock;
             if (constInt.getIntValue() == 0) {
-                noCondBr = new BrInst(brInst.getFalseBlock());
-                curBlock.deleteForPhi(brInst.getTrueBlock());
-                curBlock.getNextBlocks().remove(brInst.getTrueBlock());
-                brInst.getTrueBlock().getPrevBlocks().remove(curBlock);
+                targetBlock = brInst.getFalseBlock();
             } else {
-                noCondBr = new BrInst(brInst.getTrueBlock());
-                curBlock.deleteForPhi(brInst.getTrueBlock());
-                curBlock.getNextBlocks().remove(brInst.getFalseBlock());
-                brInst.getFalseBlock().getPrevBlocks().remove(curBlock);
+                targetBlock = brInst.getTrueBlock();
             }
-            if (brInst.getTrueBlock().getPrevBlocks().isEmpty()) {
-                buffer.add(brInst.getTrueBlock());
-            }
-            if (brInst.getFalseBlock().getPrevBlocks().isEmpty()) {
-                buffer.add(brInst.getFalseBlock());
-            }
+            noCondBr = new BrInst(targetBlock);
             curBlock.getInstructions().set(curBlock.getInstructions().indexOf(brInst), noCondBr);
             brInst.removeOperands();
         }
     }
+
+    private static HashSet<BasicBlock> findReachableBlocks(Function function) {
+        HashSet<BasicBlock> reachable = new HashSet<>();
+        ArrayList<BasicBlock> workList = new ArrayList<>();
+        if (!function.getBasicBlocks().isEmpty()) {
+            BasicBlock entry = function.getEntryBlock();
+            workList.add(entry);
+            reachable.add(entry);
+        }
+        while (!workList.isEmpty()) {
+            BasicBlock current = workList.remove(workList.size() - 1);
+            for (BasicBlock suc : current.getNextBlocks()) {
+                if (!reachable.contains(suc)) {
+                    reachable.add(suc);
+                    workList.add(suc);
+                }
+            }
+        }
+        return reachable;
+    }
+
 }

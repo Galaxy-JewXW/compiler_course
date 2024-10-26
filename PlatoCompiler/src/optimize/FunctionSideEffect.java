@@ -30,7 +30,7 @@ public class FunctionSideEffect {
         do {
             changed = module.getFunctions().stream().anyMatch(function -> {
                 Set<Function> callFunctions = callMap.get(function);
-                boolean updated = callFunctions.stream().anyMatch(Function::hasSideEffects)
+                boolean updated = callFunctions.stream().anyMatch(FunctionSideEffect::hasSideEffects)
                         && !function.hasSideEffects();
                 if (updated) {
                     function.setHasSideEffects(true);

@@ -5,16 +5,16 @@ int func_cond() {
     return global;
 }
 void test_if() {
-    if (0 && func_cond()) { ; }
-    if (1 || func_cond()) { ; }
-    if (1 && func_cond() && 0 && func_cond()) { ; }
-    if (0 || !func_cond() || 1 || !func_cond()) { ; }
-    if (0 && func_cond() || func_cond() && 1) { ; }
-    if (0 || !func_cond() && func_cond() && 1) { ; }
-    if (0 && func_cond() || func_cond()) { ; }
-    if (!func_cond() || 1 && func_cond()) { ; }
-    if (1 == func_cond()) { ; }
-    if (1 != func_cond()) { ; }
+    if (0 && func_cond()) printf("%d\n", global);
+    if (1 || func_cond()) printf("%d\n", global);
+    if (1 && func_cond() && 0 && func_cond()) printf("%d\n", global);
+    if (0 || !func_cond() || 1 || !func_cond()) printf("%d\n", global);
+    if (0 && func_cond() || func_cond() && 1) printf("%d\n", global);
+    if (0 || !func_cond() && func_cond() && 1) printf("%d\n", global); 
+    if (0 && func_cond() || func_cond()) printf("%d\n", global);
+    if (!func_cond() || 1 && func_cond()) printf("%d\n", global);
+    if (1 == func_cond()) printf("%d\n", global);
+    if (1 != func_cond()) printf("%d\n", global);
 }
 
 int main() {

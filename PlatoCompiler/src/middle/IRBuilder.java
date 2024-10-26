@@ -3,18 +3,72 @@ package middle;
 import frontend.SymbolTable;
 import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
+import frontend.symbol.ParamSymbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
-import frontend.syntax.function.*;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.function.FuncDef;
+import frontend.syntax.function.FuncFParam;
+import frontend.syntax.function.FuncFParams;
+import frontend.syntax.function.MainFuncDef;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.ForLoop;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
-import middle.component.instruction.io.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
+import middle.component.instruction.io.GetcharInst;
+import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
+import middle.component.instruction.io.PutintInst;
+import middle.component.instruction.io.PutstrInst;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -125,13 +179,14 @@ public class IRBuilder {
                 new StoreInst(instruction,
                         new ConstInt(initialValue.getValueType(), init));
             } else if (varSymbol.getDimension() == 1) {
+                ValueType elementType = ((ArrayType) initialValue.getValueType()).getElementType();
                 Value pointer = instruction;
                 for (int i = 0; i < initialValue.getElements().size(); i++) {
                     instruction = new GepInst(pointer,
                             new ConstInt(IntegerType.i32, i)
                     );
                     new StoreInst(instruction,
-                            new ConstInt(IntegerType.i32, initialValue.getElements().get(i)));
+                            new ConstInt(elementType, initialValue.getElements().get(i)));
                 }
             } else {
                 throw new RuntimeException("Shouldn't reach here");
@@ -184,7 +239,7 @@ public class IRBuilder {
                         if (storeValue instanceof ConstInt constInt) {
                             storeValue = new ConstInt(IntegerType.i32, constInt.getIntValue());
                         } else {
-                            storeValue = new ZextInst(storeValue, IntegerType.i8);
+                            storeValue = new ZextInst(storeValue, IntegerType.i32);
                         }
                     }
                     new StoreInst(instruction, storeValue);
@@ -196,8 +251,25 @@ public class IRBuilder {
                 if (varDef.getInitVal() != null) {
                     ArrayList<Value> inits = buildInitVal(varDef.getInitVal());
                     for (int i = 0; i < inits.size(); i++) {
+                        Value storeValue = inits.get(i);
+                        ValueType targetType = ((ArrayType) instruction.getTargetType()).getElementType();
+                        if (storeValue.getValueType().equals(IntegerType.i32)
+                                && targetType.equals(IntegerType.i8)) {
+                            if (storeValue instanceof ConstInt constInt) {
+                                storeValue = new ConstInt(IntegerType.i8, constInt.getIntValue());
+                            } else {
+                                storeValue = new TruncInst(storeValue, IntegerType.i8);
+                            }
+                        } else if (storeValue.getValueType().equals(IntegerType.i8)
+                                && targetType.equals(IntegerType.i32)) {
+                            if (storeValue instanceof ConstInt constInt) {
+                                storeValue = new ConstInt(IntegerType.i32, constInt.getIntValue());
+                            } else {
+                                storeValue = new ZextInst(storeValue, IntegerType.i32);
+                            }
+                        }
                         Instruction inst = new GepInst(instruction, new ConstInt(IntegerType.i32, i));
-                        new StoreInst(inst, inits.get(i));
+                        new StoreInst(inst, storeValue);
                     }
                 }
             }
@@ -229,7 +301,7 @@ public class IRBuilder {
 
     private Value buildAddExp(AddExp addExp) {
         Value left = buildMulExp(addExp.getMulExps().get(0));
-        if (left.getValueType().equals(IntegerType.i8)) {
+        if (left.getValueType().equals(IntegerType.i8) && addExp.getMulExps().size() > 1) {
             left = new ZextInst(left, IntegerType.i32);
         }
         Value right;
@@ -252,7 +324,7 @@ public class IRBuilder {
 
     private Value buildMulExp(MulExp mulExp) {
         Value left = buildUnaryExp(mulExp.getUnaryExps().get(0));
-        if (left.getValueType().equals(IntegerType.i8)) {
+        if (left.getValueType().equals(IntegerType.i8) && mulExp.getUnaryExps().size() > 1) {
             left = new ZextInst(left, IntegerType.i32);
         }
         Value right;
@@ -289,6 +361,9 @@ public class IRBuilder {
             } else if (type == TokenType.MINU) {
                 return new BinaryInst(OperatorType.SUB, right, left);
             } else if (type == TokenType.NOT) {
+                if (left.getValueType().equals(IntegerType.i8)) {
+                    left = new ZextInst(left, IntegerType.i32);
+                }
                 Instruction instruction = new BinaryInst(OperatorType.ICMP_EQ, right, left);
                 return new ZextInst(instruction, IntegerType.i32);
             } else {
@@ -303,20 +378,36 @@ public class IRBuilder {
             // 获取函数调用的实参
             ArrayList<Value> arguments = new ArrayList<>();
             if (unaryExp.getFuncRParams() != null) {
-                arguments.addAll(buildFuncRParams(unaryExp.getFuncRParams()));
+                for (int i = 0; i < unaryExp.getFuncRParams().getExps().size(); i++) {
+                    Exp exp = unaryExp.getFuncRParams().getExps().get(i);
+                    Value rValue = buildExp(exp);
+                    ParamSymbol paramSymbol = funcSymbol.getFuncParams().get(i);
+                    if (rValue.getValueType().equals(paramSymbol.getValueType())) {
+                        arguments.add(rValue);
+                        continue;
+                    }
+                    if (rValue instanceof ConstInt constInt) {
+                        if (constInt.getValueType().equals(IntegerType.i32)
+                                && paramSymbol.getValueType().equals(IntegerType.i8)) {
+                            rValue = new ConstInt(IntegerType.i8, constInt.getIntValue());
+                        } else if (constInt.getValueType().equals(IntegerType.i8)
+                                && paramSymbol.getValueType().equals(IntegerType.i32)) {
+                            rValue = new ConstInt(IntegerType.i32, constInt.getIntValue());
+                        }
+                    } else if (rValue.getValueType().equals(IntegerType.i32)
+                            && paramSymbol.getValueType().equals(IntegerType.i8)) {
+                        rValue = new TruncInst(rValue, IntegerType.i8);
+                    } else if (rValue.getValueType().equals(IntegerType.i8)
+                            && paramSymbol.getValueType().equals(IntegerType.i32)) {
+                        rValue = new ZextInst(rValue, IntegerType.i32);
+                    }
+                    arguments.add(rValue);
+                }
             }
             return new CallInst(function, arguments);
         } else {
             throw new RuntimeException("Shouldn't reach here");
         }
-    }
-
-    private ArrayList<Value> buildFuncRParams(FuncRParams funcRParams) {
-        ArrayList<Value> ans = new ArrayList<>();
-        for (Exp exp : funcRParams.getExps()) {
-            ans.add(buildExp(exp));
-        }
-        return ans;
     }
 
     private Value buildPrimaryExp(PrimaryExp primaryExp) {
@@ -600,6 +691,9 @@ public class IRBuilder {
                 left = new ZextInst(left, IntegerType.i32);
             }
             Value right = buildAddExp(relExp.getAddExps().get(i));
+            if (!right.getValueType().equals(IntegerType.i32)) {
+                right = new ZextInst(right, IntegerType.i32);
+            }
             left = switch (relExp.getOperators().get(i - 1).getType()) {
                 case GRE -> new BinaryInst(OperatorType.ICMP_SGT, left, right);
                 case GEQ -> new BinaryInst(OperatorType.ICMP_SGE, left, right);
@@ -638,6 +732,22 @@ public class IRBuilder {
         Value returnValue = null;
         if (returnStmt.getExp() != null) {
             returnValue = buildExp(returnStmt.getExp());
+            Function function = IRData.getCurrentFunction();
+            if (function.getReturnType().equals(IntegerType.i8)
+                    && returnValue.getValueType().equals(IntegerType.i32)) {
+                if (returnValue instanceof ConstInt constInt) {
+                    returnValue = new ConstInt(IntegerType.i8, constInt.getIntValue());
+                } else {
+                    returnValue = new TruncInst(returnValue, IntegerType.i8);
+                }
+            } else if (function.getReturnType().equals(IntegerType.i32)
+                    && returnValue.getValueType().equals(IntegerType.i8)) {
+                if (returnValue instanceof ConstInt constInt) {
+                    returnValue = new ConstInt(IntegerType.i32, constInt.getIntValue());
+                } else {
+                    returnValue = new ZextInst(returnValue, IntegerType.i32);
+                }
+            }
         } else if (IRData.getCurrentFunction().getReturnType().equals(IntegerType.i8)) {
             returnValue = new ConstInt(IntegerType.i8, 0);
         } else if (IRData.getCurrentFunction().getReturnType().equals(IntegerType.i32)) {

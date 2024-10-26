@@ -4,16 +4,161 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
+@.s.0 = private unnamed_addr constant [10 x i8] c"21376218\0A\00", align 1
+@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.s.2 = private unnamed_addr constant [14 x i8] c"Finish test1\0A\00", align 1
 
+@global = dso_local global i32 0
 
+define dso_local i32 @func_cond() {
+b0:
+	%v1 = load i32, i32* @global
+	%v2 = add i32 %v1, 1
+	store i32 %v2, i32* @global
+	%v3 = load i32, i32* @global
+	ret i32 %v3
+}
 
+define dso_local void @test_if() {
+b0:
+	%v1 = icmp ne i32 0, 0
+	br i1 %v1, label %b5, label %b3
+b2:
+	br label %b3
+b3:
+	%v4 = icmp ne i32 1, 0
+	br i1 %v4, label %b8, label %b11
+b5:
+	%v6 = call i32 @func_cond()
+	%v7 = icmp ne i32 %v6, 0
+	br i1 %v7, label %b2, label %b3
+b8:
+	br label %b9
+b9:
+	%v10 = icmp ne i32 1, 0
+	br i1 %v10, label %b17, label %b15
+b11:
+	%v12 = call i32 @func_cond()
+	%v13 = icmp ne i32 %v12, 0
+	br i1 %v13, label %b8, label %b9
+b14:
+	br label %b15
+b15:
+	%v16 = icmp ne i32 0, 0
+	br i1 %v16, label %b25, label %b28
+b17:
+	%v18 = call i32 @func_cond()
+	%v19 = icmp ne i32 %v18, 0
+	br i1 %v19, label %b20, label %b15
+b20:
+	%v21 = icmp ne i32 0, 0
+	br i1 %v21, label %b22, label %b15
+b22:
+	%v23 = call i32 @func_cond()
+	%v24 = icmp ne i32 %v23, 0
+	br i1 %v24, label %b14, label %b15
+b25:
+	br label %b26
+b26:
+	%v27 = icmp ne i32 0, 0
+	br i1 %v27, label %b46, label %b43
+b28:
+	%v29 = call i32 @func_cond()
+	%v30 = icmp eq i32 0, %v29
+	%v31 = zext i1 %v30 to i32
+	%v32 = icmp ne i32 %v31, 0
+	br i1 %v32, label %b25, label %b33
+b33:
+	%v34 = icmp ne i32 1, 0
+	br i1 %v34, label %b25, label %b35
+b35:
+	%v36 = call i32 @func_cond()
+	%v37 = icmp eq i32 0, %v36
+	%v38 = zext i1 %v37 to i32
+	%v39 = icmp ne i32 %v38, 0
+	br i1 %v39, label %b25, label %b26
+b40:
+	br label %b41
+b41:
+	%v42 = icmp ne i32 0, 0
+	br i1 %v42, label %b51, label %b54
+b43:
+	%v44 = call i32 @func_cond()
+	%v45 = icmp ne i32 %v44, 0
+	br i1 %v45, label %b49, label %b41
+b46:
+	%v47 = call i32 @func_cond()
+	%v48 = icmp ne i32 %v47, 0
+	br i1 %v48, label %b40, label %b43
+b49:
+	%v50 = icmp ne i32 1, 0
+	br i1 %v50, label %b40, label %b41
+b51:
+	br label %b52
+b52:
+	%v53 = icmp ne i32 0, 0
+	br i1 %v53, label %b73, label %b70
+b54:
+	%v55 = call i32 @func_cond()
+	%v56 = icmp eq i32 0, %v55
+	%v57 = zext i1 %v56 to i32
+	%v58 = icmp ne i32 %v57, 0
+	br i1 %v58, label %b59, label %b52
+b59:
+	%v60 = call i32 @func_cond()
+	%v61 = icmp ne i32 %v60, 0
+	br i1 %v61, label %b62, label %b52
+b62:
+	%v63 = icmp ne i32 1, 0
+	br i1 %v63, label %b51, label %b52
+b64:
+	br label %b65
+b65:
+	%v66 = call i32 @func_cond()
+	%v67 = icmp eq i32 0, %v66
+	%v68 = zext i1 %v67 to i32
+	%v69 = icmp ne i32 %v68, 0
+	br i1 %v69, label %b76, label %b80
+b70:
+	%v71 = call i32 @func_cond()
+	%v72 = icmp ne i32 %v71, 0
+	br i1 %v72, label %b64, label %b65
+b73:
+	%v74 = call i32 @func_cond()
+	%v75 = icmp ne i32 %v74, 0
+	br i1 %v75, label %b64, label %b70
+b76:
+	br label %b77
+b77:
+	%v78 = call i32 @func_cond()
+	%v79 = icmp eq i32 1, %v78
+	br i1 %v79, label %b85, label %b86
+b80:
+	%v81 = icmp ne i32 1, 0
+	br i1 %v81, label %b82, label %b77
+b82:
+	%v83 = call i32 @func_cond()
+	%v84 = icmp ne i32 %v83, 0
+	br i1 %v84, label %b76, label %b77
+b85:
+	br label %b86
+b86:
+	%v87 = call i32 @func_cond()
+	%v88 = icmp ne i32 1, %v87
+	br i1 %v88, label %b89, label %b90
+b89:
+	br label %b90
+b90:
+	ret void
+}
 
 define dso_local i32 @main() {
-0:
-	%1 = alloca i32
-	store i32 3, i32* %1
-	%2 = alloca [0 x i32]
-	%3 = alloca i32
-	store i32 4, i32* %3
+b0:
+	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.0, i64 0, i64 0))
+	call void @test_if()
+	%v1 = load i32, i32* @global
+	call void @putint(i32 %v1)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
+	call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.2, i64 0, i64 0))
 	ret i32 0
 }
