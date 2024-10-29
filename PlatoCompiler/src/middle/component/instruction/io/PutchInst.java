@@ -2,12 +2,13 @@ package middle.component.instruction.io;
 
 import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
+import middle.component.ConstInt;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
-public class PutchInst extends IOInst {
+public class PutchInst extends IOInst implements OutputInst {
     public PutchInst(Value target) {
         super("", IntegerType.VOID, OperatorType.IO);
         addOperand(target);
@@ -15,6 +16,20 @@ public class PutchInst extends IOInst {
 
     public Value getTarget() {
         return getOperands().get(0);
+    }
+
+    @Override
+    public boolean constContent() {
+        return getTarget() instanceof ConstInt;
+    }
+
+    @Override
+    public String getConstContent() {
+        if (constContent()) {
+            ConstInt c = (ConstInt) getTarget();
+            return String.valueOf((char) c.getIntValue());
+        }
+        return null;
     }
 
     @Override

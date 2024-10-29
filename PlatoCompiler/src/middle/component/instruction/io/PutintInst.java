@@ -2,12 +2,13 @@ package middle.component.instruction.io;
 
 import frontend.TableManager;
 import frontend.symbol.FuncSymbol;
+import middle.component.ConstInt;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 
-public class PutintInst extends IOInst {
+public class PutintInst extends IOInst implements OutputInst {
     public PutintInst(Value target) {
         super("", IntegerType.VOID, OperatorType.IO);
         addOperand(target);
@@ -20,6 +21,19 @@ public class PutintInst extends IOInst {
     @Override
     public String toString() {
         return "call void @putint(i32 " + getTarget().getName() + ")";
+    }
+
+    @Override
+    public boolean constContent() {
+        return getTarget() instanceof ConstInt;
+    }
+
+    @Override
+    public String getConstContent() {
+        if (constContent()) {
+            return getTarget().getName();
+        }
+        return null;
     }
 
     @Override

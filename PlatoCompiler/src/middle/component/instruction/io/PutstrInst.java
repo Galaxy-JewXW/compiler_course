@@ -8,7 +8,7 @@ import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
 
-public class PutstrInst extends IOInst {
+public class PutstrInst extends IOInst implements OutputInst {
     // constString是printf中需要打印的句子
     // 单个字符也按照string处理，主要是懒
     private final ConstString constString;
@@ -20,6 +20,19 @@ public class PutstrInst extends IOInst {
 
     public ConstString getConstString() {
         return constString;
+    }
+
+    @Override
+    public boolean constContent() {
+        return true;
+    }
+
+    @Override
+    public String getConstContent() {
+        if (constContent()) {
+            return constString.getContent();
+        }
+        return null;
     }
 
     @Override
