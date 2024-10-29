@@ -1,27 +1,9 @@
 package optimize;
 
 import middle.IRData;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.PhiInst;
-import middle.component.instruction.RetInst;
-import middle.component.instruction.StoreInst;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutchInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.*;
+import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Value;
 
 import java.util.ArrayList;

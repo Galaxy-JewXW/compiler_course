@@ -89,8 +89,10 @@ public class IcmpOptimize {
             BasicBlock targetBlock;
             if (constInt.getIntValue() == 0) {
                 targetBlock = brInst.getFalseBlock();
+                curBlock.deleteForPhi(brInst.getTrueBlock());
             } else {
                 targetBlock = brInst.getTrueBlock();
+                curBlock.deleteForPhi(brInst.getFalseBlock());
             }
             noCondBr = new BrInst(targetBlock);
             curBlock.getInstructions().set(curBlock.getInstructions().indexOf(brInst), noCondBr);

@@ -45,7 +45,7 @@ public class GCM {
         }
     }
 
-    private static ArrayList<BasicBlock> getPostOrder(Function function) {
+    public static ArrayList<BasicBlock> getPostOrder(Function function) {
         ArrayList<BasicBlock> postOrder = new ArrayList<>();
         Stack<BasicBlock> stack = new Stack<>();
         HashSet<BasicBlock> visited = new HashSet<>();
@@ -118,7 +118,7 @@ public class GCM {
         }
     }
 
-    public static BasicBlock getLCA(BasicBlock block1, BasicBlock block2) {
+    private static BasicBlock getLCA(BasicBlock block1, BasicBlock block2) {
         if (block1 == null) {
             return block2;
         }
