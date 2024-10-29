@@ -4,126 +4,23 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [10 x i8] c"22371443\0A\00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.2 = private unnamed_addr constant [5 x i8] c"for\0A\00", align 1
-@.s.3 = private unnamed_addr constant [21 x i8] c"lack 1, situation 1\0A\00", align 1
-@.s.4 = private unnamed_addr constant [21 x i8] c"lack 1, situation 2\0A\00", align 1
-@.s.5 = private unnamed_addr constant [25 x i8] c"lack 1, situation 3 and \00", align 1
-@.s.6 = private unnamed_addr constant [21 x i8] c"lack 2, situation 1\0A\00", align 1
-@.s.7 = private unnamed_addr constant [21 x i8] c"lack 2, situation 2\0A\00", align 1
-@.s.8 = private unnamed_addr constant [25 x i8] c"lack 2, situation 3 and \00", align 1
-@.s.9 = private unnamed_addr constant [3 x i8] c"1\0A\00", align 1
-@.s.10 = private unnamed_addr constant [27 x i8] c"lack 1, situation 3 and a\0A\00", align 1
-@.s.11 = private unnamed_addr constant [27 x i8] c"lack 2, situation 3 and a\0A\00", align 1
+@.s.0 = private unnamed_addr constant [11 x i8] c"Fuck you!\0A\00", align 1
 
 
 
 define dso_local i32 @main() {
 b0:
-	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.0, i64 0, i64 0))
-	%v1 = call i32 @getint()
-	%v2 = call i32 @getchar()
-	br label %b3
-b3:
-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.9, i64 0, i64 0))
-	br label %b4
+	br label %b1
+b1:
+	%v2 = phi i32 [ 0, %b0 ], [ %v6, %b5 ]
+	%v3 = icmp slt i32 %v2, 100
+	br i1 %v3, label %b4, label %b7
 b4:
-	%v5 = icmp ne i32 %v1, 2
-	br i1 %v5, label %b41, label %b6
-b6:
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	br label %b42
+	call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
+	br label %b5
+b5:
+	%v6 = add i32 %v2, 1
+	br label %b1
 b7:
-	br label %b8
-b8:
-	br label %b9
-b9:
-	br label %b11
-b10:
-	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
-	br label %b12
-b11:
-	call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.4, i64 0, i64 0))
-	br label %b18
-b12:
-	%v13 = add i32 %v44, 1
-	br label %b43
-b14:
-	call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.3, i64 0, i64 0))
-	br label %b15
-b15:
-	br label %b16
-b16:
-	%v17 = icmp slt i32 1, 2
-	br i1 %v17, label %b7, label %b18
-b18:
-	br label %b19
-b19:
-	br label %b20
-b20:
-	br label %b21
-b21:
-	br label %b22
-b22:
-	call void @putstr(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.s.10, i64 0, i64 0))
-	br label %b23
-b23:
-	br label %b24
-b24:
-	br label %b25
-b25:
-	br label %b26
-b26:
-	br label %b27
-b27:
-	call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.6, i64 0, i64 0))
-	br label %b28
-b28:
-	br label %b29
-b29:
-	br label %b30
-b30:
-	br label %b31
-b31:
-	br label %b32
-b32:
-	call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.7, i64 0, i64 0))
-	br label %b33
-b33:
-	br label %b34
-b34:
-	br label %b35
-b35:
-	br label %b36
-b36:
-	br label %b37
-b37:
-	call void @putstr(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.s.11, i64 0, i64 0))
-	br label %b38
-b38:
-	br label %b39
-b39:
-	br label %b40
-b40:
 	ret i32 0
-b41:
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	br label %b42
-b42:
-	br label %b43
-b43:
-	%v44 = phi i32 [ 1, %b42 ], [ %v13, %b12 ]
-	%v45 = icmp slt i32 %v44, 2
-	br i1 %v45, label %b10, label %b46
-b46:
-	br label %b47
-b47:
-	br label %b48
-b48:
-	br label %b49
-b49:
-	br label %b14
 }

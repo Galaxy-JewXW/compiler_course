@@ -9,19 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="sb">
-      <change afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/OutputInst.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/optimize/PrintOptimize.java" afterDir="false" />
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="feat">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutchInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutchInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutintInst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/io/PutstrInst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
@@ -69,28 +67,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "工件",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "two.files.diff.last.used.file": "D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Compiler.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Compiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Compiler" />
@@ -108,8 +106,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -181,14 +179,8 @@
       <workItem from="1729940110242" duration="7855000" />
       <workItem from="1730167180682" duration="11213000" />
       <workItem from="1730200996767" duration="3880000" />
-    </task>
-    <task id="LOCAL-00016" summary="del unused">
-      <option name="closed" value="true" />
-      <created>1727420362460</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1727420362460</updated>
+      <workItem from="1730213819177" duration="405000" />
+      <workItem from="1730214238530" duration="2684000" />
     </task>
     <task id="LOCAL-00017" summary="caosini">
       <option name="closed" value="true" />
@@ -574,7 +566,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730200330902</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="feat">
+      <option name="closed" value="true" />
+      <created>1730212668935</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1730212668936</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,7 +592,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add move" />
     <MESSAGE value="fix move" />
     <MESSAGE value="dismiss" />
     <MESSAGE value="add br inst" />
@@ -617,7 +616,8 @@
     <MESSAGE value="ff" />
     <MESSAGE value="fixed" />
     <MESSAGE value="sb" />
-    <option name="LAST_COMMIT_MESSAGE" value="sb" />
+    <MESSAGE value="feat" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -695,6 +695,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PlatoCompiler$Compiler.ic" NAME="Compiler 覆盖结果" MODIFIED="1728789418586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/PlatoCompiler$Compiler.ic" NAME="Compiler 覆盖结果" MODIFIED="1730214247155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
