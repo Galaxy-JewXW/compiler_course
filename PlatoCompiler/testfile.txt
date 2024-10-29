@@ -1,49 +1,25 @@
-
-void printInt(int var){
-	printf("print int : %d\n",var);
-	return ;
+int global = 0;
+int func_cond() {
+    global=global+1;
+    return global;
 }
-int main(){
-	printf("19373479\n");
-    int a = 10,b,c,d,e;
-    b = 2;
-    c = 3;
-    d = 4;
-    e = 5;
-    for (;a;) {
-        a = a - 1;
-        printf("a: %d\n", a);
-        if (c>=a){
-            c = c / (a+1) + a;
-            printf("c: %d\n", c);
-        }
-        if (d <= a){
-            d = d*a;
-            printf("d1: %d\n", d);
-        }
-        else{
-            d = d % (a+3);
-            printf("d2: %d\n", d);
-        }
-        for(;e < d;){
-            e = e + a;
-            printf("e1: %d\n", e);
-            if (e == b) {printf("break\n");break;}
-            if (e != c) {
-                e  = c + e;
-                printf("e2: %d\n", e);
-                continue;
-            }
-        }
-    }
+void test_if() {
+    if (0 && func_cond()) { ; }
+    if (1 || func_cond()) { ; }
+    if (1 && func_cond() && 0 && func_cond()) { ; }
+    if (0 || !func_cond() || 1 || !func_cond()) { ; }
+    if (0 && func_cond() || func_cond() && 1) { ; }
+    if (0 || !func_cond() && func_cond() && 1) { ; }
+    if (0 && func_cond() || func_cond()) { ; }
+    if (!func_cond() || 1 && func_cond()) { ; }
+    if (1 == func_cond()) { ; }
+    if (1 != func_cond()) { ; }
+}
 
-    if(!a){
-        printInt(a);
-    }
-    printInt(b);
-    printInt(c);
-    printInt(d);
-    printInt(e);
-
-	return 0;
+int main() {
+    printf("21376218\n");
+    test_if();
+    printf("%d\n", global);
+    printf("Finish test1\n");
+    return 0;
 }

@@ -6,6 +6,7 @@ import middle.component.instruction.MoveInst;
 import middle.component.instruction.PhiInst;
 import middle.component.model.User;
 import middle.component.type.LabelType;
+import optimize.LoopRecord;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class BasicBlock extends User {
     // 标记是否在优化过程中被删除
     private boolean isDeleted = false;
     private int imdomDepth = 0;
+    private LoopRecord loopRecord = null;
 
     public BasicBlock(String name) {
         super(name, new LabelType());
@@ -171,6 +173,18 @@ public class BasicBlock extends User {
 
     public void setImdomDepth(int imdomDepth) {
         this.imdomDepth = imdomDepth;
+    }
+
+    public LoopRecord getLoopRecord() {
+        return loopRecord;
+    }
+
+    public void setLoopRecord(LoopRecord loopRecord) {
+        this.loopRecord = loopRecord;
+    }
+
+    public int getLoopDepth() {
+        return loopRecord == null ? 0 : loopRecord.getLoopDepth();
     }
 
     @Override

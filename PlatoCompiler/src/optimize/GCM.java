@@ -10,7 +10,6 @@ import middle.component.type.PointerType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Stack;
 
 public class GCM {
     private static Function currentFunction = null;
@@ -18,6 +17,7 @@ public class GCM {
 
     public static void run(Module module) {
         Mem2Reg.run(module, false);
+        LoopAnalysis.run(module);
         module.getFunctions().forEach(GCM::optimize);
     }
 
@@ -25,53 +25,18 @@ public class GCM {
         ArrayList<Instruction> instructions = new ArrayList<>();
         currentFunction = function;
         visitedInstructions = new HashSet<>();
-        ArrayList<BasicBlock> postOrderList = getPostOrder(function);
+        ArrayList<BasicBlock> postOrderList = function.getPostOrder();
         Collections.reverse(postOrderList);
         postOrderList.forEach(basicBlock
                 -> instructions.addAll(basicBlock.getInstructions()));
         for (Instruction instruction : instructions) {
-            if (visitedInstructions.contains(instruction) || isPinned(instruction)) {
-                continue;
-            }
             scheduleEarly(instruction);
         }
         visitedInstructions = new HashSet<>();
         Collections.reverse(instructions);
         for (Instruction instruction : instructions) {
-            if (visitedInstructions.contains(instruction) || isPinned(instruction)) {
-                continue;
-            }
             scheduleLate(instruction);
         }
-    }
-
-    public static ArrayList<BasicBlock> getPostOrder(Function function) {
-        ArrayList<BasicBlock> postOrder = new ArrayList<>();
-        Stack<BasicBlock> stack = new Stack<>();
-        HashSet<BasicBlock> visited = new HashSet<>();
-        BasicBlock entry = function.getEntryBlock();
-        stack.push(entry);
-        while (!stack.isEmpty()) {
-            BasicBlock current = stack.peek();
-            // 如果当前节点未被访问过，则标记为已访问并将其子节点压入栈中
-            if (!visited.contains(current)) {
-                visited.add(current);
-                // 逆序压入子节点，以确保按照原始顺序访问
-                ArrayList<BasicBlock> children = new ArrayList<>(
-                        current.getImmediateDominateBlocks());
-                for (int i = children.size() - 1; i >= 0; i--) {
-                    BasicBlock child = children.get(i);
-                    if (!visited.contains(child)) {
-                        stack.push(child);
-                    }
-                }
-            } else {
-                // 如果当前节点已被访问过，说明其所有子节点已被处理，添加到 postOrder 中
-                stack.pop();
-                postOrder.add(current);
-            }
-        }
-        return postOrder;
     }
 
     private static boolean isPinned(Instruction instruction) {
@@ -100,6 +65,9 @@ public class GCM {
     }
 
     private static void scheduleEarly(Instruction instruction) {
+        if (visitedInstructions.contains(instruction) || isPinned(instruction)) {
+            return;
+        }
         visitedInstructions.add(instruction);
         BasicBlock entry = currentFunction.getEntryBlock();
         instruction.getBasicBlock().getInstructions().remove(instruction);
@@ -136,6 +104,9 @@ public class GCM {
     }
 
     private static void scheduleLate(Instruction instruction) {
+        if (visitedInstructions.contains(instruction) || isPinned(instruction)) {
+            return;
+        }
         visitedInstructions.add(instruction);
         BasicBlock lca = null;
         for (Value value : instruction.getUserList()) {
@@ -154,13 +125,29 @@ public class GCM {
                 lca = getLCA(lca, instruction1.getBasicBlock());
             }
         }
-        // TODO: 循环分析，实现select_block
         BasicBlock select = lca;
         while (lca != instruction.getBasicBlock()) {
             if (lca == null) {
                 throw new RuntimeException();
             }
             lca = lca.getImmediateDominator();
+            if (lca.getLoopDepth() < select.getLoopDepth()) {
+                select = lca;
+            }
+        }
+        if (lca == null) {
+            throw new RuntimeException();
+        }
+        instruction.getBasicBlock().getInstructions().remove(instruction);
+        select.getInstructions().add(select.getInstructions().size() - 1, instruction);
+        instruction.setBasicBlock(select);
+        for (Instruction instruction1 : select.getInstructions()) {
+            if (instruction1 != instruction && !(instruction1 instanceof PhiInst)
+                    && instruction1.getOperands().contains(instruction)) {
+                select.getInstructions().remove(instruction);
+                select.getInstructions().add(select.getInstructions().indexOf(instruction1), instruction);
+                break;
+            }
         }
     }
 }

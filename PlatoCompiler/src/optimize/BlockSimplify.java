@@ -9,10 +9,11 @@ import middle.component.instruction.RetInst;
 
 import java.util.Collections;
 
-public class RearrangeBlock {
+public class BlockSimplify {
     public static void run(Module module) {
+        Mem2Reg.run(module, false);
         for (int i = 0; i < 10; i++) {
-            module.getFunctions().forEach(RearrangeBlock::rearrange);
+            module.getFunctions().forEach(BlockSimplify::rearrange);
         }
     }
 
@@ -41,4 +42,8 @@ public class RearrangeBlock {
             }
         }
     }
+
+    // TODO: 基本块合并
+
+
 }

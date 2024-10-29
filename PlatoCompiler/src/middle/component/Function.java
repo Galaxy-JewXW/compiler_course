@@ -9,6 +9,8 @@ import middle.component.type.ValueType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Function extends User {
@@ -83,6 +85,35 @@ public class Function extends User {
 
     public void setVar2reg(HashMap<Value, Register> var2reg) {
         this.var2reg = var2reg;
+    }
+
+    public ArrayList<BasicBlock> getPostOrder() {
+        ArrayList<BasicBlock> postOrder = new ArrayList<>();
+        Stack<BasicBlock> stack = new Stack<>();
+        HashSet<BasicBlock> visited = new HashSet<>();
+        BasicBlock entry = this.getEntryBlock();
+        stack.push(entry);
+        while (!stack.isEmpty()) {
+            BasicBlock current = stack.peek();
+            // 如果当前节点未被访问过，则标记为已访问并将其子节点压入栈中
+            if (!visited.contains(current)) {
+                visited.add(current);
+                // 逆序压入子节点，以确保按照原始顺序访问
+                ArrayList<BasicBlock> children = new ArrayList<>(
+                        current.getImmediateDominateBlocks());
+                for (int i = children.size() - 1; i >= 0; i--) {
+                    BasicBlock child = children.get(i);
+                    if (!visited.contains(child)) {
+                        stack.push(child);
+                    }
+                }
+            } else {
+                // 如果当前节点已被访问过，说明其所有子节点已被处理，添加到 postOrder 中
+                stack.pop();
+                postOrder.add(current);
+            }
+        }
+        return postOrder;
     }
 
     @Override
