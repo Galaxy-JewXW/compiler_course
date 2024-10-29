@@ -1,3 +1,7 @@
-1 global Int
-1 func_cond IntFunc
-1 test_if VoidFunc
+1 printInt VoidFunc
+2 var Int
+3 a Int
+3 b Int
+3 c Int
+3 d Int
+3 e Int

@@ -22,5 +22,6 @@ public class Optimizer {
         module.updateId();
         System.out.println(module);
         IcmpOptimize.run(module);
+        RearrangeBlock.run(module);
     }
 }

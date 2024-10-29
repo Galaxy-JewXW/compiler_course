@@ -9,44 +9,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="ff">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fixed">
+      <change afterPath="$PROJECT_DIR$/src/optimize/RearrangeBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error.txt" beforeDir="false" afterPath="$PROJECT_DIR$/error.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/ParamSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/frontend/symbol/ParamSymbol.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/ValueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/type/ValueType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/CodeRemoval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/CodeRemoval.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/FunctionSideEffect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/FunctionSideEffect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GlobalVarLocalize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GlobalVarLocalize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/IcmpOptimize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/IcmpOptimize.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/Printer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/tools/Printer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/woc.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/symbol/ParamSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/symbol/ParamSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/IRData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/InitialValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/InitialValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/type/ValueType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/type/ValueType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/FunctionSideEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/FunctionSideEffect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GlobalVarLocalize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/IcmpOptimize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/IcmpOptimize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/Printer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/woc.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mars/mips1.asm" beforeDir="false" afterPath="$PROJECT_DIR$/../mars/mips1.asm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,8 +106,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
@@ -198,6 +177,7 @@
       <workItem from="1729938702415" duration="119000" />
       <workItem from="1729939084574" duration="867000" />
       <workItem from="1729940110242" duration="7855000" />
+      <workItem from="1730167180682" duration="8135000" />
     </task>
     <task id="LOCAL-00014" summary="爆笑了">
       <option name="closed" value="true" />

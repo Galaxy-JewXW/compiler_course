@@ -6,69 +6,19 @@ import frontend.symbol.FuncSymbol;
 import frontend.symbol.ParamSymbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
-import frontend.syntax.Block;
-import frontend.syntax.BlockItem;
-import frontend.syntax.CompUnit;
-import frontend.syntax.Decl;
-import frontend.syntax.LVal;
-import frontend.syntax.expression.AddExp;
-import frontend.syntax.expression.Cond;
-import frontend.syntax.expression.EqExp;
-import frontend.syntax.expression.Exp;
-import frontend.syntax.expression.LAndExp;
-import frontend.syntax.expression.LOrExp;
-import frontend.syntax.expression.MulExp;
-import frontend.syntax.expression.PrimaryExp;
-import frontend.syntax.expression.RelExp;
-import frontend.syntax.expression.UnaryExp;
+import frontend.syntax.*;
+import frontend.syntax.expression.*;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.FuncFParams;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.BlockStmt;
-import frontend.syntax.statement.BreakStmt;
-import frontend.syntax.statement.ContinueStmt;
-import frontend.syntax.statement.ExpStmt;
-import frontend.syntax.statement.ForStruct;
-import frontend.syntax.statement.GetcharStmt;
-import frontend.syntax.statement.GetintStmt;
-import frontend.syntax.statement.IfStmt;
-import frontend.syntax.statement.LValExpStmt;
-import frontend.syntax.statement.PrintfStmt;
-import frontend.syntax.statement.ReturnStmt;
-import frontend.syntax.statement.Stmt;
-import frontend.syntax.variable.ConstDecl;
-import frontend.syntax.variable.ConstDef;
-import frontend.syntax.variable.InitVal;
-import frontend.syntax.variable.VarDecl;
-import frontend.syntax.variable.VarDef;
+import frontend.syntax.statement.*;
+import frontend.syntax.variable.*;
 import frontend.token.TokenType;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.ForLoop;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
-import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.instruction.AllocInst;
-import middle.component.instruction.BinaryInst;
-import middle.component.instruction.BrInst;
-import middle.component.instruction.CallInst;
-import middle.component.instruction.GepInst;
-import middle.component.instruction.Instruction;
-import middle.component.instruction.LoadInst;
-import middle.component.instruction.OperatorType;
-import middle.component.instruction.RetInst;
-import middle.component.instruction.StoreInst;
-import middle.component.instruction.TruncInst;
-import middle.component.instruction.ZextInst;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
-import middle.component.instruction.io.PutchInst;
-import middle.component.instruction.io.PutintInst;
-import middle.component.instruction.io.PutstrInst;
+import middle.component.*;
+import middle.component.instruction.*;
+import middle.component.instruction.io.*;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -844,45 +794,6 @@ public class IRBuilder {
             }
             new PutstrInst(constString);
         }
-    }
-
-    private void buildDoWhileStruct(ForStruct forStruct) {
-        // 初始化部分（等同于 forStmt1）
-        if (forStruct.getForStmt1() != null) {
-            buildAssign(forStruct.getForStmt1().getLVal(),
-                    forStruct.getForStmt1().getExp());
-        }
-        BasicBlock bodyBlock = new BasicBlock(IRData.getBlockName());
-        BasicBlock updateBlock = new BasicBlock(IRData.getBlockName());
-        BasicBlock conditionBlock = new BasicBlock(IRData.getBlockName()); // 用于条件判断的block
-        BasicBlock followBlock = new BasicBlock(IRData.getBlockName());
-        // 保存循环信息，包括updateBlock和conditionBlock
-        IRData.push(new ForLoop(bodyBlock, conditionBlock, updateBlock, followBlock));
-        // 直接跳转到循环体，模拟do-while结构
-        new BrInst(bodyBlock);
-        // 设置当前块为bodyBlock，开始执行循环体
-        IRData.setCurrentBlock(bodyBlock);
-        buildStmt(forStruct.getStmt());
-        // 在循环体结束后，执行更新操作（forStmt2）
-        new BrInst(updateBlock);
-        IRData.setCurrentBlock(updateBlock);
-        if (forStruct.getForStmt2() != null) {
-            buildAssign(forStruct.getForStmt2().getLVal(),
-                    forStruct.getForStmt2().getExp());
-        }
-        // 更新完后跳转到条件判断
-        new BrInst(conditionBlock);
-        // 条件判断块，决定是否继续执行循环
-        IRData.setCurrentBlock(conditionBlock);
-        if (forStruct.getCond() != null) {
-            buildCond(forStruct.getCond(), bodyBlock, followBlock);
-        } else {
-            // 如果没有条件，直接继续循环
-            new BrInst(bodyBlock);
-        }
-        // 循环结束，跳转到followBlock
-        IRData.setCurrentBlock(followBlock);
-        IRData.pop();
     }
 
     private void buildForStruct(ForStruct forStruct) {

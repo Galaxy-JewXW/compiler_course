@@ -63,6 +63,7 @@ public class Compiler {
                 // 中间代码优化
                 Optimizer optimizer = new Optimizer(Module.getInstance());
                 optimizer.optimize();
+                Module.getInstance().updateId();
                 Printer.printIr(Module.getInstance(), irOutput);
             }
             if (toMips) {// 目标代码生成
