@@ -5,13 +5,13 @@ s0: .asciiz "Fuck you!\n"
 func_main:
 main_bb0:
     # move 0 -> %v2
-    li $t1, 0
+    li $t0, 0
     # br label %b2
 
 main_bb2:
     # %v3 = icmp slt i32 %v2, 100
     # br i1 %v3, label %b4, label %b8
-    bge $t1, 100, main_bb8
+    bge $t0, 100, main_bb8
 
 main_bb4:
     # call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
@@ -22,9 +22,8 @@ main_bb4:
 
 main_bb5:
     # %v6 = add i32 %v2, 1
-    addiu $t0, $t1, 1
+    addiu $t0, $t0, 1
     # move %v6 -> %v2
-    move $t1, $t0
     # br label %b2
     j main_bb2
 
