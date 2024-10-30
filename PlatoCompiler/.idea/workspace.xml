@@ -9,17 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="feat">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fuck">
+      <change afterPath="$PROJECT_DIR$/src/backend/regalloc/RegAlloc.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc$InterferenceGraphNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc$InterferenceGraphNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/IRBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/MipsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc$InterferenceGraphNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/backend/utils/RegAlloc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GCM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/GCM.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/MipsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MipsBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/regalloc/RegAlloc1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/GCM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GCM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,14 +182,6 @@
       <workItem from="1730200996767" duration="3880000" />
       <workItem from="1730213819177" duration="405000" />
       <workItem from="1730214238530" duration="2684000" />
-    </task>
-    <task id="LOCAL-00017" summary="caosini">
-      <option name="closed" value="true" />
-      <created>1727442503015</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1727442503015</updated>
     </task>
     <task id="LOCAL-00018" summary="gosh">
       <option name="closed" value="true" />
@@ -572,7 +567,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730212668936</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="fuck">
+      <option name="closed" value="true" />
+      <created>1730248709159</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1730248709160</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -590,7 +593,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix move" />
     <MESSAGE value="dismiss" />
     <MESSAGE value="add br inst" />
     <MESSAGE value="finish mips, peephole to be added" />
@@ -615,7 +617,8 @@
     <MESSAGE value="fixed" />
     <MESSAGE value="sb" />
     <MESSAGE value="feat" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat" />
+    <MESSAGE value="fuck" />
+    <option name="LAST_COMMIT_MESSAGE" value="fuck" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -646,47 +649,47 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>372</line>
+          <line>378</line>
           <option name="timeStamp" value="235" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>373</line>
+          <line>379</line>
           <option name="timeStamp" value="236" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>376</line>
+          <line>382</line>
           <option name="timeStamp" value="238" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>374</line>
+          <line>380</line>
           <option name="timeStamp" value="239" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>375</line>
+          <line>381</line>
           <option name="timeStamp" value="240" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>377</line>
+          <line>383</line>
           <option name="timeStamp" value="241" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>378</line>
+          <line>384</line>
           <option name="timeStamp" value="242" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>379</line>
+          <line>385</line>
           <option name="timeStamp" value="243" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>380</line>
+          <line>386</line>
           <option name="timeStamp" value="244" />
         </line-breakpoint>
       </breakpoints>
