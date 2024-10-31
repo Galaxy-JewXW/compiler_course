@@ -1,0 +1,1672 @@
+Index: src/optimize/Optimizer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package optimize;\r\n\r\nimport middle.IRData;\r\nimport middle.component.Module;\r\n\r\npublic class Optimizer {\r\n    private final Module module;\r\n\r\n    public Optimizer(Module module) {\r\n        this.module = module;\r\n        IRData.setInsect(false);\r\n    }\r\n\r\n    public void optimize() {\r\n        SurplusBlock.build(module);\r\n        Mem2Reg.run(module, true);\r\n        InlinedFunction.run(module);\r\n        UnusedFunction.run(module);\r\n        GlobalVarLocalize.build(module);\r\n        LocalConstArrayToValue.run(module);\r\n        GVN.run(module);\r\n        IcmpOptimize.run(module);\r\n        GCM.run(module);\r\n        // BlockSimplify.run(module);\r\n        PrintOptimize.run(module);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/optimize/Optimizer.java b/src/optimize/Optimizer.java
+--- a/src/optimize/Optimizer.java	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/src/optimize/Optimizer.java	(date 1730211655478)
+@@ -21,7 +21,7 @@
+         GVN.run(module);
+         IcmpOptimize.run(module);
+         GCM.run(module);
+-        // BlockSimplify.run(module);
++        BlockSimplify.run(module);
+         PrintOptimize.run(module);
+     }
+ }
+Index: ir.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>declare i32 @getint()\r\ndeclare i32 @getchar()\r\ndeclare void @putint(i32)\r\ndeclare void @putch(i8)\r\ndeclare void @putstr(i8*)\r\n\r\n@.s.0 = private unnamed_addr constant [11 x i8] c\"Fuck you!\\0A\\00\", align 1\r\n\r\n\r\n\r\ndefine dso_local i32 @main() {\r\nb0:\r\n\tbr label %b1\r\nb1:\r\n\t%v2 = phi i32 [ 0, %b0 ], [ %v6, %b5 ]\r\n\t%v3 = icmp slt i32 %v2, 100\r\n\tbr i1 %v3, label %b4, label %b7\r\nb4:\r\n\tcall void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))\r\n\tbr label %b5\r\nb5:\r\n\t%v6 = add i32 %v2, 1\r\n\tbr label %b1\r\nb7:\r\n\tret i32 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ir.txt b/ir.txt
+--- a/ir.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/ir.txt	(date 1730381694854)
+@@ -4,23 +4,148 @@
+ declare void @putch(i8)
+ declare void @putstr(i8*)
+ 
+-@.s.0 = private unnamed_addr constant [11 x i8] c"Fuck you!\0A\00", align 1
++@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
++@.s.1 = private unnamed_addr constant [10 x i8] c"21373457\0A\00", align 1
++@.s.2 = private unnamed_addr constant [8 x i8] c"ERROR!\0A\00", align 1
++@.s.3 = private unnamed_addr constant [14 x i8] c"And success!\0A\00", align 1
++@.s.4 = private unnamed_addr constant [10 x i8] c"Or pass!\0A\00", align 1
++@.s.5 = private unnamed_addr constant [15 x i8] c"Test1 Success!\00", align 1
+ 
+ 
+ 
+ define dso_local i32 @main() {
+ b0:
++	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.1, i64 0, i64 0))
++	br label %b29
++b1:
++	br label %b2
++b2:
++	%v3 = zext i1 1 to i32
++	%v4 = icmp ne i32 %v3, 0
++	br i1 %v4, label %b30, label %b5
++b5:
++	call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.3, i64 0, i64 0))
++	br label %b6
++b6:
++	br label %b7
++b7:
++	br label %b8
++b8:
++	br label %b9
++b9:
++	br label %b10
++b10:
++	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.4, i64 0, i64 0))
++	br label %b11
++b11:
++	br label %b12
++b12:
++	call void @putstr(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.s.5, i64 0, i64 0))
++	br label %b13
++b13:
++	br label %b48
++b14:
++	br label %b15
++b15:
++	%v16 = mul i32 %v36, 2
++	br label %b35
++b17:
++	br label %b21
++b18:
++	br label %b19
++b19:
++	%v20 = mul i32 %v67, 2
++	br label %b66
++b21:
++	%v22 = mul i32 %v61, 2
++	br label %b60
++b23:
++	br label %b24
++b24:
++	%v25 = mul i32 %v42, 2
++	br label %b41
++b26:
++	br label %b27
++b27:
++	%v28 = mul i32 %v55, 2
++	br label %b54
++b29:
+ 	br label %b1
+-b1:
+-	%v2 = phi i32 [ 0, %b0 ], [ %v6, %b5 ]
+-	%v3 = icmp slt i32 %v2, 100
+-	br i1 %v3, label %b4, label %b7
+-b4:
+-	call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
++b30:
+ 	br label %b5
+-b5:
+-	%v6 = add i32 %v2, 1
+-	br label %b1
+-b7:
++b31:
++	br label %b46
++b32:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v67)
++	br label %b33
++b33:
++	br label %b34
++b34:
++	br label %b35
++b35:
++	%v36 = phi i32 [ 1, %b34 ], [ %v16, %b15 ]
++	%v37 = icmp slt i32 %v36, 1000
++	br i1 %v37, label %b14, label %b38
++b38:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v36)
++	br label %b39
++b39:
++	br label %b40
++b40:
++	br label %b41
++b41:
++	%v42 = phi i32 [ 1, %b40 ], [ %v25, %b24 ]
++	%v43 = icmp slt i32 %v42, 1000
++	br i1 %v43, label %b23, label %b44
++b44:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v42)
++	br label %b45
++b45:
+ 	ret i32 0
++b46:
++	%v47 = mul i32 %v49, 2
++	br label %b48
++b48:
++	%v49 = phi i32 [ 1, %b13 ], [ %v47, %b46 ]
++	%v50 = icmp slt i32 %v49, 1000
++	br i1 %v50, label %b31, label %b51
++b51:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v49)
++	br label %b52
++b52:
++	br label %b53
++b53:
++	br label %b54
++b54:
++	%v55 = phi i32 [ 1, %b53 ], [ %v28, %b27 ]
++	%v56 = icmp slt i32 %v55, 1000
++	br i1 %v56, label %b26, label %b57
++b57:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v55)
++	br label %b58
++b58:
++	br label %b59
++b59:
++	br label %b60
++b60:
++	%v61 = phi i32 [ 1, %b59 ], [ %v22, %b21 ]
++	%v62 = icmp slt i32 %v61, 1000
++	br i1 %v62, label %b17, label %b63
++b63:
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v61)
++	br label %b64
++b64:
++	br label %b65
++b65:
++	br label %b66
++b66:
++	%v67 = phi i32 [ 1, %b65 ], [ %v20, %b19 ]
++	%v68 = icmp slt i32 %v67, 1000
++	br i1 %v68, label %b18, label %b32
+ }
+Index: llvm_ir.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>declare i32 @getint()\r\ndeclare i32 @getchar()\r\ndeclare void @putint(i32)\r\ndeclare void @putch(i8)\r\ndeclare void @putstr(i8*)\r\n\r\n@.s.0 = private unnamed_addr constant [11 x i8] c\"Fuck you!\\0A\\00\", align 1\r\n\r\n\r\n\r\ndefine dso_local i32 @main() {\r\nb0:\r\n\t%v1 = alloca i32\r\n\tstore i32 0, i32* %v1\r\n\tbr label %b2\r\nb2:\r\n\t%v3 = load i32, i32* %v1\r\n\t%v4 = icmp slt i32 %v3, 100\r\n\tbr i1 %v4, label %b5, label %b9\r\nb5:\r\n\tcall void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))\r\n\tbr label %b6\r\nb6:\r\n\t%v7 = load i32, i32* %v1\r\n\t%v8 = add i32 %v7, 1\r\n\tstore i32 %v8, i32* %v1\r\n\tbr label %b2\r\nb9:\r\n\tret i32 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/llvm_ir.txt b/llvm_ir.txt
+--- a/llvm_ir.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/llvm_ir.txt	(date 1730381694792)
+@@ -4,27 +4,121 @@
+ declare void @putch(i8)
+ declare void @putstr(i8*)
+ 
+-@.s.0 = private unnamed_addr constant [11 x i8] c"Fuck you!\0A\00", align 1
++@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
++@.s.1 = private unnamed_addr constant [10 x i8] c"21373457\0A\00", align 1
++@.s.2 = private unnamed_addr constant [8 x i8] c"ERROR!\0A\00", align 1
++@.s.3 = private unnamed_addr constant [14 x i8] c"And success!\0A\00", align 1
++@.s.4 = private unnamed_addr constant [10 x i8] c"Or pass!\0A\00", align 1
++@.s.5 = private unnamed_addr constant [15 x i8] c"Test1 Success!\00", align 1
+ 
++@ZERO = dso_local constant i32 0
++@ONE = dso_local constant i32 1
++@var2 = dso_local global i32 2
++@var3 = dso_local global i32 3
+ 
+-
+-define dso_local i32 @main() {
++define dso_local void @fun() {
+ b0:
+ 	%v1 = alloca i32
+-	store i32 0, i32* %v1
+-	br label %b2
+-b2:
+-	%v3 = load i32, i32* %v1
+-	%v4 = icmp slt i32 %v3, 100
+-	br i1 %v4, label %b5, label %b9
+-b5:
+-	call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
+-	br label %b6
++	store i32 1, i32* %v1
++	%v2 = alloca i32
++	store i32 1, i32* %v2
++	br label %b3
++b3:
++	%v4 = load i32, i32* %v2
++	%v5 = icmp slt i32 %v4, 1000
++	br i1 %v5, label %b6, label %b10
+ b6:
+-	%v7 = load i32, i32* %v1
+-	%v8 = add i32 %v7, 1
+-	store i32 %v8, i32* %v1
+-	br label %b2
++	%v7 = load i32, i32* %v2
++	%v8 = mul i32 %v7, 2
++	store i32 %v8, i32* %v2
++	br label %b9
+ b9:
++	br label %b3
++b10:
++	%v11 = load i32, i32* %v2
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	call void @putint(i32 %v11)
++	ret void
++}
++
++define dso_local i32 @main() {
++b0:
++	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.1, i64 0, i64 0))
++	%v1 = load i32, i32* @ZERO
++	%v2 = load i32, i32* @var2
++	%v3 = add i32 %v1, %v2
++	%v4 = load i32, i32* @var3
++	%v5 = load i32, i32* @ONE
++	%v6 = sub i32 %v4, %v5
++	%v7 = icmp eq i32 %v3, %v6
++	br i1 %v7, label %b14, label %b11
++b8:
++	%v9 = load i32, i32* @ZERO
++	%v10 = icmp ne i32 %v9, 0
++	br i1 %v10, label %b17, label %b20
++b11:
++	%v12 = load i32, i32* @var3
++	%v13 = icmp ne i32 %v12, 3
++	br i1 %v13, label %b31, label %b43
++b14:
++	%v15 = load i32, i32* @ONE
++	%v16 = icmp ne i32 %v15, 0
++	br i1 %v16, label %b8, label %b11
++b17:
++	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.2, i64 0, i64 0))
++	br label %b19
++b18:
++	call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.3, i64 0, i64 0))
++	br label %b19
++b19:
++	br label %b11
++b20:
++	%v21 = load i32, i32* @ZERO
++	%v22 = icmp eq i32 0, %v21
++	%v23 = zext i1 %v22 to i32
++	%v24 = icmp ne i32 %v23, 0
++	br i1 %v24, label %b25, label %b18
++b25:
++	%v26 = load i32, i32* @ONE
++	%v27 = add i32 %v26, 1
++	%v28 = load i32, i32* @var2
++	%v29 = add i32 %v27, %v28
++	%v30 = icmp slt i32 %v29, 0
++	br i1 %v30, label %b17, label %b18
++b31:
++	%v32 = load i32, i32* @ONE
++	%v33 = srem i32 %v32, 2
++	%v34 = add i32 %v33, 3
++	%v35 = mul i32 4, 2
++	%v36 = sub i32 %v34, %v35
++	%v37 = load i32, i32* @var3
++	%v38 = add i32 %v36, %v37
++	%v39 = load i32, i32* @var2
++	%v40 = add i32 %v38, %v39
++	%v41 = icmp sle i32 %v40, 100
++	br i1 %v41, label %b48, label %b50
++b42:
++	call void @putstr(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.s.5, i64 0, i64 0))
++	call void @fun()
++	call void @fun()
++	call void @fun()
++	call void @fun()
++	call void @fun()
++	call void @fun()
+ 	ret i32 0
++b43:
++	%v44 = load i32, i32* @var2
++	%v45 = sub i32 %v44, 22
++	%v46 = sub i32 0, 20
++	%v47 = icmp eq i32 %v45, %v46
++	br i1 %v47, label %b31, label %b42
++b48:
++	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.4, i64 0, i64 0))
++	br label %b49
++b49:
++	br label %b42
++b50:
++	%v51 = load i32, i32* @ONE
++	%v52 = icmp ne i32 %v51, 0
++	br i1 %v52, label %b48, label %b49
+ }
+Index: src/middle/IRBuilder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package middle;\r\n\r\nimport frontend.SymbolTable;\r\nimport frontend.TableManager;\r\nimport frontend.symbol.FuncSymbol;\r\nimport frontend.symbol.ParamSymbol;\r\nimport frontend.symbol.SymbolType;\r\nimport frontend.symbol.VarSymbol;\r\nimport frontend.syntax.Block;\r\nimport frontend.syntax.BlockItem;\r\nimport frontend.syntax.CompUnit;\r\nimport frontend.syntax.Decl;\r\nimport frontend.syntax.LVal;\r\nimport frontend.syntax.expression.AddExp;\r\nimport frontend.syntax.expression.Cond;\r\nimport frontend.syntax.expression.EqExp;\r\nimport frontend.syntax.expression.Exp;\r\nimport frontend.syntax.expression.LAndExp;\r\nimport frontend.syntax.expression.LOrExp;\r\nimport frontend.syntax.expression.MulExp;\r\nimport frontend.syntax.expression.PrimaryExp;\r\nimport frontend.syntax.expression.RelExp;\r\nimport frontend.syntax.expression.UnaryExp;\r\nimport frontend.syntax.function.FuncDef;\r\nimport frontend.syntax.function.FuncFParam;\r\nimport frontend.syntax.function.FuncFParams;\r\nimport frontend.syntax.function.MainFuncDef;\r\nimport frontend.syntax.statement.BlockStmt;\r\nimport frontend.syntax.statement.BreakStmt;\r\nimport frontend.syntax.statement.ContinueStmt;\r\nimport frontend.syntax.statement.ExpStmt;\r\nimport frontend.syntax.statement.ForStruct;\r\nimport frontend.syntax.statement.GetcharStmt;\r\nimport frontend.syntax.statement.GetintStmt;\r\nimport frontend.syntax.statement.IfStmt;\r\nimport frontend.syntax.statement.LValExpStmt;\r\nimport frontend.syntax.statement.PrintfStmt;\r\nimport frontend.syntax.statement.ReturnStmt;\r\nimport frontend.syntax.statement.Stmt;\r\nimport frontend.syntax.variable.ConstDecl;\r\nimport frontend.syntax.variable.ConstDef;\r\nimport frontend.syntax.variable.InitVal;\r\nimport frontend.syntax.variable.VarDecl;\r\nimport frontend.syntax.variable.VarDef;\r\nimport frontend.token.TokenType;\r\nimport middle.component.BasicBlock;\r\nimport middle.component.ConstInt;\r\nimport middle.component.ConstString;\r\nimport middle.component.ForLoop;\r\nimport middle.component.FuncParam;\r\nimport middle.component.Function;\r\nimport middle.component.GlobalVar;\r\nimport middle.component.InitialValue;\r\nimport middle.component.Module;\r\nimport middle.component.instruction.AllocInst;\r\nimport middle.component.instruction.BinaryInst;\r\nimport middle.component.instruction.BrInst;\r\nimport middle.component.instruction.CallInst;\r\nimport middle.component.instruction.GepInst;\r\nimport middle.component.instruction.Instruction;\r\nimport middle.component.instruction.LoadInst;\r\nimport middle.component.instruction.OperatorType;\r\nimport middle.component.instruction.RetInst;\r\nimport middle.component.instruction.StoreInst;\r\nimport middle.component.instruction.TruncInst;\r\nimport middle.component.instruction.ZextInst;\r\nimport middle.component.instruction.io.GetcharInst;\r\nimport middle.component.instruction.io.GetintInst;\r\nimport middle.component.instruction.io.PutchInst;\r\nimport middle.component.instruction.io.PutintInst;\r\nimport middle.component.instruction.io.PutstrInst;\r\nimport middle.component.model.Value;\r\nimport middle.component.type.ArrayType;\r\nimport middle.component.type.IntegerType;\r\nimport middle.component.type.PointerType;\r\nimport middle.component.type.ValueType;\r\nimport tools.StrToArray;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.regex.Matcher;\r\nimport java.util.regex.Pattern;\r\nimport java.util.stream.Collectors;\r\n\r\npublic class IRBuilder {\r\n    private final SymbolTable rootTable = TableManager.getInstance1()\r\n            .getCurrentTable();\r\n    private final TableManager clonedManager = TableManager.getInstance2();\r\n    private final CompUnit compUnit;\r\n    private SymbolTable currentTable = rootTable;\r\n    private boolean isGlobal = false;\r\n\r\n    public IRBuilder(CompUnit compUnit) {\r\n        this.compUnit = compUnit;\r\n    }\r\n\r\n    public void build() {\r\n        buildCompUnit();\r\n        Module.getInstance().updateId();\r\n    }\r\n\r\n    private void setBuiltInFunctions() {\r\n        FuncSymbol symbol = new FuncSymbol(\"getint\", SymbolType.INT, new ArrayList<>());\r\n        Function function = new Function(\"getint\", IntegerType.i32, true);\r\n        symbol.setLlvmValue(function);\r\n        currentTable.addSymbol(symbol);\r\n        clonedManager.addSymbol(symbol);\r\n\r\n        symbol = new FuncSymbol(\"getchar\", SymbolType.INT, new ArrayList<>());\r\n        function = new Function(\"getchar\", IntegerType.i32, true);\r\n        symbol.setLlvmValue(function);\r\n        currentTable.addSymbol(symbol);\r\n        clonedManager.addSymbol(symbol);\r\n\r\n        symbol = new FuncSymbol(\"putint\", SymbolType.VOID, new ArrayList<>());\r\n        function = new Function(\"putint\", IntegerType.VOID, true);\r\n        symbol.setLlvmValue(function);\r\n        currentTable.addSymbol(symbol);\r\n        clonedManager.addSymbol(symbol);\r\n\r\n        symbol = new FuncSymbol(\"putch\", SymbolType.VOID, new ArrayList<>());\r\n        function = new Function(\"putch\", IntegerType.VOID, true);\r\n        symbol.setLlvmValue(function);\r\n        currentTable.addSymbol(symbol);\r\n        clonedManager.addSymbol(symbol);\r\n\r\n        symbol = new FuncSymbol(\"putstr\", SymbolType.VOID, new ArrayList<>());\r\n        function = new Function(\"putstr\", IntegerType.VOID, true);\r\n        symbol.setLlvmValue(function);\r\n        currentTable.addSymbol(symbol);\r\n        clonedManager.addSymbol(symbol);\r\n    }\r\n\r\n\r\n    private void buildCompUnit() {\r\n        setBuiltInFunctions();\r\n        isGlobal = true;\r\n        for (Decl decl : compUnit.getDecls()) {\r\n            buildDecl(decl);\r\n        }\r\n        isGlobal = false;\r\n        for (FuncDef funcDef : compUnit.getFuncDefs()) {\r\n            IRData.reset();\r\n            buildFuncDef(funcDef);\r\n        }\r\n        IRData.reset();\r\n        buildMainFuncDef(compUnit.getMainFuncDef());\r\n    }\r\n\r\n    private void buildDecl(Decl decl) {\r\n        if (decl instanceof ConstDecl constDecl) {\r\n            buildConstDecl(constDecl);\r\n        } else if (decl instanceof VarDecl varDecl) {\r\n            buildVarDecl(varDecl);\r\n        }\r\n    }\r\n\r\n    private void buildConstDecl(ConstDecl constDecl) {\r\n        for (ConstDef constDef : constDecl.getConstDefs()) {\r\n            buildConstDef(constDef);\r\n        }\r\n    }\r\n\r\n    private void buildConstDef(ConstDef constDef) {\r\n        VarSymbol varSymbol = (VarSymbol) currentTable.getSymbol(\r\n                constDef.getIdent().getContent());\r\n        clonedManager.addSymbol(varSymbol);\r\n        // constDef必然有constInitVal，所以也必然有initialValue\r\n        InitialValue initialValue = varSymbol.getInitialValue();\r\n        if (isGlobal) {\r\n            String name = \"@\" + constDef.getIdent().getContent();\r\n            ValueType type = new PointerType(initialValue.getValueType());\r\n            GlobalVar globalVar = new GlobalVar(name, type, initialValue, true);\r\n            varSymbol.setLlvmValue(globalVar);\r\n        } else {\r\n            Instruction instruction = new AllocInst(initialValue.getValueType());\r\n            varSymbol.setLlvmValue(instruction);\r\n            if (varSymbol.getDimension() == 0) {\r\n                int init = initialValue.getElements().get(0);\r\n                new StoreInst(instruction,\r\n                        new ConstInt(initialValue.getValueType(), init));\r\n            } else if (varSymbol.getDimension() == 1) {\r\n                ValueType elementType = ((ArrayType) initialValue.getValueType()).getElementType();\r\n                Value pointer = instruction;\r\n                for (int i = 0; i < initialValue.getElements().size(); i++) {\r\n                    instruction = new GepInst(pointer,\r\n                            new ConstInt(IntegerType.i32, i)\r\n                    );\r\n                    new StoreInst(instruction,\r\n                            new ConstInt(elementType, initialValue.getElements().get(i)));\r\n                }\r\n            } else {\r\n                throw new RuntimeException(\"Shouldn't reach here\");\r\n            }\r\n        }\r\n    }\r\n\r\n    private void buildVarDecl(VarDecl varDecl) {\r\n        for (VarDef varDef : varDecl.getVarDefs()) {\r\n            buildVarDef(varDef);\r\n        }\r\n    }\r\n\r\n    private void buildVarDef(VarDef varDef) throws NullPointerException {\r\n        VarSymbol varSymbol = (VarSymbol) currentTable.getSymbol(\r\n                varDef.getIdent().getContent());\r\n        clonedManager.addSymbol(varSymbol);\r\n        InitialValue initialValue = varSymbol.getInitialValue();\r\n        if (isGlobal) {\r\n            // 全局下initialValue不为null\r\n            // initialValue中的elements数组可能为null\r\n            String name = \"@\" + varDef.getIdent().getContent();\r\n            ValueType type = new PointerType(initialValue.getValueType());\r\n            GlobalVar globalVar = new GlobalVar(name, type, initialValue, false);\r\n            varSymbol.setLlvmValue(globalVar);\r\n        } else {\r\n            AllocInst instruction;\r\n            ValueType valueType = switch (varSymbol.getType()) {\r\n                case INT -> IntegerType.i32;\r\n                case CHAR -> IntegerType.i8;\r\n                default -> throw new RuntimeException(\"Shouldn't reach here\");\r\n            };\r\n            if (varSymbol.getDimension() == 0) {\r\n                instruction = new AllocInst(valueType);\r\n                varSymbol.setLlvmValue(instruction);\r\n                if (varDef.getInitVal() != null) {\r\n                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal());\r\n                    Value storeValue = inits.get(0);\r\n                    ValueType targetType = instruction.getTargetType();\r\n                    // 进行类型转换\r\n                    if (storeValue.getValueType().equals(IntegerType.i32)\r\n                            && targetType.equals(IntegerType.i8)) {\r\n                        if (storeValue instanceof ConstInt constInt) {\r\n                            storeValue = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n                        } else {\r\n                            storeValue = new TruncInst(storeValue, IntegerType.i8);\r\n                        }\r\n                    } else if (storeValue.getValueType().equals(IntegerType.i8)\r\n                            && targetType.equals(IntegerType.i32)) {\r\n                        if (storeValue instanceof ConstInt constInt) {\r\n                            storeValue = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n                        } else {\r\n                            storeValue = new ZextInst(storeValue, IntegerType.i32);\r\n                        }\r\n                    }\r\n                    new StoreInst(instruction, storeValue);\r\n                }\r\n            } else {\r\n                valueType = new ArrayType(varSymbol.getLength(), valueType);\r\n                instruction = new AllocInst(valueType);\r\n                varSymbol.setLlvmValue(instruction);\r\n                if (varDef.getInitVal() != null) {\r\n                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal());\r\n                    for (int i = 0; i < inits.size(); i++) {\r\n                        Value storeValue = inits.get(i);\r\n                        ValueType targetType = ((ArrayType) instruction.getTargetType()).getElementType();\r\n                        if (storeValue.getValueType().equals(IntegerType.i32)\r\n                                && targetType.equals(IntegerType.i8)) {\r\n                            if (storeValue instanceof ConstInt constInt) {\r\n                                storeValue = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n                            } else {\r\n                                storeValue = new TruncInst(storeValue, IntegerType.i8);\r\n                            }\r\n                        } else if (storeValue.getValueType().equals(IntegerType.i8)\r\n                                && targetType.equals(IntegerType.i32)) {\r\n                            if (storeValue instanceof ConstInt constInt) {\r\n                                storeValue = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n                            } else {\r\n                                storeValue = new ZextInst(storeValue, IntegerType.i32);\r\n                            }\r\n                        }\r\n                        Instruction inst = new GepInst(instruction, new ConstInt(IntegerType.i32, i));\r\n                        new StoreInst(inst, storeValue);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    private ArrayList<Value> buildInitVal(InitVal initVal) {\r\n        ArrayList<Value> ans = new ArrayList<>();\r\n        if (initVal.getExp() != null) {\r\n            ans.add(buildExp(initVal.getExp()));\r\n        } else if (initVal.getExps() != null) {\r\n            for (Exp exp : initVal.getExps()) {\r\n                ans.add(buildExp(exp));\r\n            }\r\n        } else if (initVal.getStringConst() != null) {\r\n            ans = StrToArray.str2Array(initVal.getStringConst().getContent())\r\n                    .stream()\r\n                    .map(value -> new ConstInt(IntegerType.i8, value))\r\n                    .collect(Collectors.toCollection(ArrayList::new));\r\n        } else {\r\n            throw new RuntimeException(\"Shouldn't reach here\");\r\n        }\r\n        return ans;\r\n    }\r\n\r\n    private Value buildExp(Exp exp) {\r\n        return buildAddExp(exp.getAddExp());\r\n    }\r\n\r\n    private Value buildAddExp(AddExp addExp) {\r\n        Value left = buildMulExp(addExp.getMulExps().get(0));\r\n        if (left.getValueType().equals(IntegerType.i8) && addExp.getMulExps().size() > 1) {\r\n            left = new ZextInst(left, IntegerType.i32);\r\n        }\r\n        Value right;\r\n        Instruction instruction;\r\n        for (int i = 1; i < addExp.getMulExps().size(); i++) {\r\n            TokenType op = addExp.getOperators().get(i - 1).getType();\r\n            right = buildMulExp(addExp.getMulExps().get(i));\r\n            if (right.getValueType().equals(IntegerType.i8)) {\r\n                right = new ZextInst(right, IntegerType.i32);\r\n            }\r\n            if (op == TokenType.PLUS) {\r\n                instruction = new BinaryInst(OperatorType.ADD, left, right);\r\n            } else {\r\n                instruction = new BinaryInst(OperatorType.SUB, left, right);\r\n            }\r\n            left = instruction;\r\n        }\r\n        return left;\r\n    }\r\n\r\n    private Value buildMulExp(MulExp mulExp) {\r\n        Value left = buildUnaryExp(mulExp.getUnaryExps().get(0));\r\n        if (left.getValueType().equals(IntegerType.i8) && mulExp.getUnaryExps().size() > 1) {\r\n            left = new ZextInst(left, IntegerType.i32);\r\n        }\r\n        Value right;\r\n        Instruction instruction;\r\n        for (int i = 1; i < mulExp.getUnaryExps().size(); i++) {\r\n            TokenType op = mulExp.getOperators().get(i - 1).getType();\r\n            right = buildUnaryExp(mulExp.getUnaryExps().get(i));\r\n            if (right.getValueType().equals(IntegerType.i8)) {\r\n                right = new ZextInst(right, IntegerType.i32);\r\n            }\r\n            if (op == TokenType.MULT) {\r\n                instruction = new BinaryInst(OperatorType.MUL, left, right);\r\n            } else if (op == TokenType.DIV) {\r\n                instruction = new BinaryInst(OperatorType.SDIV, left, right);\r\n            } else if (op == TokenType.MOD) {\r\n                instruction = new BinaryInst(OperatorType.SREM, left, right);\r\n            } else {\r\n                throw new RuntimeException(\"Shouldn't reach here\");\r\n            }\r\n            left = instruction;\r\n        }\r\n        return left;\r\n    }\r\n\r\n    private Value buildUnaryExp(UnaryExp unaryExp) {\r\n        if (unaryExp.getPrimaryExp() != null) {\r\n            return buildPrimaryExp(unaryExp.getPrimaryExp());\r\n        } else if (unaryExp.getUnaryOp() != null && unaryExp.getUnaryExp() != null) {\r\n            Value left = buildUnaryExp(unaryExp.getUnaryExp());\r\n            Value right = new ConstInt(IntegerType.i32, 0);\r\n            TokenType type = unaryExp.getUnaryOp().getOperator().getType();\r\n            if (type == TokenType.PLUS) {\r\n                return left;\r\n            } else if (type == TokenType.MINU) {\r\n                return new BinaryInst(OperatorType.SUB, right, left);\r\n            } else if (type == TokenType.NOT) {\r\n                if (left.getValueType().equals(IntegerType.i8)) {\r\n                    left = new ZextInst(left, IntegerType.i32);\r\n                }\r\n                Instruction instruction = new BinaryInst(OperatorType.ICMP_EQ, right, left);\r\n                return new ZextInst(instruction, IntegerType.i32);\r\n            } else {\r\n                throw new RuntimeException(\"Shouldn't reach here\");\r\n            }\r\n        } else if (unaryExp.getIdent() != null) {\r\n            String funcName = unaryExp.getIdent().getContent();\r\n            // 从根节点开始查找\r\n            FuncSymbol funcSymbol = (FuncSymbol) TableManager.getInstance1()\r\n                    .getSymbol(funcName);\r\n            Function function = funcSymbol.getLlvmValue();\r\n            // 获取函数调用的实参\r\n            ArrayList<Value> arguments = new ArrayList<>();\r\n            if (unaryExp.getFuncRParams() != null) {\r\n                for (int i = 0; i < unaryExp.getFuncRParams().getExps().size(); i++) {\r\n                    Exp exp = unaryExp.getFuncRParams().getExps().get(i);\r\n                    Value rValue = buildExp(exp);\r\n                    ParamSymbol paramSymbol = funcSymbol.getFuncParams().get(i);\r\n                    if (rValue.getValueType().equals(paramSymbol.getValueType())) {\r\n                        arguments.add(rValue);\r\n                        continue;\r\n                    }\r\n                    if (rValue instanceof ConstInt constInt) {\r\n                        if (constInt.getValueType().equals(IntegerType.i32)\r\n                                && paramSymbol.getValueType().equals(IntegerType.i8)) {\r\n                            rValue = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n                        } else if (constInt.getValueType().equals(IntegerType.i8)\r\n                                && paramSymbol.getValueType().equals(IntegerType.i32)) {\r\n                            rValue = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n                        }\r\n                    } else if (rValue.getValueType().equals(IntegerType.i32)\r\n                            && paramSymbol.getValueType().equals(IntegerType.i8)) {\r\n                        rValue = new TruncInst(rValue, IntegerType.i8);\r\n                    } else if (rValue.getValueType().equals(IntegerType.i8)\r\n                            && paramSymbol.getValueType().equals(IntegerType.i32)) {\r\n                        rValue = new ZextInst(rValue, IntegerType.i32);\r\n                    }\r\n                    arguments.add(rValue);\r\n                }\r\n            }\r\n            return new CallInst(function, arguments);\r\n        } else {\r\n            throw new RuntimeException(\"Shouldn't reach here\");\r\n        }\r\n    }\r\n\r\n    private Value buildPrimaryExp(PrimaryExp primaryExp) {\r\n        if (primaryExp.getExp() != null) {\r\n            return buildExp(primaryExp.getExp());\r\n        } else if (primaryExp.getNumber() != null) {\r\n            return new ConstInt(IntegerType.i32,\r\n                    primaryExp.getNumber().getIntConstValue());\r\n        } else if (primaryExp.getCharacter() != null) {\r\n            return new ConstInt(IntegerType.i32,\r\n                    primaryExp.getCharacter().getCharConstValue());\r\n        } else if (primaryExp.getLVal() != null) {\r\n            return buildLValValue(primaryExp.getLVal());\r\n        } else {\r\n            throw new RuntimeException(\"Shouldn't reach here\");\r\n        }\r\n    }\r\n\r\n    // 左值形式出现在等号右边时，或作为实参时\r\n    private Value buildLValValue(LVal lVal) {\r\n        ArrayList<Value> indexes = new ArrayList<>();\r\n        if (lVal.getExp() != null) {\r\n            indexes.add(buildExp(lVal.getExp()));\r\n        }\r\n        String name = lVal.getIdent().getContent();\r\n        // 从符号表树的叶子节点向上查找\r\n        VarSymbol varSymbol = (VarSymbol) clonedManager.getSymbol(name);\r\n        int dimension = varSymbol.getDimension();\r\n        if (dimension == 0) {\r\n            return new LoadInst(varSymbol.getLlvmValue());\r\n        } else if (dimension == 1) {\r\n            if (indexes.isEmpty()) {\r\n                return new GepInst(varSymbol.getLlvmValue(), new ConstInt(IntegerType.i32, 0));\r\n            } else {\r\n                Instruction inst = new GepInst(varSymbol.getLlvmValue(), indexes.get(0));\r\n                return new LoadInst(inst);\r\n            }\r\n        } else {\r\n            throw new RuntimeException(\"Shouldn't reach here\");\r\n        }\r\n    }\r\n\r\n    // 左值形式出现在等号左边\r\n    private Value buildLValAssign(LVal lVal) {\r\n        ArrayList<Value> indexes = new ArrayList<>();\r\n        if (lVal.getExp() != null) {\r\n            indexes.add(buildExp(lVal.getExp()));\r\n        }\r\n        String name = lVal.getIdent().getContent();\r\n        // 从符号表树的叶子节点向上查找\r\n        VarSymbol varSymbol = (VarSymbol) clonedManager.getSymbol(name);\r\n        int dimension = varSymbol.getDimension();\r\n        if (dimension == 0) {\r\n            return varSymbol.getLlvmValue();\r\n        } else if (dimension == 1) {\r\n            return new GepInst(varSymbol.getLlvmValue(), indexes.get(0));\r\n        } else {\r\n            throw new RuntimeException(\"Shouldn't reach here\");\r\n        }\r\n    }\r\n\r\n    private void buildFuncDef(FuncDef funcDef) {\r\n        FuncSymbol funcSymbol = (FuncSymbol) currentTable.getSymbol(\r\n                funcDef.getIdent().getContent());\r\n        clonedManager.addSymbol(funcSymbol);\r\n        String name = \"@\" + funcDef.getIdent().getContent();\r\n        ValueType funcReturnType = switch (funcSymbol.getType()) {\r\n            case INT -> IntegerType.i32;\r\n            case CHAR -> IntegerType.i8;\r\n            case VOID -> IntegerType.VOID;\r\n        };\r\n        Function function = new Function(name, funcReturnType);\r\n        funcSymbol.setLlvmValue(function);\r\n        IRData.setCurrentFunction(function);\r\n        clonedManager.createTable(funcSymbol.getType());\r\n        currentTable = currentTable.getChild();\r\n        IRData.setCurrentBlock(new BasicBlock(IRData.getBlockName()));\r\n        if (funcDef.getFuncFParams() != null) {\r\n            buildFuncFParams(funcDef.getFuncFParams());\r\n        }\r\n        buildBlock(funcDef.getBlock());\r\n        BasicBlock lastBlock = IRData.getCurrentBlock();\r\n        if (lastBlock.isEmpty() || !(lastBlock.getLastInstruction() instanceof RetInst)) {\r\n            if (funcReturnType.equals(IntegerType.i32)\r\n                    || funcReturnType.equals(IntegerType.i8)) {\r\n                new RetInst(new ConstInt(funcReturnType, 0));\r\n            } else {\r\n                new RetInst(null);\r\n            }\r\n        }\r\n        currentTable = currentTable.getParent();\r\n        clonedManager.recoverTable();\r\n        IRData.setCurrentFunction(null);\r\n    }\r\n\r\n    private void buildFuncFParams(FuncFParams funcFParams) {\r\n        for (FuncFParam funcFParam : funcFParams.getFuncFParams()) {\r\n            buildFuncFParam(funcFParam);\r\n        }\r\n    }\r\n\r\n    private void buildFuncFParam(FuncFParam funcFParam) {\r\n        VarSymbol fParamSymbol = (VarSymbol) currentTable.getSymbol(\r\n                funcFParam.getIdent().getContent());\r\n        clonedManager.addSymbol(fParamSymbol);\r\n        ValueType fParamType = switch (fParamSymbol.getType()) {\r\n            case INT -> IntegerType.i32;\r\n            case CHAR -> IntegerType.i8;\r\n            default -> throw new RuntimeException(\"Shouldn't reach here\");\r\n        };\r\n        if (fParamSymbol.getDimension() == 1) {\r\n            fParamType = new PointerType(fParamType);\r\n        }\r\n        FuncParam funcParam = new FuncParam(IRData.getVarName(), fParamType);\r\n        IRData.getCurrentFunction().addFuncParam(funcParam);\r\n        if (fParamType instanceof IntegerType integerType) {\r\n            Instruction instruction = new AllocInst(integerType);\r\n            fParamSymbol.setLlvmValue(instruction);\r\n            new StoreInst(instruction, funcParam);\r\n        } else {\r\n            fParamSymbol.setLlvmValue(funcParam);\r\n        }\r\n    }\r\n\r\n    private void buildMainFuncDef(MainFuncDef mainFuncDef) {\r\n        FuncSymbol mainFuncSymbol = (FuncSymbol) currentTable.getSymbol(\"main\");\r\n        clonedManager.addSymbol(mainFuncSymbol);\r\n        String name = \"@main\";\r\n        ValueType funcReturnType = switch (mainFuncSymbol.getType()) {\r\n            case INT -> IntegerType.i32;\r\n            case CHAR -> IntegerType.i8;\r\n            case VOID -> IntegerType.VOID;\r\n        };\r\n        Function mainFunction = new Function(name, funcReturnType);\r\n        mainFuncSymbol.setLlvmValue(mainFunction);\r\n        IRData.setCurrentFunction(mainFunction);\r\n        IRData.setCurrentBlock(new BasicBlock(IRData.getBlockName()));\r\n        clonedManager.createTable(mainFuncSymbol.getType());\r\n        currentTable = currentTable.getChild();\r\n        buildBlock(mainFuncDef.getBlock());\r\n        currentTable = currentTable.getParent();\r\n        clonedManager.recoverTable();\r\n        IRData.setCurrentFunction(null);\r\n    }\r\n\r\n    private void buildBlock(Block block) {\r\n        for (BlockItem blockItem : block.getBlockItems()) {\r\n            buildBlockItem(blockItem);\r\n        }\r\n    }\r\n\r\n    private void buildBlockItem(BlockItem blockItem) {\r\n        if (blockItem.getDecl() != null) {\r\n            buildDecl(blockItem.getDecl());\r\n        } else if (blockItem.getStmt() != null) {\r\n            buildStmt(blockItem.getStmt());\r\n        }\r\n    }\r\n\r\n    private void buildStmt(Stmt stmt) {\r\n        if (stmt instanceof BlockStmt blockStmt) {\r\n            clonedManager.createTable(null);\r\n            currentTable = currentTable.getChild();\r\n            buildBlock(blockStmt.getBlock());\r\n            currentTable = currentTable.getParent();\r\n            clonedManager.recoverTable();\r\n        } else if (stmt instanceof ReturnStmt returnStmt) {\r\n            buildReturnStmt(returnStmt);\r\n        } else if (stmt instanceof LValExpStmt lValExpStmt) {\r\n            buildAssign(lValExpStmt.getLVal(), lValExpStmt.getExp());\r\n        } else if (stmt instanceof ExpStmt expStmt) {\r\n            if (expStmt.getExp() != null) {\r\n                buildExp(expStmt.getExp());\r\n            }\r\n        } else if (stmt instanceof IfStmt ifStmt) {\r\n            buildIfStmt(ifStmt);\r\n        } else if (stmt instanceof GetintStmt getintStmt) {\r\n            buildGetintStmt(getintStmt);\r\n        } else if (stmt instanceof GetcharStmt getcharStmt) {\r\n            buildGetcharStmt(getcharStmt);\r\n        } else if (stmt instanceof PrintfStmt printfStmt) {\r\n            buildPrintfStmt(printfStmt);\r\n        } else if (stmt instanceof ForStruct forStruct) {\r\n            buildForStruct(forStruct);\r\n        } else if (stmt instanceof BreakStmt) {\r\n            buildBreakStmt();\r\n        } else if (stmt instanceof ContinueStmt) {\r\n            buildContinueStmt();\r\n        }\r\n    }\r\n\r\n    private void buildAssign(LVal lVal, Exp exp) {\r\n        Value lvalue = buildLValAssign(lVal);\r\n        Value rvalue = buildExp(exp);\r\n        ValueType targetType = ((PointerType) lvalue.getValueType()).getTargetType();\r\n        if (rvalue.getValueType().equals(IntegerType.i32)\r\n                && targetType.equals(IntegerType.i8)) {\r\n            if (rvalue instanceof ConstInt constInt) {\r\n                rvalue = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n            } else {\r\n                rvalue = new TruncInst(rvalue, IntegerType.i8);\r\n            }\r\n        } else if (rvalue.getValueType().equals(IntegerType.i8)\r\n                && targetType.equals(IntegerType.i32)) {\r\n            if (rvalue instanceof ConstInt constInt) {\r\n                rvalue = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n            } else {\r\n                rvalue = new ZextInst(rvalue, IntegerType.i8);\r\n            }\r\n        }\r\n        new StoreInst(lvalue, rvalue);\r\n    }\r\n\r\n    private void buildCond(Cond cond, BasicBlock trueBlock, BasicBlock falseBlock) {\r\n        buildLOrExp(cond.getLOrExp(), trueBlock, falseBlock);\r\n    }\r\n\r\n    private void buildLOrExp(LOrExp lOrExp, BasicBlock trueBlock, BasicBlock falseBlock) {\r\n        ArrayList<LAndExp> lAndExps = lOrExp.getlAndExps();\r\n        for (int i = 0; i < lAndExps.size(); i++) {\r\n            LAndExp lAndExp = lAndExps.get(i);\r\n            if (i == lAndExps.size() - 1) {\r\n                buildLAndExp(lAndExp, trueBlock, falseBlock);\r\n            } else {\r\n                BasicBlock nextBlock = new BasicBlock(IRData.getBlockName());\r\n                buildLAndExp(lAndExp, trueBlock, nextBlock);\r\n                IRData.setCurrentBlock(nextBlock);\r\n            }\r\n        }\r\n    }\r\n\r\n    private void buildLAndExp(LAndExp lAndExp, BasicBlock trueBlock, BasicBlock falseBlock) {\r\n        ArrayList<EqExp> eqExps = lAndExp.getEqExps();\r\n        for (int i = 0; i < eqExps.size(); i++) {\r\n            EqExp eqExp = eqExps.get(i);\r\n            if (i == eqExps.size() - 1) {\r\n                Value condition = buildEqExp(eqExp);\r\n                new BrInst(condition, trueBlock, falseBlock);\r\n            } else {\r\n                BasicBlock nextBlock = new BasicBlock(IRData.getBlockName());\r\n                Value condition = buildEqExp(eqExp);\r\n                new BrInst(condition, nextBlock, falseBlock);\r\n                IRData.setCurrentBlock(nextBlock);\r\n            }\r\n        }\r\n    }\r\n\r\n    private Value buildEqExp(EqExp eqExp) {\r\n        Value left = buildRelExp(eqExp.getRelExps().get(0));\r\n        if (eqExp.getRelExps().size() == 1) {\r\n            if (left.getValueType().equals(IntegerType.i32)) {\r\n                left = new BinaryInst(OperatorType.ICMP_NE, left,\r\n                        new ConstInt(IntegerType.i32, 0));\r\n                return left;\r\n            }\r\n        }\r\n        for (int i = 1; i < eqExp.getRelExps().size(); i++) {\r\n            if (!left.getValueType().equals(IntegerType.i32)) {\r\n                left = new ZextInst(left, IntegerType.i32);\r\n            }\r\n            Value right = buildRelExp(eqExp.getRelExps().get(i));\r\n            if (!right.getValueType().equals(IntegerType.i32)) {\r\n                right = new ZextInst(right, IntegerType.i32);\r\n            }\r\n            left = switch (eqExp.getOperators().get(i - 1).getType()) {\r\n                case EQL -> new BinaryInst(OperatorType.ICMP_EQ, left, right);\r\n                case NEQ -> new BinaryInst(OperatorType.ICMP_NE, left, right);\r\n                default -> throw new RuntimeException(\"Shouldn't reach here\");\r\n            };\r\n        }\r\n        return left;\r\n    }\r\n\r\n    private Value buildRelExp(RelExp relExp) {\r\n        Value left = buildAddExp(relExp.getAddExps().get(0));\r\n        if (relExp.getAddExps().size() == 1) {\r\n            return left;\r\n        }\r\n        for (int i = 1; i < relExp.getAddExps().size(); i++) {\r\n            if (!left.getValueType().equals(IntegerType.i32)) {\r\n                left = new ZextInst(left, IntegerType.i32);\r\n            }\r\n            Value right = buildAddExp(relExp.getAddExps().get(i));\r\n            if (!right.getValueType().equals(IntegerType.i32)) {\r\n                right = new ZextInst(right, IntegerType.i32);\r\n            }\r\n            left = switch (relExp.getOperators().get(i - 1).getType()) {\r\n                case GRE -> new BinaryInst(OperatorType.ICMP_SGT, left, right);\r\n                case GEQ -> new BinaryInst(OperatorType.ICMP_SGE, left, right);\r\n                case LSS -> new BinaryInst(OperatorType.ICMP_SLT, left, right);\r\n                case LEQ -> new BinaryInst(OperatorType.ICMP_SLE, left, right);\r\n                default -> throw new RuntimeException(\"Shouldn't reach here\");\r\n            };\r\n        }\r\n        return left;\r\n    }\r\n\r\n    private void buildIfStmt(IfStmt ifStmt) {\r\n        BasicBlock trueBlock = new BasicBlock(IRData.getBlockName());\r\n        if (ifStmt.getStmt2() != null) {\r\n            BasicBlock falseBlock = new BasicBlock(IRData.getBlockName());\r\n            BasicBlock followBlock = new BasicBlock(IRData.getBlockName());\r\n            buildCond(ifStmt.getCond(), trueBlock, falseBlock);\r\n            IRData.setCurrentBlock(trueBlock);\r\n            buildStmt(ifStmt.getStmt1());\r\n            new BrInst(followBlock);\r\n            IRData.setCurrentBlock(falseBlock);\r\n            buildStmt(ifStmt.getStmt2());\r\n            new BrInst(followBlock);\r\n            IRData.setCurrentBlock(followBlock);\r\n        } else {\r\n            BasicBlock followBlock = new BasicBlock(IRData.getBlockName());\r\n            buildCond(ifStmt.getCond(), trueBlock, followBlock);\r\n            IRData.setCurrentBlock(trueBlock);\r\n            buildStmt(ifStmt.getStmt1());\r\n            new BrInst(followBlock);\r\n            IRData.setCurrentBlock(followBlock);\r\n        }\r\n    }\r\n\r\n    private void buildReturnStmt(ReturnStmt returnStmt) {\r\n        Value returnValue = null;\r\n        if (returnStmt.getExp() != null) {\r\n            returnValue = buildExp(returnStmt.getExp());\r\n            Function function = IRData.getCurrentFunction();\r\n            if (function.getReturnType().equals(IntegerType.i8)\r\n                    && returnValue.getValueType().equals(IntegerType.i32)) {\r\n                if (returnValue instanceof ConstInt constInt) {\r\n                    returnValue = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n                } else {\r\n                    returnValue = new TruncInst(returnValue, IntegerType.i8);\r\n                }\r\n            } else if (function.getReturnType().equals(IntegerType.i32)\r\n                    && returnValue.getValueType().equals(IntegerType.i8)) {\r\n                if (returnValue instanceof ConstInt constInt) {\r\n                    returnValue = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n                } else {\r\n                    returnValue = new ZextInst(returnValue, IntegerType.i32);\r\n                }\r\n            }\r\n        } else if (IRData.getCurrentFunction().getReturnType().equals(IntegerType.i8)) {\r\n            returnValue = new ConstInt(IntegerType.i8, 0);\r\n        } else if (IRData.getCurrentFunction().getReturnType().equals(IntegerType.i32)) {\r\n            returnValue = new ConstInt(IntegerType.i32, 0);\r\n        }\r\n        new RetInst(returnValue);\r\n    }\r\n\r\n    private void buildGetintStmt(GetintStmt getintStmt) {\r\n        Value pointer = buildLValAssign(getintStmt.getLVal());\r\n        Value storeValue = new GetintInst();\r\n        ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();\r\n        if (storeValue.getValueType().equals(IntegerType.i32)\r\n                && targetType.equals(IntegerType.i8)) {\r\n            storeValue = new TruncInst(storeValue, IntegerType.i8);\r\n        }\r\n        new StoreInst(pointer, storeValue);\r\n    }\r\n\r\n    private void buildGetcharStmt(GetcharStmt getcharStmt) {\r\n        Value pointer = buildLValAssign(getcharStmt.getLVal());\r\n        Value storeValue = new GetcharInst();\r\n        ValueType targetType = ((PointerType) pointer.getValueType()).getTargetType();\r\n        if (storeValue.getValueType().equals(IntegerType.i32)\r\n                && targetType.equals(IntegerType.i8)) {\r\n            storeValue = new TruncInst(storeValue, IntegerType.i8);\r\n        }\r\n        new StoreInst(pointer, storeValue);\r\n    }\r\n\r\n    private void buildPrintfStmt(PrintfStmt printfStmt) {\r\n        ArrayList<Value> values = new ArrayList<>();\r\n        for (Exp exp : printfStmt.getExps()) {\r\n            values.add(buildExp(exp));\r\n        }\r\n        String formatString = printfStmt.getStringConst().getContent();\r\n        formatString = formatString.substring(1, formatString.length() - 1);\r\n        formatString = formatString.replace(\"\\\\n\", \"\\n\");\r\n        Pattern pattern = Pattern.compile(\"%[cd]\");\r\n        Matcher matcher = pattern.matcher(formatString);\r\n        int pos = 0;\r\n        int cnt = 0;\r\n        while (matcher.find()) {\r\n            // typeString是\"%d\"或\"%c\"\r\n            String typeString = matcher.group();\r\n            int start = matcher.start();\r\n            String tempString = formatString.substring(pos, start);\r\n            if (!tempString.isEmpty()) {\r\n                ConstString constString;\r\n                if (IRData.containsString(tempString)) {\r\n                    constString = IRData.getConstString(tempString);\r\n                } else {\r\n                    constString = new ConstString(\r\n                            IRData.getConstStringName(), tempString);\r\n                    IRData.putConstString(tempString, constString);\r\n                }\r\n                new PutstrInst(constString);\r\n            }\r\n            if (typeString.equals(\"%d\")) {\r\n                Value value = values.get(cnt++);\r\n                if (!value.getValueType().equals(IntegerType.i32)) {\r\n                    if (value instanceof ConstInt constInt) {\r\n                        value = new ConstInt(IntegerType.i32, constInt.getIntValue());\r\n                    } else {\r\n                        value = new ZextInst(value, IntegerType.i32);\r\n                    }\r\n                }\r\n                new PutintInst(value);\r\n            } else if (typeString.equals(\"%c\")) {\r\n                Value value = values.get(cnt++);\r\n                if (value.getValueType().equals(IntegerType.i32)) {\r\n                    if (value instanceof ConstInt constInt) {\r\n                        value = new ConstInt(IntegerType.i8, constInt.getIntValue());\r\n                    } else {\r\n                        value = new TruncInst(value, IntegerType.i8);\r\n                    }\r\n                }\r\n                new PutchInst(value);\r\n            }\r\n            pos = start + 2;\r\n        }\r\n        if (pos < formatString.length()) {\r\n            String tempString = formatString.substring(pos);\r\n            if (tempString.isEmpty()) {\r\n                return;\r\n            }\r\n            ConstString constString;\r\n            if (IRData.containsString(tempString)) {\r\n                constString = IRData.getConstString(tempString);\r\n            } else {\r\n                constString = new ConstString(\r\n                        IRData.getConstStringName(), tempString);\r\n                IRData.putConstString(tempString, constString);\r\n            }\r\n            new PutstrInst(constString);\r\n        }\r\n    }\r\n\r\n    private void buildForStruct(ForStruct forStruct) {\r\n        // forStmt和LValAssignExp本质上是一样的\r\n        if (forStruct.getForStmt1() != null) {\r\n            buildAssign(forStruct.getForStmt1().getLVal(),\r\n                    forStruct.getForStmt1().getExp());\r\n        }\r\n        BasicBlock conditionBlock = new BasicBlock(IRData.getBlockName());\r\n        BasicBlock bodyBlock = new BasicBlock(IRData.getBlockName());\r\n        BasicBlock updateBlock = new BasicBlock(IRData.getBlockName());\r\n        BasicBlock followBlock = new BasicBlock(IRData.getBlockName());\r\n        IRData.push(new ForLoop(conditionBlock, bodyBlock, updateBlock, followBlock));\r\n        new BrInst(conditionBlock);\r\n        IRData.setCurrentBlock(conditionBlock);\r\n        if (forStruct.getCond() != null) {\r\n            buildCond(forStruct.getCond(), bodyBlock, followBlock);\r\n        } else {\r\n            new BrInst(bodyBlock);\r\n        }\r\n        IRData.setCurrentBlock(bodyBlock);\r\n        buildStmt(forStruct.getStmt());\r\n        // 循环量更新直接嵌入bodyBlock\r\n        new BrInst(updateBlock);\r\n        IRData.setCurrentBlock(updateBlock);\r\n        if (forStruct.getForStmt2() != null) {\r\n            buildAssign(forStruct.getForStmt2().getLVal(),\r\n                    forStruct.getForStmt2().getExp());\r\n        }\r\n        new BrInst(conditionBlock);\r\n        IRData.setCurrentBlock(followBlock);\r\n        IRData.pop();\r\n    }\r\n\r\n    private void buildBreakStmt() {\r\n        new BrInst(IRData.peek().getFollowBlock());\r\n    }\r\n\r\n    private void buildContinueStmt() {\r\n        new BrInst(IRData.peek().getUpdateBlock());\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/middle/IRBuilder.java b/src/middle/IRBuilder.java
+--- a/src/middle/IRBuilder.java	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/src/middle/IRBuilder.java	(date 1730209156844)
+@@ -6,69 +6,19 @@
+ import frontend.symbol.ParamSymbol;
+ import frontend.symbol.SymbolType;
+ import frontend.symbol.VarSymbol;
+-import frontend.syntax.Block;
+-import frontend.syntax.BlockItem;
+-import frontend.syntax.CompUnit;
+-import frontend.syntax.Decl;
+-import frontend.syntax.LVal;
+-import frontend.syntax.expression.AddExp;
+-import frontend.syntax.expression.Cond;
+-import frontend.syntax.expression.EqExp;
+-import frontend.syntax.expression.Exp;
+-import frontend.syntax.expression.LAndExp;
+-import frontend.syntax.expression.LOrExp;
+-import frontend.syntax.expression.MulExp;
+-import frontend.syntax.expression.PrimaryExp;
+-import frontend.syntax.expression.RelExp;
+-import frontend.syntax.expression.UnaryExp;
++import frontend.syntax.*;
++import frontend.syntax.expression.*;
+ import frontend.syntax.function.FuncDef;
+ import frontend.syntax.function.FuncFParam;
+ import frontend.syntax.function.FuncFParams;
+ import frontend.syntax.function.MainFuncDef;
+-import frontend.syntax.statement.BlockStmt;
+-import frontend.syntax.statement.BreakStmt;
+-import frontend.syntax.statement.ContinueStmt;
+-import frontend.syntax.statement.ExpStmt;
+-import frontend.syntax.statement.ForStruct;
+-import frontend.syntax.statement.GetcharStmt;
+-import frontend.syntax.statement.GetintStmt;
+-import frontend.syntax.statement.IfStmt;
+-import frontend.syntax.statement.LValExpStmt;
+-import frontend.syntax.statement.PrintfStmt;
+-import frontend.syntax.statement.ReturnStmt;
+-import frontend.syntax.statement.Stmt;
+-import frontend.syntax.variable.ConstDecl;
+-import frontend.syntax.variable.ConstDef;
+-import frontend.syntax.variable.InitVal;
+-import frontend.syntax.variable.VarDecl;
+-import frontend.syntax.variable.VarDef;
++import frontend.syntax.statement.*;
++import frontend.syntax.variable.*;
+ import frontend.token.TokenType;
+-import middle.component.BasicBlock;
+-import middle.component.ConstInt;
+-import middle.component.ConstString;
+-import middle.component.ForLoop;
+-import middle.component.FuncParam;
+-import middle.component.Function;
+-import middle.component.GlobalVar;
+-import middle.component.InitialValue;
+ import middle.component.Module;
+-import middle.component.instruction.AllocInst;
+-import middle.component.instruction.BinaryInst;
+-import middle.component.instruction.BrInst;
+-import middle.component.instruction.CallInst;
+-import middle.component.instruction.GepInst;
+-import middle.component.instruction.Instruction;
+-import middle.component.instruction.LoadInst;
+-import middle.component.instruction.OperatorType;
+-import middle.component.instruction.RetInst;
+-import middle.component.instruction.StoreInst;
+-import middle.component.instruction.TruncInst;
+-import middle.component.instruction.ZextInst;
+-import middle.component.instruction.io.GetcharInst;
+-import middle.component.instruction.io.GetintInst;
+-import middle.component.instruction.io.PutchInst;
+-import middle.component.instruction.io.PutintInst;
+-import middle.component.instruction.io.PutstrInst;
++import middle.component.*;
++import middle.component.instruction.*;
++import middle.component.instruction.io.*;
+ import middle.component.model.Value;
+ import middle.component.type.ArrayType;
+ import middle.component.type.IntegerType;
+Index: mips.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.data:\r\ns0: .asciiz \"Fuck you!\\n\"\r\n\r\n.text:\r\nfunc_main:\r\nmain_bb0:\r\n    # move 0 -> %v2\r\n    li $t1, 0\r\n    # br label %b2\r\n\r\nmain_bb2:\r\n    # %v3 = icmp slt i32 %v2, 100\r\n    # br i1 %v3, label %b4, label %b8\r\n    bge $t1, 100, main_bb8\r\n\r\nmain_bb4:\r\n    # call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))\r\n    la $a0, s0\r\n    li $v0, 4\r\n    syscall\r\n    # br label %b5\r\n\r\nmain_bb5:\r\n    # %v6 = add i32 %v2, 1\r\n    addiu $t0, $t1, 1\r\n    # move %v6 -> %v2\r\n    move $t1, $t0\r\n    # br label %b2\r\n    j main_bb2\r\n\r\nmain_bb8:\r\n    # ret i32 0\r\n    li $v0, 10\r\n    syscall\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mips.txt b/mips.txt
+--- a/mips.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/mips.txt	(date 1730381694883)
+@@ -1,35 +1,285 @@
+ .data:
+-s0: .asciiz "Fuck you!\n"
++s0: .asciiz "\n"
++s1: .asciiz "21373457\n"
++s2: .asciiz "ERROR!\n"
++s3: .asciiz "And success!\n"
++s4: .asciiz "Or pass!\n"
++s5: .asciiz "Test1 Success!"
+ 
+ .text:
+ func_main:
+ main_bb0:
+-    # move 0 -> %v2
+-    li $t1, 0
++    # call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.1, i64 0, i64 0))
++    la $a0, s1
++    li $v0, 4
++    syscall
++    # br label %b34
++    j main_bb34
++
++main_bb1:
+     # br label %b2
+ 
+ main_bb2:
+-    # %v3 = icmp slt i32 %v2, 100
+-    # br i1 %v3, label %b4, label %b8
+-    bge $t1, 100, main_bb8
++    # %v3 = icmp ne i32 1, 0
++    # br i1 %v3, label %b35, label %b4
++    li $k0, 1
++    bne $k0, 0, main_bb35
+ 
+ main_bb4:
+-    # call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
+-    la $a0, s0
++    # call void @putstr(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.s.3, i64 0, i64 0))
++    la $a0, s3
+     li $v0, 4
+     syscall
+     # br label %b5
+ 
+ main_bb5:
+-    # %v6 = add i32 %v2, 1
+-    addiu $t0, $t1, 1
+-    # move %v6 -> %v2
+-    move $t1, $t0
+-    # br label %b2
+-    j main_bb2
++    # br label %b6
++
++main_bb6:
++    # br label %b7
++
++main_bb7:
++    # br label %b8
+ 
+ main_bb8:
++    # br label %b9
++
++main_bb9:
++    # call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.4, i64 0, i64 0))
++    la $a0, s4
++    li $v0, 4
++    syscall
++    # br label %b10
++
++main_bb10:
++    # br label %b11
++
++main_bb11:
++    # call void @putstr(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.s.5, i64 0, i64 0))
++    la $a0, s5
++    li $v0, 4
++    syscall
++    # br label %b12
++
++main_bb12:
++    # move 1 -> %v49
++    li $t6, 1
++    # br label %b54
++    j main_bb54
++
++main_bb14:
++    # br label %b15
++
++main_bb15:
++    # %v16 = mul i32 %v36, 2
++    addu $t4, $t1, $t1
++    # move %v16 -> %v36
++    move $t1, $t4
++    # br label %b41
++    j main_bb41
++
++main_bb18:
++    # br label %b23
++    j main_bb23
++
++main_bb19:
++    # br label %b20
++
++main_bb20:
++    # %v21 = mul i32 %v67, 2
++    addu $t2, $t0, $t0
++    # move %v21 -> %v67
++    move $t0, $t2
++    # br label %b72
++    j main_bb72
++
++main_bb23:
++    # %v24 = mul i32 %v61, 2
++    addu $t3, $t0, $t0
++    # move %v24 -> %v61
++    move $t0, $t3
++    # br label %b66
++    j main_bb66
++
++main_bb26:
++    # br label %b27
++
++main_bb27:
++    # %v28 = mul i32 %v42, 2
++    addu $t5, $t1, $t1
++    # move %v28 -> %v42
++    move $t1, $t5
++    # br label %b47
++    j main_bb47
++
++main_bb30:
++    # br label %b31
++
++main_bb31:
++    # %v32 = mul i32 %v55, 2
++    addu $t1, $t1, $t1
++    # move %v32 -> %v55
++    # br label %b60
++    j main_bb60
++
++main_bb34:
++    # br label %b1
++    j main_bb1
++
++main_bb35:
++    # br label %b4
++    j main_bb4
++
++main_bb36:
++    # br label %b51
++    j main_bb51
++
++main_bb37:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v67)
++    move $a0, $t0
++    li $v0, 1
++    syscall
++    # br label %b38
++
++main_bb38:
++    # br label %b39
++
++main_bb39:
++    # move 1 -> %v36
++    li $t1, 1
++    # br label %b41
++
++main_bb41:
++    # %v42 = icmp slt i32 %v36, 1000
++    # br i1 %v42, label %b14, label %b43
++    blt $t1, 1000, main_bb14
++
++main_bb43:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v36)
++    move $a0, $t1
++    li $v0, 1
++    syscall
++    # br label %b44
++
++main_bb44:
++    # br label %b45
++
++main_bb45:
++    # move 1 -> %v42
++    li $t1, 1
++    # br label %b47
++
++main_bb47:
++    # %v48 = icmp slt i32 %v42, 1000
++    # br i1 %v48, label %b26, label %b49
++    blt $t1, 1000, main_bb26
++
++main_bb49:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v42)
++    move $a0, $t1
++    li $v0, 1
++    syscall
++    # br label %b50
++
++main_bb50:
+     # ret i32 0
+     li $v0, 10
+     syscall
+ 
++main_bb51:
++    # %v52 = mul i32 %v49, 2
++    addu $t0, $t6, $t6
++    # move %v52 -> %v49
++    move $t6, $t0
++    # br label %b54
++
++main_bb54:
++    # %v55 = icmp slt i32 %v49, 1000
++    # br i1 %v55, label %b36, label %b56
++    blt $t6, 1000, main_bb36
++
++main_bb56:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v49)
++    move $a0, $t6
++    li $v0, 1
++    syscall
++    # br label %b57
++
++main_bb57:
++    # br label %b58
++
++main_bb58:
++    # move 1 -> %v55
++    li $t1, 1
++    # br label %b60
++
++main_bb60:
++    # %v61 = icmp slt i32 %v55, 1000
++    # br i1 %v61, label %b30, label %b62
++    blt $t1, 1000, main_bb30
++
++main_bb62:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v55)
++    move $a0, $t1
++    li $v0, 1
++    syscall
++    # br label %b63
++
++main_bb63:
++    # br label %b64
++
++main_bb64:
++    # move 1 -> %v61
++    li $t0, 1
++    # br label %b66
++
++main_bb66:
++    # %v67 = icmp slt i32 %v61, 1000
++    # br i1 %v67, label %b18, label %b68
++    blt $t0, 1000, main_bb18
++
++main_bb68:
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++    la $a0, s0
++    li $v0, 4
++    syscall
++    # call void @putint(i32 %v61)
++    move $a0, $t0
++    li $v0, 1
++    syscall
++    # br label %b69
++
++main_bb69:
++    # br label %b70
++
++main_bb70:
++    # move 1 -> %v67
++    li $t0, 1
++    # br label %b72
++
++main_bb72:
++    # %v73 = icmp slt i32 %v67, 1000
++    # br i1 %v73, label %b19, label %b37
++    blt $t0, 1000, main_bb19
++    j main_bb37
++
+Index: testfile.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>int main() {\r\n    int i;\r\n    for (i = 0; i < 100; i = i + 1) {\r\n        printf(\"Fuck you!\\n\");\r\n    }\r\n    return 0;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/testfile.txt b/testfile.txt
+--- a/testfile.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/testfile.txt	(date 1730381693010)
+@@ -1,7 +1,57 @@
+-int main() {
+-    int i;
+-    for (i = 0; i < 100; i = i + 1) {
+-        printf("Fuck you!\n");
++
++
++const int ZERO = 0, ONE = 1;
++int var2 = 2, var3 = 3;
++
++void fun()
++{
++    int i = 1;
++    {
++        int yuming = 1;
++        for (;yuming < 1000;)
++        {
++            /* code */
++            yuming = yuming * 2;
++        }
++        printf("\n%d",yuming);
++    }
++    return;
++}
++
++int main()
++{
++    printf("21373457\n");
++    if (ZERO + var2 == var3 - ONE && ONE)
++    {
++        if (ZERO || !ZERO && ONE + 1 + var2 < 0)
++        {
++            printf("ERROR!\n");
++        }
++        else
++        {
++            printf("And success!\n");
++        }
++    }
++
++    if (var3 != 3 || var2 - 22 == -20)
++    {
++
++        if (ONE % 2 + 3 - 4 * 2 + var3 + var2 <= 100 || ONE)
++        {
++            printf("Or pass!\n");
++        }
+     }
++
++
++    printf("Test1 Success!");
++    {
++    }
++    fun();
++    fun();
++    fun();
++    fun();
++    fun();
++    fun();
++
+     return 0;
+ }
+\ No newline at end of file
+Index: src/backend/utils/RegAlloc.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package backend.utils;\r\n\r\nimport backend.enums.Register;\r\nimport middle.component.Module;\r\nimport middle.component.*;\r\nimport middle.component.instruction.CallInst;\r\nimport middle.component.instruction.Instruction;\r\nimport middle.component.instruction.PhiInst;\r\nimport middle.component.instruction.ZextInst;\r\nimport middle.component.model.Value;\r\nimport optimize.Mem2Reg;\r\n\r\nimport java.util.*;\r\n\r\n/**\r\n * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。\r\n */\r\npublic class RegAlloc {\r\n    // 活跃变量分析映射\r\n    private static HashMap<BasicBlock, HashSet<Value>> inMap;    // 每个基本块的入口活跃变量集合\r\n    private static HashMap<BasicBlock, HashSet<Value>> outMap;   // 每个基本块的出口活跃变量集合\r\n    private static HashMap<BasicBlock, HashSet<Value>> defMap;   // 定义集合：在块中被定义的变量\r\n    private static HashMap<BasicBlock, HashSet<Value>> useMap;   // 使用集合：在块中先使用后定义的变量\r\n\r\n    private static int registerCount;                            // 可用寄存器数量\r\n    private static HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射\r\n\r\n    // 干涉图节点集合\r\n    private static HashSet<InterferenceGraphNode> graphNodes;\r\n\r\n    public static void run(Module module) {\r\n        Mem2Reg.run(module, false);\r\n\r\n        ArrayList<Register> registerPool = new ArrayList<>();\r\n        for (Register register : Register.values()) {\r\n            if (register.ordinal() >= Register.T0.ordinal() && register.ordinal() <= Register.T9.ordinal()) {\r\n                registerPool.add(register);\r\n            }\r\n        }\r\n        registerCount = registerPool.size();\r\n\r\n        for (Function function : module.getFunctions()) {\r\n            initLiveVariableAnalysis(function);\r\n            computeInOutSets(function);\r\n            buildInterferenceGraph(function);\r\n            colorGraph();\r\n\r\n            HashMap<Value, Register> varToRegMap = new HashMap<>();\r\n            for (InterferenceGraphNode node : valueNodeMap.values()) {\r\n                if (node.isSpilled) {\r\n                    continue;\r\n                }\r\n                varToRegMap.put(node.value, registerPool.get(node.color));\r\n                System.out.println(node.value.getName() + \" -> \" + registerPool.get(node.color));\r\n            }\r\n            for (BasicBlock block : function.getBasicBlocks()) {\r\n                for (Instruction instruction : block.getInstructions()) {\r\n                    if (!(instruction instanceof CallInst callInst)) {\r\n                        continue;\r\n                    }\r\n                    HashSet<Register> regSet = new HashSet<>();\r\n                    for (Value value : outMap.get(block)) {\r\n                        if (varToRegMap.containsKey(value)) {\r\n                            regSet.add(varToRegMap.get(value));\r\n                        }\r\n                    }\r\n                    for (int i = block.getInstructions().indexOf(callInst) + 1;\r\n                         i < block.getInstructions().size(); i++) {\r\n                        for (Value value : block.getInstructions().get(i).getOperands()) {\r\n                            if (varToRegMap.containsKey(value)) {\r\n                                regSet.add(varToRegMap.get(value));\r\n                            }\r\n                        }\r\n                    }\r\n                    callInst.setActiveReg(regSet);\r\n                }\r\n            }\r\n            function.setVar2reg(varToRegMap);\r\n        }\r\n    }\r\n\r\n    private static void initLiveVariableAnalysis(Function function) {\r\n        inMap = new HashMap<>();\r\n        outMap = new HashMap<>();\r\n        defMap = new HashMap<>();\r\n        useMap = new HashMap<>();\r\n\r\n        for (BasicBlock block : function.getBasicBlocks()) {\r\n            inMap.put(block, new HashSet<>());\r\n            outMap.put(block, new HashSet<>());\r\n            defMap.put(block, new HashSet<>());\r\n            useMap.put(block, new HashSet<>());\r\n            computeDefUseSets(block);\r\n        }\r\n    }\r\n\r\n    private static void computeDefUseSets(BasicBlock block) {\r\n        HashSet<Value> defSet = defMap.get(block);\r\n        HashSet<Value> useSet = useMap.get(block);\r\n\r\n        for (Instruction instruction : block.getInstructions()) {\r\n            if (instruction instanceof PhiInst) {\r\n                for (Value value : instruction.getOperands()) {\r\n                    if (isAllocatableValue(value) && !defSet.contains(value)) {\r\n                        useSet.add(value);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        for (Instruction instruction : block.getInstructions()) {\r\n            for (Value operand : instruction.getOperands()) {\r\n                if (isAllocatableValue(operand) && !defSet.contains(operand)) {\r\n                    useSet.add(operand);\r\n                }\r\n            }\r\n            if (!instruction.getName().isEmpty() && !(instruction instanceof ZextInst)) {\r\n                defSet.add(instruction);\r\n            }\r\n        }\r\n    }\r\n\r\n    private static void computeInOutSets(Function function) {\r\n        ArrayList<BasicBlock> blocks = function.getBasicBlocks();\r\n        boolean changed = true;\r\n\r\n        // 迭代进行数据流分析，直到IN和OUT集合不再发生变化\r\n        while (changed) {\r\n            changed = false;\r\n            for (int i = blocks.size() - 1; i >= 0; i--) {\r\n                BasicBlock block = blocks.get(i);\r\n                HashSet<Value> outSet = new HashSet<>();\r\n                // OUT[B] = 所有后继块的IN集合的并集\r\n                for (BasicBlock successor : block.getNextBlocks()) {\r\n                    outSet.addAll(inMap.get(successor));\r\n                }\r\n\r\n                for (BasicBlock successor : block.getNextBlocks()) {\r\n                    for (Instruction instruction : successor.getInstructions()) {\r\n                        if (instruction instanceof PhiInst phi) {\r\n                            int index = phi.getBlocks().indexOf(block);\r\n                            if (index >= 0) {\r\n                                Value value = phi.getOperands().get(index);\r\n                                if (isAllocatableValue(value)) {\r\n                                    outSet.add(value);\r\n                                }\r\n                            }\r\n                        } else {\r\n                            break; // 非Phi指令，跳出循环\r\n                        }\r\n                    }\r\n                }\r\n\r\n                outMap.put(block, outSet);\r\n\r\n                HashSet<Value> inSet = new HashSet<>(outSet);\r\n                // IN[B] = USE[B] ∪ (OUT[B] - DEF[B])\r\n                inSet.removeAll(defMap.get(block));\r\n                inSet.addAll(useMap.get(block));\r\n\r\n                if (!inSet.equals(inMap.get(block))) {\r\n                    changed = true;\r\n                    inMap.put(block, inSet);\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    private static void buildInterferenceGraph(Function function) {\r\n        graphNodes = new HashSet<>();\r\n        valueNodeMap = new HashMap<>();\r\n\r\n        for (BasicBlock block : function.getBasicBlocks()) {\r\n            HashSet<Value> live = new HashSet<>(outMap.get(block));\r\n            List<Instruction> instructions = block.getInstructions();\r\n            ListIterator<Instruction> iterator = instructions.listIterator(instructions.size());\r\n\r\n            while (iterator.hasPrevious()) {\r\n                Instruction instruction = iterator.previous();\r\n                if (!instruction.getName().isEmpty() && !(instruction instanceof ZextInst)) {\r\n                    live.remove(instruction);\r\n                    InterferenceGraphNode nodeU = getOrCreateNode(instruction);\r\n                    for (Value v : live) {\r\n                        InterferenceGraphNode nodeV = getOrCreateNode(v);\r\n                        addEdge(nodeU, nodeV);\r\n                    }\r\n                }\r\n                for (Value operand : instruction.getOperands()) {\r\n                    if (isAllocatableValue(operand)) {\r\n                        live.add(operand);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    private static InterferenceGraphNode getOrCreateNode(Value value) {\r\n        if (valueNodeMap.containsKey(value)) {\r\n            return valueNodeMap.get(value);\r\n        } else {\r\n            InterferenceGraphNode node = new InterferenceGraphNode(value);\r\n            valueNodeMap.put(value, node);\r\n            graphNodes.add(node);\r\n            return node;\r\n        }\r\n    }\r\n\r\n    private static void addEdge(InterferenceGraphNode u, InterferenceGraphNode v) {\r\n        if (u == v) return;\r\n        if (!u.neighbors.contains(v)) {\r\n            u.neighbors.add(v);\r\n            u.degree++;\r\n        }\r\n        if (!v.neighbors.contains(u)) {\r\n            v.neighbors.add(u);\r\n            v.degree++;\r\n        }\r\n    }\r\n\r\n    private static void colorGraph() {\r\n        Stack<InterferenceGraphNode> selectStack = new Stack<>();\r\n        HashSet<InterferenceGraphNode> workList = new HashSet<>(graphNodes);\r\n\r\n        while (!workList.isEmpty()) {\r\n            boolean found = false;\r\n            Iterator<InterferenceGraphNode> iterator = workList.iterator();\r\n            while (iterator.hasNext()) {\r\n                InterferenceGraphNode node = iterator.next();\r\n                if (node.degree < registerCount) {\r\n                    iterator.remove();\r\n                    for (InterferenceGraphNode neighbor : node.neighbors) {\r\n                        neighbor.degree--;\r\n                    }\r\n                    selectStack.push(node);\r\n                    found = true;\r\n                }\r\n            }\r\n            if (!found) {\r\n                // Spill阶段，选择度数最大的节点进行溢出\r\n                InterferenceGraphNode spillNode = selectSpillNode(workList);\r\n                workList.remove(spillNode);\r\n                for (InterferenceGraphNode neighbor : spillNode.neighbors) {\r\n                    neighbor.degree--;\r\n                }\r\n                selectStack.push(spillNode);\r\n            }\r\n        }\r\n\r\n        // Select阶段\r\n        while (!selectStack.isEmpty()) {\r\n            InterferenceGraphNode node = selectStack.pop();\r\n            HashSet<Integer> neighborColors = new HashSet<>();\r\n            for (InterferenceGraphNode neighbor : node.neighbors) {\r\n                if (neighbor.color != -1) {\r\n                    neighborColors.add(neighbor.color);\r\n                }\r\n            }\r\n            // 寻找可用的颜色（寄存器）\r\n            int color = -1;\r\n            for (int i = 0; i < registerCount; i++) {\r\n                if (!neighborColors.contains(i)) {\r\n                    color = i;\r\n                    break;\r\n                }\r\n            }\r\n            if (color != -1) {\r\n                node.color = color;\r\n            } else {\r\n                node.isSpilled = true;\r\n            }\r\n        }\r\n    }\r\n\r\n    private static InterferenceGraphNode selectSpillNode(HashSet<InterferenceGraphNode> nodes) {\r\n        InterferenceGraphNode spillNode = null;\r\n        int maxDegree = -1;\r\n        for (InterferenceGraphNode node : nodes) {\r\n            if (node.degree > maxDegree) {\r\n                maxDegree = node.degree;\r\n                spillNode = node;\r\n            }\r\n        }\r\n        return spillNode;\r\n    }\r\n\r\n    private static boolean isAllocatableValue(Value value) {\r\n        return !(value instanceof ConstInt || value instanceof ConstString\r\n                || (value instanceof GlobalVar)\r\n                || value instanceof BasicBlock || value instanceof Function\r\n                || value instanceof FuncParam);\r\n    }\r\n\r\n    private static class InterferenceGraphNode {\r\n        Value value;                                   // 对应的变量\r\n        HashSet<InterferenceGraphNode> neighbors;      // 相邻节点集合\r\n        boolean isSpilled;                             // 是否需要溢出\r\n        int degree;                                    // 度数（相邻节点数量）\r\n        int color;                                     // 分配的颜色（寄存器编号）\r\n\r\n        public InterferenceGraphNode(Value value) {\r\n            this.value = value;\r\n            this.neighbors = new HashSet<>();\r\n            this.isSpilled = false;\r\n            this.degree = 0;\r\n            this.color = -1; // -1表示未着色\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/backend/utils/RegAlloc.java b/src/backend/utils/RegAlloc.java
+--- a/src/backend/utils/RegAlloc.java	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/src/backend/utils/RegAlloc.java	(date 1730381556592)
+@@ -1,8 +1,13 @@
+ package backend.utils;
+ 
+ import backend.enums.Register;
++import middle.component.BasicBlock;
++import middle.component.ConstInt;
++import middle.component.ConstString;
++import middle.component.FuncParam;
++import middle.component.Function;
++import middle.component.GlobalVar;
+ import middle.component.Module;
+-import middle.component.*;
+ import middle.component.instruction.CallInst;
+ import middle.component.instruction.Instruction;
+ import middle.component.instruction.PhiInst;
+@@ -10,7 +15,13 @@
+ import middle.component.model.Value;
+ import optimize.Mem2Reg;
+ 
+-import java.util.*;
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.Iterator;
++import java.util.List;
++import java.util.ListIterator;
++import java.util.Stack;
+ 
+ /**
+  * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
+Index: parser.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>INTTK int\r\nMAINTK main\r\nLPARENT (\r\nRPARENT )\r\nLBRACE {\r\nINTTK int\r\nIDENFR i\r\n<VarDef>\r\nSEMICN ;\r\n<VarDecl>\r\nFORTK for\r\nLPARENT (\r\nIDENFR i\r\n<LVal>\r\nASSIGN =\r\nINTCON 0\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\n<ForStmt>\r\nSEMICN ;\r\nIDENFR i\r\n<LVal>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<RelExp>\r\nLSS <\r\nINTCON 100\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<RelExp>\r\n<EqExp>\r\n<LAndExp>\r\n<LOrExp>\r\n<Cond>\r\nSEMICN ;\r\nIDENFR i\r\n<LVal>\r\nASSIGN =\r\nIDENFR i\r\n<LVal>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\nPLUS +\r\nINTCON 1\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\n<ForStmt>\r\nRPARENT )\r\nLBRACE {\r\nPRINTFTK printf\r\nLPARENT (\r\nSTRCON \"Fuck you!\\n\"\r\nRPARENT )\r\nSEMICN ;\r\n<Stmt>\r\nRBRACE }\r\n<Block>\r\n<Stmt>\r\n<Stmt>\r\nRETURNTK return\r\nINTCON 0\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\nSEMICN ;\r\n<Stmt>\r\nRBRACE }\r\n<Block>\r\n<MainFuncDef>\r\n<CompUnit>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/parser.txt b/parser.txt
+--- a/parser.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/parser.txt	(date 1730381694741)
+@@ -1,28 +1,261 @@
++CONSTTK const
+ INTTK int
+-MAINTK main
++IDENFR ZERO
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++COMMA ,
++IDENFR ONE
++ASSIGN =
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++SEMICN ;
++<ConstDecl>
++INTTK int
++IDENFR var2
++ASSIGN =
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++COMMA ,
++IDENFR var3
++ASSIGN =
++INTCON 3
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++VOIDTK void
++<FuncType>
++IDENFR fun
+ LPARENT (
+ RPARENT )
+ LBRACE {
+ INTTK int
+ IDENFR i
++ASSIGN =
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++LBRACE {
++INTTK int
++IDENFR yuming
++ASSIGN =
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
+ <VarDef>
+ SEMICN ;
+ <VarDecl>
+ FORTK for
+ LPARENT (
+-IDENFR i
++SEMICN ;
++IDENFR yuming
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++INTCON 1000
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++SEMICN ;
++RPARENT )
++LBRACE {
++IDENFR yuming
+ <LVal>
+ ASSIGN =
+-INTCON 0
++IDENFR yuming
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++MULT *
++INTCON 2
+ <Number>
+ <PrimaryExp>
+ <UnaryExp>
+ <MulExp>
+ <AddExp>
+ <Exp>
+-<ForStmt>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "\n%d"
++COMMA ,
++IDENFR yuming
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++RPARENT )
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++MAINTK main
++LPARENT (
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "21373457\n"
++RPARENT )
+ SEMICN ;
+-IDENFR i
++<Stmt>
++IFTK if
++LPARENT (
++IDENFR ZERO
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++IDENFR var2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++EQL ==
++IDENFR var3
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++MINU -
++IDENFR ONE
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++AND &&
++IDENFR ONE
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR ZERO
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++OR ||
++NOT !
++<UnaryOp>
++IDENFR ZERO
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++AND &&
++IDENFR ONE
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++IDENFR var2
+ <LVal>
+ <PrimaryExp>
+ <UnaryExp>
+@@ -30,7 +263,7 @@
+ <AddExp>
+ <RelExp>
+ LSS <
+-INTCON 100
++INTCON 0
+ <Number>
+ <PrimaryExp>
+ <UnaryExp>
+@@ -41,36 +274,238 @@
+ <LAndExp>
+ <LOrExp>
+ <Cond>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "ERROR!\n"
++RPARENT )
+ SEMICN ;
+-IDENFR i
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++ELSETK else
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "And success!\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IFTK if
++LPARENT (
++IDENFR var3
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++NEQ !=
++INTCON 3
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++OR ||
++IDENFR var2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++MINU -
++INTCON 22
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++EQL ==
++MINU -
++<UnaryOp>
++INTCON 20
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR ONE
+ <LVal>
+-ASSIGN =
+-IDENFR i
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++MOD %
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 3
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++MINU -
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++MULT *
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++IDENFR var3
+ <LVal>
+ <PrimaryExp>
+ <UnaryExp>
+ <MulExp>
+ <AddExp>
+ PLUS +
+-INTCON 1
++IDENFR var2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LEQ <=
++INTCON 100
+ <Number>
+ <PrimaryExp>
+ <UnaryExp>
+ <MulExp>
+ <AddExp>
+-<Exp>
+-<ForStmt>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++OR ||
++IDENFR ONE
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
+ RPARENT )
+ LBRACE {
+ PRINTFTK printf
+ LPARENT (
+-STRCON "Fuck you!\n"
++STRCON "Or pass!\n"
+ RPARENT )
+ SEMICN ;
+ <Stmt>
+ RBRACE }
+ <Block>
+ <Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "Test1 Success!"
++RPARENT )
++SEMICN ;
++<Stmt>
++LBRACE {
++RBRACE }
++<Block>
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR fun
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
+ <Stmt>
+ RETURNTK return
+ INTCON 0
+Index: lexer.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>INTTK int\r\nMAINTK main\r\nLPARENT (\r\nRPARENT )\r\nLBRACE {\r\nINTTK int\r\nIDENFR i\r\nSEMICN ;\r\nFORTK for\r\nLPARENT (\r\nIDENFR i\r\nASSIGN =\r\nINTCON 0\r\nSEMICN ;\r\nIDENFR i\r\nLSS <\r\nINTCON 100\r\nSEMICN ;\r\nIDENFR i\r\nASSIGN =\r\nIDENFR i\r\nPLUS +\r\nINTCON 1\r\nRPARENT )\r\nLBRACE {\r\nPRINTFTK printf\r\nLPARENT (\r\nSTRCON \"Fuck you!\\n\"\r\nRPARENT )\r\nSEMICN ;\r\nRBRACE }\r\nRETURNTK return\r\nINTCON 0\r\nSEMICN ;\r\nRBRACE }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lexer.txt b/lexer.txt
+--- a/lexer.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/lexer.txt	(date 1730381694714)
+@@ -1,34 +1,192 @@
++CONSTTK const
+ INTTK int
+-MAINTK main
++IDENFR ZERO
++ASSIGN =
++INTCON 0
++COMMA ,
++IDENFR ONE
++ASSIGN =
++INTCON 1
++SEMICN ;
++INTTK int
++IDENFR var2
++ASSIGN =
++INTCON 2
++COMMA ,
++IDENFR var3
++ASSIGN =
++INTCON 3
++SEMICN ;
++VOIDTK void
++IDENFR fun
+ LPARENT (
+ RPARENT )
+ LBRACE {
+ INTTK int
+ IDENFR i
++ASSIGN =
++INTCON 1
++SEMICN ;
++LBRACE {
++INTTK int
++IDENFR yuming
++ASSIGN =
++INTCON 1
+ SEMICN ;
+ FORTK for
+ LPARENT (
+-IDENFR i
+-ASSIGN =
+-INTCON 0
+ SEMICN ;
+-IDENFR i
++IDENFR yuming
+ LSS <
+-INTCON 100
++INTCON 1000
+ SEMICN ;
+-IDENFR i
++RPARENT )
++LBRACE {
++IDENFR yuming
+ ASSIGN =
+-IDENFR i
++IDENFR yuming
++MULT *
++INTCON 2
++SEMICN ;
++RBRACE }
++PRINTFTK printf
++LPARENT (
++STRCON "\n%d"
++COMMA ,
++IDENFR yuming
++RPARENT )
++SEMICN ;
++RBRACE }
++RETURNTK return
++SEMICN ;
++RBRACE }
++INTTK int
++MAINTK main
++LPARENT (
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "21373457\n"
++RPARENT )
++SEMICN ;
++IFTK if
++LPARENT (
++IDENFR ZERO
++PLUS +
++IDENFR var2
++EQL ==
++IDENFR var3
++MINU -
++IDENFR ONE
++AND &&
++IDENFR ONE
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR ZERO
++OR ||
++NOT !
++IDENFR ZERO
++AND &&
++IDENFR ONE
+ PLUS +
+ INTCON 1
++PLUS +
++IDENFR var2
++LSS <
++INTCON 0
+ RPARENT )
+ LBRACE {
+ PRINTFTK printf
+ LPARENT (
+-STRCON "Fuck you!\n"
++STRCON "ERROR!\n"
+ RPARENT )
+ SEMICN ;
+ RBRACE }
++ELSETK else
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "And success!\n"
++RPARENT )
++SEMICN ;
++RBRACE }
++RBRACE }
++IFTK if
++LPARENT (
++IDENFR var3
++NEQ !=
++INTCON 3
++OR ||
++IDENFR var2
++MINU -
++INTCON 22
++EQL ==
++MINU -
++INTCON 20
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR ONE
++MOD %
++INTCON 2
++PLUS +
++INTCON 3
++MINU -
++INTCON 4
++MULT *
++INTCON 2
++PLUS +
++IDENFR var3
++PLUS +
++IDENFR var2
++LEQ <=
++INTCON 100
++OR ||
++IDENFR ONE
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "Or pass!\n"
++RPARENT )
++SEMICN ;
++RBRACE }
++RBRACE }
++PRINTFTK printf
++LPARENT (
++STRCON "Test1 Success!"
++RPARENT )
++SEMICN ;
++LBRACE {
++RBRACE }
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR fun
++LPARENT (
++RPARENT )
++SEMICN ;
+ RETURNTK return
+ INTCON 0
+ SEMICN ;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"PlatoCompiler:jar\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"ae2e92cf-5aa7-4477-b5aa-5e0263970b8b\" name=\"更改\" comment=\"feat\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ir.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ir.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/lexer.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/lexer.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/llvm_ir.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/llvm_ir.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/mips.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/mips.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/parser.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/parser.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/middle/IRBuilder.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/middle/IRBuilder.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/optimize/Optimizer.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/optimize/Optimizer.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/symbol.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/symbol.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/testfile.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/testfile.txt\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"Interface\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"FormatOnSaveOptions\">\r\n    <option name=\"myRunOnSave\" value=\"true\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Galaxy-JewXW&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;git@github.com:Galaxy-JewXW/compiler_course.git&quot;,\r\n    &quot;accountId&quot;: &quot;7e69d295-b0ef-4293-81cc-173b50d78e7a&quot;\r\n  }\r\n}</component>\r\n  <component name=\"OptimizeOnSaveOptions\">\r\n    <option name=\"myRunOnSave\" value=\"true\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2mWDK2Es587qqNXqqmI19ieDXrF\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,\r\n    &quot;two.files.diff.last.used.file&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,\r\n    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Compiler\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Compiler\" />\r\n      <module name=\"PlatoCompiler\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"应用程序.Compiler\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"应用程序级\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"默认任务\">\r\n      <changelist id=\"ae2e92cf-5aa7-4477-b5aa-5e0263970b8b\" name=\"更改\" comment=\"\" />\r\n      <created>1727183371853</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1727183371853</updated>\r\n      <workItem from=\"1727183373763\" duration=\"9898000\" />\r\n      <workItem from=\"1727229022465\" duration=\"5529000\" />\r\n      <workItem from=\"1727246954081\" duration=\"114000\" />\r\n      <workItem from=\"1727249114398\" duration=\"5487000\" />\r\n      <workItem from=\"1727315797359\" duration=\"8929000\" />\r\n      <workItem from=\"1727329252902\" duration=\"102000\" />\r\n      <workItem from=\"1727330162827\" duration=\"5253000\" />\r\n      <workItem from=\"1727335498896\" duration=\"675000\" />\r\n      <workItem from=\"1727341038100\" duration=\"4238000\" />\r\n      <workItem from=\"1727347322326\" duration=\"538000\" />\r\n      <workItem from=\"1727399141395\" duration=\"220000\" />\r\n      <workItem from=\"1727399590695\" duration=\"1056000\" />\r\n      <workItem from=\"1727401691601\" duration=\"12666000\" />\r\n      <workItem from=\"1727416498760\" duration=\"2784000\" />\r\n      <workItem from=\"1727420435180\" duration=\"50000\" />\r\n      <workItem from=\"1727431491520\" duration=\"2530000\" />\r\n      <workItem from=\"1727434852503\" duration=\"14443000\" />\r\n      <workItem from=\"1727496050805\" duration=\"19744000\" />\r\n      <workItem from=\"1727584804830\" duration=\"10932000\" />\r\n      <workItem from=\"1727605942525\" duration=\"4778000\" />\r\n      <workItem from=\"1727621967237\" duration=\"5308000\" />\r\n      <workItem from=\"1727680773980\" duration=\"1263000\" />\r\n      <workItem from=\"1727686730882\" duration=\"7000\" />\r\n      <workItem from=\"1727686747855\" duration=\"3409000\" />\r\n      <workItem from=\"1727693987333\" duration=\"69000\" />\r\n      <workItem from=\"1727694071804\" duration=\"1502000\" />\r\n      <workItem from=\"1727792778806\" duration=\"9344000\" />\r\n      <workItem from=\"1727833190980\" duration=\"6281000\" />\r\n      <workItem from=\"1727853966114\" duration=\"58000\" />\r\n      <workItem from=\"1727865078155\" duration=\"10736000\" />\r\n      <workItem from=\"1727876320748\" duration=\"2772000\" />\r\n      <workItem from=\"1727879466934\" duration=\"26000\" />\r\n      <workItem from=\"1727887664371\" duration=\"21000\" />\r\n      <workItem from=\"1727972714731\" duration=\"39000\" />\r\n      <workItem from=\"1727972795427\" duration=\"1333000\" />\r\n      <workItem from=\"1728213509413\" duration=\"230000\" />\r\n      <workItem from=\"1728213767604\" duration=\"1385000\" />\r\n      <workItem from=\"1728439042572\" duration=\"61000\" />\r\n      <workItem from=\"1728440379764\" duration=\"626000\" />\r\n      <workItem from=\"1728448561452\" duration=\"3410000\" />\r\n      <workItem from=\"1728473025112\" duration=\"11000\" />\r\n      <workItem from=\"1728547809087\" duration=\"1967000\" />\r\n      <workItem from=\"1728563168071\" duration=\"692000\" />\r\n      <workItem from=\"1728608104989\" duration=\"2185000\" />\r\n      <workItem from=\"1728610337248\" duration=\"117000\" />\r\n      <workItem from=\"1728611276078\" duration=\"618000\" />\r\n      <workItem from=\"1728611922370\" duration=\"165000\" />\r\n      <workItem from=\"1728612753060\" duration=\"2691000\" />\r\n      <workItem from=\"1728624351032\" duration=\"3541000\" />\r\n      <workItem from=\"1728649132348\" duration=\"1377000\" />\r\n      <workItem from=\"1729258985141\" duration=\"862000\" />\r\n      <workItem from=\"1729264467984\" duration=\"75000\" />\r\n      <workItem from=\"1729357706810\" duration=\"33000\" />\r\n      <workItem from=\"1729389573751\" duration=\"214000\" />\r\n      <workItem from=\"1729699077223\" duration=\"1204000\" />\r\n      <workItem from=\"1729938702415\" duration=\"119000\" />\r\n      <workItem from=\"1729939084574\" duration=\"867000\" />\r\n      <workItem from=\"1729940110242\" duration=\"7855000\" />\r\n      <workItem from=\"1730167180682\" duration=\"11213000\" />\r\n      <workItem from=\"1730200996767\" duration=\"3880000\" />\r\n      <workItem from=\"1730213819177\" duration=\"405000\" />\r\n      <workItem from=\"1730214238530\" duration=\"2684000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"caosini\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727442503015</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727442503015</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"gosh\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727443016814</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727443016814</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"win\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727448309630</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727448309630</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"try gvn\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727448678132</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727448678132</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00021\" summary=\"一定要先mem2reg！\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727450042646</created>\r\n      <option name=\"number\" value=\"00021\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00021\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727450042646</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00022\" summary=\"函数内联\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727498718849</created>\r\n      <option name=\"number\" value=\"00022\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727498718849</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00023\" summary=\"fix 函数内联\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727516813174</created>\r\n      <option name=\"number\" value=\"00023\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00023\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727516813174</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00024\" summary=\"add CodeRemoval\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727521228423</created>\r\n      <option name=\"number\" value=\"00024\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00024\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727521228423</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00025\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727540641841</created>\r\n      <option name=\"number\" value=\"00025\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00025\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727540641841</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00026\" summary=\"add move\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727579949810</created>\r\n      <option name=\"number\" value=\"00026\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00026\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727579949810</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00027\" summary=\"fix move\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727582411894</created>\r\n      <option name=\"number\" value=\"00027\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00027\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727582411894</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00028\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727582564806</created>\r\n      <option name=\"number\" value=\"00028\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00028\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727582564806</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00029\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727601774633</created>\r\n      <option name=\"number\" value=\"00029\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00029\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727601774633</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00030\" summary=\"dismiss\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727602991762</created>\r\n      <option name=\"number\" value=\"00030\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00030\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727602991762</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00031\" summary=\"add br inst\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727624520209</created>\r\n      <option name=\"number\" value=\"00031\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00031\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727624520209</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00032\" summary=\"finish mips, peephole to be added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727675829873</created>\r\n      <option name=\"number\" value=\"00032\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00032\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727675829873</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00033\" summary=\"finish mips, peephole to be added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727680460032</created>\r\n      <option name=\"number\" value=\"00033\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00033\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727680460032</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00034\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727680611154</created>\r\n      <option name=\"number\" value=\"00034\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00034\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727680611154</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00035\" summary=\"fix style\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727690337319</created>\r\n      <option name=\"number\" value=\"00035\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00035\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727690337319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00036\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727710044298</created>\r\n      <option name=\"number\" value=\"00036\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00036\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727710044298</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00037\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727786126799</created>\r\n      <option name=\"number\" value=\"00037\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00037\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727786126799</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00038\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727791449014</created>\r\n      <option name=\"number\" value=\"00038\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00038\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727791449014</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00039\" summary=\"loop error\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727805988269</created>\r\n      <option name=\"number\" value=\"00039\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00039\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727805988269</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00040\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727836527072</created>\r\n      <option name=\"number\" value=\"00040\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00040\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727836527072</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00041\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727836537790</created>\r\n      <option name=\"number\" value=\"00041\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00041\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727836537790</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00042\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727841272902</created>\r\n      <option name=\"number\" value=\"00042\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00042\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727841272902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00043\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727879107319</created>\r\n      <option name=\"number\" value=\"00043\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00043\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727879107319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00044\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727974074352</created>\r\n      <option name=\"number\" value=\"00044\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00044\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727974074352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00045\" summary=\"111\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728215688451</created>\r\n      <option name=\"number\" value=\"00045\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00045\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728215688451</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00046\" summary=\"111\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728215825124</created>\r\n      <option name=\"number\" value=\"00046\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00046\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728215825124</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00047\" summary=\"char使用lb和sb\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728450680394</created>\r\n      <option name=\"number\" value=\"00047\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00047\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728450680394</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00048\" summary=\"label重名问题\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728451182482</created>\r\n      <option name=\"number\" value=\"00048\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00048\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728451182482</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00049\" summary=\"fix bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728453068421</created>\r\n      <option name=\"number\" value=\"00049\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00049\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728453068421</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00050\" summary=\"fix bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728548828590</created>\r\n      <option name=\"number\" value=\"00050\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00050\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728548828590</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00051\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728561706854</created>\r\n      <option name=\"number\" value=\"00051\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00051\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728561706854</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00052\" summary=\"a\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728571671291</created>\r\n      <option name=\"number\" value=\"00052\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00052\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728571671291</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00053\" summary=\"haiyou bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728573878605</created>\r\n      <option name=\"number\" value=\"00053\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00053\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728573878605</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00054\" summary=\"bugs in optimize\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728606411783</created>\r\n      <option name=\"number\" value=\"00054\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00054\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728606411783</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00055\" summary=\"bugs in gvn\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728612964368</created>\r\n      <option name=\"number\" value=\"00055\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00055\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728612964369</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00056\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728620448372</created>\r\n      <option name=\"number\" value=\"00056\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00056\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728620448373</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00057\" summary=\"stable\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728627921672</created>\r\n      <option name=\"number\" value=\"00057\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00057\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728627921672</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00058\" summary=\"123\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728790806187</created>\r\n      <option name=\"number\" value=\"00058\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00058\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728790806187</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00059\" summary=\"bug in regalloc\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728828269448</created>\r\n      <option name=\"number\" value=\"00059\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00059\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728828269449</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00060\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728952857448</created>\r\n      <option name=\"number\" value=\"00060\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00060\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728952857450</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00061\" summary=\"bugs\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729254422474</created>\r\n      <option name=\"number\" value=\"00061\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00061\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729254422474</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00062\" summary=\"ff\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729700127959</created>\r\n      <option name=\"number\" value=\"00062\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00062\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729700127960</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00063\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730189950449</created>\r\n      <option name=\"number\" value=\"00063\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00063\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730189950450</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00064\" summary=\"sb\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730200330900</created>\r\n      <option name=\"number\" value=\"00064\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00064\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730200330902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00065\" summary=\"feat\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730212668935</created>\r\n      <option name=\"number\" value=\"00065\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00065\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730212668936</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"66\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"fix move\" />\r\n    <MESSAGE value=\"dismiss\" />\r\n    <MESSAGE value=\"add br inst\" />\r\n    <MESSAGE value=\"finish mips, peephole to be added\" />\r\n    <MESSAGE value=\"fix style\" />\r\n    <MESSAGE value=\"loop error\" />\r\n    <MESSAGE value=\"fix\" />\r\n    <MESSAGE value=\"man\" />\r\n    <MESSAGE value=\"111\" />\r\n    <MESSAGE value=\"char使用lb和sb\" />\r\n    <MESSAGE value=\"label重名问题\" />\r\n    <MESSAGE value=\"fix bug\" />\r\n    <MESSAGE value=\"1\" />\r\n    <MESSAGE value=\"a\" />\r\n    <MESSAGE value=\"haiyou bug\" />\r\n    <MESSAGE value=\"bugs in optimize\" />\r\n    <MESSAGE value=\"bugs in gvn\" />\r\n    <MESSAGE value=\"stable\" />\r\n    <MESSAGE value=\"123\" />\r\n    <MESSAGE value=\"bug in regalloc\" />\r\n    <MESSAGE value=\"bugs\" />\r\n    <MESSAGE value=\"ff\" />\r\n    <MESSAGE value=\"fixed\" />\r\n    <MESSAGE value=\"sb\" />\r\n    <MESSAGE value=\"feat\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"feat\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint type=\"java-exception\">\r\n          <properties class=\"java.util.ConcurrentModificationException\" package=\"java.util\" />\r\n          <option name=\"timeStamp\" value=\"189\" />\r\n        </breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>\r\n          <line>154</line>\r\n          <option name=\"timeStamp\" value=\"221\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>\r\n          <line>151</line>\r\n          <option name=\"timeStamp\" value=\"229\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>\r\n          <line>152</line>\r\n          <option name=\"timeStamp\" value=\"230\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>\r\n          <line>153</line>\r\n          <option name=\"timeStamp\" value=\"231\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>372</line>\r\n          <option name=\"timeStamp\" value=\"235\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>373</line>\r\n          <option name=\"timeStamp\" value=\"236\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>376</line>\r\n          <option name=\"timeStamp\" value=\"238\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>374</line>\r\n          <option name=\"timeStamp\" value=\"239\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>375</line>\r\n          <option name=\"timeStamp\" value=\"240\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>377</line>\r\n          <option name=\"timeStamp\" value=\"241\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>378</line>\r\n          <option name=\"timeStamp\" value=\"242\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>379</line>\r\n          <option name=\"timeStamp\" value=\"243\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>\r\n          <line>380</line>\r\n          <option name=\"timeStamp\" value=\"244\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/PlatoCompiler$Compiler.ic\" NAME=\"Compiler 覆盖结果\" MODIFIED=\"1730214247155\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/.idea/workspace.xml	(date 1730381736134)
+@@ -15,12 +15,13 @@
+       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutchInst.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutintInst.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/instruction/io/PutstrInst.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/Optimizer.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/RegAlloc.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/optimize/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/Optimizer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+     </list>
+@@ -180,15 +181,9 @@
+       <workItem from="1730167180682" duration="11213000" />
+       <workItem from="1730200996767" duration="3880000" />
+       <workItem from="1730213819177" duration="405000" />
+-      <workItem from="1730214238530" duration="2684000" />
+-    </task>
+-    <task id="LOCAL-00017" summary="caosini">
+-      <option name="closed" value="true" />
+-      <created>1727442503015</created>
+-      <option name="number" value="00017" />
+-      <option name="presentableId" value="LOCAL-00017" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1727442503015</updated>
++      <workItem from="1730214238530" duration="2892000" />
++      <workItem from="1730220015885" duration="702000" />
++      <workItem from="1730381414285" duration="319000" />
+     </task>
+     <task id="LOCAL-00018" summary="gosh">
+       <option name="closed" value="true" />
+@@ -574,7 +569,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1730212668936</updated>
+     </task>
+-    <option name="localTasksCounter" value="66" />
++    <task id="LOCAL-00066" summary="feat">
++      <option name="closed" value="true" />
++      <created>1730217056177</created>
++      <option name="number" value="00066" />
++      <option name="presentableId" value="LOCAL-00066" />
++      <option name="project" value="LOCAL" />
++      <updated>1730217056177</updated>
++    </task>
++    <option name="localTasksCounter" value="67" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+Index: symbol.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>2 i Int\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/symbol.txt b/symbol.txt
+--- a/symbol.txt	(revision b340837d61ba3edc2fd2d7a8f46ad6c6650020ec)
++++ b/symbol.txt	(date 1730381694751)
+@@ -1,1 +1,7 @@
++1 ZERO ConstInt
++1 ONE ConstInt
++1 var2 Int
++1 var3 Int
++1 fun VoidFunc
+ 2 i Int
++3 yuming Int

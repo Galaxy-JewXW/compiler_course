@@ -1,35 +1,247 @@
 .data:
-s0: .asciiz "Fuck you!\n"
+s0: .asciiz " is not a prime number\n"
+s1: .asciiz " is a prime number\n"
+s2: .asciiz " is neither prime nor composite\n"
+s3: .asciiz "c and d are both positive\n"
+s4: .asciiz "Neither c nor d are positive\n"
+s5: .asciiz "\n"
 
 .text:
 func_main:
 main_bb0:
-    # move 0 -> %v5
-    li $t1, 0
-    # br label %b6
-    j main_bb6
+    # %v1 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $s1, $v0
+    # %v2 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $t3, $v0
+    # %v3 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $s3, $v0
+    # %v4 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $t6, $v0
+    # %v5 = call i32 @getint()
+    li $v0, 5
+    syscall
+    move $t5, $v0
+    # %v6 = icmp sge i32 %v1, 2
+    # br i1 %v6, label %b7, label %b29
+    blt $s1, 2, main_bb29
 
-main_bb2:
-    # call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.0, i64 0, i64 0))
+main_bb7:
+    # move 2 -> %v9
+    li $t1, 2
+    # move 0 -> %v10
+    li $t2, 0
+    # br label %b9
+
+main_bb9:
+    # %v10 = icmp slt i32 %v9, %v1
+    # br i1 %v10, label %b23, label %b11
+    blt $t1, $s1, main_bb23
+
+main_bb11:
+    # %v12 = icmp ne i32 %v10, 0
+    # br i1 %v12, label %b22, label %b13
+    bne $t2, 0, main_bb22
+
+main_bb13:
+    # call void @putint(i32 %v1)
+    move $a0, $s1
+    li $v0, 1
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.s.1, i64 0, i64 0))
+    la $a0, s1
+    li $v0, 4
+    syscall
+    # br label %b14
+
+main_bb14:
+    # br label %b15
+
+main_bb15:
+    # %v16 = icmp sgt i32 %v2, 0
+    # br i1 %v16, label %b48, label %b17
+    bgt $t3, 0, main_bb48
+
+main_bb17:
+    # call void @putstr(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.s.4, i64 0, i64 0))
+    la $a0, s4
+    li $v0, 4
+    syscall
+    # br label %b18
+
+main_bb18:
+    # move %v4 -> %v55
+    move $t0, $t6
+    # move 1 -> %v56
+    li $t1, 1
+    # br label %b59
+    j main_bb59
+
+main_bb20:
+    # %v21 = icmp eq i32 %v33, 4
+    # br i1 %v21, label %b39, label %b40
+    beq $t4, 4, main_bb39
+    j main_bb40
+
+main_bb22:
+    # call void @putint(i32 %v1)
+    move $a0, $s1
+    li $v0, 1
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.s.0, i64 0, i64 0))
     la $a0, s0
     li $v0, 4
     syscall
-    # br label %b3
+    # br label %b14
+    j main_bb14
 
-main_bb3:
-    # %v4 = add i32 %v5, 1
-    addiu $t0, $t1, 1
-    # move %v4 -> %v5
-    move $t1, $t0
-    # br label %b6
+main_bb23:
+    # %v24 = srem i32 %v1, %v9
+    div $s1, $t1
+    mfhi $t0
+    # %v25 = icmp eq i32 %v24, 0
+    # br i1 %v25, label %b45, label %b35
+    beq $t0, 0, main_bb45
+    j main_bb35
 
-main_bb6:
-    # %v7 = icmp slt i32 %v5, 100
-    # br i1 %v7, label %b2, label %b8
-    blt $t1, 100, main_bb2
+main_bb26:
+    # move %v5 -> %v30
+    move $t0, $t5
+    # br label %b30
+    j main_bb30
 
-main_bb8:
+main_bb28:
+    # call void @putstr(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.s.3, i64 0, i64 0))
+    la $a0, s3
+    li $v0, 4
+    syscall
+    # br label %b18
+    j main_bb18
+
+main_bb29:
+    # call void @putint(i32 %v1)
+    move $a0, $s1
+    li $v0, 1
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.s.2, i64 0, i64 0))
+    la $a0, s2
+    li $v0, 4
+    syscall
+    # br label %b15
+    j main_bb15
+
+main_bb30:
+    # %v31 = icmp slt i32 %v30, 6
+    # br i1 %v31, label %b32, label %b38
+    bge $t0, 6, main_bb38
+
+main_bb32:
+    # %v33 = add i32 %v30, 1
+    addiu $t4, $t0, 1
+    # %v34 = icmp eq i32 %v33, 3
+    # br i1 %v34, label %b39, label %b20
+    beq $t4, 3, main_bb39
+    j main_bb20
+
+main_bb35:
+    # move %v10 -> %v36
+    move $t0, $t2
+    # br label %b37
+
+main_bb37:
+    # br label %b42
+    j main_bb42
+
+main_bb38:
     # ret i32 0
     li $v0, 10
     syscall
+
+main_bb39:
+    # br label %b50
+    j main_bb50
+
+main_bb40:
+    # call void @putint(i32 %v33)
+    move $a0, $t4
+    li $v0, 1
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.5, i64 0, i64 0))
+    la $a0, s5
+    li $v0, 4
+    syscall
+    # br label %b50
+    j main_bb50
+
+main_bb41:
+    # br label %b26
+    j main_bb26
+
+main_bb42:
+    # %v43 = add i32 %v9, 1
+    addiu $t2, $t1, 1
+    # move %v43 -> %v9
+    move $t1, $t2
+    # move %v36 -> %v10
+    move $t2, $t0
+    # br label %b9
+    j main_bb9
+
+main_bb45:
+    # %v46 = add i32 %v10, 1
+    addiu $s2, $t2, 1
+    # move %v46 -> %v36
+    move $t0, $s2
+    # br label %b37
+    j main_bb37
+
+main_bb48:
+    # %v49 = icmp sgt i32 %v3, 0
+    # br i1 %v49, label %b28, label %b17
+    bgt $s3, 0, main_bb28
+    j main_bb17
+
+main_bb50:
+    # move %v33 -> %v30
+    move $t0, $t4
+    # br label %b30
+    j main_bb30
+
+main_bb52:
+    # %v53 = add i32 %v55, 1
+    addiu $s0, $t0, 1
+    # call void @putint(i32 %v53)
+    move $a0, $s0
+    li $v0, 1
+    syscall
+    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.5, i64 0, i64 0))
+    la $a0, s5
+    li $v0, 4
+    syscall
+    # %v54 = add i32 %v56, 1
+    addiu $t7, $t1, 1
+    # %v55 = icmp sgt i32 %v54, 3
+    # br i1 %v55, label %b41, label %b56
+    bgt $t7, 3, main_bb41
+
+main_bb56:
+    # br label %b57
+
+main_bb57:
+    # move %v53 -> %v55
+    move $t0, $s0
+    # move %v54 -> %v56
+    move $t1, $t7
+    # br label %b59
+
+main_bb59:
+    # br label %b52
+    j main_bb52
 

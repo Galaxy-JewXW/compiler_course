@@ -22,6 +22,13 @@ public class Optimizer {
         IcmpOptimize.run(module);
         GCM.run(module);
         BlockSimplify.run(module);
+        GVN.run(module);
+        IcmpOptimize.run(module);
+        GCM.run(module);
+        BlockSimplify.run(module);
+        GVN.run(module);
+        IcmpOptimize.run(module);
+        BlockSimplify.run(module);
         PrintOptimize.run(module);
     }
 }
