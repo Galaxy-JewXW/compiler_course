@@ -4,113 +4,26 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [24 x i8] c" is not a prime number\0A\00", align 1
-@.s.1 = private unnamed_addr constant [20 x i8] c" is a prime number\0A\00", align 1
-@.s.2 = private unnamed_addr constant [33 x i8] c" is neither prime nor composite\0A\00", align 1
-@.s.3 = private unnamed_addr constant [27 x i8] c"c and d are both positive\0A\00", align 1
-@.s.4 = private unnamed_addr constant [30 x i8] c"Neither c nor d are positive\0A\00", align 1
-@.s.5 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+
 
 
 
 define dso_local i32 @main() {
 b0:
-	%v1 = call i32 @getint()
-	%v2 = call i32 @getint()
-	%v3 = call i32 @getint()
-	%v4 = call i32 @getint()
-	%v5 = call i32 @getint()
-	%v6 = icmp sge i32 %v1, 2
-	br i1 %v6, label %b7, label %b28
-b7:
-	br label %b8
-b8:
-	%v9 = phi i32 [ 2, %b7 ], [ %v42, %b41 ]
-	%v10 = phi i32 [ 0, %b7 ], [ %v36, %b41 ]
-	%v11 = icmp slt i32 %v9, %v1
-	br i1 %v11, label %b23, label %b12
-b12:
-	%v13 = icmp ne i32 %v10, 0
-	br i1 %v13, label %b22, label %b14
-b14:
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.s.1, i64 0, i64 0))
-	br label %b15
-b15:
-	br label %b16
-b16:
-	%v17 = icmp sgt i32 %v2, 0
-	br i1 %v17, label %b45, label %b18
-b18:
-	call void @putstr(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.s.4, i64 0, i64 0))
-	br label %b19
-b19:
-	br label %b54
-b20:
-	%v21 = icmp eq i32 %v33, 4
-	br i1 %v21, label %b38, label %b39
-b22:
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.s.0, i64 0, i64 0))
-	br label %b15
-b23:
-	%v24 = srem i32 %v1, %v9
-	%v25 = icmp eq i32 %v24, 0
-	br i1 %v25, label %b43, label %b35
-b26:
-	br label %b29
-b27:
-	call void @putstr(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.s.3, i64 0, i64 0))
-	br label %b19
-b28:
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.s.2, i64 0, i64 0))
-	br label %b16
-b29:
-	%v30 = phi i32 [ %v5, %b26 ], [ %v33, %b47 ]
-	%v31 = icmp slt i32 %v30, 6
-	br i1 %v31, label %b32, label %b37
-b32:
-	%v33 = add i32 %v30, 1
-	%v34 = icmp eq i32 %v33, 3
-	br i1 %v34, label %b38, label %b20
-b35:
-	%v36 = phi i32 [ %v10, %b23 ], [ %v44, %b43 ]
-	br label %b41
-b37:
+	br label %b3
+b1:
+	%v2 = add i32 %v4, 1
+	br label %b3
+b3:
+	%v4 = phi i32 [ 0, %b0 ], [ %v2, %b1 ]
+	%v5 = phi i32 [ 0, %b0 ], [ 0, %b1 ]
+	%v6 = phi i32 [ 0, %b0 ], [ 9, %b1 ]
+	%v7 = phi i32 [ 0, %b0 ], [ 0, %b1 ]
+	%v8 = icmp slt i32 %v4, 1000
+	br i1 %v8, label %b1, label %b9
+b9:
+	call void @putint(i32 %v7)
+	call void @putint(i32 %v6)
+	call void @putint(i32 %v5)
 	ret i32 0
-b38:
-	br label %b47
-b39:
-	call void @putint(i32 %v33)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.5, i64 0, i64 0))
-	br label %b47
-b40:
-	br label %b26
-b41:
-	%v42 = add i32 %v9, 1
-	br label %b8
-b43:
-	%v44 = add i32 %v10, 1
-	br label %b35
-b45:
-	%v46 = icmp sgt i32 %v3, 0
-	br i1 %v46, label %b27, label %b18
-b47:
-	br label %b29
-b48:
-	%v49 = add i32 %v55, 1
-	call void @putint(i32 %v49)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.5, i64 0, i64 0))
-	%v50 = add i32 %v56, 1
-	%v51 = icmp sgt i32 %v50, 3
-	br i1 %v51, label %b40, label %b52
-b52:
-	br label %b53
-b53:
-	br label %b54
-b54:
-	%v55 = phi i32 [ %v4, %b19 ], [ %v49, %b53 ]
-	%v56 = phi i32 [ 1, %b19 ], [ %v50, %b53 ]
-	br label %b48
 }

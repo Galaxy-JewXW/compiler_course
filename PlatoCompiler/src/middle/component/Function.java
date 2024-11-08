@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Function extends User {
     private final ValueType returnType;
     private final ArrayList<FuncParam> funcParams = new ArrayList<>();
-    private ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
+    private final ArrayList<BasicBlock> basicBlocks = new ArrayList<>();
     private boolean isBuiltIn = false;
     private boolean hasSideEffects = false;
 

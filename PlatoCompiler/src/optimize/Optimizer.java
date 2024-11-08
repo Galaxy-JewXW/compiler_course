@@ -12,7 +12,7 @@ public class Optimizer {
     }
 
     public void optimize() {
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             SurplusBlock.build(module);
             Mem2Reg.run(module, true);
             InlinedFunction.run(module);
@@ -20,14 +20,7 @@ public class Optimizer {
             GlobalVarLocalize.build(module);
             LocalConstArrayToValue.run(module);
             GVN.run(module);
-            IcmpOptimize.run(module);
             GCM.run(module);
-            BlockSimplify.run(module);
-            GVN.run(module);
-            IcmpOptimize.run(module);
-            GCM.run(module);
-            BlockSimplify.run(module);
-            GVN.run(module);
             IcmpOptimize.run(module);
             BlockSimplify.run(module);
             PrintOptimize.run(module);
