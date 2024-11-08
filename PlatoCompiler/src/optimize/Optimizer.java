@@ -15,6 +15,7 @@ public class Optimizer {
         for (int i = 0; i < 10; i++) {
             SurplusBlock.build(module);
             Mem2Reg.run(module, true);
+            FunctionSideEffect.run(module);
             InlinedFunction.run(module);
             UnusedFunction.run(module);
             GlobalVarLocalize.build(module);

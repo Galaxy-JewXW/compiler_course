@@ -1,5 +1,6 @@
 package optimize;
 
+import middle.component.BasicBlock;
 import middle.component.FuncParam;
 import middle.component.Function;
 import middle.component.GlobalVar;
@@ -11,61 +12,58 @@ import middle.component.instruction.StoreInst;
 import middle.component.instruction.io.IOInst;
 import middle.component.model.Value;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class FunctionSideEffect {
-
     public static void run(Module module) {
-        // 初始化 callMap
-        Map<Function, Set<Function>> callMap = module.getFunctions().stream()
-                .collect(Collectors.toMap(
-                        function -> function,
-                        FunctionSideEffect::getCalledFunctions
-                ));
-
-        // 迭代更新每个函数的副作用，传播 sideEffects
-        boolean changed;
-        do {
-            changed = module.getFunctions().stream().anyMatch(function -> {
-                Set<Function> callFunctions = callMap.get(function);
-                boolean updated = callFunctions.stream().anyMatch(FunctionSideEffect::hasSideEffects)
-                        && !function.hasSideEffects();
-                if (updated) {
-                    function.setHasSideEffects(true);
+        HashMap<Function, HashSet<Function>> callMap = new HashMap<>();
+        for (Function function : module.getFunctions()) {
+            boolean hasSideEffects = false;
+            HashSet<Function> calledFunctions = new HashSet<>();
+            for (BasicBlock block : function.getBasicBlocks()) {
+                for (Instruction instruction : block.getInstructions()) {
+                    if (instruction instanceof CallInst callInst) {
+                        calledFunctions.add(callInst.getCalledFunction());
+                    } else if (instruction instanceof IOInst) {
+                        hasSideEffects = true;
+                        break;
+                    } else if (instruction instanceof StoreInst storeInst) {
+                        Value target = storeInst.getPointer();
+                        if (target instanceof GlobalVar) {
+                            hasSideEffects = true;
+                            break;
+                        } else if (target instanceof GepInst gepInst) {
+                            if (gepInst.getPointer() instanceof FuncParam
+                                    || gepInst.getPointer() instanceof GlobalVar) {
+                                hasSideEffects = true;
+                                break;
+                            }
+                        }
+                    }
                 }
-                return updated;
-            });
-        } while (changed);
-    }
-
-    // 判断函数是否有副作用
-    private static boolean hasSideEffects(Function function) {
-        return function.getBasicBlocks().stream()
-                .flatMap(block -> block.getInstructions().stream())
-                .anyMatch(FunctionSideEffect::isSideEffectInstruction);
-    }
-
-    // 判断指令是否为副作用指令
-    private static boolean isSideEffectInstruction(Instruction instruction) {
-        if (instruction instanceof IOInst) {
-            return true;
-        } else if (instruction instanceof StoreInst storeInst) {
-            Value pointer = storeInst.getPointer();
-            return pointer instanceof GlobalVar ||
-                    (pointer instanceof GepInst gepInst &&
-                            (gepInst.getPointer() instanceof GlobalVar || gepInst.getPointer() instanceof FuncParam));
+                if (hasSideEffects) {
+                    break;
+                }
+            }
+            callMap.put(function, calledFunctions);
+            function.setHasSideEffects(hasSideEffects);
         }
-        return false;
-    }
-
-    // 获取函数内所有调用的函数
-    private static Set<Function> getCalledFunctions(Function function) {
-        return function.getBasicBlocks().stream()
-                .flatMap(block -> block.getInstructions().stream())
-                .filter(instruction -> instruction instanceof CallInst)
-                .map(instruction -> ((CallInst) instruction).getCalledFunction())
-                .collect(Collectors.toSet());
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (Function function : callMap.keySet()) {
+                HashSet<Function> calledFunctions = callMap.get(function);
+                boolean hasSideEffects = false;
+                for (Function calledFunction : calledFunctions) {
+                    hasSideEffects |= calledFunction.hasSideEffects();
+                }
+                if (hasSideEffects && !function.hasSideEffects()) {
+                    function.setHasSideEffects(true);
+                    changed = true;
+                    break;
+                }
+            }
+        }
     }
 }

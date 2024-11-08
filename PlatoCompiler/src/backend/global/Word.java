@@ -30,21 +30,25 @@ public class Word extends GlobalAssembly {
         } else if (values == null) {
             return name + ": .word 0:" + length;
         } else {
-            StringBuilder sb = new StringBuilder(name + ": .word ");
-            for (int v : values) {
-                sb.append(v);
-                sb.append(", ");
+            if (!values.isEmpty()) {
+                StringBuilder sb = new StringBuilder(name + ": .word ");
+                for (int v : values) {
+                    sb.append(v);
+                    sb.append(", ");
+                }
+                sb.delete(sb.length() - 2, sb.length());
+                if (values.size() < length) {
+                    // word部分是已经存在的定义
+                    sb.append(" # existed definition\n");
+                    sb.append(" ".repeat(Math.max(0, name.length() + 2)));
+                    // space部分是后面未初始化的空间，使用space自动置0
+                    sb.append(".space ").append(4 * (length - values.size()));
+                    sb.append(" # zeroinitializer");
+                }
+                return sb.toString();
+            } else {
+                return name + ": .space " + 4 * length;
             }
-            sb.delete(sb.length() - 2, sb.length());
-            if (values.size() < length) {
-                // word部分是已经存在的定义
-                sb.append(" # existed definition\n");
-                sb.append(" ".repeat(Math.max(0, name.length() + 2)));
-                // space部分是后面未初始化的空间，使用space自动置0
-                sb.append(".space ").append(4 * (length - values.size()));
-                sb.append(" # zeroinitializer");
-            }
-            return sb.toString();
         }
     }
 }

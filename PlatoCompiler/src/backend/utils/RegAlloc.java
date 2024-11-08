@@ -36,7 +36,7 @@ public class RegAlloc {
     private static int registerCount;                            // 可用寄存器数量
     private static HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射
 
-    private static boolean aggressive = false;
+    private static boolean aggressive = true;
 
     // 干涉图节点集合
     private static HashSet<InterferenceGraphNode> graphNodes;
