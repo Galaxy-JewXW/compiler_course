@@ -1,8 +1,13 @@
 package backend.utils;
 
 import backend.enums.Register;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
 import middle.component.Module;
-import middle.component.*;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
@@ -10,7 +15,13 @@ import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import optimize.Mem2Reg;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Stack;
 
 /**
  * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
@@ -25,6 +36,8 @@ public class RegAlloc {
     private static int registerCount;                            // 可用寄存器数量
     private static HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射
 
+    private static boolean aggressive = true;
+
     // 干涉图节点集合
     private static HashSet<InterferenceGraphNode> graphNodes;
 
@@ -36,6 +49,10 @@ public class RegAlloc {
             if (register.ordinal() >= Register.T0.ordinal() && register.ordinal() <= Register.T9.ordinal()) {
                 registerPool.add(register);
             }
+        }
+        if (aggressive) {
+            registerPool.add(Register.GP);
+            registerPool.add(Register.FP);
         }
         registerCount = registerPool.size();
 

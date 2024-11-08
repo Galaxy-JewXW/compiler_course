@@ -12,23 +12,25 @@ public class Optimizer {
     }
 
     public void optimize() {
-        SurplusBlock.build(module);
-        Mem2Reg.run(module, true);
-        InlinedFunction.run(module);
-        UnusedFunction.run(module);
-        GlobalVarLocalize.build(module);
-        LocalConstArrayToValue.run(module);
-        GVN.run(module);
-        IcmpOptimize.run(module);
-        GCM.run(module);
-        BlockSimplify.run(module);
-        GVN.run(module);
-        IcmpOptimize.run(module);
-        GCM.run(module);
-        BlockSimplify.run(module);
-        GVN.run(module);
-        IcmpOptimize.run(module);
-        BlockSimplify.run(module);
-        PrintOptimize.run(module);
+        for (int i = 1; i < 10; i++) {
+            SurplusBlock.build(module);
+            Mem2Reg.run(module, true);
+            InlinedFunction.run(module);
+            UnusedFunction.run(module);
+            GlobalVarLocalize.build(module);
+            LocalConstArrayToValue.run(module);
+            GVN.run(module);
+            IcmpOptimize.run(module);
+            GCM.run(module);
+            BlockSimplify.run(module);
+            GVN.run(module);
+            IcmpOptimize.run(module);
+            GCM.run(module);
+            BlockSimplify.run(module);
+            GVN.run(module);
+            IcmpOptimize.run(module);
+            BlockSimplify.run(module);
+            PrintOptimize.run(module);
+        }
     }
 }
