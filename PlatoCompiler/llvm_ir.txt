@@ -4,68 +4,18 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
+@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 
-@a = dso_local global [10 x i32] zeroinitializer
-@b = dso_local constant [2 x i32] [i32 1, i32 2]
-@aa = dso_local global [10 x i8] zeroinitializer
-@bb = dso_local constant [10 x i8] [i8 104, i8 101, i8 108, i8 108, i8 111, i8 0, i8 0, i8 0, i8 0, i8 0]
-
-define dso_local i32 @foo(i32* %v0, i32 %v1, i8* %v2, i8 %v3) {
-b4:
-	%v5 = alloca i32
-	store i32 %v1, i32* %v5
-	%v6 = alloca i8
-	store i8 %v3, i8* %v6
-	%v7 = getelementptr inbounds i32, i32* %v0, i32 0
-	%v8 = load i32, i32* %v5
-	%v9 = getelementptr inbounds i8, i8* %v2, i32 0
-	%v10 = load i8, i8* %v6
-	%v11 = call i32 @foo(i32* %v7, i32 %v8, i8* %v9, i8 %v10)
-	ret i32 0
-}
 
 define dso_local i32 @main() {
 b0:
-	%v1 = alloca [10 x i32]
-	%v2 = alloca [10 x i8]
-	%v3 = alloca [2 x i32]
-	%v4 = getelementptr inbounds [2 x i32], [2 x i32]* %v3, i32 0, i32 0
-	store i32 1, i32* %v4
-	%v5 = getelementptr inbounds [2 x i32], [2 x i32]* %v3, i32 0, i32 1
-	store i32 2, i32* %v5
-	%v6 = alloca [3 x i8]
-	%v7 = getelementptr inbounds [3 x i8], [3 x i8]* %v6, i32 0, i32 0
-	store i8 49, i8* %v7
-	%v8 = getelementptr inbounds [3 x i8], [3 x i8]* %v6, i32 0, i32 1
-	store i8 0, i8* %v8
-	%v9 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 0
-	%v10 = getelementptr inbounds [10 x i32], [10 x i32]* @a, i32 0, i32 1
-	%v11 = load i32, i32* %v10
-	%v12 = getelementptr inbounds [10 x i8], [10 x i8]* @aa, i32 0, i32 0
-	%v13 = getelementptr inbounds [10 x i8], [10 x i8]* @aa, i32 0, i32 1
-	%v14 = load i8, i8* %v13
-	%v15 = call i32 @foo(i32* %v9, i32 %v11, i8* %v12, i8 %v14)
-	%v16 = getelementptr inbounds [2 x i32], [2 x i32]* @b, i32 0, i32 0
-	%v17 = getelementptr inbounds [2 x i32], [2 x i32]* @b, i32 0, i32 1
-	%v18 = load i32, i32* %v17
-	%v19 = getelementptr inbounds [10 x i8], [10 x i8]* @bb, i32 0, i32 0
-	%v20 = getelementptr inbounds [10 x i8], [10 x i8]* @bb, i32 0, i32 1
-	%v21 = load i8, i8* %v20
-	%v22 = call i32 @foo(i32* %v16, i32 %v18, i8* %v19, i8 %v21)
-	%v23 = getelementptr inbounds [10 x i32], [10 x i32]* %v1, i32 0, i32 0
-	%v24 = getelementptr inbounds [10 x i32], [10 x i32]* %v1, i32 0, i32 1
-	%v25 = load i32, i32* %v24
-	%v26 = getelementptr inbounds [10 x i8], [10 x i8]* %v2, i32 0, i32 0
-	%v27 = getelementptr inbounds [10 x i8], [10 x i8]* %v2, i32 0, i32 1
-	%v28 = load i8, i8* %v27
-	%v29 = call i32 @foo(i32* %v23, i32 %v25, i8* %v26, i8 %v28)
-	%v30 = getelementptr inbounds [2 x i32], [2 x i32]* %v3, i32 0, i32 0
-	%v31 = getelementptr inbounds [2 x i32], [2 x i32]* %v3, i32 0, i32 1
-	%v32 = load i32, i32* %v31
-	%v33 = getelementptr inbounds [3 x i8], [3 x i8]* %v6, i32 0, i32 0
-	%v34 = getelementptr inbounds [3 x i8], [3 x i8]* %v6, i32 0, i32 1
-	%v35 = load i8, i8* %v34
-	%v36 = call i32 @foo(i32* %v30, i32 %v32, i8* %v33, i8 %v35)
+	%v1 = alloca i32
+	%v2 = call i32 @getint()
+	store i32 %v2, i32* %v1
+	store i32 3, i32* %v1
+	%v3 = load i32, i32* %v1
+	call void @putint(i32 %v3)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }

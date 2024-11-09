@@ -1,13 +1,1 @@
-1 a IntArray
-1 b ConstIntArray
-1 aa CharArray
-1 bb ConstCharArray
-1 foo IntFunc
-2 a IntArray
-2 b Int
-2 c CharArray
-2 d Char
-3 c IntArray
-3 cc CharArray
-3 d ConstIntArray
-3 dd ConstCharArray
+2 n Int

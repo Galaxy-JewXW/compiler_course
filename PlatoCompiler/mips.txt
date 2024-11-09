@@ -1,32 +1,14 @@
 .data:
+s0: .asciiz "\n"
+s1: .asciiz "3\n"
 
 .text:
 func_main:
 main_bb0:
-    # %v1 = alloca [2 x i32]
-    addiu $t1, $sp, -8
-    # %v2 = getelementptr inbounds [2 x i32], [2 x i32]* %v1, i32 0, i32 0
-    move $t0, $t1
-    # store i32 1, i32* %v2
-    li $k1, 1
-    sw $k1, 0($t0)
-    # %v3 = getelementptr inbounds [2 x i32], [2 x i32]* %v1, i32 0, i32 1
-    addiu $t0, $t1, 4
-    # store i32 2, i32* %v3
-    li $k1, 2
-    sw $k1, 0($t0)
-    # %v4 = alloca [3 x i8]
-    addiu $t1, $sp, -20
-    # %v5 = getelementptr inbounds [3 x i8], [3 x i8]* %v4, i32 0, i32 0
-    move $t0, $t1
-    # store i8 49, i8* %v5
-    li $k1, 49
-    sb $k1, 0($t0)
-    # %v6 = getelementptr inbounds [3 x i8], [3 x i8]* %v4, i32 0, i32 1
-    addiu $t0, $t1, 1
-    # store i8 0, i8* %v6
-    li $k1, 0
-    sb $k1, 0($t0)
+    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))
+    la $a0, s1
+    li $v0, 4
+    syscall
     # ret i32 0
     li $v0, 10
     syscall

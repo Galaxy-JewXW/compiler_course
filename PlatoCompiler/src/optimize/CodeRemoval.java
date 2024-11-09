@@ -4,8 +4,6 @@ import middle.component.Function;
 import middle.component.Module;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
-import middle.component.instruction.io.GetcharInst;
-import middle.component.instruction.io.GetintInst;
 import middle.component.instruction.io.IOInst;
 
 import java.util.HashSet;
@@ -32,11 +30,10 @@ public class CodeRemoval {
     private static boolean isDeadCode(Instruction instruction) {
         if (instruction.getUserList().isEmpty() && !instruction.getName().isEmpty()) {
             // 非副作用的指令应被移除
-            if (!(instruction instanceof CallInst
-                    || instruction instanceof GetintInst || instruction instanceof GetcharInst)) {
+            if (!(instruction instanceof CallInst callInst)) {
                 instruction.removeOperands();
                 return true;
-            } else if (instruction instanceof CallInst callInst) {
+            } else {
                 // 没有副作用的函数调用也应被移除
                 if (instruction.getUserList().isEmpty()
                         && !callInst.getCalledFunction().hasSideEffects()) {
