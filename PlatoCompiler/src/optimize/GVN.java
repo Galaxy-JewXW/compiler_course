@@ -3,7 +3,12 @@ package optimize;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Module;
-import middle.component.instruction.*;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -124,8 +129,6 @@ public class GVN {
                 }
                 return lName + " " + temp.toString() + " " + rName;
             }
-        } else if (instruction instanceof CallInst callInst) {
-            return callInst.getCallee();
         } else if (instruction instanceof GepInst gepInst) {
             return gepInst.getPointer().getName() + " "
                     + gepInst.getIndex().getName();
