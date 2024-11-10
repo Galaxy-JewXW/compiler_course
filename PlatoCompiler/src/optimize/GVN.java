@@ -127,8 +127,14 @@ public class GVN {
         } else if (instruction instanceof GepInst gepInst) {
             return gepInst.getPointer().getName() + " "
                     + gepInst.getIndex().getName();
+        } else if (instruction instanceof CallInst callInst && callCanReplaced(callInst)) {
+            return callInst.getCallee();
         }
         return null;
+    }
+
+    private static boolean callCanReplaced(CallInst callInst) {
+        return callInst.getCalledFunction().canReplace();
     }
 
     private static void zextOptimize(ZextInst zextInst) {

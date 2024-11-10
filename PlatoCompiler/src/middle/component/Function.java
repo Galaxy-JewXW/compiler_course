@@ -2,9 +2,14 @@ package middle.component;
 
 import backend.enums.Register;
 import middle.IRData;
+import middle.component.instruction.Call;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.io.IOInst;
 import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.LabelType;
+import middle.component.type.PointerType;
 import middle.component.type.ValueType;
 
 import java.util.ArrayList;
@@ -114,6 +119,48 @@ public class Function extends User {
             }
         }
         return postOrder;
+    }
+
+    public boolean canReplace() {
+        // 用一个集合来记录已经访问过的函数
+        HashSet<Function> visitedFunctions = new HashSet<>();
+        return canReplaceHelper(visitedFunctions);
+    }
+
+    private boolean canReplaceHelper(HashSet<Function> visitedFunctions) {
+        if (visitedFunctions.contains(this)) {
+            return true;
+        }
+        visitedFunctions.add(this);
+        // 检查参数类型是否包含指针类型
+        for (FuncParam funcParam : funcParams) {
+            if (funcParam.getValueType() instanceof PointerType) {
+                return false;
+            }
+        }
+        for (BasicBlock basicBlock : basicBlocks) {
+            for (Instruction instruction : basicBlock.getInstructions()) {
+                if (instruction instanceof Call call) {
+                    // 如果是 IO 操作，返回 false
+                    if (call instanceof IOInst) {
+                        return false;
+                    }
+                    CallInst callInst = (CallInst) call;
+                    Function calledFunction = callInst.getCalledFunction();
+                    // 如果调用的函数不能替换，则返回 false
+                    if (!calledFunction.canReplaceHelper(visitedFunctions)) {
+                        return false;
+                    }
+                }
+                // 检查操作数是否引用了非常量的全局变量
+                for (Value operand : instruction.getOperands()) {
+                    if (operand instanceof GlobalVar globalVar && !globalVar.isConstant()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Override
