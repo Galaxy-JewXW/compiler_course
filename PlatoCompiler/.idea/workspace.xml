@@ -9,17 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fuck">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/456.rar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middle/component/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/Function.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/optimize/GVN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/GVN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -104,8 +104,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -179,41 +179,12 @@
       <workItem from="1730200996767" duration="3880000" />
       <workItem from="1730213819177" duration="405000" />
       <workItem from="1730214238530" duration="2684000" />
-      <workItem from="1731216483158" duration="128000" />
-      <workItem from="1731217094754" duration="371000" />
-      <workItem from="1731240710083" duration="1187000" />
-    </task>
-    <task id="LOCAL-00018" summary="gosh">
-      <option name="closed" value="true" />
-      <created>1727443016814</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1727443016814</updated>
-    </task>
-    <task id="LOCAL-00019" summary="win">
-      <option name="closed" value="true" />
-      <created>1727448309630</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1727448309630</updated>
-    </task>
-    <task id="LOCAL-00020" summary="try gvn">
-      <option name="closed" value="true" />
-      <created>1727448678132</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1727448678132</updated>
-    </task>
-    <task id="LOCAL-00021" summary="一定要先mem2reg！">
-      <option name="closed" value="true" />
-      <created>1727450042646</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1727450042646</updated>
+      <workItem from="1731045987836" duration="723000" />
+      <workItem from="1731046835903" duration="4086000" />
+      <workItem from="1731051022715" duration="1981000" />
+      <workItem from="1731053050315" duration="3521000" />
+      <workItem from="1731082978399" duration="684000" />
+      <workItem from="1731111395666" duration="706000" />
     </task>
     <task id="LOCAL-00022" summary="函数内联">
       <option name="closed" value="true" />
@@ -567,15 +538,47 @@
       <option name="project" value="LOCAL" />
       <updated>1730212668936</updated>
     </task>
-    <task id="LOCAL-00066" summary="fuck">
+    <task id="LOCAL-00066" summary="feat">
       <option name="closed" value="true" />
-      <created>1730248709159</created>
+      <created>1730383331649</created>
       <option name="number" value="00066" />
       <option name="presentableId" value="LOCAL-00066" />
       <option name="project" value="LOCAL" />
-      <updated>1730248709160</updated>
+      <updated>1730383331650</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="feat">
+      <option name="closed" value="true" />
+      <created>1731046710549</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1731046710550</updated>
+    </task>
+    <task id="LOCAL-00068" summary="feat">
+      <option name="closed" value="true" />
+      <created>1731051036385</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1731051036385</updated>
+    </task>
+    <task id="LOCAL-00069" summary="bugs">
+      <option name="closed" value="true" />
+      <created>1731053750830</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1731053750831</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fix">
+      <option name="closed" value="true" />
+      <created>1731111419415</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1731111419415</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,12 +596,12 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix move" />
     <MESSAGE value="dismiss" />
     <MESSAGE value="add br inst" />
     <MESSAGE value="finish mips, peephole to be added" />
     <MESSAGE value="fix style" />
     <MESSAGE value="loop error" />
-    <MESSAGE value="fix" />
     <MESSAGE value="man" />
     <MESSAGE value="111" />
     <MESSAGE value="char使用lb和sb" />
@@ -612,13 +615,13 @@
     <MESSAGE value="stable" />
     <MESSAGE value="123" />
     <MESSAGE value="bug in regalloc" />
-    <MESSAGE value="bugs" />
     <MESSAGE value="ff" />
     <MESSAGE value="fixed" />
     <MESSAGE value="sb" />
     <MESSAGE value="feat" />
-    <MESSAGE value="fuck" />
-    <option name="LAST_COMMIT_MESSAGE" value="fuck" />
+    <MESSAGE value="bugs" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -628,69 +631,9 @@
           <option name="timeStamp" value="189" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
-          <line>154</line>
-          <option name="timeStamp" value="221" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
-          <line>151</line>
-          <option name="timeStamp" value="229" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
-          <line>152</line>
-          <option name="timeStamp" value="230" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/utils/PeepHole.java</url>
-          <line>153</line>
-          <option name="timeStamp" value="231" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>378</line>
-          <option name="timeStamp" value="235" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>379</line>
-          <option name="timeStamp" value="236" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>382</line>
-          <option name="timeStamp" value="238" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>380</line>
-          <option name="timeStamp" value="239" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>381</line>
-          <option name="timeStamp" value="240" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>383</line>
-          <option name="timeStamp" value="241" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>384</line>
-          <option name="timeStamp" value="242" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>385</line>
-          <option name="timeStamp" value="243" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/backend/MipsBuilder.java</url>
-          <line>386</line>
-          <option name="timeStamp" value="244" />
+          <url>file://$PROJECT_DIR$/src/optimize/FixMD.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="197" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -22,10 +22,43 @@ public class BlockSimplify {
             module.getFunctions().forEach(BlockSimplify::merge);
             Mem2Reg.run(module, false);
         }
+        for (Function function : module.getFunctions()) {
+            int l = function.getBasicBlocks().size();
+            for (int i = 1; i < l; i++) {
+                rearrange(function, i);
+                Mem2Reg.run(module, false);
+            }
+        }
     }
 
     private static void rearrange(Function function) {
         for (int i = 1; i < function.getBasicBlocks().size(); i++) {
+            BasicBlock block = function.getBasicBlocks().get(i);
+            Instruction lastInst = block.getLastInstruction();
+            if (lastInst instanceof RetInst) {
+                continue;
+            }
+            BasicBlock target = null;
+            if (lastInst instanceof BrInst brInst) {
+                if (brInst.isConditional()) {
+                    target = brInst.getFalseBlock();
+                } else {
+                    target = brInst.getTrueBlock();
+                }
+            }
+            if (target == null) {
+                continue;
+            }
+            int index = function.getBasicBlocks().indexOf(target);
+            if (i < function.getBasicBlocks().size()
+                    && i + 1 < function.getBasicBlocks().size()) {
+                Collections.swap(function.getBasicBlocks(), i + 1, index);
+            }
+        }
+    }
+
+    private static void rearrange(Function function, int begin) {
+        for (int i = begin; i < function.getBasicBlocks().size(); i++) {
             BasicBlock block = function.getBasicBlocks().get(i);
             Instruction lastInst = block.getLastInstruction();
             if (lastInst instanceof RetInst) {

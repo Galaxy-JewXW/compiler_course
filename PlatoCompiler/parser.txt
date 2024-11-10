@@ -449,7 +449,7 @@ IDENFR fib
 LPARENT (
 IDENFR fib
 LPARENT (
-INTCON 4
+INTCON 5
 <Number>
 <PrimaryExp>
 <UnaryExp>

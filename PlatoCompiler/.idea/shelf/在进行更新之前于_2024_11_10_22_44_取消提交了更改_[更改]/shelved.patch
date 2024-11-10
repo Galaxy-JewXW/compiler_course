@@ -1,0 +1,3744 @@
+Index: parser.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>INTTK int\r\nMAINTK main\r\nLPARENT (\r\nRPARENT )\r\nLBRACE {\r\nINTTK int\r\nIDENFR n\r\n<VarDef>\r\nSEMICN ;\r\n<VarDecl>\r\nIDENFR n\r\n<LVal>\r\nASSIGN =\r\nGETINTTK getint\r\nLPARENT (\r\nRPARENT )\r\nSEMICN ;\r\n<Stmt>\r\nIDENFR n\r\n<LVal>\r\nASSIGN =\r\nINTCON 3\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\nSEMICN ;\r\n<Stmt>\r\nPRINTFTK printf\r\nLPARENT (\r\nSTRCON \"%d\\n\"\r\nCOMMA ,\r\nIDENFR n\r\n<LVal>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\nRPARENT )\r\nSEMICN ;\r\n<Stmt>\r\nRETURNTK return\r\nINTCON 0\r\n<Number>\r\n<PrimaryExp>\r\n<UnaryExp>\r\n<MulExp>\r\n<AddExp>\r\n<Exp>\r\nSEMICN ;\r\n<Stmt>\r\nRBRACE }\r\n<Block>\r\n<MainFuncDef>\r\n<CompUnit>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/parser.txt b/parser.txt
+--- a/parser.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/parser.txt	(date 1731146775156)
+@@ -1,25 +1,1385 @@
++CONSTTK const
++INTTK int
++IDENFR num1
++ASSIGN =
++LPARENT (
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++RPARENT )
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++SEMICN ;
++<ConstDecl>
++CONSTTK const
++INTTK int
++IDENFR num2
++ASSIGN =
++PLUS +
++<UnaryOp>
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++COMMA ,
++IDENFR num3
++ASSIGN =
++MINU -
++<UnaryOp>
++INTCON 3
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++SEMICN ;
++<ConstDecl>
++CONSTTK const
++CHARTK char
++IDENFR a
++ASSIGN =
++CHRCON 'a'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++SEMICN ;
++<ConstDecl>
++CONSTTK const
++CHARTK char
++IDENFR b
++ASSIGN =
++CHRCON 'b'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++COMMA ,
++IDENFR c
++ASSIGN =
++CHRCON 'c'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<ConstExp>
++<ConstInitVal>
++<ConstDef>
++SEMICN ;
++<ConstDecl>
++INTTK int
++IDENFR num4
++<VarDef>
++SEMICN ;
++<VarDecl>
++INTTK int
++IDENFR num5
++<VarDef>
++COMMA ,
++IDENFR num6
++<VarDef>
++SEMICN ;
++<VarDecl>
++INTTK int
++IDENFR num7
++ASSIGN =
++INTCON 7
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++INTTK int
++IDENFR num8
++ASSIGN =
++INTCON 8
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++COMMA ,
++IDENFR num9
++ASSIGN =
++INTCON 9
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++CHARTK char
++IDENFR d
++<VarDef>
++SEMICN ;
++<VarDecl>
++CHARTK char
++IDENFR e
++<VarDef>
++COMMA ,
++IDENFR f
++<VarDef>
++SEMICN ;
++<VarDecl>
++CHARTK char
++IDENFR g
++ASSIGN =
++CHRCON 'g'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++CHARTK char
++IDENFR h
++ASSIGN =
++CHRCON 'h'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++COMMA ,
++IDENFR i
++ASSIGN =
++CHRCON 'i'
++<Character>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++VOIDTK void
++<FuncType>
++IDENFR nothing
++LPARENT (
++RPARENT )
++LBRACE {
+ INTTK int
+-MAINTK main
++IDENFR nothing
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR add
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RETURNTK return
++IDENFR x
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR minus
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++MINU -
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RETURNTK return
++IDENFR x
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR multi
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++MULT *
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RETURNTK return
++IDENFR x
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR divide
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++DIV /
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RETURNTK return
++IDENFR x
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR mod
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++MOD %
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++RETURNTK return
++IDENFR x
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++VOIDTK void
++<FuncType>
++IDENFR compare
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GEQ >=
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GRE >
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is greater than num2.\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++EQL ==
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is equal to num2.\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LEQ <=
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is less than num2.\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++EQL ==
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is equal to num2.\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RETURNTK return
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++CHARTK char
++<FuncType>
++IDENFR printLetter
++LPARENT (
++CHARTK char
++IDENFR ch
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "The letter is %c\n"
++COMMA ,
++IDENFR ch
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++RPARENT )
++SEMICN ;
++<Stmt>
++RETURNTK return
++IDENFR ch
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++VOIDTK void
++<FuncType>
++IDENFR judgeFor
++LPARENT (
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR i
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
++LPARENT (
++IDENFR i
++<LVal>
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++SEMICN ;
++IDENFR i
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++SEMICN ;
++IDENFR i
++<LVal>
++ASSIGN =
++IDENFR i
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++RPARENT )
++CONTINUETK continue
++SEMICN ;
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR j
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
++LPARENT (
++SEMICN ;
++IDENFR j
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++SEMICN ;
++IDENFR j
++<LVal>
++ASSIGN =
++IDENFR j
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++RPARENT )
++LBRACE {
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR k
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
++LPARENT (
++IDENFR k
++<LVal>
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++SEMICN ;
++SEMICN ;
++IDENFR k
++<LVal>
++ASSIGN =
++IDENFR k
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR k
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GEQ >=
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR l
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
++LPARENT (
++IDENFR l
++<LVal>
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++SEMICN ;
++IDENFR l
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++SEMICN ;
++RPARENT )
++LBRACE {
++IDENFR l
++<LVal>
++ASSIGN =
++IDENFR l
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR m
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
+ LPARENT (
++SEMICN ;
++SEMICN ;
++IDENFR m
++<LVal>
++ASSIGN =
++IDENFR m
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
+ RPARENT )
+ LBRACE {
++IFTK if
++LPARENT (
++IDENFR m
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GEQ >=
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
+ INTTK int
+ IDENFR n
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
+ <VarDef>
+ SEMICN ;
+ <VarDecl>
++FORTK for
++LPARENT (
++SEMICN ;
+ IDENFR n
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++LSS <
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++SEMICN ;
++RPARENT )
++LBRACE {
++IDENFR n
++<LVal>
++ASSIGN =
++IDENFR n
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR o
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
++LPARENT (
++IDENFR o
+ <LVal>
+ ASSIGN =
+-GETINTTK getint
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<ForStmt>
++SEMICN ;
++SEMICN ;
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR o
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GEQ >=
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IDENFR o
++<LVal>
++ASSIGN =
++IDENFR o
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++INTTK int
++IDENFR p
++ASSIGN =
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<InitVal>
++<VarDef>
++SEMICN ;
++<VarDecl>
++FORTK for
+ LPARENT (
++SEMICN ;
++SEMICN ;
+ RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR p
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++GEQ >=
++INTCON 5
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++BREAKTK break
+ SEMICN ;
+ <Stmt>
+-IDENFR n
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++IDENFR p
+ <LVal>
+ ASSIGN =
+-INTCON 3
++IDENFR p
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++PLUS +
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR judgeEqual
++LPARENT (
++INTTK int
++IDENFR num1
++<FuncFParam>
++COMMA ,
++INTTK int
++IDENFR num2
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++NEQ !=
++IDENFR num2
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++RETURNTK return
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++ELSETK else
++LBRACE {
++RETURNTK return
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RETURNTK return
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++<FuncType>
++IDENFR judgeTrue
++LPARENT (
++INTTK int
++IDENFR num
++<FuncFParam>
++<FuncFParams>
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++NOT !
++<UnaryOp>
++IDENFR num
++<LVal>
++<PrimaryExp>
++<UnaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<RelExp>
++<EqExp>
++<LAndExp>
++<LOrExp>
++<Cond>
++RPARENT )
++LBRACE {
++RETURNTK return
++INTCON 0
+ <Number>
+ <PrimaryExp>
+ <UnaryExp>
+@@ -28,17 +1388,421 @@
+ <Exp>
+ SEMICN ;
+ <Stmt>
++RBRACE }
++<Block>
++<Stmt>
++ELSETK else
++LBRACE {
++RETURNTK return
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<Stmt>
++<Stmt>
++RETURNTK return
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++RBRACE }
++<Block>
++<FuncDef>
++INTTK int
++MAINTK main
++LPARENT (
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++<VarDef>
++SEMICN ;
++<VarDecl>
++IDENFR x
++<LVal>
++ASSIGN =
++GETINTTK getint
++LPARENT (
++RPARENT )
++SEMICN ;
++<Stmt>
++CHARTK char
++IDENFR ch
++<VarDef>
++SEMICN ;
++<VarDecl>
++IDENFR ch
++<LVal>
++ASSIGN =
++GETCHARTK getchar
++LPARENT (
++RPARENT )
++SEMICN ;
++<Stmt>
+ PRINTFTK printf
+ LPARENT (
+-STRCON "%d\n"
++STRCON "22230605\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++IDENFR nothing
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR add
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR minus
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR multi
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR divide
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
+ COMMA ,
+-IDENFR n
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR mod
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR compare
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR compare
++LPARENT (
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR compare
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR printLetter
++LPARENT (
++IDENFR ch
+ <LVal>
+ <PrimaryExp>
+ <UnaryExp>
+ <MulExp>
+ <AddExp>
+ <Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR judgeFor
++LPARENT (
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR judgeEqual
++LPARENT (
++INTCON 2
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR judgeEqual
++LPARENT (
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++COMMA ,
++INTCON 4
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR judgeTrue
++LPARENT (
++INTCON 1
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++IDENFR judgeTrue
++LPARENT (
++INTCON 0
++<Number>
++<PrimaryExp>
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++<FuncRParams>
++RPARENT )
++<UnaryExp>
++<MulExp>
++<AddExp>
++<Exp>
++SEMICN ;
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++<Stmt>
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
+ RPARENT )
+ SEMICN ;
+ <Stmt>
+Index: llvm_ir.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>declare i32 @getint()\r\ndeclare i32 @getchar()\r\ndeclare void @putint(i32)\r\ndeclare void @putch(i8)\r\ndeclare void @putstr(i8*)\r\n\r\n@.s.0 = private unnamed_addr constant [2 x i8] c\"\\0A\\00\", align 1\r\n\r\n\r\n\r\ndefine dso_local i32 @main() {\r\nb0:\r\n\t%v1 = alloca i32\r\n\t%v2 = call i32 @getint()\r\n\tstore i32 %v2, i32* %v1\r\n\tstore i32 3, i32* %v1\r\n\t%v3 = load i32, i32* %v1\r\n\tcall void @putint(i32 %v3)\r\n\tcall void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))\r\n\tret i32 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/llvm_ir.txt b/llvm_ir.txt
+--- a/llvm_ir.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/llvm_ir.txt	(date 1731146775202)
+@@ -4,18 +4,401 @@
+ declare void @putch(i8)
+ declare void @putstr(i8*)
+ 
+-@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
++@.s.0 = private unnamed_addr constant [28 x i8] c"num1 is greater than num2.\0A\00", align 1
++@.s.1 = private unnamed_addr constant [24 x i8] c"num1 is equal to num2.\0A\00", align 1
++@.s.2 = private unnamed_addr constant [25 x i8] c"num1 is less than num2.\0A\00", align 1
++@.s.3 = private unnamed_addr constant [15 x i8] c"The letter is \00", align 1
++@.s.4 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
++@.s.5 = private unnamed_addr constant [10 x i8] c"22230605\0A\00", align 1
++@.s.6 = private unnamed_addr constant [5 x i8] c"end\0A\00", align 1
++
++@num1 = dso_local constant i32 1
++@num2 = dso_local constant i32 2
++@num3 = dso_local constant i32 -3
++@a = dso_local constant i8 97
++@b = dso_local constant i8 98
++@c = dso_local constant i8 99
++@num4 = dso_local global i32 0
++@num5 = dso_local global i32 0
++@num6 = dso_local global i32 0
++@num7 = dso_local global i32 7
++@num8 = dso_local global i32 8
++@num9 = dso_local global i32 9
++@d = dso_local global i8 0
++@e = dso_local global i8 0
++@f = dso_local global i8 0
++@g = dso_local global i8 103
++@h = dso_local global i8 104
++@i = dso_local global i8 105
++
++define dso_local void @nothing() {
++b0:
++	%v1 = alloca i32
++	store i32 0, i32* %v1
++	ret void
++}
++
++define dso_local i32 @add(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = alloca i32
++	%v6 = load i32, i32* %v3
++	%v7 = load i32, i32* %v4
++	%v8 = add i32 %v6, %v7
++	store i32 %v8, i32* %v5
++	%v9 = load i32, i32* %v5
++	ret i32 %v9
++}
++
++define dso_local i32 @minus(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = alloca i32
++	%v6 = load i32, i32* %v3
++	%v7 = load i32, i32* %v4
++	%v8 = sub i32 %v6, %v7
++	store i32 %v8, i32* %v5
++	%v9 = load i32, i32* %v5
++	ret i32 %v9
++}
++
++define dso_local i32 @multi(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = alloca i32
++	%v6 = load i32, i32* %v3
++	%v7 = load i32, i32* %v4
++	%v8 = mul i32 %v6, %v7
++	store i32 %v8, i32* %v5
++	%v9 = load i32, i32* %v5
++	ret i32 %v9
++}
++
++define dso_local i32 @divide(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = alloca i32
++	%v6 = load i32, i32* %v3
++	%v7 = load i32, i32* %v4
++	%v8 = sdiv i32 %v6, %v7
++	store i32 %v8, i32* %v5
++	%v9 = load i32, i32* %v5
++	ret i32 %v9
++}
+ 
++define dso_local i32 @mod(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = alloca i32
++	%v6 = load i32, i32* %v3
++	%v7 = load i32, i32* %v4
++	%v8 = srem i32 %v6, %v7
++	store i32 %v8, i32* %v5
++	%v9 = load i32, i32* %v5
++	ret i32 %v9
++}
+ 
++define dso_local void @compare(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = load i32, i32* %v3
++	%v6 = load i32, i32* %v4
++	%v7 = icmp sge i32 %v5, %v6
++	br i1 %v7, label %b8, label %b12
++b8:
++	%v9 = load i32, i32* %v3
++	%v10 = load i32, i32* %v4
++	%v11 = icmp sgt i32 %v9, %v10
++	br i1 %v11, label %b16, label %b17
++b12:
++	%v13 = load i32, i32* %v3
++	%v14 = load i32, i32* %v4
++	%v15 = icmp sle i32 %v13, %v14
++	br i1 %v15, label %b23, label %b27
++b16:
++	call void @putstr(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.s.0, i64 0, i64 0))
++	ret void
++	br label %b17
++b17:
++	%v18 = load i32, i32* %v3
++	%v19 = load i32, i32* %v4
++	%v20 = icmp eq i32 %v18, %v19
++	br i1 %v20, label %b21, label %b22
++b21:
++	call void @putstr(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.s.1, i64 0, i64 0))
++	ret void
++	br label %b22
++b22:
++	br label %b12
++b23:
++	%v24 = load i32, i32* %v3
++	%v25 = load i32, i32* %v4
++	%v26 = icmp slt i32 %v24, %v25
++	br i1 %v26, label %b28, label %b29
++b27:
++	ret void
++b28:
++	call void @putstr(i8* getelementptr inbounds ([25 x i8], [25 x i8]* @.s.2, i64 0, i64 0))
++	ret void
++	br label %b29
++b29:
++	%v30 = load i32, i32* %v3
++	%v31 = load i32, i32* %v4
++	%v32 = icmp eq i32 %v30, %v31
++	br i1 %v32, label %b33, label %b34
++b33:
++	call void @putstr(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.s.1, i64 0, i64 0))
++	ret void
++	br label %b34
++b34:
++	br label %b27
++}
++
++define dso_local i8 @printLetter(i8 %v0) {
++b1:
++	%v2 = alloca i8
++	store i8 %v0, i8* %v2
++	%v3 = load i8, i8* %v2
++	call void @putstr(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.s.3, i64 0, i64 0))
++	call void @putch(i8 %v3)
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.4, i64 0, i64 0))
++	%v4 = load i8, i8* %v2
++	ret i8 %v4
++}
++
++define dso_local void @judgeFor() {
++b0:
++	%v1 = alloca i32
++	store i32 0, i32* %v1
++	br label %b2
++b2:
++	%v3 = load i32, i32* %v1
++	%v4 = icmp slt i32 %v3, 5
++	br i1 %v4, label %b5, label %b9
++b5:
++	br label %b6
++	br label %b6
++b6:
++	%v7 = load i32, i32* %v1
++	%v8 = add i32 %v7, 1
++	store i32 %v8, i32* %v1
++	br label %b2
++b9:
++	%v10 = alloca i32
++	store i32 0, i32* %v10
++	br label %b11
++b11:
++	%v12 = load i32, i32* %v10
++	%v13 = icmp slt i32 %v12, 5
++	br i1 %v13, label %b14, label %b18
++b14:
++	br label %b15
++b15:
++	%v16 = load i32, i32* %v10
++	%v17 = add i32 %v16, 1
++	store i32 %v17, i32* %v10
++	br label %b11
++b18:
++	%v19 = alloca i32
++	store i32 0, i32* %v19
++	br label %b20
++b20:
++	br label %b21
++b21:
++	%v22 = load i32, i32* %v19
++	%v23 = icmp sge i32 %v22, 5
++	br i1 %v23, label %b29, label %b30
++b24:
++	%v25 = load i32, i32* %v19
++	%v26 = add i32 %v25, 1
++	store i32 %v26, i32* %v19
++	br label %b20
++b27:
++	%v28 = alloca i32
++	store i32 0, i32* %v28
++	br label %b31
++b29:
++	br label %b27
++	br label %b30
++b30:
++	br label %b24
++b31:
++	%v32 = load i32, i32* %v28
++	%v33 = icmp slt i32 %v32, 5
++	br i1 %v33, label %b34, label %b38
++b34:
++	%v35 = load i32, i32* %v28
++	%v36 = add i32 %v35, 1
++	store i32 %v36, i32* %v28
++	br label %b37
++b37:
++	br label %b31
++b38:
++	%v39 = alloca i32
++	store i32 0, i32* %v39
++	br label %b40
++b40:
++	br label %b41
++b41:
++	%v42 = load i32, i32* %v39
++	%v43 = icmp sge i32 %v42, 5
++	br i1 %v43, label %b49, label %b50
++b44:
++	%v45 = load i32, i32* %v39
++	%v46 = add i32 %v45, 1
++	store i32 %v46, i32* %v39
++	br label %b40
++b47:
++	%v48 = alloca i32
++	store i32 0, i32* %v48
++	br label %b51
++b49:
++	br label %b47
++	br label %b50
++b50:
++	br label %b44
++b51:
++	%v52 = load i32, i32* %v48
++	%v53 = icmp slt i32 %v52, 5
++	br i1 %v53, label %b54, label %b58
++b54:
++	%v55 = load i32, i32* %v48
++	%v56 = add i32 %v55, 1
++	store i32 %v56, i32* %v48
++	br label %b57
++b57:
++	br label %b51
++b58:
++	%v59 = alloca i32
++	store i32 0, i32* %v59
++	br label %b60
++b60:
++	br label %b61
++b61:
++	%v62 = load i32, i32* %v59
++	%v63 = icmp sge i32 %v62, 5
++	br i1 %v63, label %b67, label %b68
++b64:
++	br label %b60
++b65:
++	%v66 = alloca i32
++	store i32 0, i32* %v66
++	br label %b71
++b67:
++	br label %b65
++	br label %b68
++b68:
++	%v69 = load i32, i32* %v59
++	%v70 = add i32 %v69, 1
++	store i32 %v70, i32* %v59
++	br label %b64
++b71:
++	br label %b72
++b72:
++	%v73 = load i32, i32* %v66
++	%v74 = icmp sge i32 %v73, 5
++	br i1 %v74, label %b77, label %b78
++b75:
++	br label %b71
++b76:
++	ret void
++b77:
++	br label %b76
++	br label %b78
++b78:
++	%v79 = load i32, i32* %v66
++	%v80 = add i32 %v79, 1
++	store i32 %v80, i32* %v66
++	br label %b75
++}
++
++define dso_local i32 @judgeEqual(i32 %v0, i32 %v1) {
++b2:
++	%v3 = alloca i32
++	store i32 %v0, i32* %v3
++	%v4 = alloca i32
++	store i32 %v1, i32* %v4
++	%v5 = load i32, i32* %v3
++	%v6 = load i32, i32* %v4
++	%v7 = icmp ne i32 %v5, %v6
++	br i1 %v7, label %b8, label %b9
++b8:
++	ret i32 0
++	br label %b10
++b9:
++	ret i32 1
++	br label %b10
++b10:
++	ret i32 0
++}
++
++define dso_local i32 @judgeTrue(i32 %v0) {
++b1:
++	%v2 = alloca i32
++	store i32 %v0, i32* %v2
++	%v3 = load i32, i32* %v2
++	%v4 = icmp eq i32 0, %v3
++	%v5 = zext i1 %v4 to i32
++	%v6 = icmp ne i32 %v5, 0
++	br i1 %v6, label %b7, label %b8
++b7:
++	ret i32 0
++	br label %b9
++b8:
++	ret i32 1
++	br label %b9
++b9:
++	ret i32 0
++}
+ 
+ define dso_local i32 @main() {
+ b0:
+ 	%v1 = alloca i32
+ 	%v2 = call i32 @getint()
+ 	store i32 %v2, i32* %v1
+-	store i32 3, i32* %v1
+-	%v3 = load i32, i32* %v1
+-	call void @putint(i32 %v3)
+-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
++	%v3 = alloca i8
++	%v4 = call i32 @getchar()
++	%v5 = trunc i32 %v4 to i8
++	store i8 %v5, i8* %v3
++	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.5, i64 0, i64 0))
++	call void @nothing()
++	%v6 = call i32 @add(i32 4, i32 2)
++	%v7 = call i32 @minus(i32 4, i32 2)
++	%v8 = call i32 @multi(i32 4, i32 2)
++	%v9 = call i32 @divide(i32 4, i32 2)
++	%v10 = call i32 @mod(i32 4, i32 2)
++	call void @compare(i32 4, i32 2)
++	call void @compare(i32 2, i32 4)
++	call void @compare(i32 4, i32 4)
++	%v11 = load i8, i8* %v3
++	%v12 = call i8 @printLetter(i8 %v11)
++	call void @judgeFor()
++	%v13 = call i32 @judgeEqual(i32 2, i32 4)
++	%v14 = call i32 @judgeEqual(i32 4, i32 4)
++	%v15 = call i32 @judgeTrue(i32 1)
++	%v16 = call i32 @judgeTrue(i32 0)
++	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.6, i64 0, i64 0))
++	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.6, i64 0, i64 0))
++	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.6, i64 0, i64 0))
++	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.6, i64 0, i64 0))
++	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.6, i64 0, i64 0))
+ 	ret i32 0
+ }
+Index: mips.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.data:\r\ns0: .asciiz \"\\n\"\r\ns1: .asciiz \"3\\n\"\r\n\r\n.text:\r\nfunc_main:\r\nmain_bb0:\r\n    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))\r\n    la $a0, s1\r\n    li $v0, 4\r\n    syscall\r\n    # ret i32 0\r\n    li $v0, 10\r\n    syscall\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mips.txt b/mips.txt
+--- a/mips.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/mips.txt	(date 1731146775344)
+@@ -1,15 +1,191 @@
+ .data:
+-s0: .asciiz "\n"
+-s1: .asciiz "3\n"
++s0: .asciiz "num1 is greater than num2.\n"
++s1: .asciiz "num1 is equal to num2.\n"
++s2: .asciiz "num1 is less than num2.\n"
++s3: .asciiz "The letter is "
++s4: .asciiz "\n"
++s5: .asciiz "22230605\n"
++s6: .asciiz "end\n"
++s7: .asciiz "22230605\nnum1 is greater than num2.\nnum1 is less than num2.\nnum1 is equal to num2.\nThe letter is "
++s8: .asciiz "end\nend\nend\nend\nend\n"
+ 
+ .text:
+ func_main:
+ main_bb0:
+-    # call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))
+-    la $a0, s1
++    # %v1 = call i32 @getint()
++    li $v0, 5
++    syscall
++    move $t3, $v0
++    # %v2 = call i32 @getchar()
++    li $v0, 12
++    syscall
++    move $t3, $v0
++    # call void @putstr(i8* getelementptr inbounds ([98 x i8], [98 x i8]* @.s.7, i64 0, i64 0))
++    la $a0, s7
++    li $v0, 4
++    syscall
++    # %v3 = trunc i32 %v2 to i8
++    andi $t3, $t3, 255
++    # call void @putch(i8 %v3)
++    move $a0, $t3
++    li $v0, 11
++    syscall
++    # call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.4, i64 0, i64 0))
++    la $a0, s4
++    li $v0, 4
++    syscall
++    # move 0 -> %v23
++    li $t3, 0
++    # br label %b29
++    j main_bb29
++
++main_bb5:
++    # move 0 -> %v6
++    li $t1, 0
++    # br label %b7
++
++main_bb7:
++    # %v8 = icmp slt i32 %v6, 5
++    # br i1 %v8, label %b40, label %b9
++    blt $t1, 5, main_bb40
++
++main_bb9:
++    # move 0 -> %v45
++    li $t0, 0
++    # br label %b53
++    j main_bb53
++
++main_bb11:
++    # move 0 -> %v11
++    li $t1, 0
++    # br label %b13
++
++main_bb13:
++    # %v14 = icmp slt i32 %v11, 5
++    # br i1 %v14, label %b37, label %b15
++    blt $t1, 5, main_bb37
++
++main_bb15:
++    # move 0 -> %v38
++    li $t0, 0
++    # br label %b45
++    j main_bb45
++
++main_bb17:
++    # %v18 = add i32 %v27, 1
++    addiu $t2, $t2, 1
++    # move %v18 -> %v27
++    # br label %b33
++    j main_bb33
++
++main_bb20:
++    # call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.8, i64 0, i64 0))
++    la $a0, s8
+     li $v0, 4
+     syscall
+     # ret i32 0
+     li $v0, 10
+     syscall
+ 
++main_bb21:
++    # %v22 = add i32 %v35, 1
++    addiu $t7, $t0, 1
++    # move %v22 -> %v35
++    move $t0, $t7
++    # br label %b43
++    j main_bb43
++
++main_bb24:
++    # move 0 -> %v48
++    li $t1, 0
++    # br label %b55
++    j main_bb55
++
++main_bb26:
++    # %v27 = add i32 %v23, 1
++    addiu $t0, $t3, 1
++    # move %v27 -> %v23
++    move $t3, $t0
++    # br label %b29
++
++main_bb29:
++    # %v30 = icmp slt i32 %v23, 5
++    # br i1 %v30, label %b26, label %b31
++    blt $t3, 5, main_bb26
++
++main_bb31:
++    # move 0 -> %v27
++    li $t2, 0
++    # br label %b33
++
++main_bb33:
++    # %v34 = icmp slt i32 %v27, 5
++    # br i1 %v34, label %b17, label %b35
++    blt $t2, 5, main_bb17
++
++main_bb35:
++    # move 0 -> %v35
++    li $t0, 0
++    # br label %b43
++    j main_bb43
++
++main_bb37:
++    # %v38 = add i32 %v11, 1
++    addiu $t1, $t1, 1
++    # move %v38 -> %v11
++    # br label %b13
++    j main_bb13
++
++main_bb40:
++    # %v41 = add i32 %v6, 1
++    addiu $s0, $t1, 1
++    # move %v41 -> %v6
++    move $t1, $s0
++    # br label %b7
++    j main_bb7
++
++main_bb43:
++    # %v44 = icmp sge i32 %v35, 5
++    # br i1 %v44, label %b11, label %b21
++    bge $t0, 5, main_bb11
++    j main_bb21
++
++main_bb45:
++    # %v46 = icmp sge i32 %v38, 5
++    # br i1 %v46, label %b5, label %b47
++    bge $t0, 5, main_bb5
++
++main_bb47:
++    # %v48 = add i32 %v38, 1
++    addiu $t6, $t0, 1
++    # move %v48 -> %v38
++    move $t0, $t6
++    # br label %b45
++    j main_bb45
++
++main_bb50:
++    # %v51 = add i32 %v45, 1
++    addiu $t4, $t0, 1
++    # move %v51 -> %v45
++    move $t0, $t4
++    # br label %b53
++
++main_bb53:
++    # %v54 = icmp sge i32 %v45, 5
++    # br i1 %v54, label %b24, label %b50
++    bge $t0, 5, main_bb24
++    j main_bb50
++
++main_bb55:
++    # %v56 = icmp sge i32 %v48, 5
++    # br i1 %v56, label %b20, label %b57
++    bge $t1, 5, main_bb20
++
++main_bb57:
++    # %v58 = add i32 %v48, 1
++    addiu $t5, $t1, 1
++    # move %v58 -> %v48
++    move $t1, $t5
++    # br label %b55
++    j main_bb55
++
+Index: src/optimize/CodeRemoval.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package optimize;\r\n\r\nimport middle.component.Function;\r\nimport middle.component.Module;\r\nimport middle.component.instruction.CallInst;\r\nimport middle.component.instruction.Instruction;\r\nimport middle.component.instruction.io.IOInst;\r\n\r\nimport java.util.HashSet;\r\nimport java.util.Stack;\r\n\r\n// Code Removal\r\npublic class CodeRemoval {\r\n    public static void run(Module module) {\r\n        FunctionSideEffect.run(module);\r\n        rmDeadCode(module);\r\n        rmUnusedCode(module);\r\n    }\r\n\r\n    private static void rmDeadCode(Module module) {\r\n        module.getFunctions().forEach(function ->\r\n                function.getBasicBlocks().forEach(block -> {\r\n                    // 使用 stream() 和 removeIf() 过滤无用指令\r\n                    block.getInstructions().removeIf(CodeRemoval::isDeadCode);\r\n                })\r\n        );\r\n    }\r\n\r\n    // 判断指令是否是死代码\r\n    private static boolean isDeadCode(Instruction instruction) {\r\n        if (instruction.getUserList().isEmpty() && !instruction.getName().isEmpty()) {\r\n            // 非副作用的指令应被移除\r\n            if (!(instruction instanceof CallInst callInst)) {\r\n                instruction.removeOperands();\r\n                return true;\r\n            } else {\r\n                // 没有副作用的函数调用也应被移除\r\n                if (instruction.getUserList().isEmpty()\r\n                        && !callInst.getCalledFunction().hasSideEffects()) {\r\n                    instruction.removeOperands();\r\n                    return true;\r\n                }\r\n            }\r\n        }\r\n        return false;\r\n    }\r\n\r\n    private static void rmUnusedCode(Module module) {\r\n        module.getFunctions().forEach(CodeRemoval::delete);\r\n    }\r\n\r\n    private static void delete(Function function) {\r\n        HashSet<Instruction> usefulInstructions = findUseful(function);\r\n        removeUseless(function, usefulInstructions);\r\n    }\r\n\r\n    // 查找有用的指令\r\n    private static HashSet<Instruction> findUseful(Function function) {\r\n        HashSet<Instruction> useful = new HashSet<>();\r\n        function.getBasicBlocks().forEach(block ->\r\n                block.getInstructions().stream()\r\n                        .filter(CodeRemoval::isUseful)\r\n                        .forEach(instruction -> getClosure(instruction, useful))\r\n        );\r\n        return useful;\r\n    }\r\n\r\n    // 获取所有依赖关系的闭包\r\n    private static void getClosure(Instruction instruction, HashSet<Instruction> useful) {\r\n        Stack<Instruction> stack = new Stack<>();\r\n        stack.push(instruction);\r\n        while (!stack.isEmpty()) {\r\n            Instruction curInstruction = stack.pop();\r\n            if (useful.add(curInstruction)) {\r\n                curInstruction.getOperands().stream()\r\n                        .filter(operand -> operand instanceof Instruction)\r\n                        .map(operand -> (Instruction) operand)\r\n                        .forEach(stack::push);\r\n            }\r\n        }\r\n    }\r\n\r\n    // 判断指令是否有用\r\n    private static boolean isUseful(Instruction instruction) {\r\n        return instruction.getName().isEmpty() || instruction instanceof IOInst ||\r\n                (instruction instanceof CallInst callInst && callInst.getCalledFunction().hasSideEffects());\r\n    }\r\n\r\n    // 移除无用的指令\r\n    private static void removeUseless(Function function, HashSet<Instruction> useful) {\r\n        function.getBasicBlocks().forEach(block ->\r\n                block.getInstructions().removeIf(instruction -> {\r\n                    if (!useful.contains(instruction)) {\r\n                        instruction.removeOperands();\r\n                        return true;\r\n                    }\r\n                    return false;\r\n                })\r\n        );\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/optimize/CodeRemoval.java b/src/optimize/CodeRemoval.java
+--- a/src/optimize/CodeRemoval.java	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/src/optimize/CodeRemoval.java	(date 1731146773596)
+@@ -4,6 +4,8 @@
+ import middle.component.Module;
+ import middle.component.instruction.CallInst;
+ import middle.component.instruction.Instruction;
++import middle.component.instruction.io.GetcharInst;
++import middle.component.instruction.io.GetintInst;
+ import middle.component.instruction.io.IOInst;
+ 
+ import java.util.HashSet;
+@@ -30,10 +32,11 @@
+     private static boolean isDeadCode(Instruction instruction) {
+         if (instruction.getUserList().isEmpty() && !instruction.getName().isEmpty()) {
+             // 非副作用的指令应被移除
+-            if (!(instruction instanceof CallInst callInst)) {
++            if (!(instruction instanceof CallInst
++                    || instruction instanceof GetintInst || instruction instanceof GetcharInst)) {
+                 instruction.removeOperands();
+                 return true;
+-            } else {
++            } else if (instruction instanceof CallInst callInst) {
+                 // 没有副作用的函数调用也应被移除
+                 if (instruction.getUserList().isEmpty()
+                         && !callInst.getCalledFunction().hasSideEffects()) {
+Index: src/optimize/BlockSimplify.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package optimize;\r\n\r\nimport middle.component.BasicBlock;\r\nimport middle.component.Function;\r\nimport middle.component.Module;\r\nimport middle.component.instruction.BrInst;\r\nimport middle.component.instruction.Instruction;\r\nimport middle.component.instruction.PhiInst;\r\nimport middle.component.instruction.RetInst;\r\nimport middle.component.model.Value;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Collections;\r\nimport java.util.Iterator;\r\n\r\npublic class BlockSimplify {\r\n    public static void run(Module module) {\r\n        Mem2Reg.run(module, false);\r\n        for (int i = 0; i < 10; i++) {\r\n            module.getFunctions().forEach(BlockSimplify::rearrange);\r\n            Mem2Reg.run(module, false);\r\n            module.getFunctions().forEach(BlockSimplify::merge);\r\n            Mem2Reg.run(module, false);\r\n        }\r\n    }\r\n\r\n    private static void rearrange(Function function) {\r\n        for (int i = 1; i < function.getBasicBlocks().size(); i++) {\r\n            BasicBlock block = function.getBasicBlocks().get(i);\r\n            Instruction lastInst = block.getLastInstruction();\r\n            if (lastInst instanceof RetInst) {\r\n                continue;\r\n            }\r\n            BasicBlock target = null;\r\n            if (lastInst instanceof BrInst brInst) {\r\n                if (brInst.isConditional()) {\r\n                    target = brInst.getFalseBlock();\r\n                } else {\r\n                    target = brInst.getTrueBlock();\r\n                }\r\n            }\r\n            if (target == null) {\r\n                continue;\r\n            }\r\n            int index = function.getBasicBlocks().indexOf(target);\r\n            if (i < function.getBasicBlocks().size()\r\n                    && i + 1 < function.getBasicBlocks().size()) {\r\n                Collections.swap(function.getBasicBlocks(), i + 1, index);\r\n            }\r\n        }\r\n    }\r\n\r\n    // TODO: 基本块合并\r\n    private static void merge(Function function) {\r\n        for (BasicBlock block : function.getBasicBlocks()) {\r\n            if (!block.isDeleted()) {\r\n                if (block.getNextBlocks().size() == 1) {\r\n                    BasicBlock child = block.getNextBlocks().get(0);\r\n                    if (child.getPrevBlocks().size() == 1) {\r\n                        Instruction jumpInstr = block.getLastInstruction();\r\n                        jumpInstr.removeOperands();\r\n                        block.getInstructions().remove(jumpInstr);\r\n                        Iterator<Instruction> it = child.getInstructions().iterator();\r\n                        while (it.hasNext()) {\r\n                            Instruction instr = it.next();\r\n                            if (instr instanceof PhiInst phiInst) {\r\n                                ArrayList<BasicBlock> blocks = phiInst.getBlocks();\r\n                                ArrayList<Value> operands = phiInst.getOperands();\r\n                                phiInst.replaceByNewValue(operands.get(blocks.indexOf(block)));\r\n                                phiInst.removeOperands();\r\n                            } else {\r\n                                block.getInstructions().add(instr);\r\n                                instr.setBasicBlock(block);\r\n                            }\r\n                            it.remove();\r\n                        }\r\n                        child.replaceByNewValue(block);\r\n                        child.setDeleted(true);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        function.getBasicBlocks().removeIf(BasicBlock::isDeleted);\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/optimize/BlockSimplify.java b/src/optimize/BlockSimplify.java
+--- a/src/optimize/BlockSimplify.java	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/src/optimize/BlockSimplify.java	(date 1731146225360)
+@@ -22,6 +22,13 @@
+             module.getFunctions().forEach(BlockSimplify::merge);
+             Mem2Reg.run(module, false);
+         }
++        for (Function function : module.getFunctions()) {
++            int l = function.getBasicBlocks().size();
++            for (int i = 1; i < l; i++) {
++                rearrange(function, i);
++                Mem2Reg.run(module, false);
++            }
++        }
+     }
+ 
+     private static void rearrange(Function function) {
+@@ -49,6 +56,32 @@
+             }
+         }
+     }
++
++    private static void rearrange(Function function, int begin) {
++        for (int i = begin; i < function.getBasicBlocks().size(); i++) {
++            BasicBlock block = function.getBasicBlocks().get(i);
++            Instruction lastInst = block.getLastInstruction();
++            if (lastInst instanceof RetInst) {
++                continue;
++            }
++            BasicBlock target = null;
++            if (lastInst instanceof BrInst brInst) {
++                if (brInst.isConditional()) {
++                    target = brInst.getFalseBlock();
++                } else {
++                    target = brInst.getTrueBlock();
++                }
++            }
++            if (target == null) {
++                continue;
++            }
++            int index = function.getBasicBlocks().indexOf(target);
++            if (i < function.getBasicBlocks().size()
++                    && i + 1 < function.getBasicBlocks().size()) {
++                Collections.swap(function.getBasicBlocks(), i + 1, index);
++            }
++        }
++    }
+ 
+     // TODO: 基本块合并
+     private static void merge(Function function) {
+Index: testfile.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const int N = 10;\r\nint a[10] = {0,1,2,3,4,5,6,7,8,9};\r\nint fib(int i) {\r\n    if (i == 1) {\r\n        return 1;\r\n    }\r\n    if (i == 2) {\r\n        return 2;\r\n    }\r\n    return fib(i - 1) + fib(i - 2);\r\n}\r\nint main()\r\n{\r\n    int i = 2,j = 5;\r\n    const int a1 = 1, a2 = 2;\r\n    i = getint();\r\n    j = getint();\r\n    i = (-(i * j) * fib(4) + 0 + a[1] * 1 - 1/2) / 5;\r\n    j = 7*5923%56*57 - fib(fib(5)+2) + (a1+a2-(89/2*36-53) /1*6-2*(45*56/85-56+35*56/4-9));\r\n    int k = +-+6;\r\n    for(; i < 100;) {\r\n\ta[0] = a[0] + i * i;\r\n\ta[1] = a[1] + i * i;\r\n\ta[2] = a[2] + i * i;\r\n\ta[3] = a[3] + i * i;\r\n\ta[4] = a[4] + i * i;\r\n\ta[5] = a[5] + i * i;\r\n\ta[6] = a[6] + i * i;\r\n\ta[7] = a[7] + i * i;\r\n\ta[8] = a[8] + i * i;\r\n\ta[9] = a[9] + i * i;\r\n    }\r\n    i = 0;\r\n    for(; i < 10;) {\r\n\tprintf(\"%d, \", a[i]);\r\n\ti = i + 1;\r\n    }\r\n    printf(\"\\n%d, %d, %d\\n\", i, j, k);\r\n    return 0;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/testfile.txt b/testfile.txt
+--- a/testfile.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/testfile.txt	(date 1731146637011)
+@@ -1,40 +1,161 @@
+-const int N = 10;
+-int a[10] = {0,1,2,3,4,5,6,7,8,9};
+-int fib(int i) {
+-    if (i == 1) {
++const int num1 = (1);
++const int num2 = +2, num3 = -3;
++
++const char a = 'a';
++const char b = 'b', c = 'c';
++
++int num4;
++int num5, num6;
++int num7 = 7;
++int num8 = 8, num9 = 9;
++
++char d;
++char e, f;
++char g = 'g';
++char h = 'h', i = 'i';
++
++void nothing() {
++    int nothing = 0;
++}
++int add(int num1, int num2) {
++    int x = num1 + num2;
++    return x;
++}
++int minus(int num1, int num2) {
++    int x = num1 - num2;
++    return x;
++}
++int multi(int num1, int num2) {
++    int x = num1 * num2;
++    return x;
++}
++int divide(int num1, int num2) {
++    int x = num1 / num2;
++    return x;
++}
++int mod(int num1, int num2) {
++    int x = num1 % num2;
++    return x;
++}
++void compare(int num1, int num2) {
++    if (num1 >= num2) {
++        if (num1 > num2) {
++            printf("num1 is greater than num2.\n");
++            return;
++        }
++        if (num1 == num2) {
++            printf("num1 is equal to num2.\n");
++            return;
++        }
++    }
++    if (num1 <= num2) {
++        if (num1 < num2) {
++            printf("num1 is less than num2.\n");
++            return;
++        }
++        if (num1 == num2) {
++            printf("num1 is equal to num2.\n");
++            return;
++        }
++    }
++    return;
++}
++
++char printLetter(char ch) {
++    printf("The letter is %c\n", ch);
++    return ch;
++}
++
++void judgeFor() {
++    int i;
++    for (i = 0; i < 5; i=i+1) continue;
++
++    int j = 0;
++    for (; j < 5; j=j+1) {
++    }
++
++    int k;
++    for (k = 0; ; k=k+1) {
++        if (k >= 5) {
++            break;
++        }
++    }
++
++    int l;
++    for (l = 0; l < 5; ) {
++        l=l+1;
++    }
++
++    int m = 0;
++    for ( ; ; m=m+1) {
++        if (m >= 5) {
++            break;
++        }
++    }
++
++    int n = 0;
++    for ( ; n < 5; ) {
++        n=n + 1;
++    }
++
++    int o;
++    for (o = 0; ; ) {
++        if (o >= 5) {
++            break;
++        }
++        o = o + 1;
++    }
++
++    int p = 0;
++    for(;;) {
++        if(p >= 5) {
++            break;
++        }
++        p = p + 1;
++    }
++}
++int judgeEqual(int num1, int num2) {
++    if(num1 != num2) {
++        return 0;
++    } else {
+         return 1;
+     }
+-    if (i == 2) {
+-        return 2;
+-    }
+-    return fib(i - 1) + fib(i - 2);
++    return 0;
+ }
+-int main()
+-{
+-    int i = 2,j = 5;
+-    const int a1 = 1, a2 = 2;
+-    i = getint();
+-    j = getint();
+-    i = (-(i * j) * fib(4) + 0 + a[1] * 1 - 1/2) / 5;
+-    j = 7*5923%56*57 - fib(fib(5)+2) + (a1+a2-(89/2*36-53) /1*6-2*(45*56/85-56+35*56/4-9));
+-    int k = +-+6;
+-    for(; i < 100;) {
+-	a[0] = a[0] + i * i;
+-	a[1] = a[1] + i * i;
+-	a[2] = a[2] + i * i;
+-	a[3] = a[3] + i * i;
+-	a[4] = a[4] + i * i;
+-	a[5] = a[5] + i * i;
+-	a[6] = a[6] + i * i;
+-	a[7] = a[7] + i * i;
+-	a[8] = a[8] + i * i;
+-	a[9] = a[9] + i * i;
++int judgeTrue(int num) {
++    if(!num) {
++        return 0;
++    } else {
++        return 1;
+     }
+-    i = 0;
+-    for(; i < 10;) {
+-	printf("%d, ", a[i]);
+-	i = i + 1;
+-    }
+-    printf("\n%d, %d, %d\n", i, j, k);
++    return 0;
++}
++int main() {
++    int x;
++    x = getint();
++    char ch;
++    ch = getchar();
++    printf("22230605\n");
++    nothing();
++    add(4,2);
++    minus(4,2);
++    multi(4,2);
++    divide(4,2);
++    mod(4,2);
++    compare(4,2);
++    compare(2,4);
++    compare(4,4);
++    printLetter(ch);
++    judgeFor();
++    judgeEqual(2,4);
++    judgeEqual(4,4);
++    judgeTrue(1);
++    judgeTrue(0);
++    printf("end\n");
++    printf("end\n");
++    printf("end\n");
++    printf("end\n");
++    printf("end\n");
+     return 0;
+-}
+\ No newline at end of file
++}
++
+Index: ir.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>declare i32 @getint()\r\ndeclare i32 @getchar()\r\ndeclare void @putint(i32)\r\ndeclare void @putch(i8)\r\ndeclare void @putstr(i8*)\r\n\r\n@.s.0 = private unnamed_addr constant [2 x i8] c\"\\0A\\00\", align 1\r\n@.s.1 = private unnamed_addr constant [3 x i8] c\"3\\0A\\00\", align 1\r\n\r\n\r\n\r\ndefine dso_local i32 @main() {\r\nb0:\r\n\tcall void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))\r\n\tret i32 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ir.txt b/ir.txt
+--- a/ir.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/ir.txt	(date 1731146775313)
+@@ -4,13 +4,98 @@
+ declare void @putch(i8)
+ declare void @putstr(i8*)
+ 
+-@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+-@.s.1 = private unnamed_addr constant [3 x i8] c"3\0A\00", align 1
++@.s.0 = private unnamed_addr constant [28 x i8] c"num1 is greater than num2.\0A\00", align 1
++@.s.1 = private unnamed_addr constant [24 x i8] c"num1 is equal to num2.\0A\00", align 1
++@.s.2 = private unnamed_addr constant [25 x i8] c"num1 is less than num2.\0A\00", align 1
++@.s.3 = private unnamed_addr constant [15 x i8] c"The letter is \00", align 1
++@.s.4 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
++@.s.5 = private unnamed_addr constant [10 x i8] c"22230605\0A\00", align 1
++@.s.6 = private unnamed_addr constant [5 x i8] c"end\0A\00", align 1
++@.s.7 = private unnamed_addr constant [98 x i8] c"22230605\0Anum1 is greater than num2.\0Anum1 is less than num2.\0Anum1 is equal to num2.\0AThe letter is \00", align 1
++@.s.8 = private unnamed_addr constant [21 x i8] c"end\0Aend\0Aend\0Aend\0Aend\0A\00", align 1
+ 
+ 
+ 
+ define dso_local i32 @main() {
+ b0:
+-	call void @putstr(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.s.1, i64 0, i64 0))
++	%v1 = call i32 @getint()
++	%v2 = call i32 @getchar()
++	call void @putstr(i8* getelementptr inbounds ([98 x i8], [98 x i8]* @.s.7, i64 0, i64 0))
++	%v3 = trunc i32 %v2 to i8
++	call void @putch(i8 %v3)
++	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.4, i64 0, i64 0))
++	br label %b22
++b4:
++	br label %b5
++b5:
++	%v6 = phi i32 [ 0, %b4 ], [ %v33, %b32 ]
++	%v7 = icmp slt i32 %v6, 5
++	br i1 %v7, label %b32, label %b8
++b8:
++	br label %b44
++b9:
++	br label %b10
++b10:
++	%v11 = phi i32 [ 0, %b9 ], [ %v31, %b30 ]
++	%v12 = icmp slt i32 %v11, 5
++	br i1 %v12, label %b30, label %b13
++b13:
++	br label %b37
++b14:
++	%v15 = add i32 %v27, 1
++	br label %b26
++b16:
++	call void @putstr(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.s.8, i64 0, i64 0))
+ 	ret i32 0
++b17:
++	%v18 = add i32 %v35, 1
++	br label %b34
++b19:
++	br label %b47
++b20:
++	%v21 = add i32 %v23, 1
++	br label %b22
++b22:
++	%v23 = phi i32 [ 0, %b0 ], [ %v21, %b20 ]
++	%v24 = icmp slt i32 %v23, 5
++	br i1 %v24, label %b20, label %b25
++b25:
++	br label %b26
++b26:
++	%v27 = phi i32 [ 0, %b25 ], [ %v15, %b14 ]
++	%v28 = icmp slt i32 %v27, 5
++	br i1 %v28, label %b14, label %b29
++b29:
++	br label %b34
++b30:
++	%v31 = add i32 %v11, 1
++	br label %b10
++b32:
++	%v33 = add i32 %v6, 1
++	br label %b5
++b34:
++	%v35 = phi i32 [ 0, %b29 ], [ %v18, %b17 ]
++	%v36 = icmp sge i32 %v35, 5
++	br i1 %v36, label %b9, label %b17
++b37:
++	%v38 = phi i32 [ 0, %b13 ], [ %v41, %b40 ]
++	%v39 = icmp sge i32 %v38, 5
++	br i1 %v39, label %b4, label %b40
++b40:
++	%v41 = add i32 %v38, 1
++	br label %b37
++b42:
++	%v43 = add i32 %v45, 1
++	br label %b44
++b44:
++	%v45 = phi i32 [ 0, %b8 ], [ %v43, %b42 ]
++	%v46 = icmp sge i32 %v45, 5
++	br i1 %v46, label %b19, label %b42
++b47:
++	%v48 = phi i32 [ 0, %b19 ], [ %v51, %b50 ]
++	%v49 = icmp sge i32 %v48, 5
++	br i1 %v49, label %b16, label %b50
++b50:
++	%v51 = add i32 %v48, 1
++	br label %b47
+ }
+Index: lexer.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>INTTK int\r\nMAINTK main\r\nLPARENT (\r\nRPARENT )\r\nLBRACE {\r\nINTTK int\r\nIDENFR n\r\nSEMICN ;\r\nIDENFR n\r\nASSIGN =\r\nGETINTTK getint\r\nLPARENT (\r\nRPARENT )\r\nSEMICN ;\r\nIDENFR n\r\nASSIGN =\r\nINTCON 3\r\nSEMICN ;\r\nPRINTFTK printf\r\nLPARENT (\r\nSTRCON \"%d\\n\"\r\nCOMMA ,\r\nIDENFR n\r\nRPARENT )\r\nSEMICN ;\r\nRETURNTK return\r\nINTCON 0\r\nSEMICN ;\r\nRBRACE }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lexer.txt b/lexer.txt
+--- a/lexer.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/lexer.txt	(date 1731146775124)
+@@ -1,26 +1,710 @@
++CONSTTK const
++INTTK int
++IDENFR num1
++ASSIGN =
++LPARENT (
++INTCON 1
++RPARENT )
++SEMICN ;
++CONSTTK const
++INTTK int
++IDENFR num2
++ASSIGN =
++PLUS +
++INTCON 2
++COMMA ,
++IDENFR num3
++ASSIGN =
++MINU -
++INTCON 3
++SEMICN ;
++CONSTTK const
++CHARTK char
++IDENFR a
++ASSIGN =
++CHRCON 'a'
++SEMICN ;
++CONSTTK const
++CHARTK char
++IDENFR b
++ASSIGN =
++CHRCON 'b'
++COMMA ,
++IDENFR c
++ASSIGN =
++CHRCON 'c'
++SEMICN ;
++INTTK int
++IDENFR num4
++SEMICN ;
++INTTK int
++IDENFR num5
++COMMA ,
++IDENFR num6
++SEMICN ;
++INTTK int
++IDENFR num7
++ASSIGN =
++INTCON 7
++SEMICN ;
++INTTK int
++IDENFR num8
++ASSIGN =
++INTCON 8
++COMMA ,
++IDENFR num9
++ASSIGN =
++INTCON 9
++SEMICN ;
++CHARTK char
++IDENFR d
++SEMICN ;
++CHARTK char
++IDENFR e
++COMMA ,
++IDENFR f
++SEMICN ;
++CHARTK char
++IDENFR g
++ASSIGN =
++CHRCON 'g'
++SEMICN ;
++CHARTK char
++IDENFR h
++ASSIGN =
++CHRCON 'h'
++COMMA ,
++IDENFR i
++ASSIGN =
++CHRCON 'i'
++SEMICN ;
++VOIDTK void
++IDENFR nothing
++LPARENT (
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR nothing
++ASSIGN =
++INTCON 0
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR add
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++PLUS +
++IDENFR num2
++SEMICN ;
++RETURNTK return
++IDENFR x
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR minus
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++MINU -
++IDENFR num2
++SEMICN ;
++RETURNTK return
++IDENFR x
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR multi
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++MULT *
++IDENFR num2
++SEMICN ;
++RETURNTK return
++IDENFR x
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR divide
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++DIV /
++IDENFR num2
++SEMICN ;
++RETURNTK return
++IDENFR x
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR mod
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++ASSIGN =
++IDENFR num1
++MOD %
++IDENFR num2
++SEMICN ;
++RETURNTK return
++IDENFR x
++SEMICN ;
++RBRACE }
++VOIDTK void
++IDENFR compare
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++GEQ >=
++IDENFR num2
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++GRE >
++IDENFR num2
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is greater than num2.\n"
++RPARENT )
++SEMICN ;
++RETURNTK return
++SEMICN ;
++RBRACE }
++IFTK if
++LPARENT (
++IDENFR num1
++EQL ==
++IDENFR num2
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is equal to num2.\n"
++RPARENT )
++SEMICN ;
++RETURNTK return
++SEMICN ;
++RBRACE }
++RBRACE }
++IFTK if
++LPARENT (
++IDENFR num1
++LEQ <=
++IDENFR num2
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++LSS <
++IDENFR num2
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is less than num2.\n"
++RPARENT )
++SEMICN ;
++RETURNTK return
++SEMICN ;
++RBRACE }
++IFTK if
++LPARENT (
++IDENFR num1
++EQL ==
++IDENFR num2
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "num1 is equal to num2.\n"
++RPARENT )
++SEMICN ;
++RETURNTK return
++SEMICN ;
++RBRACE }
++RBRACE }
++RETURNTK return
++SEMICN ;
++RBRACE }
++CHARTK char
++IDENFR printLetter
++LPARENT (
++CHARTK char
++IDENFR ch
++RPARENT )
++LBRACE {
++PRINTFTK printf
++LPARENT (
++STRCON "The letter is %c\n"
++COMMA ,
++IDENFR ch
++RPARENT )
++SEMICN ;
++RETURNTK return
++IDENFR ch
++SEMICN ;
++RBRACE }
++VOIDTK void
++IDENFR judgeFor
++LPARENT (
++RPARENT )
++LBRACE {
+ INTTK int
+-MAINTK main
++IDENFR i
++SEMICN ;
++FORTK for
++LPARENT (
++IDENFR i
++ASSIGN =
++INTCON 0
++SEMICN ;
++IDENFR i
++LSS <
++INTCON 5
++SEMICN ;
++IDENFR i
++ASSIGN =
++IDENFR i
++PLUS +
++INTCON 1
++RPARENT )
++CONTINUETK continue
++SEMICN ;
++INTTK int
++IDENFR j
++ASSIGN =
++INTCON 0
++SEMICN ;
++FORTK for
++LPARENT (
++SEMICN ;
++IDENFR j
++LSS <
++INTCON 5
++SEMICN ;
++IDENFR j
++ASSIGN =
++IDENFR j
++PLUS +
++INTCON 1
++RPARENT )
++LBRACE {
++RBRACE }
++INTTK int
++IDENFR k
++SEMICN ;
++FORTK for
++LPARENT (
++IDENFR k
++ASSIGN =
++INTCON 0
++SEMICN ;
++SEMICN ;
++IDENFR k
++ASSIGN =
++IDENFR k
++PLUS +
++INTCON 1
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR k
++GEQ >=
++INTCON 5
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++RBRACE }
++RBRACE }
++INTTK int
++IDENFR l
++SEMICN ;
++FORTK for
++LPARENT (
++IDENFR l
++ASSIGN =
++INTCON 0
++SEMICN ;
++IDENFR l
++LSS <
++INTCON 5
++SEMICN ;
++RPARENT )
++LBRACE {
++IDENFR l
++ASSIGN =
++IDENFR l
++PLUS +
++INTCON 1
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR m
++ASSIGN =
++INTCON 0
++SEMICN ;
++FORTK for
++LPARENT (
++SEMICN ;
++SEMICN ;
++IDENFR m
++ASSIGN =
++IDENFR m
++PLUS +
++INTCON 1
++RPARENT )
++LBRACE {
++IFTK if
+ LPARENT (
++IDENFR m
++GEQ >=
++INTCON 5
+ RPARENT )
+ LBRACE {
++BREAKTK break
++SEMICN ;
++RBRACE }
++RBRACE }
+ INTTK int
+ IDENFR n
++ASSIGN =
++INTCON 0
+ SEMICN ;
++FORTK for
++LPARENT (
++SEMICN ;
++IDENFR n
++LSS <
++INTCON 5
++SEMICN ;
++RPARENT )
++LBRACE {
++IDENFR n
++ASSIGN =
+ IDENFR n
++PLUS +
++INTCON 1
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR o
++SEMICN ;
++FORTK for
++LPARENT (
++IDENFR o
++ASSIGN =
++INTCON 0
++SEMICN ;
++SEMICN ;
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR o
++GEQ >=
++INTCON 5
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++RBRACE }
++IDENFR o
++ASSIGN =
++IDENFR o
++PLUS +
++INTCON 1
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR p
++ASSIGN =
++INTCON 0
++SEMICN ;
++FORTK for
++LPARENT (
++SEMICN ;
++SEMICN ;
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR p
++GEQ >=
++INTCON 5
++RPARENT )
++LBRACE {
++BREAKTK break
++SEMICN ;
++RBRACE }
++IDENFR p
++ASSIGN =
++IDENFR p
++PLUS +
++INTCON 1
++SEMICN ;
++RBRACE }
++RBRACE }
++INTTK int
++IDENFR judgeEqual
++LPARENT (
++INTTK int
++IDENFR num1
++COMMA ,
++INTTK int
++IDENFR num2
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++IDENFR num1
++NEQ !=
++IDENFR num2
++RPARENT )
++LBRACE {
++RETURNTK return
++INTCON 0
++SEMICN ;
++RBRACE }
++ELSETK else
++LBRACE {
++RETURNTK return
++INTCON 1
++SEMICN ;
++RBRACE }
++RETURNTK return
++INTCON 0
++SEMICN ;
++RBRACE }
++INTTK int
++IDENFR judgeTrue
++LPARENT (
++INTTK int
++IDENFR num
++RPARENT )
++LBRACE {
++IFTK if
++LPARENT (
++NOT !
++IDENFR num
++RPARENT )
++LBRACE {
++RETURNTK return
++INTCON 0
++SEMICN ;
++RBRACE }
++ELSETK else
++LBRACE {
++RETURNTK return
++INTCON 1
++SEMICN ;
++RBRACE }
++RETURNTK return
++INTCON 0
++SEMICN ;
++RBRACE }
++INTTK int
++MAINTK main
++LPARENT (
++RPARENT )
++LBRACE {
++INTTK int
++IDENFR x
++SEMICN ;
++IDENFR x
+ ASSIGN =
+ GETINTTK getint
+ LPARENT (
+ RPARENT )
+ SEMICN ;
+-IDENFR n
++CHARTK char
++IDENFR ch
++SEMICN ;
++IDENFR ch
+ ASSIGN =
+-INTCON 3
++GETCHARTK getchar
++LPARENT (
++RPARENT )
+ SEMICN ;
+ PRINTFTK printf
+ LPARENT (
+-STRCON "%d\n"
++STRCON "22230605\n"
++RPARENT )
++SEMICN ;
++IDENFR nothing
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR add
++LPARENT (
++INTCON 4
+ COMMA ,
+-IDENFR n
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR minus
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR multi
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR divide
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR mod
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR compare
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 2
++RPARENT )
++SEMICN ;
++IDENFR compare
++LPARENT (
++INTCON 2
++COMMA ,
++INTCON 4
++RPARENT )
++SEMICN ;
++IDENFR compare
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 4
++RPARENT )
++SEMICN ;
++IDENFR printLetter
++LPARENT (
++IDENFR ch
++RPARENT )
++SEMICN ;
++IDENFR judgeFor
++LPARENT (
++RPARENT )
++SEMICN ;
++IDENFR judgeEqual
++LPARENT (
++INTCON 2
++COMMA ,
++INTCON 4
++RPARENT )
++SEMICN ;
++IDENFR judgeEqual
++LPARENT (
++INTCON 4
++COMMA ,
++INTCON 4
++RPARENT )
++SEMICN ;
++IDENFR judgeTrue
++LPARENT (
++INTCON 1
++RPARENT )
++SEMICN ;
++IDENFR judgeTrue
++LPARENT (
++INTCON 0
++RPARENT )
++SEMICN ;
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
++RPARENT )
++SEMICN ;
++PRINTFTK printf
++LPARENT (
++STRCON "end\n"
+ RPARENT )
+ SEMICN ;
+ RETURNTK return
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"PlatoCompiler:jar\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"ae2e92cf-5aa7-4477-b5aa-5e0263970b8b\" name=\"更改\" comment=\"fix\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ir.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ir.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/lexer.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/lexer.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/llvm_ir.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/llvm_ir.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/mips.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/mips.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/PlatoCompiler/456.rar\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/PlatoCompiler/src.rar\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/PlatoCompiler/src.rar\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/parser.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/parser.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/optimize/CodeRemoval.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/optimize/CodeRemoval.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/symbol.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/symbol.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/testfile.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/testfile.txt\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"FormatOnSaveOptions\">\r\n    <option name=\"myRunOnSave\" value=\"true\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Galaxy-JewXW&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;git@github.com:Galaxy-JewXW/compiler_course.git&quot;,\r\n    &quot;accountId&quot;: &quot;7e69d295-b0ef-4293-81cc-173b50d78e7a&quot;\r\n  }\r\n}</component>\r\n  <component name=\"OptimizeOnSaveOptions\">\r\n    <option name=\"myRunOnSave\" value=\"true\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2mWDK2Es587qqNXqqmI19ieDXrF\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,\r\n    &quot;two.files.diff.last.used.file&quot;: &quot;D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,\r\n    &quot;应用程序.Compiler.executor&quot;: &quot;Run&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Compiler\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Compiler\" />\r\n      <module name=\"PlatoCompiler\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"应用程序.Compiler\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"应用程序级\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"默认任务\">\r\n      <changelist id=\"ae2e92cf-5aa7-4477-b5aa-5e0263970b8b\" name=\"更改\" comment=\"\" />\r\n      <created>1727183371853</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1727183371853</updated>\r\n      <workItem from=\"1727183373763\" duration=\"9898000\" />\r\n      <workItem from=\"1727229022465\" duration=\"5529000\" />\r\n      <workItem from=\"1727246954081\" duration=\"114000\" />\r\n      <workItem from=\"1727249114398\" duration=\"5487000\" />\r\n      <workItem from=\"1727315797359\" duration=\"8929000\" />\r\n      <workItem from=\"1727329252902\" duration=\"102000\" />\r\n      <workItem from=\"1727330162827\" duration=\"5253000\" />\r\n      <workItem from=\"1727335498896\" duration=\"675000\" />\r\n      <workItem from=\"1727341038100\" duration=\"4238000\" />\r\n      <workItem from=\"1727347322326\" duration=\"538000\" />\r\n      <workItem from=\"1727399141395\" duration=\"220000\" />\r\n      <workItem from=\"1727399590695\" duration=\"1056000\" />\r\n      <workItem from=\"1727401691601\" duration=\"12666000\" />\r\n      <workItem from=\"1727416498760\" duration=\"2784000\" />\r\n      <workItem from=\"1727420435180\" duration=\"50000\" />\r\n      <workItem from=\"1727431491520\" duration=\"2530000\" />\r\n      <workItem from=\"1727434852503\" duration=\"14443000\" />\r\n      <workItem from=\"1727496050805\" duration=\"19744000\" />\r\n      <workItem from=\"1727584804830\" duration=\"10932000\" />\r\n      <workItem from=\"1727605942525\" duration=\"4778000\" />\r\n      <workItem from=\"1727621967237\" duration=\"5308000\" />\r\n      <workItem from=\"1727680773980\" duration=\"1263000\" />\r\n      <workItem from=\"1727686730882\" duration=\"7000\" />\r\n      <workItem from=\"1727686747855\" duration=\"3409000\" />\r\n      <workItem from=\"1727693987333\" duration=\"69000\" />\r\n      <workItem from=\"1727694071804\" duration=\"1502000\" />\r\n      <workItem from=\"1727792778806\" duration=\"9344000\" />\r\n      <workItem from=\"1727833190980\" duration=\"6281000\" />\r\n      <workItem from=\"1727853966114\" duration=\"58000\" />\r\n      <workItem from=\"1727865078155\" duration=\"10736000\" />\r\n      <workItem from=\"1727876320748\" duration=\"2772000\" />\r\n      <workItem from=\"1727879466934\" duration=\"26000\" />\r\n      <workItem from=\"1727887664371\" duration=\"21000\" />\r\n      <workItem from=\"1727972714731\" duration=\"39000\" />\r\n      <workItem from=\"1727972795427\" duration=\"1333000\" />\r\n      <workItem from=\"1728213509413\" duration=\"230000\" />\r\n      <workItem from=\"1728213767604\" duration=\"1385000\" />\r\n      <workItem from=\"1728439042572\" duration=\"61000\" />\r\n      <workItem from=\"1728440379764\" duration=\"626000\" />\r\n      <workItem from=\"1728448561452\" duration=\"3410000\" />\r\n      <workItem from=\"1728473025112\" duration=\"11000\" />\r\n      <workItem from=\"1728547809087\" duration=\"1967000\" />\r\n      <workItem from=\"1728563168071\" duration=\"692000\" />\r\n      <workItem from=\"1728608104989\" duration=\"2185000\" />\r\n      <workItem from=\"1728610337248\" duration=\"117000\" />\r\n      <workItem from=\"1728611276078\" duration=\"618000\" />\r\n      <workItem from=\"1728611922370\" duration=\"165000\" />\r\n      <workItem from=\"1728612753060\" duration=\"2691000\" />\r\n      <workItem from=\"1728624351032\" duration=\"3541000\" />\r\n      <workItem from=\"1728649132348\" duration=\"1377000\" />\r\n      <workItem from=\"1729258985141\" duration=\"862000\" />\r\n      <workItem from=\"1729264467984\" duration=\"75000\" />\r\n      <workItem from=\"1729357706810\" duration=\"33000\" />\r\n      <workItem from=\"1729389573751\" duration=\"214000\" />\r\n      <workItem from=\"1729699077223\" duration=\"1204000\" />\r\n      <workItem from=\"1729938702415\" duration=\"119000\" />\r\n      <workItem from=\"1729939084574\" duration=\"867000\" />\r\n      <workItem from=\"1729940110242\" duration=\"7855000\" />\r\n      <workItem from=\"1730167180682\" duration=\"11213000\" />\r\n      <workItem from=\"1730200996767\" duration=\"3880000\" />\r\n      <workItem from=\"1730213819177\" duration=\"405000\" />\r\n      <workItem from=\"1730214238530\" duration=\"2684000\" />\r\n      <workItem from=\"1731045987836\" duration=\"723000\" />\r\n      <workItem from=\"1731046835903\" duration=\"4086000\" />\r\n      <workItem from=\"1731051022715\" duration=\"1981000\" />\r\n      <workItem from=\"1731053050315\" duration=\"3521000\" />\r\n      <workItem from=\"1731082978399\" duration=\"684000\" />\r\n      <workItem from=\"1731111395666\" duration=\"706000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00022\" summary=\"函数内联\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727498718849</created>\r\n      <option name=\"number\" value=\"00022\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727498718849</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00023\" summary=\"fix 函数内联\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727516813174</created>\r\n      <option name=\"number\" value=\"00023\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00023\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727516813174</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00024\" summary=\"add CodeRemoval\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727521228423</created>\r\n      <option name=\"number\" value=\"00024\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00024\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727521228423</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00025\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727540641841</created>\r\n      <option name=\"number\" value=\"00025\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00025\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727540641841</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00026\" summary=\"add move\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727579949810</created>\r\n      <option name=\"number\" value=\"00026\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00026\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727579949810</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00027\" summary=\"fix move\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727582411894</created>\r\n      <option name=\"number\" value=\"00027\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00027\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727582411894</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00028\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727582564806</created>\r\n      <option name=\"number\" value=\"00028\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00028\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727582564806</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00029\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727601774633</created>\r\n      <option name=\"number\" value=\"00029\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00029\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727601774633</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00030\" summary=\"dismiss\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727602991762</created>\r\n      <option name=\"number\" value=\"00030\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00030\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727602991762</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00031\" summary=\"add br inst\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727624520209</created>\r\n      <option name=\"number\" value=\"00031\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00031\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727624520209</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00032\" summary=\"finish mips, peephole to be added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727675829873</created>\r\n      <option name=\"number\" value=\"00032\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00032\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727675829873</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00033\" summary=\"finish mips, peephole to be added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727680460032</created>\r\n      <option name=\"number\" value=\"00033\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00033\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727680460032</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00034\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727680611154</created>\r\n      <option name=\"number\" value=\"00034\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00034\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727680611154</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00035\" summary=\"fix style\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727690337319</created>\r\n      <option name=\"number\" value=\"00035\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00035\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727690337319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00036\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727710044298</created>\r\n      <option name=\"number\" value=\"00036\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00036\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727710044298</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00037\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727786126799</created>\r\n      <option name=\"number\" value=\"00037\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00037\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727786126799</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00038\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727791449014</created>\r\n      <option name=\"number\" value=\"00038\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00038\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727791449014</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00039\" summary=\"loop error\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727805988269</created>\r\n      <option name=\"number\" value=\"00039\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00039\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727805988269</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00040\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727836527072</created>\r\n      <option name=\"number\" value=\"00040\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00040\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727836527072</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00041\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727836537790</created>\r\n      <option name=\"number\" value=\"00041\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00041\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727836537790</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00042\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727841272902</created>\r\n      <option name=\"number\" value=\"00042\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00042\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727841272902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00043\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727879107319</created>\r\n      <option name=\"number\" value=\"00043\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00043\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727879107319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00044\" summary=\"man\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727974074352</created>\r\n      <option name=\"number\" value=\"00044\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00044\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727974074352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00045\" summary=\"111\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728215688451</created>\r\n      <option name=\"number\" value=\"00045\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00045\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728215688451</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00046\" summary=\"111\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728215825124</created>\r\n      <option name=\"number\" value=\"00046\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00046\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728215825124</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00047\" summary=\"char使用lb和sb\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728450680394</created>\r\n      <option name=\"number\" value=\"00047\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00047\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728450680394</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00048\" summary=\"label重名问题\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728451182482</created>\r\n      <option name=\"number\" value=\"00048\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00048\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728451182482</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00049\" summary=\"fix bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728453068421</created>\r\n      <option name=\"number\" value=\"00049\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00049\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728453068421</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00050\" summary=\"fix bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728548828590</created>\r\n      <option name=\"number\" value=\"00050\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00050\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728548828590</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00051\" summary=\"1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728561706854</created>\r\n      <option name=\"number\" value=\"00051\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00051\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728561706854</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00052\" summary=\"a\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728571671291</created>\r\n      <option name=\"number\" value=\"00052\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00052\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728571671291</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00053\" summary=\"haiyou bug\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728573878605</created>\r\n      <option name=\"number\" value=\"00053\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00053\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728573878605</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00054\" summary=\"bugs in optimize\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728606411783</created>\r\n      <option name=\"number\" value=\"00054\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00054\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728606411783</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00055\" summary=\"bugs in gvn\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728612964368</created>\r\n      <option name=\"number\" value=\"00055\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00055\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728612964369</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00056\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728620448372</created>\r\n      <option name=\"number\" value=\"00056\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00056\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728620448373</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00057\" summary=\"stable\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728627921672</created>\r\n      <option name=\"number\" value=\"00057\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00057\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728627921672</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00058\" summary=\"123\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728790806187</created>\r\n      <option name=\"number\" value=\"00058\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00058\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728790806187</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00059\" summary=\"bug in regalloc\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728828269448</created>\r\n      <option name=\"number\" value=\"00059\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00059\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728828269449</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00060\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728952857448</created>\r\n      <option name=\"number\" value=\"00060\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00060\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728952857450</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00061\" summary=\"bugs\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729254422474</created>\r\n      <option name=\"number\" value=\"00061\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00061\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729254422474</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00062\" summary=\"ff\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729700127959</created>\r\n      <option name=\"number\" value=\"00062\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00062\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729700127960</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00063\" summary=\"fixed\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730189950449</created>\r\n      <option name=\"number\" value=\"00063\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00063\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730189950450</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00064\" summary=\"sb\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730200330900</created>\r\n      <option name=\"number\" value=\"00064\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00064\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730200330902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00065\" summary=\"feat\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730212668935</created>\r\n      <option name=\"number\" value=\"00065\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00065\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730212668936</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00066\" summary=\"feat\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730383331649</created>\r\n      <option name=\"number\" value=\"00066\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00066\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730383331650</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00067\" summary=\"feat\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731046710549</created>\r\n      <option name=\"number\" value=\"00067\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00067\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731046710550</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00068\" summary=\"feat\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731051036385</created>\r\n      <option name=\"number\" value=\"00068\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00068\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731051036385</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00069\" summary=\"bugs\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731053750830</created>\r\n      <option name=\"number\" value=\"00069\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00069\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731053750831</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00070\" summary=\"fix\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731111419415</created>\r\n      <option name=\"number\" value=\"00070\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00070\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731111419415</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"71\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"fix move\" />\r\n    <MESSAGE value=\"dismiss\" />\r\n    <MESSAGE value=\"add br inst\" />\r\n    <MESSAGE value=\"finish mips, peephole to be added\" />\r\n    <MESSAGE value=\"fix style\" />\r\n    <MESSAGE value=\"loop error\" />\r\n    <MESSAGE value=\"man\" />\r\n    <MESSAGE value=\"111\" />\r\n    <MESSAGE value=\"char使用lb和sb\" />\r\n    <MESSAGE value=\"label重名问题\" />\r\n    <MESSAGE value=\"fix bug\" />\r\n    <MESSAGE value=\"1\" />\r\n    <MESSAGE value=\"a\" />\r\n    <MESSAGE value=\"haiyou bug\" />\r\n    <MESSAGE value=\"bugs in optimize\" />\r\n    <MESSAGE value=\"bugs in gvn\" />\r\n    <MESSAGE value=\"stable\" />\r\n    <MESSAGE value=\"123\" />\r\n    <MESSAGE value=\"bug in regalloc\" />\r\n    <MESSAGE value=\"ff\" />\r\n    <MESSAGE value=\"fixed\" />\r\n    <MESSAGE value=\"sb\" />\r\n    <MESSAGE value=\"feat\" />\r\n    <MESSAGE value=\"bugs\" />\r\n    <MESSAGE value=\"fix\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"fix\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint type=\"java-exception\">\r\n          <properties class=\"java.util.ConcurrentModificationException\" package=\"java.util\" />\r\n          <option name=\"timeStamp\" value=\"189\" />\r\n        </breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/optimize/FixMD.java</url>\r\n          <line>69</line>\r\n          <option name=\"timeStamp\" value=\"197\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/PlatoCompiler$Compiler.ic\" NAME=\"Compiler 覆盖结果\" MODIFIED=\"1730214247155\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/.idea/workspace.xml	(date 1731171718423)
+@@ -9,16 +9,20 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix">
++    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="fix?">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ir.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" afterPath="$PROJECT_DIR$/llvm_ir.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mips.txt" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/456.rar" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/BlockSimplify.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/BlockSimplify.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/CodeRemoval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/optimize/CodeRemoval.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/src.rar" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/parser.txt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/12.rar" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/optimize/BlockSimplify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/BlockSimplify.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimize/CodeRemoval.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/src.rar" beforeDir="false" afterPath="$PROJECT_DIR$/src/src.rar" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
+     </list>
+@@ -184,15 +188,10 @@
+       <workItem from="1731051022715" duration="1981000" />
+       <workItem from="1731053050315" duration="3521000" />
+       <workItem from="1731082978399" duration="684000" />
+-      <workItem from="1731111395666" duration="706000" />
+-    </task>
+-    <task id="LOCAL-00022" summary="函数内联">
+-      <option name="closed" value="true" />
+-      <created>1727498718849</created>
+-      <option name="number" value="00022" />
+-      <option name="presentableId" value="LOCAL-00022" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1727498718849</updated>
++      <workItem from="1731111395666" duration="961000" />
++      <workItem from="1731145669661" duration="1733000" />
++      <workItem from="1731164964582" duration="42000" />
++      <workItem from="1731171708395" duration="10000" />
+     </task>
+     <task id="LOCAL-00023" summary="fix 函数内联">
+       <option name="closed" value="true" />
+@@ -578,7 +577,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1731111419415</updated>
+     </task>
+-    <option name="localTasksCounter" value="71" />
++    <task id="LOCAL-00071" summary="fix?">
++      <option name="closed" value="true" />
++      <created>1731112328127</created>
++      <option name="number" value="00071" />
++      <option name="presentableId" value="LOCAL-00071" />
++      <option name="project" value="LOCAL" />
++      <updated>1731112328127</updated>
++    </task>
++    <option name="localTasksCounter" value="72" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -596,7 +603,6 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <MESSAGE value="fix move" />
+     <MESSAGE value="dismiss" />
+     <MESSAGE value="add br inst" />
+     <MESSAGE value="finish mips, peephole to be added" />
+@@ -621,7 +627,8 @@
+     <MESSAGE value="feat" />
+     <MESSAGE value="bugs" />
+     <MESSAGE value="fix" />
+-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
++    <MESSAGE value="fix?" />
++    <option name="LAST_COMMIT_MESSAGE" value="fix?" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+Index: symbol.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>2 n Int\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/symbol.txt b/symbol.txt
+--- a/symbol.txt	(revision bae5b2db177f5f329c8250af3ecdd053a4356e34)
++++ b/symbol.txt	(date 1731146775167)
+@@ -1,1 +1,61 @@
+-2 n Int
++1 num1 ConstInt
++1 num2 ConstInt
++1 num3 ConstInt
++1 a ConstChar
++1 b ConstChar
++1 c ConstChar
++1 num4 Int
++1 num5 Int
++1 num6 Int
++1 num7 Int
++1 num8 Int
++1 num9 Int
++1 d Char
++1 e Char
++1 f Char
++1 g Char
++1 h Char
++1 i Char
++1 nothing VoidFunc
++1 add IntFunc
++1 minus IntFunc
++1 multi IntFunc
++1 divide IntFunc
++1 mod IntFunc
++1 compare VoidFunc
++1 printLetter CharFunc
++1 judgeFor VoidFunc
++1 judgeEqual IntFunc
++1 judgeTrue IntFunc
++2 nothing Int
++3 num1 Int
++3 num2 Int
++3 x Int
++4 num1 Int
++4 num2 Int
++4 x Int
++5 num1 Int
++5 num2 Int
++5 x Int
++6 num1 Int
++6 num2 Int
++6 x Int
++7 num1 Int
++7 num2 Int
++7 x Int
++8 num1 Int
++8 num2 Int
++15 ch Char
++16 i Int
++16 j Int
++16 k Int
++16 l Int
++16 m Int
++16 n Int
++16 o Int
++16 p Int
++28 num1 Int
++28 num2 Int
++31 num Int
++34 x Int
++34 ch Char
