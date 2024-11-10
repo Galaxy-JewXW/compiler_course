@@ -5,12 +5,49 @@ import backend.enums.Register;
 import backend.global.Asciiz;
 import backend.global.Byte;
 import backend.global.Word;
-import backend.text.*;
-import backend.utils.*;
+import backend.text.BrAsm;
+import backend.text.CalcAsm;
+import backend.text.CmpAsm;
+import backend.text.Comment;
+import backend.text.JumpAsm;
+import backend.text.LaAsm;
+import backend.text.Label;
+import backend.text.LiAsm;
+import backend.text.MDRegAsm;
+import backend.text.MemAsm;
+import backend.text.MoveAsm;
+import backend.text.MulDivAsm;
+import backend.text.SyscallAsm;
+import backend.utils.OptimizedDivision;
+import backend.utils.PeepHole;
+import backend.utils.RegAlloc;
+import backend.utils.RemovePhi;
+import backend.utils.ZextRemoval;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
-import middle.component.instruction.io.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.MoveInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
+import middle.component.instruction.io.GetcharInst;
+import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
+import middle.component.instruction.io.PutintInst;
+import middle.component.instruction.io.PutstrInst;
 import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
@@ -775,9 +812,20 @@ public class MipsBuilder {
 
     private void buildPutstrInst(PutstrInst putstrInst) {
         ConstString constString = putstrInst.getConstString();
-        new LaAsm(Register.A0, "s" + constString.getName().substring(4));
-        new LiAsm(Register.V0, 4);
-        new SyscallAsm();
+        String stringContent = constString.getContent();
+        stringContent = stringContent.replace("\\0A", "\n");
+        if (stringContent.length() > 1) {
+            new LaAsm(Register.A0, "s" + constString.getName().substring(4));
+            new LiAsm(Register.V0, 4);
+            new SyscallAsm();
+        } else {
+            new LiAsm(Register.V0, 11);
+            for (int i = 0; i < stringContent.length(); i++) {
+                char c = stringContent.charAt(i);
+                new LiAsm(Register.A0, c);
+                new SyscallAsm();
+            }
+        }
     }
 
     private void buildRetInst(RetInst retInst) {
