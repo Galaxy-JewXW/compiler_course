@@ -14,9 +14,11 @@ RPARENT )
 SEMICN ;
 PRINTFTK printf
 LPARENT (
-STRCON "I got\n: %d\n"
+STRCON "%d\n"
 COMMA ,
 IDENFR n
+DIV /
+INTCON 4
 RPARENT )
 SEMICN ;
 RETURNTK return

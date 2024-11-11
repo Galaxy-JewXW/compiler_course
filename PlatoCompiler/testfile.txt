@@ -1,6 +1,6 @@
 int main() {
     int n;
     n = getint();
-    printf("I got\n: %d\n", n);
+    printf("%d\n", n / 4);
     return 0;
 }

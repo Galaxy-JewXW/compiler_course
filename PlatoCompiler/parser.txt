@@ -18,10 +18,16 @@ SEMICN ;
 <Stmt>
 PRINTFTK printf
 LPARENT (
-STRCON "I got\n: %d\n"
+STRCON "%d\n"
 COMMA ,
 IDENFR n
 <LVal>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+DIV /
+INTCON 4
+<Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

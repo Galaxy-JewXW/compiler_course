@@ -4,16 +4,15 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [9 x i8] c"I got\0A: \00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
 
 
 define dso_local i32 @main() {
 b0:
 	%v1 = call i32 @getint()
-	call void @putstr(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 %v1)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
+	%v2 = sdiv i32 %v1, 4
+	call void @putint(i32 %v2)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
 	ret i32 0
 }

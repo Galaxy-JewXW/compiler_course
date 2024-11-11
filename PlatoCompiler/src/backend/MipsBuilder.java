@@ -17,6 +17,7 @@ import backend.text.MDRegAsm;
 import backend.text.MemAsm;
 import backend.text.MoveAsm;
 import backend.text.MulDivAsm;
+import backend.text.NegAsm;
 import backend.text.SyscallAsm;
 import backend.utils.OptimizedDivision;
 import backend.utils.PeepHole;
@@ -364,6 +365,10 @@ public class MipsBuilder {
                 int constant = constInt.getIntValue();
                 makeVarMulConst(temp, constant, targetReg);
             } else {
+                if (binaryInst.getOpType() == OperatorType.SUB && constInt.getIntValue() == 0) {
+                    new NegAsm(targetReg, temp);
+                    return;
+                }
                 new LiAsm(Register.K1, constInt.getIntValue());
                 if (binaryInst.getOpType() == OperatorType.SUB) {
                     new CalcAsm(targetReg, AsmOp.SUBU, Register.K1, temp);
