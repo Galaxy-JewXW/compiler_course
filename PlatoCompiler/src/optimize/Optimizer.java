@@ -26,5 +26,6 @@ public class Optimizer {
             BlockSimplify.run(module);
             PrintOptimize.run(module);
         }
+        DivideCall.run(module);
     }
 }
