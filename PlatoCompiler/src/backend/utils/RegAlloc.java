@@ -1,13 +1,8 @@
 package backend.utils;
 
 import backend.enums.Register;
-import middle.component.BasicBlock;
-import middle.component.ConstInt;
-import middle.component.ConstString;
-import middle.component.FuncParam;
-import middle.component.Function;
-import middle.component.GlobalVar;
 import middle.component.Module;
+import middle.component.*;
 import middle.component.instruction.CallInst;
 import middle.component.instruction.Instruction;
 import middle.component.instruction.PhiInst;
@@ -15,33 +10,27 @@ import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import optimize.Mem2Reg;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 寄存器分配器，使用图着色算法将变量映射到物理寄存器。
  */
 public class RegAlloc {
     // 活跃变量分析映射
-    private static HashMap<BasicBlock, HashSet<Value>> inMap;    // 每个基本块的入口活跃变量集合
-    private static HashMap<BasicBlock, HashSet<Value>> outMap;   // 每个基本块的出口活跃变量集合
-    private static HashMap<BasicBlock, HashSet<Value>> defMap;   // 定义集合：在块中被定义的变量
-    private static HashMap<BasicBlock, HashSet<Value>> useMap;   // 使用集合：在块中先使用后定义的变量
+    private HashMap<BasicBlock, HashSet<Value>> inMap;    // 每个基本块的入口活跃变量集合
+    private HashMap<BasicBlock, HashSet<Value>> outMap;   // 每个基本块的出口活跃变量集合
+    private HashMap<BasicBlock, HashSet<Value>> defMap;   // 定义集合：在块中被定义的变量
+    private HashMap<BasicBlock, HashSet<Value>> useMap;   // 使用集合：在块中先使用后定义的变量
 
-    private static int registerCount;                            // 可用寄存器数量
-    private static HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射
+    private int registerCount;                            // 可用寄存器数量
+    private HashMap<Value, InterferenceGraphNode> valueNodeMap; // 变量到干涉图节点的映射
 
-    private static boolean aggressive = true;
+    private boolean aggressive = true;
 
     // 干涉图节点集合
-    private static HashSet<InterferenceGraphNode> graphNodes;
+    private HashSet<InterferenceGraphNode> graphNodes;
 
-    public static void run(Module module) {
+    public void run(Module module) {
         Mem2Reg.run(module, false);
 
         ArrayList<Register> registerPool = new ArrayList<>();
@@ -96,7 +85,7 @@ public class RegAlloc {
         }
     }
 
-    private static void initLiveVariableAnalysis(Function function) {
+    private void initLiveVariableAnalysis(Function function) {
         inMap = new HashMap<>();
         outMap = new HashMap<>();
         defMap = new HashMap<>();
@@ -111,7 +100,7 @@ public class RegAlloc {
         }
     }
 
-    private static void computeDefUseSets(BasicBlock block) {
+    private void computeDefUseSets(BasicBlock block) {
         HashSet<Value> defSet = defMap.get(block);
         HashSet<Value> useSet = useMap.get(block);
 
@@ -137,7 +126,7 @@ public class RegAlloc {
         }
     }
 
-    private static void computeInOutSets(Function function) {
+    private void computeInOutSets(Function function) {
         ArrayList<BasicBlock> blocks = function.getBasicBlocks();
         boolean changed = true;
 
@@ -183,7 +172,7 @@ public class RegAlloc {
         }
     }
 
-    private static void buildInterferenceGraph(Function function) {
+    private void buildInterferenceGraph(Function function) {
         graphNodes = new HashSet<>();
         valueNodeMap = new HashMap<>();
 
@@ -211,7 +200,7 @@ public class RegAlloc {
         }
     }
 
-    private static InterferenceGraphNode getOrCreateNode(Value value) {
+    private InterferenceGraphNode getOrCreateNode(Value value) {
         if (valueNodeMap.containsKey(value)) {
             return valueNodeMap.get(value);
         } else {
@@ -222,7 +211,7 @@ public class RegAlloc {
         }
     }
 
-    private static void addEdge(InterferenceGraphNode u, InterferenceGraphNode v) {
+    private void addEdge(InterferenceGraphNode u, InterferenceGraphNode v) {
         if (u == v) return;
         if (!u.neighbors.contains(v)) {
             u.neighbors.add(v);
@@ -234,7 +223,7 @@ public class RegAlloc {
         }
     }
 
-    private static void colorGraph() {
+    private void colorGraph() {
         Stack<InterferenceGraphNode> selectStack = new Stack<>();
         HashSet<InterferenceGraphNode> workList = new HashSet<>(graphNodes);
 
@@ -288,7 +277,7 @@ public class RegAlloc {
         }
     }
 
-    private static InterferenceGraphNode selectSpillNode(HashSet<InterferenceGraphNode> nodes) {
+    private InterferenceGraphNode selectSpillNode(HashSet<InterferenceGraphNode> nodes) {
         InterferenceGraphNode spillNode = null;
         int maxDegree = -1;
         for (InterferenceGraphNode node : nodes) {
@@ -300,14 +289,14 @@ public class RegAlloc {
         return spillNode;
     }
 
-    private static boolean isAllocatableValue(Value value) {
+    private boolean isAllocatableValue(Value value) {
         return !(value instanceof ConstInt || value instanceof ConstString
                 || (value instanceof GlobalVar)
                 || value instanceof BasicBlock || value instanceof Function
                 || value instanceof FuncParam);
     }
 
-    private static class InterferenceGraphNode {
+    private class InterferenceGraphNode {
         Value value;                                   // 对应的变量
         HashSet<InterferenceGraphNode> neighbors;      // 相邻节点集合
         boolean isSpilled;                             // 是否需要溢出

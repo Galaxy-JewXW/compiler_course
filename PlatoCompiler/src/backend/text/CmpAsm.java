@@ -16,6 +16,14 @@ public class CmpAsm extends TextAssembly {
         this.rt = rt;
     }
 
+    public Register getRs() {
+        return rs;
+    }
+
+    public Register getRt() {
+        return rt;
+    }
+
     public Register getRd() {
         return rd;
     }
