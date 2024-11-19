@@ -20,6 +20,7 @@ public class GVN {
     public static void run(Module module) {
         Mem2Reg.run(module, false);
         FixMD.run(module);
+        Rec.run(module);
         optimize(module);
         SurplusBlock.build(module);
         CodeRemoval.run(module);

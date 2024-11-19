@@ -631,31 +631,6 @@ INTCON 6
 <VarDef>
 SEMICN ;
 <VarDecl>
-FORTK for
-LPARENT (
-SEMICN ;
-IDENFR i
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<RelExp>
-LSS <
-INTCON 10
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<RelExp>
-<EqExp>
-<LAndExp>
-<LOrExp>
-<Cond>
-SEMICN ;
-RPARENT )
-LBRACE {
 IDENFR a
 LBRACK [
 INTCON 0
@@ -1085,10 +1060,6 @@ IDENFR i
 <AddExp>
 <Exp>
 SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<Stmt>
 <Stmt>
 IDENFR i
 <LVal>
