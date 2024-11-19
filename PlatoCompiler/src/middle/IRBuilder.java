@@ -131,12 +131,15 @@ public class IRBuilder {
             } else if (varSymbol.getDimension() == 1) {
                 ValueType elementType = ((ArrayType) initialValue.getValueType()).getElementType();
                 Value pointer = instruction;
+                AllocInst allocInst = (AllocInst) pointer;
                 for (int i = 0; i < initialValue.getElements().size(); i++) {
                     instruction = new GepInst(pointer,
                             new ConstInt(IntegerType.i32, i)
                     );
-                    new StoreInst(instruction,
+                    allocInst.addGepInst((GepInst) instruction);
+                    StoreInst storeInst = new StoreInst(instruction,
                             new ConstInt(elementType, initialValue.getElements().get(i)));
+                    allocInst.addStoreInst(storeInst);
                 }
             } else {
                 throw new RuntimeException("Shouldn't reach here");
@@ -218,8 +221,10 @@ public class IRBuilder {
                                 storeValue = new ZextInst(storeValue, IntegerType.i32);
                             }
                         }
-                        Instruction inst = new GepInst(instruction, new ConstInt(IntegerType.i32, i));
-                        new StoreInst(inst, storeValue);
+                        GepInst inst = new GepInst(instruction, new ConstInt(IntegerType.i32, i));
+                        instruction.addGepInst(inst);
+                        StoreInst storeInst = new StoreInst(inst, storeValue);
+                        instruction.addStoreInst(storeInst);
                     }
                 }
             }

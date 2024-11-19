@@ -12,6 +12,7 @@ public class Optimizer {
     }
 
     public void optimize() {
+        UnusedLocalArray.run(module);
         for (int i = 0; i < 10; i++) {
             SurplusBlock.build(module);
             Mem2Reg.run(module, true);
