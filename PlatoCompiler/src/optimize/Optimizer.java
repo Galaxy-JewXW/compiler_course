@@ -28,6 +28,5 @@ public class Optimizer {
             PrintOptimize.run(module);
         }
         DivideCall.run(module);
-        UnusedLocalArray.run(module);
     }
 }
