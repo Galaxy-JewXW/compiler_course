@@ -3,7 +3,13 @@ package optimize;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Module;
-import middle.component.instruction.*;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
 import middle.component.model.Value;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
@@ -20,7 +26,6 @@ public class GVN {
     public static void run(Module module) {
         Mem2Reg.run(module, false);
         FixMD.run(module);
-        Rec.run(module);
         optimize(module);
         SurplusBlock.build(module);
         CodeRemoval.run(module);
