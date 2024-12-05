@@ -28,7 +28,7 @@ public class Compiler {
     private static final boolean toLLVM = true;
     private static final boolean toMips = true;
 
-    private static final boolean optimize = true;
+    private static final boolean optimize = false;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));
