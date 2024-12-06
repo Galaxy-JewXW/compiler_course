@@ -1,107 +1,44 @@
-// 全局变量定义
-int global_int;
-char global_char;
-int arr[10];
-char str[100];
+// Global variables
+int global_length;
+char global_buffer[100];
 
-// 函数定义
-int add(int a, int b) {
-    int result;
-    if(a == 0) {
-        if(b == 0) {
-            result = 0;
-        } else {
-            result = b;
-        }
-    } else {
-        if(b == 0) {
-            result = a;
-        } else {
-            result = a + b;
-        }
+// Custom strlen implementation
+int my_strlen(char arr[]) {
+    int len;
+    len = 0;
+
+    for (len = 0; arr[len] != 0; len = len + 1) {
+
     }
-    return result;
+
+    return len;
 }
 
-int multiply(int a, int b) {
-    int result;
-    if(a != 0) {
-        if(b != 0) {
-            result = a * b;
-        } else {
-            result = 0;
-        }
-    } else {
-        result = 0;
-    }
-    return result;
-}
-
-void process_array(int arr[]) {
+// Custom strcpy implementation
+void my_strcpy(char dest[], char src[]) {
     int i;
-    for(i = 0; i < 10; i = i + 1) {
-        if(arr[i] > 0) {
-            arr[i] = arr[i] + 1;
-        } else {
-            arr[i] = arr[i] - 1;
-        }
+    i = 0;
+
+    for (i = 0; src[i] != 0; i = i + 1) {
+        printf("%d %d\n", src[i], dest[i]);
+        dest[i] = src[i];
     }
+    dest[i] = 0;
+    printf("END\n");
 }
 
-// main 函数
+// Main function demonstrating string processing
 int main() {
-    int x, y;
-    char ch;
+    char str1[13] = "Hello";
+    char str2[13] = "World";
+    char str3[13];
+    int result;
 
-    x = getint();
-    y = getint();
-
-    // 计算结果并输出
-    int sum = add(x, y);
-    int prod = multiply(x, y);
-
-    printf("Sum: %d\n", sum);
-    printf("Product: %d\n", prod);
-
-    // 调用数组处理函数
-    process_array(arr);
-
-    // 复杂的if和for嵌套
-    int z = 0;
-    if(sum == 0) {
-        if(prod == 0) {
-            z = getint();
-            if(z == 0 || z == 1) {
-                printf("Case 1\n");
-            } else {
-                printf("Case 2\n");
-            }
-        } else {
-            z = getint();
-            if(z == 2 || z == 3) {
-                printf("Case 3\n");
-            } else {
-                printf("Case 4\n");
-            }
-        }
-    } else {
-        z = getint();
-        if(z == 4 || z == 5) {
-            printf("Case 5\n");
-        } else {
-            printf("Case 6\n");
-        }
-    }
-
-    // 另一个for循环
-    int i;
-    for(i = 0; i < 5; i = i + 1) {
-        if(i == 0) {
-            global_int = add(global_int, i);
-        } else {
-            global_int = multiply(global_int, i);
-        }
-    }
+    // Initialize strings
+    printf("%d\n", my_strlen(str3));
+    my_strcpy(str3, str1);
+    printf("%d\n", str3[2]);
+    printf("%d\n", my_strlen(str3));
 
     return 0;
 }

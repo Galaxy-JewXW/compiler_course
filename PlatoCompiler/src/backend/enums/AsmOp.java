@@ -60,7 +60,5 @@ public enum AsmOp {
     // 内催指令
     LW,
     SW,
-    LB,
-    SB,
     SYSCALL
 }

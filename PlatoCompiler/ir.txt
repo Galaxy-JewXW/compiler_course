@@ -4,205 +4,159 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [6 x i8] c"Sum: \00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.2 = private unnamed_addr constant [10 x i8] c"Product: \00", align 1
-@.s.3 = private unnamed_addr constant [8 x i8] c"Case 1\0A\00", align 1
-@.s.4 = private unnamed_addr constant [8 x i8] c"Case 2\0A\00", align 1
-@.s.5 = private unnamed_addr constant [8 x i8] c"Case 3\0A\00", align 1
-@.s.6 = private unnamed_addr constant [8 x i8] c"Case 4\0A\00", align 1
-@.s.7 = private unnamed_addr constant [8 x i8] c"Case 5\0A\00", align 1
-@.s.8 = private unnamed_addr constant [8 x i8] c"Case 6\0A\00", align 1
-@.s.9 = private unnamed_addr constant [11 x i8] c"\0AProduct: \00", align 1
+@.s.0 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 
-@arr = dso_local global [10 x i32] zeroinitializer
+
 
 define dso_local i32 @main() {
 b0:
-	%v1 = call i32 @getint()
-	%v2 = call i32 @getint()
-	%v3 = icmp eq i32 %v1, 0
-	br i1 %v3, label %b19, label %b4
-b4:
-	%v5 = icmp eq i32 %v2, 0
-	br i1 %v5, label %b40, label %b6
-b6:
-	%v7 = add i32 %v1, %v2
-	br label %b41
-b8:
-	%v9 = load i32, i32* %v24
-	%v10 = add i32 %v9, 1
-	store i32 %v10, i32* %v24
-	br label %b30
-b11:
-	%v12 = icmp eq i32 %v110, 0
-	br i1 %v12, label %b43, label %b52
-b13:
-	br i1 %v12, label %b36, label %b14
-b14:
-	br label %b37
-b15:
-	%v16 = icmp ne i32 %v2, 0
-	br i1 %v16, label %b67, label %b32
-b17:
-	%v18 = mul i32 %v109, %v110
-	br label %b64
-b19:
-	%v20 = icmp eq i32 %v2, 0
-	br i1 %v20, label %b77, label %b73
-b21:
-	%v22 = icmp eq i32 %v85, 0
-	br i1 %v22, label %b33, label %b57
-b23:
-	%v24 = getelementptr inbounds i32, i32* %v86, i32 %v88
-	%v25 = load i32, i32* %v24
-	%v26 = icmp sgt i32 %v25, 0
-	br i1 %v26, label %b8, label %b27
-b27:
-	%v28 = load i32, i32* %v24
-	%v29 = sub i32 %v28, 1
-	store i32 %v29, i32* %v24
-	br label %b30
-b30:
-	%v31 = add i32 %v88, 1
-	br label %b87
-b32:
+	%v1 = alloca [50 x i8]
+	%v2 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 0
+	store i8 72, i8* %v2
+	%v3 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 1
+	store i8 101, i8* %v3
+	%v4 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 2
+	store i8 108, i8* %v4
+	%v5 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 3
+	store i8 108, i8* %v5
+	%v6 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 4
+	store i8 111, i8* %v6
+	%v7 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 5
+	store i8 0, i8* %v7
+	%v8 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 6
+	store i8 0, i8* %v8
+	%v9 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 7
+	store i8 0, i8* %v9
+	%v10 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 8
+	store i8 0, i8* %v10
+	%v11 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 9
+	store i8 0, i8* %v11
+	%v12 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 10
+	store i8 0, i8* %v12
+	%v13 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 11
+	store i8 0, i8* %v13
+	%v14 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 12
+	store i8 0, i8* %v14
+	%v15 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 13
+	store i8 0, i8* %v15
+	%v16 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 14
+	store i8 0, i8* %v16
+	%v17 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 15
+	store i8 0, i8* %v17
+	%v18 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 16
+	store i8 0, i8* %v18
+	%v19 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 17
+	store i8 0, i8* %v19
+	%v20 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 18
+	store i8 0, i8* %v20
+	%v21 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 19
+	store i8 0, i8* %v21
+	%v22 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 20
+	store i8 0, i8* %v22
+	%v23 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 21
+	store i8 0, i8* %v23
+	%v24 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 22
+	store i8 0, i8* %v24
+	%v25 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 23
+	store i8 0, i8* %v25
+	%v26 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 24
+	store i8 0, i8* %v26
+	%v27 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 25
+	store i8 0, i8* %v27
+	%v28 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 26
+	store i8 0, i8* %v28
+	%v29 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 27
+	store i8 0, i8* %v29
+	%v30 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 28
+	store i8 0, i8* %v30
+	%v31 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 29
+	store i8 0, i8* %v31
+	%v32 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 30
+	store i8 0, i8* %v32
+	%v33 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 31
+	store i8 0, i8* %v33
+	%v34 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 32
+	store i8 0, i8* %v34
+	%v35 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 33
+	store i8 0, i8* %v35
+	%v36 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 34
+	store i8 0, i8* %v36
+	%v37 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 35
+	store i8 0, i8* %v37
+	%v38 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 36
+	store i8 0, i8* %v38
+	%v39 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 37
+	store i8 0, i8* %v39
+	%v40 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 38
+	store i8 0, i8* %v40
+	%v41 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 39
+	store i8 0, i8* %v41
+	%v42 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 40
+	store i8 0, i8* %v42
+	%v43 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 41
+	store i8 0, i8* %v43
+	%v44 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 42
+	store i8 0, i8* %v44
+	%v45 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 43
+	store i8 0, i8* %v45
+	%v46 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 44
+	store i8 0, i8* %v46
+	%v47 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 45
+	store i8 0, i8* %v47
+	%v48 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 46
+	store i8 0, i8* %v48
+	%v49 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 47
+	store i8 0, i8* %v49
+	%v50 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 48
+	store i8 0, i8* %v50
+	%v51 = getelementptr inbounds [50 x i8], [50 x i8]* %v1, i32 0, i32 49
+	store i8 0, i8* %v51
+	%v52 = alloca [50 x i8]
+	%v53 = getelementptr inbounds [50 x i8], [50 x i8]* %v52, i32 0, i32 0
 	br label %b69
-b33:
-	%v34 = call i32 @getint()
-	%v35 = icmp eq i32 %v34, 0
-	br i1 %v35, label %b51, label %b49
-b36:
-	br label %b37
-b37:
-	%v38 = phi i32 [ 0, %b36 ], [ %v110, %b14 ]
-	br label %b103
-b39:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.5, i64 0, i64 0))
-	br label %b63
-b40:
-	br label %b41
-b41:
-	%v42 = phi i32 [ %v1, %b40 ], [ %v7, %b6 ]
-	br label %b80
-b43:
-	%v44 = icmp eq i32 %v109, 0
-	br i1 %v44, label %b13, label %b45
-b45:
-	br i1 %v12, label %b100, label %b46
-b46:
-	%v47 = add i32 %v109, %v110
-	br label %b101
-b48:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.4, i64 0, i64 0))
-	br label %b71
-b49:
-	%v50 = icmp eq i32 %v34, 1
-	br i1 %v50, label %b51, label %b48
-b51:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.3, i64 0, i64 0))
-	br label %b71
-b52:
-	%v53 = icmp ne i32 %v109, 0
-	br i1 %v53, label %b54, label %b74
 b54:
-	%v55 = icmp ne i32 %v110, 0
-	br i1 %v55, label %b17, label %b56
-b56:
-	br label %b64
-b57:
-	%v58 = call i32 @getint()
-	%v59 = icmp eq i32 %v58, 2
-	br i1 %v59, label %b39, label %b60
+	%v55 = getelementptr inbounds i8, i8* %v53, i32 %v77
+	%v56 = load i8, i8* %v78
+	store i8 %v56, i8* %v55
+	%v57 = add i32 %v77, 1
+	br label %b76
+b58:
+	%v59 = add i32 %v61, 1
+	br label %b60
 b60:
-	%v61 = icmp eq i32 %v58, 3
-	br i1 %v61, label %b39, label %b62
-b62:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.6, i64 0, i64 0))
-	br label %b63
-b63:
-	br label %b72
-b64:
-	%v65 = phi i32 [ %v18, %b17 ], [ 0, %b56 ]
-	br label %b75
+	%v61 = phi i32 [ 0, %b82 ], [ %v59, %b58 ]
+	%v62 = getelementptr inbounds i8, i8* %v53, i32 %v61
+	%v63 = load i8, i8* %v62
+	%v64 = zext i8 %v63 to i32
+	%v65 = icmp ne i32 %v64, 0
+	br i1 %v65, label %b58, label %b66
 b66:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.7, i64 0, i64 0))
-	br label %b98
+	call void @putint(i32 %v61)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
+	ret i32 0
 b67:
-	%v68 = mul i32 %v1, %v2
+	%v68 = add i32 %v70, 1
 	br label %b69
 b69:
-	%v70 = phi i32 [ %v68, %b67 ], [ 0, %b32 ]
-	br label %b84
-b71:
-	br label %b72
-b72:
-	br label %b99
-b73:
-	br label %b78
-b74:
-	br label %b75
+	%v70 = phi i32 [ 0, %b0 ], [ %v68, %b67 ]
+	%v71 = getelementptr inbounds i8, i8* %v53, i32 %v70
+	%v72 = load i8, i8* %v71
+	%v73 = zext i8 %v72 to i32
+	%v74 = icmp ne i32 %v73, 0
+	br i1 %v74, label %b67, label %b75
 b75:
-	%v76 = phi i32 [ 0, %b74 ], [ %v65, %b64 ]
-	br label %b105
-b77:
-	br label %b78
-b78:
-	%v79 = phi i32 [ 0, %b77 ], [ %v2, %b73 ]
-	br label %b80
-b80:
-	%v81 = phi i32 [ %v79, %b78 ], [ %v42, %b41 ]
-	%v82 = icmp ne i32 %v1, 0
-	br i1 %v82, label %b15, label %b83
-b83:
-	br label %b84
-b84:
-	%v85 = phi i32 [ 0, %b83 ], [ %v70, %b69 ]
-	call void @putstr(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 %v81)
-	call void @putstr(i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.s.9, i64 0, i64 0))
-	call void @putint(i32 %v85)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	%v86 = getelementptr inbounds [10 x i32], [10 x i32]* @arr, i32 0, i32 0
-	br label %b87
-b87:
-	%v88 = phi i32 [ 0, %b84 ], [ %v31, %b30 ]
-	%v89 = icmp slt i32 %v88, 10
-	br i1 %v89, label %b23, label %b90
-b90:
-	%v91 = icmp eq i32 %v81, 0
-	br i1 %v91, label %b21, label %b92
-b92:
-	%v93 = call i32 @getint()
-	%v94 = icmp eq i32 %v93, 4
-	br i1 %v94, label %b66, label %b95
-b95:
-	%v96 = icmp eq i32 %v93, 5
-	br i1 %v96, label %b66, label %b97
-b97:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.8, i64 0, i64 0))
-	br label %b98
-b98:
-	br label %b99
-b99:
-	br label %b108
-b100:
-	br label %b101
-b101:
-	%v102 = phi i32 [ %v109, %b100 ], [ %v47, %b46 ]
-	br label %b103
-b103:
-	%v104 = phi i32 [ %v38, %b37 ], [ %v102, %b101 ]
-	br label %b105
-b105:
-	%v106 = phi i32 [ %v104, %b103 ], [ %v76, %b75 ]
-	%v107 = add i32 %v110, 1
-	br label %b108
-b108:
-	%v109 = phi i32 [ 0, %b99 ], [ %v106, %b105 ]
-	%v110 = phi i32 [ 0, %b99 ], [ %v107, %b105 ]
-	%v111 = icmp slt i32 %v110, 5
-	br i1 %v111, label %b11, label %b112
-b112:
-	ret i32 0
+	call void @putint(i32 %v70)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
+	br label %b76
+b76:
+	%v77 = phi i32 [ 0, %b75 ], [ %v57, %b54 ]
+	%v78 = getelementptr inbounds i8, i8* %v2, i32 %v77
+	%v79 = load i8, i8* %v78
+	%v80 = zext i8 %v79 to i32
+	%v81 = icmp ne i32 %v80, 0
+	br i1 %v81, label %b54, label %b82
+b82:
+	%v83 = getelementptr inbounds i8, i8* %v53, i32 %v77
+	store i8 0, i8* %v83
+	br label %b60
 }

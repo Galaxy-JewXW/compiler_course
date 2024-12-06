@@ -4,267 +4,157 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [6 x i8] c"Sum: \00", align 1
+@.s.0 = private unnamed_addr constant [2 x i8] c" \00", align 1
 @.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.2 = private unnamed_addr constant [10 x i8] c"Product: \00", align 1
-@.s.3 = private unnamed_addr constant [8 x i8] c"Case 1\0A\00", align 1
-@.s.4 = private unnamed_addr constant [8 x i8] c"Case 2\0A\00", align 1
-@.s.5 = private unnamed_addr constant [8 x i8] c"Case 3\0A\00", align 1
-@.s.6 = private unnamed_addr constant [8 x i8] c"Case 4\0A\00", align 1
-@.s.7 = private unnamed_addr constant [8 x i8] c"Case 5\0A\00", align 1
-@.s.8 = private unnamed_addr constant [8 x i8] c"Case 6\0A\00", align 1
+@.s.2 = private unnamed_addr constant [5 x i8] c"END\0A\00", align 1
 
-@global_int = dso_local global i32 0
-@global_char = dso_local global i8 0
-@arr = dso_local global [10 x i32] zeroinitializer
-@str = dso_local global [100 x i8] zeroinitializer
+@global_length = dso_local global i32 0
+@global_buffer = dso_local global [100 x i8] zeroinitializer
 
-define dso_local i32 @add(i32 %v0, i32 %v1) {
-b2:
-	%v3 = alloca i32
-	store i32 %v0, i32* %v3
-	%v4 = alloca i32
-	store i32 %v1, i32* %v4
-	%v5 = alloca i32
-	%v6 = load i32, i32* %v3
-	%v7 = icmp eq i32 %v6, 0
-	br i1 %v7, label %b8, label %b11
-b8:
-	%v9 = load i32, i32* %v4
-	%v10 = icmp eq i32 %v9, 0
-	br i1 %v10, label %b16, label %b17
-b11:
-	%v12 = load i32, i32* %v4
-	%v13 = icmp eq i32 %v12, 0
-	br i1 %v13, label %b20, label %b22
-b14:
-	%v15 = load i32, i32* %v5
-	ret i32 %v15
-b16:
-	store i32 0, i32* %v5
-	br label %b19
-b17:
-	%v18 = load i32, i32* %v4
-	store i32 %v18, i32* %v5
-	br label %b19
-b19:
-	br label %b14
-b20:
-	%v21 = load i32, i32* %v3
-	store i32 %v21, i32* %v5
-	br label %b26
-b22:
-	%v23 = load i32, i32* %v3
-	%v24 = load i32, i32* %v4
-	%v25 = add i32 %v23, %v24
-	store i32 %v25, i32* %v5
-	br label %b26
-b26:
-	br label %b14
-}
-
-define dso_local i32 @multiply(i32 %v0, i32 %v1) {
-b2:
-	%v3 = alloca i32
-	store i32 %v0, i32* %v3
-	%v4 = alloca i32
-	store i32 %v1, i32* %v4
-	%v5 = alloca i32
-	%v6 = load i32, i32* %v3
-	%v7 = icmp ne i32 %v6, 0
-	br i1 %v7, label %b8, label %b11
-b8:
-	%v9 = load i32, i32* %v4
-	%v10 = icmp ne i32 %v9, 0
-	br i1 %v10, label %b14, label %b18
-b11:
-	store i32 0, i32* %v5
-	br label %b12
-b12:
-	%v13 = load i32, i32* %v5
-	ret i32 %v13
-b14:
-	%v15 = load i32, i32* %v3
-	%v16 = load i32, i32* %v4
-	%v17 = mul i32 %v15, %v16
-	store i32 %v17, i32* %v5
-	br label %b19
-b18:
-	store i32 0, i32* %v5
-	br label %b19
-b19:
-	br label %b12
-}
-
-define dso_local void @process_array(i32* %v0) {
+define dso_local i32 @my_strlen(i8* %v0) {
 b1:
 	%v2 = alloca i32
+	store i32 0, i32* %v2
 	store i32 0, i32* %v2
 	br label %b3
 b3:
 	%v4 = load i32, i32* %v2
-	%v5 = icmp slt i32 %v4, 10
-	br i1 %v5, label %b6, label %b14
-b6:
-	%v7 = load i32, i32* %v2
-	%v8 = getelementptr inbounds i32, i32* %v0, i32 %v7
-	%v9 = load i32, i32* %v8
-	%v10 = icmp sgt i32 %v9, 0
-	br i1 %v10, label %b15, label %b22
-b11:
-	%v12 = load i32, i32* %v2
-	%v13 = add i32 %v12, 1
-	store i32 %v13, i32* %v2
+	%v5 = getelementptr inbounds i8, i8* %v0, i32 %v4
+	%v6 = load i8, i8* %v5
+	%v7 = zext i8 %v6 to i32
+	%v8 = icmp ne i32 %v7, 0
+	br i1 %v8, label %b9, label %b13
+b9:
+	br label %b10
+b10:
+	%v11 = load i32, i32* %v2
+	%v12 = add i32 %v11, 1
+	store i32 %v12, i32* %v2
 	br label %b3
-b14:
+b13:
+	%v14 = load i32, i32* %v2
+	ret i32 %v14
+}
+
+define dso_local void @my_strcpy(i8* %v0, i8* %v1) {
+b2:
+	%v3 = alloca i32
+	store i32 0, i32* %v3
+	store i32 0, i32* %v3
+	br label %b4
+b4:
+	%v5 = load i32, i32* %v3
+	%v6 = getelementptr inbounds i8, i8* %v1, i32 %v5
+	%v7 = load i8, i8* %v6
+	%v8 = zext i8 %v7 to i32
+	%v9 = icmp ne i32 %v8, 0
+	br i1 %v9, label %b10, label %b27
+b10:
+	%v11 = load i32, i32* %v3
+	%v12 = getelementptr inbounds i8, i8* %v1, i32 %v11
+	%v13 = load i8, i8* %v12
+	%v14 = load i32, i32* %v3
+	%v15 = getelementptr inbounds i8, i8* %v0, i32 %v14
+	%v16 = load i8, i8* %v15
+	%v17 = zext i8 %v13 to i32
+	call void @putint(i32 %v17)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
+	%v18 = zext i8 %v16 to i32
+	call void @putint(i32 %v18)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
+	%v19 = load i32, i32* %v3
+	%v20 = getelementptr inbounds i8, i8* %v0, i32 %v19
+	%v21 = load i32, i32* %v3
+	%v22 = getelementptr inbounds i8, i8* %v1, i32 %v21
+	%v23 = load i8, i8* %v22
+	store i8 %v23, i8* %v20
+	br label %b24
+b24:
+	%v25 = load i32, i32* %v3
+	%v26 = add i32 %v25, 1
+	store i32 %v26, i32* %v3
+	br label %b4
+b27:
+	%v28 = load i32, i32* %v3
+	%v29 = getelementptr inbounds i8, i8* %v0, i32 %v28
+	store i8 0, i8* %v29
+	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
 	ret void
-b15:
-	%v16 = load i32, i32* %v2
-	%v17 = getelementptr inbounds i32, i32* %v0, i32 %v16
-	%v18 = load i32, i32* %v2
-	%v19 = getelementptr inbounds i32, i32* %v0, i32 %v18
-	%v20 = load i32, i32* %v19
-	%v21 = add i32 %v20, 1
-	store i32 %v21, i32* %v17
-	br label %b29
-b22:
-	%v23 = load i32, i32* %v2
-	%v24 = getelementptr inbounds i32, i32* %v0, i32 %v23
-	%v25 = load i32, i32* %v2
-	%v26 = getelementptr inbounds i32, i32* %v0, i32 %v25
-	%v27 = load i32, i32* %v26
-	%v28 = sub i32 %v27, 1
-	store i32 %v28, i32* %v24
-	br label %b29
-b29:
-	br label %b11
 }
 
 define dso_local i32 @main() {
 b0:
-	%v1 = alloca i32
-	%v2 = alloca i32
-	%v3 = alloca i8
-	%v4 = call i32 @getint()
-	store i32 %v4, i32* %v1
-	%v5 = call i32 @getint()
-	store i32 %v5, i32* %v2
-	%v6 = alloca i32
-	%v7 = load i32, i32* %v1
-	%v8 = load i32, i32* %v2
-	%v9 = call i32 @add(i32 %v7, i32 %v8)
-	store i32 %v9, i32* %v6
-	%v10 = alloca i32
-	%v11 = load i32, i32* %v1
-	%v12 = load i32, i32* %v2
-	%v13 = call i32 @multiply(i32 %v11, i32 %v12)
-	store i32 %v13, i32* %v10
-	%v14 = load i32, i32* %v6
-	call void @putstr(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.s.0, i64 0, i64 0))
-	call void @putint(i32 %v14)
+	%v1 = alloca [13 x i8]
+	%v2 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 0
+	store i8 72, i8* %v2
+	%v3 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 1
+	store i8 101, i8* %v3
+	%v4 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 2
+	store i8 108, i8* %v4
+	%v5 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 3
+	store i8 108, i8* %v5
+	%v6 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 4
+	store i8 111, i8* %v6
+	%v7 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 5
+	store i8 0, i8* %v7
+	%v8 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 6
+	store i8 0, i8* %v8
+	%v9 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 7
+	store i8 0, i8* %v9
+	%v10 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 8
+	store i8 0, i8* %v10
+	%v11 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 9
+	store i8 0, i8* %v11
+	%v12 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 10
+	store i8 0, i8* %v12
+	%v13 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 11
+	store i8 0, i8* %v13
+	%v14 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 12
+	store i8 0, i8* %v14
+	%v15 = alloca [13 x i8]
+	%v16 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 0
+	store i8 87, i8* %v16
+	%v17 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 1
+	store i8 111, i8* %v17
+	%v18 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 2
+	store i8 114, i8* %v18
+	%v19 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 3
+	store i8 108, i8* %v19
+	%v20 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 4
+	store i8 100, i8* %v20
+	%v21 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 5
+	store i8 0, i8* %v21
+	%v22 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 6
+	store i8 0, i8* %v22
+	%v23 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 7
+	store i8 0, i8* %v23
+	%v24 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 8
+	store i8 0, i8* %v24
+	%v25 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 9
+	store i8 0, i8* %v25
+	%v26 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 10
+	store i8 0, i8* %v26
+	%v27 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 11
+	store i8 0, i8* %v27
+	%v28 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 12
+	store i8 0, i8* %v28
+	%v29 = alloca [13 x i8]
+	%v30 = alloca i32
+	%v31 = getelementptr inbounds [13 x i8], [13 x i8]* %v29, i32 0, i32 0
+	%v32 = call i32 @my_strlen(i8* %v31)
+	call void @putint(i32 %v32)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	%v15 = load i32, i32* %v10
-	call void @putstr(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.s.2, i64 0, i64 0))
-	call void @putint(i32 %v15)
+	%v33 = getelementptr inbounds [13 x i8], [13 x i8]* %v29, i32 0, i32 0
+	%v34 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 0
+	call void @my_strcpy(i8* %v33, i8* %v34)
+	%v35 = getelementptr inbounds [13 x i8], [13 x i8]* %v29, i32 0, i32 2
+	%v36 = load i8, i8* %v35
+	%v37 = zext i8 %v36 to i32
+	call void @putint(i32 %v37)
 	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	%v16 = getelementptr inbounds [10 x i32], [10 x i32]* @arr, i32 0, i32 0
-	call void @process_array(i32* %v16)
-	%v17 = alloca i32
-	store i32 0, i32* %v17
-	%v18 = load i32, i32* %v6
-	%v19 = icmp eq i32 %v18, 0
-	br i1 %v19, label %b20, label %b23
-b20:
-	%v21 = load i32, i32* %v10
-	%v22 = icmp eq i32 %v21, 0
-	br i1 %v22, label %b29, label %b33
-b23:
-	%v24 = call i32 @getint()
-	store i32 %v24, i32* %v17
-	%v25 = load i32, i32* %v17
-	%v26 = icmp eq i32 %v25, 4
-	br i1 %v26, label %b50, label %b53
-b27:
-	%v28 = alloca i32
-	store i32 0, i32* %v28
-	br label %b56
-b29:
-	%v30 = call i32 @getint()
-	store i32 %v30, i32* %v17
-	%v31 = load i32, i32* %v17
-	%v32 = icmp eq i32 %v31, 0
-	br i1 %v32, label %b38, label %b41
-b33:
-	%v34 = call i32 @getint()
-	store i32 %v34, i32* %v17
-	%v35 = load i32, i32* %v17
-	%v36 = icmp eq i32 %v35, 2
-	br i1 %v36, label %b44, label %b47
-b37:
-	br label %b27
-b38:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.3, i64 0, i64 0))
-	br label %b40
-b39:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.4, i64 0, i64 0))
-	br label %b40
-b40:
-	br label %b37
-b41:
-	%v42 = load i32, i32* %v17
-	%v43 = icmp eq i32 %v42, 1
-	br i1 %v43, label %b38, label %b39
-b44:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.5, i64 0, i64 0))
-	br label %b46
-b45:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.6, i64 0, i64 0))
-	br label %b46
-b46:
-	br label %b37
-b47:
-	%v48 = load i32, i32* %v17
-	%v49 = icmp eq i32 %v48, 3
-	br i1 %v49, label %b44, label %b45
-b50:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.7, i64 0, i64 0))
-	br label %b52
-b51:
-	call void @putstr(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.s.8, i64 0, i64 0))
-	br label %b52
-b52:
-	br label %b27
-b53:
-	%v54 = load i32, i32* %v17
-	%v55 = icmp eq i32 %v54, 5
-	br i1 %v55, label %b50, label %b51
-b56:
-	%v57 = load i32, i32* %v28
-	%v58 = icmp slt i32 %v57, 5
-	br i1 %v58, label %b59, label %b65
-b59:
-	%v60 = load i32, i32* %v28
-	%v61 = icmp eq i32 %v60, 0
-	br i1 %v61, label %b66, label %b70
-b62:
-	%v63 = load i32, i32* %v28
-	%v64 = add i32 %v63, 1
-	store i32 %v64, i32* %v28
-	br label %b56
-b65:
+	%v38 = getelementptr inbounds [13 x i8], [13 x i8]* %v29, i32 0, i32 0
+	%v39 = call i32 @my_strlen(i8* %v38)
+	call void @putint(i32 %v39)
+	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
 	ret i32 0
-b66:
-	%v67 = load i32, i32* @global_int
-	%v68 = load i32, i32* %v28
-	%v69 = call i32 @add(i32 %v67, i32 %v68)
-	store i32 %v69, i32* @global_int
-	br label %b74
-b70:
-	%v71 = load i32, i32* @global_int
-	%v72 = load i32, i32* %v28
-	%v73 = call i32 @multiply(i32 %v71, i32 %v72)
-	store i32 %v73, i32* @global_int
-	br label %b74
-b74:
-	br label %b62
 }
