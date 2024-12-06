@@ -1,7 +1,7 @@
-INTTK int
-IDENFR a
+CHARTK char
+IDENFR s1
 LBRACK [
-INTCON 1
+INTCON 7
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -9,72 +9,14 @@ INTCON 1
 <AddExp>
 <ConstExp>
 RBRACK ]
-ASSIGN =
-LBRACE {
-INTCON 0
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-RBRACE }
-<InitVal>
 <VarDef>
 SEMICN ;
 <VarDecl>
-INTTK int
-<FuncType>
-IDENFR b1
-LPARENT (
-INTTK int
-IDENFR a
-<FuncFParam>
-<FuncFParams>
-RPARENT )
-LBRACE {
-RETURNTK return
-IDENFR a
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-INTCON 1
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-RBRACE }
-<Block>
-<FuncDef>
-INTTK int
-MAINTK main
-LPARENT (
-RPARENT )
-LBRACE {
 CONSTTK const
-INTTK int
-IDENFR a
-ASSIGN =
-INTCON 2
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<ConstExp>
-<ConstInitVal>
-<ConstDef>
-COMMA ,
-IDENFR b
+CHARTK char
+IDENFR ss1
 LBRACK [
-INTCON 1
+INTCON 6
 <Number>
 <PrimaryExp>
 <UnaryExp>
@@ -84,14 +26,8 @@ INTCON 1
 RBRACK ]
 ASSIGN =
 LBRACE {
-IDENFR a
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-DIV /
-INTCON 3
-<Number>
+CHRCON '6'
+<Character>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
@@ -103,96 +39,45 @@ RBRACE }
 SEMICN ;
 <ConstDecl>
 INTTK int
-IDENFR b12
-ASSIGN =
-INTCON 3
+MAINTK main
+LPARENT (
+RPARENT )
+LBRACE {
+CHARTK char
+IDENFR s
+LBRACK [
+INTCON 7
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-<InitVal>
+<ConstExp>
+RBRACK ]
 <VarDef>
 SEMICN ;
 <VarDecl>
 CHARTK char
-IDENFR c
-ASSIGN =
-IDENFR b12
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-INTCON 3
+IDENFR ss
+LBRACK [
+INTCON 6
 <Number>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
-<Exp>
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-IDENFR c
-<LVal>
+<ConstExp>
+RBRACK ]
 ASSIGN =
-IDENFR c
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-MULT *
-IDENFR c
-<LVal>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
-SEMICN ;
-<Stmt>
-INTTK int
-IDENFR k
-ASSIGN =
-INTCON 99
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-PLUS +
-CHRCON '0'
+LBRACE {
+CHRCON 'a'
 <Character>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
 <AddExp>
 <Exp>
-<InitVal>
-<VarDef>
-SEMICN ;
-<VarDecl>
-CHARTK char
-IDENFR sb
-ASSIGN =
-INTCON 30
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-MINU -
-INTCON 50
-<Number>
-<PrimaryExp>
-<UnaryExp>
-<MulExp>
-<AddExp>
-<Exp>
+RBRACE }
 <InitVal>
 <VarDef>
 SEMICN ;

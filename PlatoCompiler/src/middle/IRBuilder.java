@@ -201,7 +201,7 @@ public class IRBuilder {
         }
     }
 
-    private void buildVarDef(VarDef varDef) throws NullPointerException {
+    private void buildVarDef(VarDef varDef) {
         VarSymbol varSymbol = (VarSymbol) currentTable.getSymbol(
                 varDef.getIdent().getContent());
         clonedManager.addSymbol(varSymbol);
