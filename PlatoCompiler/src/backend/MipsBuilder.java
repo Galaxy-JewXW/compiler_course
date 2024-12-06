@@ -49,6 +49,7 @@ import middle.component.instruction.io.GetintInst;
 import middle.component.instruction.io.PutchInst;
 import middle.component.instruction.io.PutintInst;
 import middle.component.instruction.io.PutstrInst;
+import middle.component.model.User;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -251,6 +252,16 @@ public class MipsBuilder {
     }
 
     private void buildIcmp(BinaryInst binaryInst) {
+        boolean flag = true;
+        for (User user : binaryInst.getUserList()) {
+            if (!(user instanceof BrInst)) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            return;
+        }
         AsmOp asmOp = switch (binaryInst.getOpType()) {
             case ICMP_EQ -> AsmOp.SEQ;
             case ICMP_NE -> AsmOp.SNE;
@@ -508,16 +519,82 @@ public class MipsBuilder {
     }
 
     private void buildCondBrInst(BrInst brInst) {
-        Value condition = brInst.getCondition();
-        if (var2reg.containsKey(condition)) {
-            new BrAsm(currentFunction.getName().substring(1)
-                    + "_b" + brInst.getTrueBlock().getName(),
-                    var2reg.get(condition), AsmOp.BEQ, 1);
+        BinaryInst condition = (BinaryInst) brInst.getCondition();
+        boolean flag = true;
+        for (User user : condition.getUserList()) {
+            if (!(user instanceof BrInst)) {
+                flag = false;
+                break;
+            }
+        }
+        if (!flag) {
+            if (var2reg.containsKey(condition)) {
+                new BrAsm(currentFunction.getName().substring(1)
+                        + "_b" + brInst.getTrueBlock().getName(),
+                        var2reg.get(condition), AsmOp.BEQ, 1);
+            } else {
+                new MemAsm(AsmOp.LW, Register.K0, Register.SP, var2Offset.get(condition));
+                new BrAsm(currentFunction.getName().substring(1)
+                        + "_b" + brInst.getTrueBlock().getName(),
+                        Register.K0, AsmOp.BEQ, 1);
+            }
         } else {
-            new MemAsm(AsmOp.LW, Register.K0, Register.SP, var2Offset.get(condition));
-            new BrAsm(currentFunction.getName().substring(1)
-                    + "_b" + brInst.getTrueBlock().getName(),
-                    Register.K0, AsmOp.BEQ, 1);
+            AsmOp asmOp = switch (condition.getOpType()) {
+                case ICMP_EQ -> AsmOp.BEQ;
+                case ICMP_NE -> AsmOp.BNE;
+                case ICMP_SLT -> AsmOp.BLT;
+                case ICMP_SLE -> AsmOp.BLE;
+                case ICMP_SGT -> AsmOp.BGT;
+                case ICMP_SGE -> AsmOp.BGE;
+                default -> throw new IllegalStateException("Unexpected value: "
+                        + condition.getOpType());
+            };
+            Value operand1 = condition.getOperand1();
+            Value operand2 = condition.getOperand2();
+            Register reg1 = Register.K0;
+            Register reg2 = Register.K1;
+            ConstInt constInt1 = null;
+            ConstInt constInt2 = null;
+            if (operand1 instanceof ConstInt constInt) {
+                constInt1 = constInt;
+            } else if (var2reg.containsKey(operand1)) {
+                reg1 = var2reg.get(operand1);
+            } else {
+                new MemAsm(AsmOp.LW, reg1, Register.SP, var2Offset.get(operand1));
+            }
+            if (operand2 instanceof ConstInt constInt) {
+                constInt2 = constInt;
+            } else if (var2reg.containsKey(operand2)) {
+                reg2 = var2reg.get(operand2);
+            } else {
+                new MemAsm(AsmOp.LW, reg2, Register.SP, var2Offset.get(operand2));
+            }
+
+            if ((constInt1 != null && constInt2 == null) || (constInt1 == null && constInt2 != null)) {
+                int constNum;
+                if (constInt1 == null) {
+                    constNum = constInt2.getIntValue();
+                } else {
+                    constNum = constInt1.getIntValue();
+                    reg1 = reg2;
+                    asmOp = switch (asmOp) {
+                        case BGT -> AsmOp.BLT;
+                        case BLT -> AsmOp.BGT;
+                        case BLE -> AsmOp.BGE;
+                        case BGE -> AsmOp.BLE;
+                        default -> asmOp;
+                    };
+                }
+                new BrAsm(currentFunction.getName().substring(1)
+                        + "_b" + brInst.getTrueBlock().getName(), reg1, asmOp, constNum);
+            } else if (constInt1 != null) {
+                new LiAsm(Register.K0, constInt1.getIntValue());
+                new BrAsm(currentFunction.getName().substring(1)
+                        + "_b" + brInst.getTrueBlock().getName(), Register.K0, asmOp, constInt2.getIntValue());
+            } else {
+                new BrAsm(currentFunction.getName().substring(1)
+                        + "_b" + brInst.getTrueBlock().getName(), reg1, asmOp, reg2);
+            }
         }
         new JumpAsm(AsmOp.J, currentFunction.getName().substring(1)
                 + "_b" + brInst.getFalseBlock().getName());

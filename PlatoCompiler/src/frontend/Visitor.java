@@ -134,6 +134,11 @@ public class Visitor {
             integers = integers.stream()
                     .map(i -> i & 0xFF)
                     .collect(Collectors.toCollection(ArrayList::new));
+            if (integers.size() < length) {
+                while (integers.size() < length) {
+                    integers.add(0);
+                }
+            }
         }
         InitialValue initialValue = new InitialValue(valueType, length, integers);
         VarSymbol varSymbol = new VarSymbol(
@@ -217,6 +222,11 @@ public class Visitor {
                     integers = integers.stream()
                             .map(i -> i & 0xFF)
                             .collect(Collectors.toCollection(ArrayList::new));
+                    if (integers.size() < length) {
+                        while (integers.size() < length) {
+                            integers.add(0);
+                        }
+                    }
                 }
                 initialValue = new InitialValue(valueType, length, integers);
             } else {

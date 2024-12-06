@@ -22,6 +22,7 @@ public class Optimizer {
             GlobalVarLocalize.build(module);
             LocalConstArrayToValue.run(module);
             GVN.run(module);
+            // GCM.run(module);
             IcmpOptimize.run(module);
             BlockSimplify.run(module);
             PrintOptimize.run(module);

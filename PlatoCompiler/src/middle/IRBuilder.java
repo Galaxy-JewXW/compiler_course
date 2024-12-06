@@ -6,19 +6,69 @@ import frontend.symbol.FuncSymbol;
 import frontend.symbol.ParamSymbol;
 import frontend.symbol.SymbolType;
 import frontend.symbol.VarSymbol;
-import frontend.syntax.*;
-import frontend.syntax.expression.*;
+import frontend.syntax.Block;
+import frontend.syntax.BlockItem;
+import frontend.syntax.CompUnit;
+import frontend.syntax.Decl;
+import frontend.syntax.LVal;
+import frontend.syntax.expression.AddExp;
+import frontend.syntax.expression.Cond;
+import frontend.syntax.expression.EqExp;
+import frontend.syntax.expression.Exp;
+import frontend.syntax.expression.LAndExp;
+import frontend.syntax.expression.LOrExp;
+import frontend.syntax.expression.MulExp;
+import frontend.syntax.expression.PrimaryExp;
+import frontend.syntax.expression.RelExp;
+import frontend.syntax.expression.UnaryExp;
 import frontend.syntax.function.FuncDef;
 import frontend.syntax.function.FuncFParam;
 import frontend.syntax.function.FuncFParams;
 import frontend.syntax.function.MainFuncDef;
-import frontend.syntax.statement.*;
-import frontend.syntax.variable.*;
+import frontend.syntax.statement.BlockStmt;
+import frontend.syntax.statement.BreakStmt;
+import frontend.syntax.statement.ContinueStmt;
+import frontend.syntax.statement.ExpStmt;
+import frontend.syntax.statement.ForStruct;
+import frontend.syntax.statement.GetcharStmt;
+import frontend.syntax.statement.GetintStmt;
+import frontend.syntax.statement.IfStmt;
+import frontend.syntax.statement.LValExpStmt;
+import frontend.syntax.statement.PrintfStmt;
+import frontend.syntax.statement.ReturnStmt;
+import frontend.syntax.statement.Stmt;
+import frontend.syntax.variable.ConstDecl;
+import frontend.syntax.variable.ConstDef;
+import frontend.syntax.variable.InitVal;
+import frontend.syntax.variable.VarDecl;
+import frontend.syntax.variable.VarDef;
 import frontend.token.TokenType;
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.ConstString;
+import middle.component.ForLoop;
+import middle.component.FuncParam;
+import middle.component.Function;
+import middle.component.GlobalVar;
+import middle.component.InitialValue;
 import middle.component.Module;
-import middle.component.*;
-import middle.component.instruction.*;
-import middle.component.instruction.io.*;
+import middle.component.instruction.AllocInst;
+import middle.component.instruction.BinaryInst;
+import middle.component.instruction.BrInst;
+import middle.component.instruction.CallInst;
+import middle.component.instruction.GepInst;
+import middle.component.instruction.Instruction;
+import middle.component.instruction.LoadInst;
+import middle.component.instruction.OperatorType;
+import middle.component.instruction.RetInst;
+import middle.component.instruction.StoreInst;
+import middle.component.instruction.TruncInst;
+import middle.component.instruction.ZextInst;
+import middle.component.instruction.io.GetcharInst;
+import middle.component.instruction.io.GetintInst;
+import middle.component.instruction.io.PutchInst;
+import middle.component.instruction.io.PutintInst;
+import middle.component.instruction.io.PutstrInst;
 import middle.component.model.Value;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
@@ -176,7 +226,7 @@ public class IRBuilder {
                 instruction = new AllocInst(valueType);
                 varSymbol.setLlvmValue(instruction);
                 if (varDef.getInitVal() != null) {
-                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal());
+                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal(), -1);
                     Value storeValue = inits.get(0);
                     ValueType targetType = instruction.getTargetType();
                     // 进行类型转换
@@ -202,7 +252,8 @@ public class IRBuilder {
                 instruction = new AllocInst(valueType);
                 varSymbol.setLlvmValue(instruction);
                 if (varDef.getInitVal() != null) {
-                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal());
+                    ArrayList<Value> inits = buildInitVal(varDef.getInitVal(),
+                            varSymbol.getType().equals(SymbolType.CHAR) ? varSymbol.getLength() : -1);
                     for (int i = 0; i < inits.size(); i++) {
                         Value storeValue = inits.get(i);
                         ValueType targetType = ((ArrayType) instruction.getTargetType()).getElementType();
@@ -231,7 +282,7 @@ public class IRBuilder {
         }
     }
 
-    private ArrayList<Value> buildInitVal(InitVal initVal) {
+    private ArrayList<Value> buildInitVal(InitVal initVal, int length) {
         ArrayList<Value> ans = new ArrayList<>();
         if (initVal.getExp() != null) {
             ans.add(buildExp(initVal.getExp()));
@@ -246,6 +297,11 @@ public class IRBuilder {
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
             throw new RuntimeException("Shouldn't reach here");
+        }
+        if (length != -1) {
+            while (ans.size() < length) {
+                ans.add(new ConstInt(IntegerType.i8, 0));
+            }
         }
         return ans;
     }
@@ -614,6 +670,11 @@ public class IRBuilder {
         Value left = buildRelExp(eqExp.getRelExps().get(0));
         if (eqExp.getRelExps().size() == 1) {
             if (left.getValueType().equals(IntegerType.i32)) {
+                left = new BinaryInst(OperatorType.ICMP_NE, left,
+                        new ConstInt(IntegerType.i32, 0));
+                return left;
+            } else if (left.getValueType().equals(IntegerType.i8)) {
+                left = new ZextInst(left, IntegerType.i32);
                 left = new BinaryInst(OperatorType.ICMP_NE, left,
                         new ConstInt(IntegerType.i32, 0));
                 return left;
