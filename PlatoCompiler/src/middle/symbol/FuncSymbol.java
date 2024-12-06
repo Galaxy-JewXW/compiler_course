@@ -1,4 +1,4 @@
-package frontend.symbol;
+package middle.symbol;
 
 import middle.component.Function;
 

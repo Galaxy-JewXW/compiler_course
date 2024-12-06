@@ -1,7 +1,6 @@
 package optimize;
 
-import frontend.TableManager;
-import frontend.symbol.VarSymbol;
+import middle.TableManager;
 import middle.component.BasicBlock;
 import middle.component.ConstInt;
 import middle.component.Function;
@@ -19,6 +18,7 @@ import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
 import middle.component.type.ValueType;
+import middle.symbol.VarSymbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;

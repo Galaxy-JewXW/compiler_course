@@ -1,7 +1,6 @@
 package optimize;
 
-import frontend.TableManager;
-import frontend.symbol.VarSymbol;
+import middle.TableManager;
 import middle.component.ConstInt;
 import middle.component.Module;
 import middle.component.instruction.AllocInst;
@@ -10,6 +9,7 @@ import middle.component.instruction.LoadInst;
 import middle.component.model.User;
 import middle.component.type.ArrayType;
 import middle.component.type.ValueType;
+import middle.symbol.VarSymbol;
 
 import java.util.HashSet;
 

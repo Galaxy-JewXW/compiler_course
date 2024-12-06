@@ -1,11 +1,5 @@
 package middle;
 
-import frontend.SymbolTable;
-import frontend.TableManager;
-import frontend.symbol.FuncSymbol;
-import frontend.symbol.ParamSymbol;
-import frontend.symbol.SymbolType;
-import frontend.symbol.VarSymbol;
 import frontend.syntax.Block;
 import frontend.syntax.BlockItem;
 import frontend.syntax.CompUnit;
@@ -74,6 +68,10 @@ import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
 import middle.component.type.ValueType;
+import middle.symbol.FuncSymbol;
+import middle.symbol.ParamSymbol;
+import middle.symbol.SymbolType;
+import middle.symbol.VarSymbol;
 import tools.StrToArray;
 
 import java.util.ArrayList;

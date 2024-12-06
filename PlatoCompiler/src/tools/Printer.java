@@ -2,9 +2,9 @@ package tools;
 
 import backend.MipsFile;
 import error.Error;
-import frontend.TableManager;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
+import middle.TableManager;
 import middle.component.Module;
 
 import java.io.BufferedWriter;

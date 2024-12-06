@@ -1,12 +1,12 @@
 package middle.component.instruction.io;
 
-import frontend.TableManager;
-import frontend.symbol.FuncSymbol;
+import middle.TableManager;
 import middle.component.ConstString;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;
+import middle.symbol.FuncSymbol;
 
 public class PutstrInst extends IOInst implements OutputInst {
     // constString是printf中需要打印的句子

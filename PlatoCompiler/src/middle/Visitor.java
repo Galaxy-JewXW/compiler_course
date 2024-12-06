@@ -1,13 +1,8 @@
-package frontend;
+package middle;
 
 import error.Error;
 import error.ErrorHandler;
 import error.ErrorType;
-import frontend.symbol.FuncSymbol;
-import frontend.symbol.ParamSymbol;
-import frontend.symbol.Symbol;
-import frontend.symbol.SymbolType;
-import frontend.symbol.VarSymbol;
 import frontend.syntax.Block;
 import frontend.syntax.BlockItem;
 import frontend.syntax.CompUnit;
@@ -53,6 +48,11 @@ import middle.component.InitialValue;
 import middle.component.type.ArrayType;
 import middle.component.type.IntegerType;
 import middle.component.type.ValueType;
+import middle.symbol.FuncSymbol;
+import middle.symbol.ParamSymbol;
+import middle.symbol.Symbol;
+import middle.symbol.SymbolType;
+import middle.symbol.VarSymbol;
 import tools.StrToArray;
 import tools.ToParam;
 

@@ -1,8 +1,8 @@
-package frontend;
+package middle;
 
-import frontend.symbol.Symbol;
-import frontend.symbol.SymbolType;
-import frontend.symbol.VarSymbol;
+import middle.symbol.Symbol;
+import middle.symbol.SymbolType;
+import middle.symbol.VarSymbol;
 
 import java.util.HashSet;
 

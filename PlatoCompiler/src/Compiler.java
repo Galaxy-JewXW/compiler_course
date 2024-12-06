@@ -3,10 +3,10 @@ import backend.MipsFile;
 import error.ErrorHandler;
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.Visitor;
 import frontend.syntax.CompUnit;
 import frontend.token.Token;
 import middle.IRBuilder;
+import middle.Visitor;
 import middle.component.Module;
 import optimize.Optimizer;
 import tools.Printer;
@@ -28,7 +28,7 @@ public class Compiler {
     private static final boolean toLLVM = true;
     private static final boolean toMips = true;
 
-    private static final boolean optimize = false;
+    private static final boolean optimize = true;
 
     public static void main(String[] args) throws Exception {
         String inputString = Files.readString(Paths.get(inputFile));

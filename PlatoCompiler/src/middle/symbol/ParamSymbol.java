@@ -1,4 +1,4 @@
-package frontend.symbol;
+package middle.symbol;
 
 import middle.component.type.IntegerType;
 import middle.component.type.PointerType;

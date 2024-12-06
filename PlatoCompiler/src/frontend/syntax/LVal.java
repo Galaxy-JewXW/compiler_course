@@ -1,12 +1,12 @@
 package frontend.syntax;
 
-import frontend.TableManager;
-import frontend.symbol.FuncSymbol;
-import frontend.symbol.Symbol;
-import frontend.symbol.VarSymbol;
 import frontend.syntax.expression.Exp;
 import frontend.token.Token;
 import frontend.token.TokenType;
+import middle.TableManager;
+import middle.symbol.FuncSymbol;
+import middle.symbol.Symbol;
+import middle.symbol.VarSymbol;
 
 // 左值表达式 LVal → Ident ['[' Exp ']'] //1.普通变量、常量 2.一维数组
 public class LVal extends SyntaxNode implements Calculable {

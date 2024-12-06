@@ -1,12 +1,16 @@
 package tools;
 
-import frontend.TableManager;
-import frontend.symbol.*;
 import frontend.syntax.LVal;
 import frontend.syntax.expression.AddExp;
 import frontend.syntax.expression.Exp;
 import frontend.syntax.expression.PrimaryExp;
 import frontend.syntax.expression.UnaryExp;
+import middle.TableManager;
+import middle.symbol.FuncSymbol;
+import middle.symbol.ParamSymbol;
+import middle.symbol.Symbol;
+import middle.symbol.SymbolType;
+import middle.symbol.VarSymbol;
 
 /**
  * 工具类，用于将Exp转换为FuncParam

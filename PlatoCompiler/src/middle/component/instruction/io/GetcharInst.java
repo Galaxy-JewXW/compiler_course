@@ -1,10 +1,10 @@
 package middle.component.instruction.io;
 
-import frontend.TableManager;
-import frontend.symbol.FuncSymbol;
+import middle.TableManager;
 import middle.component.Function;
 import middle.component.instruction.OperatorType;
 import middle.component.type.IntegerType;
+import middle.symbol.FuncSymbol;
 
 public class GetcharInst extends IOInst {
     public GetcharInst() {
