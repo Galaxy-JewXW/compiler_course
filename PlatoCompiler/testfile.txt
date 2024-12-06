@@ -1,44 +1,15 @@
-// Global variables
-int global_length;
-char global_buffer[100];
+int a[1] = {0};
 
-// Custom strlen implementation
-int my_strlen(char arr[]) {
-    int len;
-    len = 0;
-
-    for (len = 0; arr[len] != 0; len = len + 1) {
-
-    }
-
-    return len;
+int b1(int a) {
+return a + 1;
 }
 
-// Custom strcpy implementation
-void my_strcpy(char dest[], char src[]) {
-    int i;
-    i = 0;
-
-    for (i = 0; src[i] != 0; i = i + 1) {
-        printf("%d %d\n", src[i], dest[i]);
-        dest[i] = src[i];
-    }
-    dest[i] = 0;
-    printf("END\n");
-}
-
-// Main function demonstrating string processing
 int main() {
-    char str1[13] = "Hello";
-    char str2[13] = "World";
-    char str3[13];
-    int result;
-
-    // Initialize strings
-    printf("%d\n", my_strlen(str3));
-    my_strcpy(str3, str1);
-    printf("%d\n", str3[2]);
-    printf("%d\n", my_strlen(str3));
-
-    return 0;
+const int a = 2, b[1] = {a / 3};
+int b12 = 3;
+char c = b12 + 3;
+c = c * c;
+int k = 99 + '0';
+char sb = 30-50;
+return 0;
 }

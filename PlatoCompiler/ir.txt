@@ -4,100 +4,11 @@ declare void @putint(i32)
 declare void @putch(i8)
 declare void @putstr(i8*)
 
-@.s.0 = private unnamed_addr constant [2 x i8] c" \00", align 1
-@.s.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.s.2 = private unnamed_addr constant [5 x i8] c"END\0A\00", align 1
+
 
 
 
 define dso_local i32 @main() {
 b0:
-	%v1 = alloca [13 x i8]
-	%v2 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 0
-	store i8 72, i8* %v2
-	%v3 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 1
-	store i8 101, i8* %v3
-	%v4 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 2
-	store i8 108, i8* %v4
-	%v5 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 3
-	store i8 108, i8* %v5
-	%v6 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 4
-	store i8 111, i8* %v6
-	%v7 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 5
-	store i8 0, i8* %v7
-	%v8 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 6
-	store i8 0, i8* %v8
-	%v9 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 7
-	store i8 0, i8* %v9
-	%v10 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 8
-	store i8 0, i8* %v10
-	%v11 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 9
-	store i8 0, i8* %v11
-	%v12 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 10
-	store i8 0, i8* %v12
-	%v13 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 11
-	store i8 0, i8* %v13
-	%v14 = getelementptr inbounds [13 x i8], [13 x i8]* %v1, i32 0, i32 12
-	store i8 0, i8* %v14
-	%v15 = alloca [13 x i8]
-	%v16 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 0
-	br label %b35
-b17:
-	%v18 = load i8, i8* %v44
-	%v19 = getelementptr inbounds i8, i8* %v16, i32 %v43
-	%v20 = load i8, i8* %v19
-	%v21 = zext i8 %v18 to i32
-	call void @putint(i32 %v21)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.0, i64 0, i64 0))
-	%v22 = zext i8 %v20 to i32
-	call void @putint(i32 %v22)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	store i8 %v18, i8* %v19
-	%v23 = add i32 %v43, 1
-	br label %b42
-b24:
-	%v25 = add i32 %v27, 1
-	br label %b26
-b26:
-	%v27 = phi i32 [ 0, %b48 ], [ %v25, %b24 ]
-	%v28 = getelementptr inbounds i8, i8* %v16, i32 %v27
-	%v29 = load i8, i8* %v28
-	%v30 = zext i8 %v29 to i32
-	%v31 = icmp ne i32 %v30, 0
-	br i1 %v31, label %b24, label %b32
-b32:
-	call void @putint(i32 %v27)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
 	ret i32 0
-b33:
-	%v34 = add i32 %v36, 1
-	br label %b35
-b35:
-	%v36 = phi i32 [ 0, %b0 ], [ %v34, %b33 ]
-	%v37 = getelementptr inbounds i8, i8* %v16, i32 %v36
-	%v38 = load i8, i8* %v37
-	%v39 = zext i8 %v38 to i32
-	%v40 = icmp ne i32 %v39, 0
-	br i1 %v40, label %b33, label %b41
-b41:
-	call void @putint(i32 %v36)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	br label %b42
-b42:
-	%v43 = phi i32 [ 0, %b41 ], [ %v23, %b17 ]
-	%v44 = getelementptr inbounds i8, i8* %v2, i32 %v43
-	%v45 = load i8, i8* %v44
-	%v46 = zext i8 %v45 to i32
-	%v47 = icmp ne i32 %v46, 0
-	br i1 %v47, label %b17, label %b48
-b48:
-	%v49 = getelementptr inbounds i8, i8* %v16, i32 %v43
-	store i8 0, i8* %v49
-	call void @putstr(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.s.2, i64 0, i64 0))
-	%v50 = getelementptr inbounds [13 x i8], [13 x i8]* %v15, i32 0, i32 2
-	%v51 = load i8, i8* %v50
-	%v52 = zext i8 %v51 to i32
-	call void @putint(i32 %v52)
-	call void @putstr(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.s.1, i64 0, i64 0))
-	br label %b26
 }

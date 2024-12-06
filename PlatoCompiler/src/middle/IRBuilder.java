@@ -880,7 +880,6 @@ public class IRBuilder {
         }
         IRData.setCurrentBlock(bodyBlock);
         buildStmt(forStruct.getStmt());
-        // 循环量更新直接嵌入bodyBlock
         new BrInst(updateBlock);
         IRData.setCurrentBlock(updateBlock);
         if (forStruct.getForStmt2() != null) {
