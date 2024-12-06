@@ -886,7 +886,11 @@ public class IRBuilder {
             buildAssign(forStruct.getForStmt2().getLVal(),
                     forStruct.getForStmt2().getExp());
         }
-        new BrInst(conditionBlock);
+        if (forStruct.getCond() != null) {
+            buildCond(forStruct.getCond(), bodyBlock, followBlock);
+        } else {
+            new BrInst(bodyBlock);
+        }
         IRData.setCurrentBlock(followBlock);
         IRData.pop();
     }
