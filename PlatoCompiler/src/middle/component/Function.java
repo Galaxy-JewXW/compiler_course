@@ -62,6 +62,11 @@ public class Function extends User {
         return basicBlocks;
     }
 
+    public void setBasicBlocks(ArrayList<BasicBlock> basicBlocks) {
+        this.basicBlocks.clear();
+        this.basicBlocks.addAll(basicBlocks);
+    }
+
     public BasicBlock getEntryBlock() {
         return basicBlocks.get(0);
     }

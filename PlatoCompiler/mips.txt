@@ -13,30 +13,29 @@ main_bb0:
     li $v0, 1
     syscall
     # %v2 = icmp sge i32 %v1, 0
-    # br i1 %v2, label %b3, label %b5
-    blt $t1, 0, main_bb5
+    # br i1 %v2, label %b3, label %b8
+    blt $t1, 0, main_bb8
 
 main_bb3:
     # %v4 = icmp slt i32 %v1, 3
-    # br i1 %v4, label %b6, label %b5
-    blt $t1, 3, main_bb6
+    # br i1 %v4, label %b5, label %b8
+    bge $t1, 3, main_bb8
 
 main_bb5:
-    # ret i32 0
-    li $v0, 10
-    syscall
-
-main_bb6:
-    # %v7 = getelementptr inbounds [3 x i32], [3 x i32]* @a, i32 0, i32 %v1
+    # %v6 = getelementptr inbounds [3 x i32], [3 x i32]* @a, i32 0, i32 %v1
     la $k0, a
     sll $k1, $t1, 2
     addu $t0, $k0, $k1
-    # %v8 = load i32, i32* %v7
+    # %v7 = load i32, i32* %v6
     lw $t0, 0($t0)
-    # call void @putint(i32 %v8)
+    # call void @putint(i32 %v7)
     move $a0, $t0
     li $v0, 1
     syscall
-    # br label %b5
-    j main_bb5
+    # br label %b8
+
+main_bb8:
+    # ret i32 0
+    li $v0, 10
+    syscall
 
