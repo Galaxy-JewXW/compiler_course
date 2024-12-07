@@ -1,4 +1,4 @@
-1 s1 CharArray
-1 ss1 ConstCharArray
-2 s CharArray
-2 ss CharArray
+1 a ConstIntArray
+1 m IntFunc
+2 k IntArray
+3 b Int

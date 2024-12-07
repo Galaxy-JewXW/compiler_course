@@ -1,14 +1,13 @@
 package optimize;
 
+import middle.component.BasicBlock;
+import middle.component.ConstInt;
+import middle.component.Function;
 import middle.component.Module;
-import middle.component.*;
 import middle.component.instruction.GepInst;
 import middle.component.instruction.Instruction;
+import middle.component.model.Value;
 
-import java.util.ArrayList;
-
-// 将编译期能确定的计算地址指令外提
-// 目前仅实现全局数组
 public class PickGep {
     public static void run(Module module) {
         for (Function function : module.getFunctions()) {
@@ -17,18 +16,42 @@ public class PickGep {
     }
 
     private static void optimize(Function function) {
-        BasicBlock entry = function.getEntryBlock();
-        for (int i = 1; i < function.getBasicBlocks().size(); i++) {
-            BasicBlock block = function.getBasicBlocks().get(i);
-            ArrayList<Instruction> instructions = new ArrayList<>(block.getInstructions());
-            for (Instruction instruction : instructions) {
-                if (instruction instanceof GepInst gepInst) {
-                    if (gepInst.getPointer() instanceof GlobalVar
-                            && gepInst.getIndex() instanceof ConstInt) {
-                        gepInst.getBasicBlock().getInstructions().remove(gepInst);
-                        gepInst.setBasicBlock(entry);
-                        entry.getInstructions().add(0, gepInst);
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (BasicBlock block : function.getBasicBlocks()) {
+                for (Instruction instruction : block.getInstructions()) {
+                    if (!(instruction instanceof GepInst gepInst)) {
+                        continue;
                     }
+                    if (!(gepInst.getIndex() instanceof ConstInt)) {
+                        continue;
+                    }
+                    if (gepInst.getOperands().stream().noneMatch(op -> op instanceof GepInst)) {
+                        continue;
+                    }
+                    for (Value operand : gepInst.getOperands()) {
+                        if (operand instanceof GepInst gepInst1
+                                && gepInst1.getIndex() instanceof ConstInt constInt
+                                && constInt.getIntValue() == 0) {
+                            GepInst newGep = new GepInst(gepInst1.getPointer(), gepInst.getIndex());
+                            BasicBlock basicBlock = gepInst.getBasicBlock();
+                            newGep.setBasicBlock(basicBlock);
+                            basicBlock.getInstructions().set(
+                                    basicBlock.getInstructions().indexOf(gepInst), newGep);
+                            basicBlock.getInstructions().remove(gepInst);
+                            gepInst.replaceByNewValue(newGep);
+                            gepInst.removeOperands();
+                            changed = true;
+                            break;
+                        }
+                    }
+                    if (changed) {
+                        break;
+                    }
+                }
+                if (changed) {
+                    break;
                 }
             }
         }

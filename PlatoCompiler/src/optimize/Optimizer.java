@@ -26,6 +26,7 @@ public class Optimizer {
             IcmpOptimize.run(module);
             BlockSimplify.run(module);
             PrintOptimize.run(module);
+            PickGep.run(module);
         }
         DivideCall.run(module);
     }

@@ -1,8 +1,13 @@
-char s1[7];
-const char ss1[6] = {'6'};
+const int a[3] = {1, 2, 3};
+
+int m(int k[]) {
+    return k[1];
+}
 
 int main() {
-    char s[7];
-    char ss[6] = {'a'};
+    int b;
+    b = getint();
+    printf("%d", m(a));
+    if (b >= 0 && b < 3) printf("%d", a[b]);
     return 0;
 }

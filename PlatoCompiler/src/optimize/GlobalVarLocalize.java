@@ -146,13 +146,7 @@ public class GlobalVarLocalize {
     }
 
     private static void constGlobalArrayToValue(Module module) {
-        ArrayList<GlobalVar> toRemove = new ArrayList<>();
         for (GlobalVar gv : module.getGlobalVars()) {
-            HashSet<Function> users = usedMap.getOrDefault(gv, null);
-            if (users == null) {
-                toRemove.add(gv);
-                continue;
-            }
             VarSymbol varSymbol = (VarSymbol) TableManager.getInstance1()
                     .getSymbol(gv.getName().substring(1));
             if (!varSymbol.isConstant()) {
@@ -178,7 +172,6 @@ public class GlobalVarLocalize {
                                     }
                                     ConstInt constInt1 = new ConstInt(gvType, intValue);
                                     loadInst.replaceByNewValue(constInt1);
-                                    toRemove.add(gv);
                                     loadInst.getBasicBlock().getInstructions().remove(loadInst);
                                 }
                             }
@@ -187,7 +180,6 @@ public class GlobalVarLocalize {
                 }
             }
         }
-        module.getGlobalVars().removeAll(toRemove);
     }
 
 }
