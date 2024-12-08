@@ -438,7 +438,7 @@ public class MipsBuilder {
             return;
         }
         if (constInt == -1) {
-            new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, varReg);
+            new NegAsm(targetReg, varReg);
             return;
         }
         boolean isNegative = constInt < 0;
@@ -501,7 +501,7 @@ public class MipsBuilder {
                 }
         }
         if (isNegative) {
-            new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, targetReg);
+            new NegAsm(targetReg, targetReg);
         }
     }
 

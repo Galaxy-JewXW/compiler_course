@@ -7,6 +7,7 @@ import backend.text.LiAsm;
 import backend.text.MDRegAsm;
 import backend.text.MoveAsm;
 import backend.text.MulDivAsm;
+import backend.text.NegAsm;
 
 public class OptimizedDivision {
     private static long calculateMagicNumber(int divisor) {
@@ -22,7 +23,7 @@ public class OptimizedDivision {
         int abs = Math.abs(constInt);
         if (abs == 1) {
             if (constInt < 0) {
-                new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, varReg);
+                new NegAsm(targetReg, targetReg);
             } else {
                 new MoveAsm(targetReg, varReg);
             }
@@ -68,7 +69,7 @@ public class OptimizedDivision {
             new CalcAsm(targetReg, AsmOp.ADDU, Register.V0, Register.A0);
         }
         if (constInt < 0) {
-            new CalcAsm(targetReg, AsmOp.SUBU, Register.ZERO, targetReg);
+            new NegAsm(targetReg, targetReg);
         }
     }
 
