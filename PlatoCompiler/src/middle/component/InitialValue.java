@@ -43,6 +43,10 @@ public class InitialValue {
             if (flag) {
                 return valueType + " " + elements.get(0);
             } else {
+                boolean allZero = elements.stream().allMatch(i -> i == 0);
+                if (allZero) {
+                    return valueType + " zeroinitializer";
+                }
                 StringBuilder sb = new StringBuilder();
                 sb.append(valueType).append(" [");
                 int filled = elements.size();
