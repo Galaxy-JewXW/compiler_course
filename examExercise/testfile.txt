@@ -1,5 +1,0 @@
-int main() {
-    int n = getint(), m = getint();
-    printf("%d\n", n / m);
-    return 0;
-}
