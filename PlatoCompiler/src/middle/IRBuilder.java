@@ -244,6 +244,9 @@ public class IRBuilder {
                         }
                     }
                     new StoreInst(instruction, storeValue);
+                } else if (varDef.isGetint()) {
+                    Value storeValue = new GetintInst();
+                    new StoreInst(instruction, storeValue);
                 }
             } else {
                 valueType = new ArrayType(varSymbol.getLength(), valueType);
@@ -350,6 +353,8 @@ public class IRBuilder {
                 instruction = new BinaryInst(OperatorType.SDIV, left, right);
             } else if (op == TokenType.MOD) {
                 instruction = new BinaryInst(OperatorType.SREM, left, right);
+            } else if (op == TokenType.BITAND) {
+                instruction = new BinaryInst(OperatorType.AND, left, right);
             } else {
                 throw new RuntimeException("Shouldn't reach here");
             }

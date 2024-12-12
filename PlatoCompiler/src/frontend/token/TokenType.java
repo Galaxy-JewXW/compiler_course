@@ -24,6 +24,7 @@ public enum TokenType {
     GETCHARTK("getchar"),
     PRINTFTK("printf"),
     RETURNTK("return"),
+    BITAND("bitand"),
     PLUS("+"),
     MINU("-"),
     VOIDTK("void"),
@@ -52,12 +53,12 @@ public enum TokenType {
         this.name = name;
     }
 
+    public static String printType(TokenType type) {
+        return type.name() + " " + type.toString();
+    }
+
     @Override
     public String toString() {
         return name;
-    }
-
-    public static String printType(TokenType type) {
-        return type.name() + " " + type.toString();
     }
 }

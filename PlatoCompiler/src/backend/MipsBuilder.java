@@ -425,6 +425,9 @@ public class MipsBuilder {
                 new MulDivAsm(reg1, AsmOp.DIV, reg2);
                 new MDRegAsm(AsmOp.MFHI, targetReg);
             }
+            case AND -> {
+                new CalcAsm(targetReg, AsmOp.AND, reg1, reg2);
+            }
         }
     }
 

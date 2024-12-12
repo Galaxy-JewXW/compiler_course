@@ -9,8 +9,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="a">
+    <list default="true" id="ae2e92cf-5aa7-4477-b5aa-5e0263970b8b" name="更改" comment="finish">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/error.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ir.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/llvm_ir.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/Compiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/llvm.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/man.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PlatoCompiler/middle/component/InitialValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/syntax/variable/VarDef.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/syntax/variable/VarDef.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/token/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/token/TokenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middle/component/instruction/OperatorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/middle/component/instruction/OperatorType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symbol.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +48,11 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -60,7 +84,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "exam",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/20251/compile/compiler_course/PlatoCompiler/src/optimize/BlockSimplify.java",
     "node.js.detected.package.eslint": "true",
@@ -193,14 +217,7 @@
       <workItem from="1733724519540" duration="44000" />
       <workItem from="1733724737947" duration="379000" />
       <workItem from="1734014573332" duration="540000" />
-    </task>
-    <task id="LOCAL-00033" summary="finish mips, peephole to be added">
-      <option name="closed" value="true" />
-      <created>1727680460032</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1727680460032</updated>
+      <workItem from="1734019953807" duration="1836000" />
     </task>
     <task id="LOCAL-00034" summary="man">
       <option name="closed" value="true" />
@@ -586,7 +603,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733561493697</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="finish">
+      <option name="closed" value="true" />
+      <created>1734020005475</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1734020005475</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +629,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="finish mips, peephole to be added" />
     <MESSAGE value="fix style" />
     <MESSAGE value="loop error" />
     <MESSAGE value="man" />
@@ -629,7 +653,8 @@
     <MESSAGE value="cheat" />
     <MESSAGE value="unfinished bugs" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -638,50 +663,6 @@
           <url>file://$PROJECT_DIR$/src/middle/component/instruction/GepInst.java</url>
           <line>10</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>14</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/middle/component/instruction/Instruction.java</url>
-          <line>12</line>
-          <properties class="middle.component.instruction.Instruction" method="&lt;init&gt;">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

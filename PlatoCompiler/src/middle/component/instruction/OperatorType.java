@@ -6,6 +6,7 @@ public enum OperatorType {
     MUL("mul"), // *
     SDIV("sdiv"), // /
     SREM("srem"), // %
+    AND("and"),
     ICMP_EQ("icmp eq"), // ==
     ICMP_NE("icmp ne"), // !=
     ICMP_SGT("icmp sgt"), // >
@@ -32,14 +33,14 @@ public enum OperatorType {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     public static boolean isLogicalOperator(OperatorType opType) {
         return opType == OperatorType.ICMP_EQ || opType == OperatorType.ICMP_NE ||
                 opType == OperatorType.ICMP_SLE || opType == OperatorType.ICMP_SLT ||
                 opType == OperatorType.ICMP_SGE || opType == OperatorType.ICMP_SGT;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -39,6 +39,7 @@ public class Lexer {
         reservedMap.put("printf", TokenType.PRINTFTK);
         reservedMap.put("return", TokenType.RETURNTK);
         reservedMap.put("void", TokenType.VOIDTK);
+        reservedMap.put("bitand", TokenType.BITAND);
 
         singleCharTokens.put("+", TokenType.PLUS);
         singleCharTokens.put("-", TokenType.MINU);
@@ -55,10 +56,10 @@ public class Lexer {
     }
 
     private final String inputString;
-    // 指向输入字符串的指针
-    private int pos = 0;
     // 当前分析的词法单元
     private final StringBuilder curToken = new StringBuilder();
+    // 指向输入字符串的指针
+    private int pos = 0;
     // 当前分析的词法单元对应的类别
     private TokenType type = null;
     // 程序行号
