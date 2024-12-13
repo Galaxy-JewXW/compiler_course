@@ -4,6 +4,8 @@ import backend.MipsFile;
 import backend.enums.AsmOp;
 import backend.enums.Register;
 import backend.text.*;
+import middle.component.Function;
+import middle.component.Module;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ public class PeepHole {
         reverseCondBr();
         removeJump1();
         removeLiLa();
+        uselessEnd();
     }
 
     private static void removeJump() {
@@ -267,5 +270,27 @@ public class PeepHole {
             }
         }
         MipsFile.getInstance().getTextSegment().removeAll(toRemove);
+    }
+
+    private static void uselessEnd() {
+        // 删除对main函数无用li v0, 10
+        Module module = Module.getInstance();
+        if (module.getFunctions().size() == 1) {
+            Function function = module.getFunctions().get(0);
+            if (function.getName().equals("@main")) {
+                ArrayList<TextAssembly> textAssemblies =
+                        MipsFile.getInstance().getTextSegment();
+                if (textAssemblies.size() < 2) {
+                    return;
+                }
+                TextAssembly asm1 = textAssemblies.get(textAssemblies.size() - 1);
+                TextAssembly asm2 = textAssemblies.get(textAssemblies.size() - 2);
+                if (asm1 instanceof SyscallAsm && asm2 instanceof LiAsm liAsm
+                        && liAsm.toString().equals("li $v0, 10")) {
+                    textAssemblies.remove(asm1);
+                    textAssemblies.remove(asm2);
+                }
+            }
+        }
     }
 }
