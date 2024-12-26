@@ -474,7 +474,7 @@ public class Parser {
         ArrayList<UnaryExp> unaryExps = new ArrayList<>();
         ArrayList<Token> operators = new ArrayList<>();
         unaryExps.add(parseUnaryExp());
-        while (match(TokenType.MULT) || match(TokenType.DIV) || match(TokenType.MOD)) {
+        while (match(TokenType.MULT) || match(TokenType.DIV) || match(TokenType.MOD) || match(TokenType.FUCK)) {
             operators.add(curToken(-1));
             unaryExps.add(parseUnaryExp());
         }

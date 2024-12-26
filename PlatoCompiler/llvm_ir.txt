@@ -11,10 +11,14 @@ declare void @putstr(i8*)
 define dso_local i32 @main() {
 b0:
 	%v1 = alloca i32
-	%v2 = call i32 @getint()
-	store i32 %v2, i32* %v1
-	%v3 = load i32, i32* %v1
-	%v4 = add i32 %v3, 1
-	call void @putint(i32 %v4)
+	%v2 = alloca i32
+	store i32 1296, i32* %v2
+	%v3 = call i32 @getint()
+	store i32 %v3, i32* %v1
+	%v4 = load i32, i32* %v1
+	%v5 = sfuck i32 %v4, 2
+	%v6 = load i32, i32* %v2
+	%v7 = add i32 %v5, %v6
+	call void @putint(i32 %v7)
 	ret i32 0
 }

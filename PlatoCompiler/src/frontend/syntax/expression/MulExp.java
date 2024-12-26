@@ -42,8 +42,17 @@ public class MulExp extends SyntaxNode implements Calculable {
                 case MULT -> ans * unaryExps.get(i).calculate();
                 case DIV -> ans / unaryExps.get(i).calculate();
                 case MOD -> ans % unaryExps.get(i).calculate();
+                case FUCK -> getFuck(ans, unaryExps.get(i).calculate());
                 default -> throw new RuntimeException("Shouldn't reach here");
             };
+        }
+        return ans;
+    }
+
+    public int getFuck(int a, int b) {
+        int ans = 1;
+        for (int i = 0; i < b; i++) {
+            ans = ans * (a + b);
         }
         return ans;
     }

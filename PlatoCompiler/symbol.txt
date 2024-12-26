@@ -1,1 +1,2 @@
 2 n Int
+2 b ConstInt

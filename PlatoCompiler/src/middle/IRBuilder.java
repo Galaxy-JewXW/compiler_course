@@ -350,6 +350,8 @@ public class IRBuilder {
                 instruction = new BinaryInst(OperatorType.SDIV, left, right);
             } else if (op == TokenType.MOD) {
                 instruction = new BinaryInst(OperatorType.SREM, left, right);
+            } else if (op == TokenType.FUCK) {
+                instruction = new BinaryInst(OperatorType.SFUCK, left, right);
             } else {
                 throw new RuntimeException("Shouldn't reach here");
             }

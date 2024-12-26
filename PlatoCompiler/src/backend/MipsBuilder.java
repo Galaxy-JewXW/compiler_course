@@ -384,6 +384,12 @@ public class MipsBuilder {
                 new CalcAsm(targetReg, AsmOp.ADDIU, temp, constant);
             } else if (binaryInst.getOpType() == OperatorType.SUB) {
                 new CalcAsm(targetReg, AsmOp.ADDIU, temp, -constant);
+            } else if (binaryInst.getOpType() == OperatorType.SFUCK) {
+                new CalcAsm(targetReg, AsmOp.ADDIU, temp, constant);
+                new MoveAsm(Register.K0, targetReg);
+                for (int i = 1; i < constant; i++) {
+                    new CalcAsm(targetReg, AsmOp.MUL, Register.K0, targetReg);
+                }
             } else if (binaryInst.getOpType() == OperatorType.MUL) {
                 makeVarMulConst(temp, constant, targetReg);
             } else if (binaryInst.getOpType() == OperatorType.SREM) {

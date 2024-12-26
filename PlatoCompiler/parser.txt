@@ -8,6 +8,27 @@ IDENFR n
 <VarDef>
 SEMICN ;
 <VarDecl>
+CONSTTK const
+INTTK int
+IDENFR b
+ASSIGN =
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+FUCK **
+INTCON 4
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
+<AddExp>
+<ConstExp>
+<ConstInitVal>
+<ConstDef>
+SEMICN ;
+<ConstDecl>
 IDENFR n
 <LVal>
 ASSIGN =
@@ -25,10 +46,16 @@ IDENFR n
 <PrimaryExp>
 <UnaryExp>
 <MulExp>
+FUCK **
+INTCON 2
+<Number>
+<PrimaryExp>
+<UnaryExp>
+<MulExp>
 <AddExp>
 PLUS +
-INTCON 1
-<Number>
+IDENFR b
+<LVal>
 <PrimaryExp>
 <UnaryExp>
 <MulExp>

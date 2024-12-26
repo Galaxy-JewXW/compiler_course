@@ -28,6 +28,7 @@ public enum TokenType {
     MINU("-"),
     VOIDTK("void"),
     MULT("*"),
+    FUCK("**"),
     DIV("/"),
     MOD("%"),
     LSS("<"),

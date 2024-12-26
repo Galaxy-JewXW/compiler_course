@@ -1,6 +1,9 @@
+
+
 int main() {
     int n;
+    const int b = 2 ** 4;
     n = getint();
-    printf("%d", n + 1);
+    printf("%d", n ** 2 + b);
     return 0;
 }

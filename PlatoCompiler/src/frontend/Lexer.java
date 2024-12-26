@@ -42,7 +42,6 @@ public class Lexer {
 
         singleCharTokens.put("+", TokenType.PLUS);
         singleCharTokens.put("-", TokenType.MINU);
-        singleCharTokens.put("*", TokenType.MULT);
         singleCharTokens.put("%", TokenType.MOD);
         singleCharTokens.put(";", TokenType.SEMICN);
         singleCharTokens.put(",", TokenType.COMMA);
@@ -55,10 +54,10 @@ public class Lexer {
     }
 
     private final String inputString;
-    // 指向输入字符串的指针
-    private int pos = 0;
     // 当前分析的词法单元
     private final StringBuilder curToken = new StringBuilder();
+    // 指向输入字符串的指针
+    private int pos = 0;
     // 当前分析的词法单元对应的类别
     private TokenType type = null;
     // 程序行号
@@ -116,6 +115,8 @@ public class Lexer {
         } else if (c == '/') {
             // 判断是除号、单行注释还是多行注释
             return getDivOrCmt();
+        } else if (c == '*') {
+            getFucked();
         } else if (c == '<' || c == '>' || c == '=') {
             // 此时可能是一个符号或两个符号组成单元，需要进一步判断
             getCmpOrAgn(c);
@@ -251,6 +252,15 @@ public class Lexer {
         addChar();
         type = TokenType.DIV;
         return true;
+    }
+
+    private void getFucked() {
+        addChar();
+        type = TokenType.MULT;
+        if (pos < inputString.length() && inputString.charAt(pos) == '*') {
+            addChar();
+            type = TokenType.FUCK;
+        }
     }
 
     private void getCmpOrAgn(char ch) {

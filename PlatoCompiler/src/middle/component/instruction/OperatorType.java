@@ -6,6 +6,7 @@ public enum OperatorType {
     MUL("mul"), // *
     SDIV("sdiv"), // /
     SREM("srem"), // %
+    SFUCK("sfuck"),
     ICMP_EQ("icmp eq"), // ==
     ICMP_NE("icmp ne"), // !=
     ICMP_SGT("icmp sgt"), // >

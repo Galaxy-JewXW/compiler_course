@@ -213,6 +213,9 @@ public class GVN {
         int lValue = ((ConstInt) binaryInst.getOperand1()).getIntValue();
         int rValue = ((ConstInt) binaryInst.getOperand2()).getIntValue();
         OperatorType op = binaryInst.getOpType();
+        if (op == OperatorType.SFUCK) {
+            return;
+        }
         int ans;
         try {
             ans = switch (op) {
